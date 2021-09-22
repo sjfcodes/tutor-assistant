@@ -1,4 +1,5 @@
-const User = require('./User');
-const Post = require('./Post');
+const Tutor = require('./Tutor');
+const Student = require('./Student');
+const Session = require('./Session');
 
-module.exports = { User, Post };
+module.exports = { Tutor, Student, Session };
