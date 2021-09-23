@@ -1,6 +1,6 @@
 const app = require('express').Router()
-const userRoutes = require('./user')
+const tutorRoutes = require('./tutor')
 
-app.use('/user', userRoutes)
+app.use('/tutor', tutorRoutes)
 
 module.exports = app
