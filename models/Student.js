@@ -2,6 +2,22 @@ const { Schema, Types, model } = require('mongoose');
 // const dateFormat = require('../utils/dateFormat');
 
 const studentSchema = new Schema({
+  firstName: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  lastName: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    match: [/.+@.+\..+/, 'Must match an email address!'],
+  },
   course: {
     type: String,
     required: true,
@@ -21,22 +37,6 @@ const studentSchema = new Schema({
   fullTimeCourse: {
     type: Boolean
   },
-  firstName: {
-    type: String,
-    required: true,
-    trim: true
-  },
-  lastName: {
-    type: String,
-    required: true,
-    trim: true
-  },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-    match: [/.+@.+\..+/, 'Must match an email address!'],
-  },
   gitHubUsername: {
     type: String
   },
@@ -46,7 +46,6 @@ const studentSchema = new Schema({
   },
   sessionsPerWeek: {
     type: Number,
-    default: () => this.fullTimeCourse ? 2 : 1
   },
   reassignment: {
     type: Boolean,
@@ -61,6 +60,13 @@ const studentSchema = new Schema({
     default: () => Math.floor(new Date().getTime() / 1000), // unix timestamp https://www.epochconverter.com/ 
     // get: (timestamp) => dateFormat(timestamp),
   },
+});
+
+studentSchema.pre('save', async function (next) {
+  if (!this.sessionsPerWeek) {
+    this.sessionsPerWeek = this.fullTimeCourse ? 2 : 1
+  }
+  next();
 });
 
 const Student = model('Student', studentSchema);
