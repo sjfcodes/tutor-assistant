@@ -1,7 +1,7 @@
 const { Schema, model } = require('mongoose');
 
 const sessionSchema = new Schema({
-    studentId: {
+    student_id: {
         type: Schema.Types.ObjectId,
         ref: 'Student',
         required: true
