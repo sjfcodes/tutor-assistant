@@ -6,18 +6,19 @@ const sessionSchema = new Schema({
         ref: 'Student',
         required: true
     },
-    createdAt: {
-        type: Number,
-        default: () => Math.floor(new Date().getTime() / 1000), // unix timestamp https://www.epochconverter.com/ 
-        // get: (timestamp) => dateFormat(timestamp),
-    },
     confirmationSent: {
         type: Boolean,
-        required: true
+        required: true,
+        default: false
     },
     startingAt: {
         type: Number,
         required: true
+    },
+    createdAt: {
+        type: Number,
+        default: () => Math.floor(new Date().getTime() / 1000), // unix timestamp https://www.epochconverter.com/ 
+        // get: (timestamp) => dateFormat(timestamp),
     }
 });
 
