@@ -6,6 +6,7 @@ const { signToken, authorizeTutor } = require('../utils/auth');
 router.post("/", async ({ body }, res) => {
     try {
         const tutor = await Tutor.create(body);
+        tutor.password = null
         const token = signToken(tutor);
         res.json({ token, tutor });
     } catch (error) {
