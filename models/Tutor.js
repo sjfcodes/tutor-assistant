@@ -38,6 +38,10 @@ const tutorSchema = new Schema({
     type: String,
     required: true
   },
+  sessionCount: {
+    type: Number,
+    default: 0
+  },
   students: [{
     type: Schema.Types.ObjectId,
     ref: 'Student',

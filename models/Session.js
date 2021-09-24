@@ -6,14 +6,22 @@ const sessionSchema = new Schema({
         ref: 'Student',
         required: true
     },
-    confirmationSent: {
+    back2back: {
         type: Boolean,
-        required: true,
         default: false
     },
     startingAt: {
         type: Number,
         required: true
+    },
+    confirmationSent: {
+        type: Boolean,
+        required: true,
+        default: false
+    },
+    completed: {
+        type: Boolean,
+        default: false
     },
     createdAt: {
         type: Number,

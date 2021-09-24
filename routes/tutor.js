@@ -4,10 +4,27 @@ const { signToken, authorizeTutor } = require('../utils/auth');
 
 
 router.post("/", async ({ body }, res) => {
-    const tutor = await Tutor.create(body);
+    try {
+        const tutor = await Tutor.create(body);
+        tutor.password = null
+        const token = signToken(tutor);
+        res.json({ token, tutor });
+    } catch (error) {
+        res.status(500).json(error.message)
+    }
+});
+router.get('/', async (req, res) => {
+    const authorized = authorizeTutor(req);
+    if (!authorized.tutor) return res.status(401).json('unauthorized');
+    const tutor = await Tutor.findById(authorized.tutor._id)
+        .populate('students')
+        .populate('sessions');
+    if (!tutor) return res.status(401).json('Incorrect credentials');
+    tutor.password = null
+
     const token = signToken(tutor);
     res.json({ token, tutor });
-});
+})
 router.put('/', async (req, res) => {
     const { tutor } = authorizeTutor(req);
     if (!tutor) return res.status(401).json('unauthorized');
@@ -57,10 +74,10 @@ router.post("/login", async ({ body }, res) => {
     const tutor = await Tutor.findOne({ email: body.email })
         .populate('students')
         .populate('sessions');
-    if (!tutor) return res.status(401).json('No tutor found with this email address');
-
+    if (!tutor) return res.status(401).json('Incorrect credentials');
     const correctPw = await tutor.isCorrectPassword(body.password);
     if (!correctPw) return res.status(401).json('Incorrect credentials');
+    tutor.password = null
 
     const token = signToken(tutor);
     res.json({ token, tutor });
