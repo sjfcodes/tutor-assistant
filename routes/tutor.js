@@ -61,10 +61,10 @@ router.post("/login", async ({ body }, res) => {
     const tutor = await Tutor.findOne({ email: body.email })
         .populate('students')
         .populate('sessions');
-    if (!tutor) return res.status(401).json('No tutor found with this email address');
-
+    if (!tutor) return res.status(401).json('Incorrect credentials');
     const correctPw = await tutor.isCorrectPassword(body.password);
     if (!correctPw) return res.status(401).json('Incorrect credentials');
+    tutor.password = null
 
     const token = signToken(tutor);
     res.json({ token, tutor });
