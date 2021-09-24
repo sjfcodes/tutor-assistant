@@ -8,6 +8,50 @@ router.post("/", async ({ body }, res) => {
     const token = signToken(tutor);
     res.json({ token, tutor });
 });
+router.put('/', async (req, res) => {
+    const { tutor } = authorizeTutor(req);
+    if (!tutor) return res.status(401).json('unauthorized');
+
+    const tutorDoc = await Tutor.findById(tutor._id)
+
+    // only allow certain values to update
+    for (const [key, value] of Object.entries(req.body)) {
+        if (key === 'password' || key === 'courses' || key === 'students' || key === 'sessions') continue
+        tutorDoc[key] = value
+    }
+
+    const updated = await tutorDoc.save()
+
+    if (!updated) res.status(500).json('failed to update')
+
+    res.json('tutor updated')
+})
+
+// // future route to update password
+// router.put('/password', async (req, res) => {
+//     const { tutor } = authorizeTutor(req);
+//     if (!tutor) return res.status(401).json('unauthorized');
+
+//     const tutorDoc = await Tutor.findById(tutor._id)
+
+//     // only allow certain values to update at this time
+//     for (const [key, value] of Object.entries(req.body)) {
+//         if (key === 'courses' || key === 'students' || key === 'sessions') continue
+//         tutorDoc[key] = value
+//     }
+
+//     const updated = await tutorDoc.save()
+
+//     if (!updated) res.status(500).json('failed to update')
+
+//     res.json('password updated')
+// })
+
+// // delete tutor
+// router.delete('/', async (req, res) => {
+
+// })
+
 
 router.post("/login", async ({ body }, res) => {
     const tutor = await Tutor.findOne({ email: body.email })
@@ -22,18 +66,7 @@ router.post("/login", async ({ body }, res) => {
     res.json({ token, tutor });
 });
 
-router.post("/student", async (req, res) => {
-    const { tutor } = authorizeTutor(req);
-    if (!tutor) return res.status(401).json('unauthorized');
 
-    const student = await Student.create(req.body);
-    if (!student) return res.status(500).json('failed to create student');
-
-    const updatedTutor = await Tutor.findOneAndUpdate({ _id: tutor._id }, { $addToSet: { students: student._id } });
-    if (!updatedTutor) return res.status(500).json('failed to add student to tutor');
-
-    res.json('student added');
-})
 
 router.post('/session', async (req, res) => {
     const { tutor } = authorizeTutor(req);
@@ -46,10 +79,9 @@ router.post('/session', async (req, res) => {
     if (!updatedTutor) return res.status(500).json('failed to add student to tutor');
 
     res.json('session added');
-
 })
 
 
-// router.get('/student/:id',);
+
 
 module.exports = router;
