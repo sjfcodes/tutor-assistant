@@ -13,6 +13,16 @@
 <body>
     <main class="m-5 w-50">
 
+        <!-- Main buttons -->
+        <div class="container mb-3">
+            <button id="login-btn" class="btn-info d-none">login</button>
+            <button id="signup-btn" class="btn-info d-none">signup</button>
+            <button id="logout-btn" class="btn-danger d-none">logout</button>
+            <button id="add-student-btn" class="btn-info d-none">add student</button>
+            <button id="add-session-btn" class="btn-info d-none">add session</button>
+        </div>
+
+        <!-- Tutor login form -->
         <form id="login-form" class="container">
             <div class="input-group mb-3">
                 <span class="input-group-text" id="basic-addon1">email</span>
@@ -22,31 +32,102 @@
                 <span class="input-group-text" id="basic-addon1">password</span>
                 <input type="text" class="form-control" aria-label="password" value="password22">
             </div>
-            <div class="container mb-3">
-                <button id="login" class="btn-info">login</button>
-                <button id="signup" class="btn-info">signup</button>
-            </div>
         </form>
 
-        <!-- <form action="" class="container d-none"> -->
+        <!-- Add New Tutor Form -->
         <form id="signup-form" action="" class="container d-none">
-            <div class="input-group mb-3 w-25">
+            <div class="input-group mb-3">
                 <span class="input-group-text" id="basic-addon1">email</span>
-                <input type="email" class="form-control" aria-label="email">
+                <input type="email" class="form-control" aria-label="email" value="email@email.com">
             </div>
-            <div class="input-group mb-3 w-25">
+            <div class="input-group mb-3">
                 <span class="input-group-text" id="basic-addon1">password</span>
-                <input type="text" class="form-control" aria-label="password">
+                <input type="text" class="form-control" aria-label="password" value="password">
             </div>
-            <div class="input-group mb-3 w-25">
+            <div class="input-group mb-3">
                 <span class="input-group-text" id="basic-addon1">firstName</span>
-                <input type="text" class="form-control" aria-label="firstName">
+                <input type="text" class="form-control" aria-label="firstName" value="firstName">
             </div>
-            <div class="input-group mb-3 w-25">
+            <div class="input-group mb-3">
                 <span class="input-group-text" id="basic-addon1">lastName</span>
-                <input type="text" class="form-control" aria-label="lastName">
+                <input type="text" class="form-control" aria-label="lastName" value="lastName">
             </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">courses</span>
+                <input type="text" class="form-control" aria-label="courses" value="course">
+            </div>
+            <div class="form-group mb-3">
+                <label for="timeZone">timeZone</label>
+                <select class="form-control" id="timeZone" aria-label="timeZone">
+                    <option>PST</option>
+                    <option>MST</option>
+                    <option>CST</option>
+                    <option>EST</option>
+                </select>
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">gitHubUsername</span>
+                <input type="text" class="form-control" aria-label="gitHubUsername" value="gitHubUsername">
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">calendlyLink</span>
+                <input type="text" class="form-control" aria-label="calendlyLink" value="calendlyLink">
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">sessionCount</span>
+                <input type="number" class="form-control" aria-label="sessionCount" value="0">
+            </div>
+            <button class="btn-info">create tutor</button>
         </form>
+
+        <!-- Add New Student -->
+        <form id="signup-form" action="" class="container d-none">
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">email</span>
+                <input type="email" class="form-control" aria-label="email" value="email@email.com">
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">password</span>
+                <input type="text" class="form-control" aria-label="password" value="password">
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">firstName</span>
+                <input type="text" class="form-control" aria-label="firstName" value="firstName">
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">lastName</span>
+                <input type="text" class="form-control" aria-label="lastName" value="lastName">
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">courses</span>
+                <input type="text" class="form-control" aria-label="courses" value="course">
+            </div>
+            <div class="form-group mb-3">
+                <label for="timeZone">timeZone</label>
+                <select class="form-control" id="timeZone" aria-label="timeZone">
+                    <option>PST</option>
+                    <option>MST</option>
+                    <option>CST</option>
+                    <option>EST</option>
+                </select>
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">gitHubUsername</span>
+                <input type="text" class="form-control" aria-label="gitHubUsername" value="gitHubUsername">
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">calendlyLink</span>
+                <input type="text" class="form-control" aria-label="calendlyLink" value="calendlyLink">
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">sessionCount</span>
+                <input type="number" class="form-control" aria-label="sessionCount" value="0">
+            </div>
+            <button class="btn-info">create tutor</button>
+        </form>
+
+        <!-- Tutor details will load here -->
+        <div id="tutor-info-container"></div>
 
     </main>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
