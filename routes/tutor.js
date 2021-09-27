@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const { Tutor, Session } = require("../models");
 const { signToken, authorizeToken } = require('../utils/auth');
-const { updateDocumentProerties } = require("../utils/helpers");
+const { updateDocumentProerties, getTutorByEmail, getTutorById } = require("../utils/helpers");
 
 
 
@@ -19,30 +19,36 @@ router.post("/", async ({ body }, res) => {
 
 // login tutor with email and password
 router.post("/login", async ({ body }, res) => {
-    const tutor = await Tutor.findOne({ email: body.email })
-        .populate('students')
-        .populate('sessions');
-    if (!tutor) return res.status(401).json('Incorrect credentials');
-    const correctPw = await tutor.isCorrectPassword(body.password);
-    if (!correctPw) return res.status(401).json('Incorrect credentials');
-    tutor.password = null
+    try {
+        const tutor = await getTutorByEmail(body.email)
+        const correctPw = await tutor.isCorrectPassword(body.password);
+        if (!correctPw) return res.status(401).json('Incorrect credentials');
+        tutor.password = ''
+        const token = signToken(tutor);
+        res.json({ token, tutor });
 
-    const token = signToken(tutor);
-    res.json({ token, tutor });
+    } catch (error) {
+        console.log(error)
+        res.status(401).json('Incorrect credentials');
+    }
 });
 
 // login tutor with token
 router.get('/', async (req, res) => {
     const authorized = authorizeToken(req);
     if (!authorized.tutor) return res.status(401).json('unauthorized');
-    const tutor = await Tutor.findById(authorized.tutor._id)
-        .populate('students')
-        .populate('sessions');
-    if (!tutor) return res.status(401).json('Incorrect credentials');
-    tutor.password = null
 
-    const token = signToken(tutor);
-    res.json({ token, tutor });
+    try {
+        const tutor = await getTutorById(authorized.tutor._id)
+        if (!tutor) return res.status(401).json('Incorrect credentials');
+        tutor.password = null
+        const token = signToken(tutor);
+        res.json({ token, tutor });
+
+    } catch (error) {
+        console.log(error)
+        res.status(401).json('Incorrect credentials');
+    }
 });
 
 // allow a tutor to update their personal data
@@ -76,24 +82,24 @@ router.put('/', async (req, res) => {
 })
 
 
-// future route to update password
-// router.put('/password', async (req, res) => {
-//     const authorized = authorizeToken(req);
-//     if (!authorized.tutor) return res.status(401).json('unauthorized');
+// update a tutors password
+router.put('/password', async (req, res) => {
+    const authorized = authorizeToken(req);
+    if (!authorized.tutor) return res.status(401).json('unauthorized');
 
-//     const tutor = await Tutor.findById(authorized.tutor._id)
+    const tutor = await Tutor.findById(authorized.tutor._id)
 
 
-//     const updated = await tutor.save()
+    const updated = await tutor.save()
 
-//     if (!updated) res.status(500).json('failed to update')
+    if (!updated) res.status(500).json('failed to update')
 
-//     res.json('password updated')
-// })
+    res.json('password updated')
+})
 
-// // delete tutor
-// router.delete('/', async (req, res) => {
+// delete tutor
+router.delete('/', async (req, res) => {
 
-// })
+})
 
 module.exports = router;
