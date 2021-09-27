@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { Tutor, Session } = require("../models");
+const { Tutor } = require("../models");
 const { signToken, authorizeToken } = require('../utils/auth');
 const { updateDocumentProerties, getTutorByEmail, getTutorById } = require("../utils/helpers");
 
@@ -23,7 +23,7 @@ router.post("/login", async ({ body }, res) => {
         const tutor = await getTutorByEmail(body.email)
 
         const correctPw = await tutor.isCorrectPassword(body.password);
-        if (!correctPw) return res.status(401).json('Incorrect credentials');
+        if (!correctPw) return res.status(401).json('unauthorized');
 
         tutor.password = null
         const token = signToken(tutor);
@@ -31,7 +31,7 @@ router.post("/login", async ({ body }, res) => {
 
     } catch (error) {
         console.log(error)
-        res.status(401).json('Incorrect credentials');
+        res.status(401).json('unauthorized');
     }
 });
 
@@ -42,14 +42,14 @@ router.get('/', async (req, res) => {
 
     try {
         const tutor = await getTutorById(authorized.tutor._id)
-        if (!tutor) return res.status(401).json('Incorrect credentials');
+        if (!tutor) return res.status(401).json('unauthorized');
         tutor.password = null
         const token = signToken(tutor);
         res.json({ token, tutor });
 
     } catch (error) {
         console.log(error)
-        res.status(401).json('Incorrect credentials');
+        res.status(401).json('unauthorized');
     }
 });
 
@@ -93,24 +93,39 @@ router.put('/password', async (req, res) => {
         const tutor = await getTutorById(authorized.tutor._id)
 
         const correctPw = await tutor.isCorrectPassword(req.body.password);
-        if (!correctPw) return res.status(401).json('Incorrect credentials');
+        if (!correctPw) return res.status(401).json('unauthorized');
 
         // update password to overwrite
         tutor.password = req.body.newPassword
-        const updated = await tutor.save()
 
+        const updated = await tutor.save()
         if (!updated) res.status(500).json('failed to update')
 
         res.json('password updated')
 
     } catch (error) {
         console.log(error)
-        res.status(401).json('Incorrect credentials');
+        res.status(401).json('unauthorized');
     }
 })
 
 // delete tutor
 router.delete('/', async (req, res) => {
+    const authorized = authorizeToken(req);
+    if (!authorized.tutor) return res.status(401).json('unauthorized');
+    try {
+        const tutor = await getTutorById(authorized.tutor._id)
+        const correctPw = await tutor.isCorrectPassword(req.body.password);
+        if (!correctPw) return res.status(401).json('unauthorized');
+
+        await Tutor.findByIdAndDelete(tutor._id)
+
+        res.json('tutor deleted')
+
+    } catch (error) {
+        console.log(error)
+        res.status(401).json('unauthorized');
+    }
 
 })
 
