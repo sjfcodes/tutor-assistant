@@ -2,7 +2,7 @@ const router = require("express").Router();
 const { Tutor, Student, Session } = require("../models");
 const { signToken, authorizeTutor } = require('../utils/auth');
 
-
+// create a new tutor
 router.post("/", async ({ body }, res) => {
     try {
         const tutor = await Tutor.create(body);
@@ -13,6 +13,22 @@ router.post("/", async ({ body }, res) => {
         res.status(500).json(error.message)
     }
 });
+
+// login tutor with email and password
+router.post("/login", async ({ body }, res) => {
+    const tutor = await Tutor.findOne({ email: body.email })
+        .populate('students')
+        .populate('sessions');
+    if (!tutor) return res.status(401).json('Incorrect credentials');
+    const correctPw = await tutor.isCorrectPassword(body.password);
+    if (!correctPw) return res.status(401).json('Incorrect credentials');
+    tutor.password = null
+
+    const token = signToken(tutor);
+    res.json({ token, tutor });
+});
+
+// login tutor with token
 router.get('/', async (req, res) => {
     const authorized = authorizeTutor(req);
     if (!authorized.tutor) return res.status(401).json('unauthorized');
@@ -24,25 +40,40 @@ router.get('/', async (req, res) => {
 
     const token = signToken(tutor);
     res.json({ token, tutor });
-})
+});
+
+// allow a tutor to update their personal data
 router.put('/', async (req, res) => {
     const { tutor } = authorizeTutor(req);
     if (!tutor) return res.status(401).json('unauthorized');
-
     const tutorDoc = await Tutor.findById(tutor._id)
 
     // only allow certain values to update
-    for (const [key, value] of Object.entries(req.body)) {
-        if (key === 'password' || key === 'courses' || key === 'students' || key === 'sessions') continue
-        tutorDoc[key] = value
+    const updateThis = {
+        firstName: true,
+        lasName: true,
+        email: true,
+        timeZone: true,
+        gitHubUsername: true,
+        calendlyLink: true,
+        sessionCount: true,
+        password: false,
+        courses: false,
+        students: false,
+        sessions: false,
+        createdAt: false,
     }
-
+    for (const [key, value] of Object.entries(req.body)) {
+        if (updateThis[key]) tutorDoc[key] = value
+    }
+    // save the updated document using the .save() method
+    // https://mongoosejs.com/docs/documents.html#updating-using-queries
     const updated = await tutorDoc.save()
 
-    if (!updated) res.status(500).json('failed to update')
-
+    if (!updated) return res.status(500).json('failed to update')
     res.json('tutor updated')
 })
+
 
 // // future route to update password
 // router.put('/password', async (req, res) => {
@@ -69,19 +100,6 @@ router.put('/', async (req, res) => {
 
 // })
 
-
-router.post("/login", async ({ body }, res) => {
-    const tutor = await Tutor.findOne({ email: body.email })
-        .populate('students')
-        .populate('sessions');
-    if (!tutor) return res.status(401).json('Incorrect credentials');
-    const correctPw = await tutor.isCorrectPassword(body.password);
-    if (!correctPw) return res.status(401).json('Incorrect credentials');
-    tutor.password = null
-
-    const token = signToken(tutor);
-    res.json({ token, tutor });
-});
 
 
 
