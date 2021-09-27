@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const { Tutor } = require("../models");
 const { signToken, authorizeToken } = require('../utils/auth');
-const { updateDocumentProerties, getTutorByEmail, getTutorById } = require("../utils/helpers");
+const { updateDocumentProperties, getTutorByEmail, getTutorById } = require("../utils/helpers");
 
 
 
@@ -74,7 +74,7 @@ router.put('/', async (req, res) => {
         sessions: false,
         createdAt: false,
     }
-    updateDocumentProerties(allowUpdate, tutorDoc, req.body)
+    updateDocumentProperties(allowUpdate, tutorDoc, req.body)
     // save the updated document using the .save() method
     // https://mongoosejs.com/docs/documents.html#updating-using-queries
     const updated = await tutorDoc.save()

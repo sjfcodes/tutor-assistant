@@ -27,12 +27,6 @@ module.exports = {
             }
         })
     },
-    updateDocumentProerties: (allowUpdate, currentDoc, newProps) => {
-        for (const [key, value] of Object.entries(newProps)) {
-            if (key === 'email' && currentDoc.email === newProps.email) continue
-            if (allowUpdate[key]) currentDoc[key] = value
-        }
-    },
     addStudentToTutor: (tutorId, student) => {
         return new Promise(async (resolve, reject) => {
             try {
@@ -49,5 +43,11 @@ module.exports = {
                 reject(error)
             }
         })
+    },
+    updateDocumentProperties: (allowUpdate, currentDoc, newProps) => {
+        for (const [key, value] of Object.entries(newProps)) {
+            if (key === 'email' && currentDoc.email === newProps.email) continue
+            if (allowUpdate[key]) currentDoc[key] = value
+        }
     }
 }
