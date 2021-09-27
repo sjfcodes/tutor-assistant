@@ -19,14 +19,6 @@ const tutorSchema = new Schema({
     unique: true,
     match: [/.+@.+\..+/, 'Must match an email address!'],
   },
-  password: {
-    type: String,
-    required: true,
-    minlength: 8,
-  },
-  courses: [{
-    type: String,
-  }],
   timeZone: {
     type: String,
     required: true
@@ -42,6 +34,14 @@ const tutorSchema = new Schema({
     type: Number,
     default: 0
   },
+  password: {
+    type: String,
+    required: true,
+    minlength: 8,
+  },
+  courses: [{
+    type: String,
+  }],
   students: [{
     type: Schema.Types.ObjectId,
     ref: 'Student',
