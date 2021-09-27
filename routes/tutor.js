@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const { Tutor, Session } = require("../models");
 const { signToken, authorizeToken } = require('../utils/auth');
+const { updateDocumentProerties } = require("../utils/helpers");
 
 
 
@@ -50,8 +51,8 @@ router.put('/', async (req, res) => {
     if (!tutor) return res.status(401).json('unauthorized');
     const tutorDoc = await Tutor.findById(tutor._id)
 
-    // only allow certain values to update
-    const updateThis = {
+    // config for properties allowed to update
+    const allowUpdate = {
         firstName: true,
         lasName: true,
         email: true,
@@ -65,9 +66,7 @@ router.put('/', async (req, res) => {
         sessions: false,
         createdAt: false,
     }
-    for (const [key, value] of Object.entries(req.body)) {
-        if (updateThis[key]) tutorDoc[key] = value
-    }
+    updateDocumentProerties(allowUpdate, tutorDoc, req.body)
     // save the updated document using the .save() method
     // https://mongoosejs.com/docs/documents.html#updating-using-queries
     const updated = await tutorDoc.save()
