@@ -44,7 +44,7 @@ const tutorSchema = new Schema({
   }],
   students: [{
     type: Schema.Types.ObjectId,
-    ref: 'Student',
+    ref: 'Student'
   }],
   sessions: [{
     type: Schema.Types.ObjectId,

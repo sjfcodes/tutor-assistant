@@ -1,8 +1,9 @@
 const router = require("express").Router();
 const { Student, Tutor } = require('../models')
-const { signToken, authorizeToken } = require('../utils/auth');
+const { authorizeToken } = require('../utils/auth');
+const { addStudentToTutor } = require("../utils/helpers");
 
-
+// create new student and add to the tutor who created the document 
 router.post("/", async (req, res) => {
     const { tutor } = authorizeToken(req);
     if (!tutor) return res.status(401).json('unauthorized');
@@ -10,10 +11,17 @@ router.post("/", async (req, res) => {
     const student = await Student.create(req.body);
     if (!student) return res.status(500).json('failed to create student');
 
-    const updatedTutor = await Tutor.findOneAndUpdate({ _id: tutor._id }, { $addToSet: { students: student._id } });
-    if (!updatedTutor) return res.status(500).json('failed to add student to tutor');
+    try {
+        await addStudentToTutor(tutor._id, student)
 
-    res.json('student added');
+        res.json({ student });
+
+    } catch (error) {
+        console.log(error)
+        await Student.findByIdAndDelete(student._id)
+        res.status(500).json('failed to add student to tutor')
+    }
+
 })
 router.put('')
 
