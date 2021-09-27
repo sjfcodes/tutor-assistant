@@ -89,18 +89,24 @@ router.put('/password', async (req, res) => {
     const authorized = authorizeToken(req);
     if (!authorized.tutor) return res.status(401).json('unauthorized');
 
-    const tutor = await getTutorById(authorized.tutor._id)
+    try {
+        const tutor = await getTutorById(authorized.tutor._id)
 
-    const correctPw = await tutor.isCorrectPassword(req.body.password);
-    if (!correctPw) return res.status(401).json('Incorrect credentials');
+        const correctPw = await tutor.isCorrectPassword(req.body.password);
+        if (!correctPw) return res.status(401).json('Incorrect credentials');
 
-    // update password to overwrite
-    tutor.password = req.body.newPassword
-    const updated = await tutor.save()
+        // update password to overwrite
+        tutor.password = req.body.newPassword
+        const updated = await tutor.save()
 
-    if (!updated) res.status(500).json('failed to update')
+        if (!updated) res.status(500).json('failed to update')
 
-    res.json('password updated')
+        res.json('password updated')
+
+    } catch (error) {
+        console.log(error)
+        res.status(401).json('Incorrect credentials');
+    }
 })
 
 // delete tutor
