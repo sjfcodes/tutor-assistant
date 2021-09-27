@@ -1,6 +1,8 @@
 const router = require("express").Router();
 const { Tutor, Student, Session } = require("../models");
-const { signToken, authorizeTutor } = require('../utils/auth');
+const { signToken, authorizeToken } = require('../utils/auth');
+
+
 
 // create a new tutor
 router.post("/", async ({ body }, res) => {
@@ -30,7 +32,7 @@ router.post("/login", async ({ body }, res) => {
 
 // login tutor with token
 router.get('/', async (req, res) => {
-    const authorized = authorizeTutor(req);
+    const authorized = authorizeToken(req);
     if (!authorized.tutor) return res.status(401).json('unauthorized');
     const tutor = await Tutor.findById(authorized.tutor._id)
         .populate('students')
@@ -44,7 +46,7 @@ router.get('/', async (req, res) => {
 
 // allow a tutor to update their personal data
 router.put('/', async (req, res) => {
-    const { tutor } = authorizeTutor(req);
+    const { tutor } = authorizeToken(req);
     if (!tutor) return res.status(401).json('unauthorized');
     const tutorDoc = await Tutor.findById(tutor._id)
 
@@ -75,20 +77,15 @@ router.put('/', async (req, res) => {
 })
 
 
-// // future route to update password
+// future route to update password
 // router.put('/password', async (req, res) => {
-//     const { tutor } = authorizeTutor(req);
-//     if (!tutor) return res.status(401).json('unauthorized');
+//     const authorized = authorizeToken(req);
+//     if (!authorized.tutor) return res.status(401).json('unauthorized');
 
-//     const tutorDoc = await Tutor.findById(tutor._id)
+//     const tutor = await Tutor.findById(authorized.tutor._id)
 
-//     // only allow certain values to update at this time
-//     for (const [key, value] of Object.entries(req.body)) {
-//         if (key === 'courses' || key === 'students' || key === 'sessions') continue
-//         tutorDoc[key] = value
-//     }
 
-//     const updated = await tutorDoc.save()
+//     const updated = await tutor.save()
 
 //     if (!updated) res.status(500).json('failed to update')
 
@@ -104,7 +101,7 @@ router.put('/', async (req, res) => {
 
 
 router.post('/session', async (req, res) => {
-    const { tutor } = authorizeTutor(req);
+    const { tutor } = authorizeToken(req);
     if (!tutor) return res.status(401).json('unauthorized');
 
     const session = await Session.create(req.body);
