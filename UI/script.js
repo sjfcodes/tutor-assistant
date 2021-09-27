@@ -7,6 +7,7 @@ const addStudentBtn = $('#add-student-btn')
 const addSessionBtn = $('#add-session-btn')
 const tutorInfoContainer = $('#tutor-info-container')
 
+// make sure the `baseUrl` in the front-end matches the `PORT` for the server
 const baseUrl = 'http://localhost:3001/api'
 
 

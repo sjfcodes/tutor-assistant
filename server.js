@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors')
 require('./config/connection');
 
+// make sure the `baseUrl` in the front-end matches the `PORT`
 const PORT = process.env.PORT || 3001;
 const app = express();
 
