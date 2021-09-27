@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { Tutor, Student, Session } = require("../models");
+const { Tutor, Session } = require("../models");
 const { signToken, authorizeToken } = require('../utils/auth');
 
 
@@ -96,24 +96,5 @@ router.put('/', async (req, res) => {
 // router.delete('/', async (req, res) => {
 
 // })
-
-
-
-
-router.post('/session', async (req, res) => {
-    const { tutor } = authorizeToken(req);
-    if (!tutor) return res.status(401).json('unauthorized');
-
-    const session = await Session.create(req.body);
-    if (!session) return res.statusMessage(500).json('failed to create session');
-
-    const updatedTutor = await Tutor.findOneAndUpdate({ _id: tutor._id }, { $addToSet: { sessions: session._id } });
-    if (!updatedTutor) return res.status(500).json('failed to add student to tutor');
-
-    res.json('session added');
-})
-
-
-
 
 module.exports = router;
