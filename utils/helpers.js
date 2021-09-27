@@ -32,5 +32,22 @@ module.exports = {
             if (key === 'email' && currentDoc.email === newProps.email) continue
             if (allowUpdate[key]) currentDoc[key] = value
         }
+    },
+    addStudentToTutor: (tutorId, student) => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const updatedTutor = await Tutor.findOneAndUpdate({ _id: tutorId },
+                    {
+                        $addToSet: {
+                            students: student._id
+                        }
+                    }
+                );
+                if (!updatedTutor) reject('tutor not updated')
+                resolve(updatedTutor)
+            } catch (error) {
+                reject(error)
+            }
+        })
     }
 }
