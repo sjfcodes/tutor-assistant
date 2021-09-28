@@ -14,13 +14,9 @@ const sessionSchema = new Schema({
         type: Number,
         required: true
     },
-    confirmationSent: {
-        type: Boolean,
-        required: true,
-        default: false
-    },
     status: {
         type: String,
+        required: true,
         default: 'scheduled'
     },
     createdAt: {
