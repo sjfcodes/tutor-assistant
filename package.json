@@ -4,8 +4,16 @@
   "description": "manage student data and provide email templates for all processes",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npm run lint && npm run mocha",
+    "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
+    "start:prod": "node server/index.js",
+    "start:dev": "concurrently \"nodemon --ignore 'client/*'\" \"npm run client\"",
+    "client": "cd client && npm run start",
+    "lint": "eslint --quiet .",
+    "fix": "eslint --fix .",
+    "seed": "node scripts/seedDB.js",
+    "install": "cd client && npm install",
+    "build": "cd client && npm run build"
   },
   "repository": {
     "type": "git",
@@ -23,6 +31,10 @@
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.0.7"
+    "mongoose": "^6.0.7",
+    "nodemon": "^2.0.13"
+  },
+  "devDependencies": {
+    "concurrently": "^6.2.2"
   }
 }
