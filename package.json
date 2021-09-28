@@ -7,7 +7,7 @@
     "test": "npm run lint && npm run mocha",
     "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
     "start:prod": "node server/index.js",
-    "start:dev": "concurrently \"nodemon --ignore 'client/*'\" \"npm run client\"",
+    "start:dev": "concurrently \"npm run server\" \"npm run client\"",
     "client": "cd client && npm run start",
     "server": "cd server && npm run dev",
     "lint": "eslint --quiet .",
