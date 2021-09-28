@@ -1,4 +1,4 @@
-const { Tutor, Student, Session } = require('../models')
+const { Tutor, Student } = require('../models')
 
 
 module.exports = {
@@ -28,13 +28,14 @@ module.exports = {
             }
         })
     },
-    addStudentToTutor: (tutorId, studentId) => {
+    addModelToTutor: (tutorId, property, modelId) => {
         return new Promise(async (resolve, reject) => {
             try {
-                const updatedTutor = await Tutor.findByIdAndUpdate(tutorId,
-                    { $addToSet: { students: studentId } },
-                    { new: true }
-                );
+                const updatedTutor = await Tutor.findByIdAndUpdate(
+                    tutorId,
+                    { $addToSet: { [property]: modelId } },
+                    // { new: true }
+                )
                 if (!updatedTutor) return reject('failed to update tutor')
                 resolve(updatedTutor)
             } catch (error) {
@@ -47,7 +48,7 @@ module.exports = {
             try {
                 const updatedTutor = await Tutor.findByIdAndUpdate(tutorId,
                     { $pullAll: { students: [studentId] } },
-                    { new: true }
+                    // { new: true }
                 );
                 if (!updatedTutor) return reject('failed to update tutor')
                 await Student.findByIdAndDelete(studentId)

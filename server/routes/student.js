@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const { Student, Tutor } = require('../models')
 const { authorizeToken } = require('../utils/auth');
-const { addStudentToTutor, updateDocumentProperties, deleteStudentFromTutor } = require("../utils/helpers");
+const { deleteStudentFromTutor, addModelToTutor } = require("../utils/helpers");
 
 
 // create new student and add to the tutor who created the document 
@@ -13,7 +13,7 @@ router.post("/", async (req, res) => {
     if (!student) return res.status(500).json('failed to create student');
 
     try {
-        await addStudentToTutor(tutor._id, student._id)
+        await addModelToTutor(tutor._id, 'students', student._id)
 
         res.json({ student });
 
