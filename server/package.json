@@ -1,19 +1,11 @@
 {
-  "name": "tutor-assistant-api",
+  "name": "server",
   "version": "1.0.0",
-  "description": "manage student data and provide email templates for all processes",
+  "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "npm run lint && npm run mocha",
-    "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
-    "start:prod": "node server/index.js",
-    "start:dev": "concurrently \"nodemon --ignore 'client/*'\" \"npm run client\"",
-    "client": "cd client && npm run start",
-    "lint": "eslint --quiet .",
-    "fix": "eslint --fix .",
-    "seed": "node scripts/seedDB.js",
-    "install": "cd client && npm install",
-    "build": "cd client && npm run build"
+    "start": "node",
+    "watch": "nodemon"
   },
   "repository": {
     "type": "git",
@@ -28,13 +20,12 @@
   "dependencies": {
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
-    "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.0.7",
-    "nodemon": "^2.0.13"
+    "mongoose": "^6.0.7"
   },
   "devDependencies": {
-    "concurrently": "^6.2.2"
+    "dotenv": "^10.0.0",
+    "nodemon": "^2.0.13"
   }
 }
