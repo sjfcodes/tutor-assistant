@@ -14,14 +14,10 @@ const sessionSchema = new Schema({
         type: Number,
         required: true
     },
-    confirmationSent: {
-        type: Boolean,
+    status: {
+        type: String,
         required: true,
-        default: false
-    },
-    completed: {
-        type: Boolean,
-        default: false
+        default: 'scheduled'
     },
     createdAt: {
         type: Number,

@@ -15,7 +15,6 @@ const studentSchema = new Schema({
   email: {
     type: String,
     required: true,
-    unique: true,
     match: [/.+@.+\..+/, 'Must match an email address!'],
   },
   course: {
