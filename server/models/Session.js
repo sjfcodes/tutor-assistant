@@ -19,9 +19,9 @@ const sessionSchema = new Schema({
         required: true,
         default: false
     },
-    completed: {
-        type: Boolean,
-        default: false
+    status: {
+        type: String,
+        default: 'scheduled'
     },
     createdAt: {
         type: Number,
