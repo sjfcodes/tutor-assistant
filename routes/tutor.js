@@ -1,8 +1,11 @@
 const router = require("express").Router();
-const { Tutor, Student, Session } = require("../models");
-const { signToken, authorizeTutor } = require('../utils/auth');
+const { Tutor } = require("../models");
+const { signToken, authorizeToken } = require('../utils/auth');
+const { updateDocumentProperties, getTutorByEmail, getTutorById } = require("../utils/helpers");
 
 
+
+// create a new tutor
 router.post("/", async ({ body }, res) => {
     try {
         const tutor = await Tutor.create(body);
@@ -13,92 +16,117 @@ router.post("/", async ({ body }, res) => {
         res.status(500).json(error.message)
     }
 });
+
+// login tutor with email and password
+router.post("/login", async ({ body }, res) => {
+    try {
+        const tutor = await getTutorByEmail(body.email)
+
+        const correctPw = await tutor.isCorrectPassword(body.password);
+        if (!correctPw) return res.status(401).json('unauthorized');
+
+        tutor.password = null
+        const token = signToken(tutor);
+        res.json({ token, tutor });
+
+    } catch (error) {
+        console.log(error)
+        res.status(401).json('unauthorized');
+    }
+});
+
+// login tutor with token
 router.get('/', async (req, res) => {
-    const authorized = authorizeTutor(req);
+    const authorized = authorizeToken(req);
     if (!authorized.tutor) return res.status(401).json('unauthorized');
-    const tutor = await Tutor.findById(authorized.tutor._id)
-        .populate('students')
-        .populate('sessions');
-    if (!tutor) return res.status(401).json('Incorrect credentials');
-    tutor.password = null
 
-    const token = signToken(tutor);
-    res.json({ token, tutor });
-})
+    try {
+        const tutor = await getTutorById(authorized.tutor._id)
+        if (!tutor) return res.status(401).json('unauthorized');
+        tutor.password = null
+        const token = signToken(tutor);
+        res.json({ token, tutor });
+
+    } catch (error) {
+        console.log(error)
+        res.status(401).json('unauthorized');
+    }
+});
+
+// allow a tutor to update their personal data
 router.put('/', async (req, res) => {
-    const { tutor } = authorizeTutor(req);
+    const { tutor } = authorizeToken(req);
     if (!tutor) return res.status(401).json('unauthorized');
-
     const tutorDoc = await Tutor.findById(tutor._id)
 
-    // only allow certain values to update
-    for (const [key, value] of Object.entries(req.body)) {
-        if (key === 'password' || key === 'courses' || key === 'students' || key === 'sessions') continue
-        tutorDoc[key] = value
+    // config for properties allowed to update
+    const allowUpdate = {
+        firstName: true,
+        lasName: true,
+        email: true,
+        timeZone: true,
+        gitHubUsername: true,
+        calendlyLink: true,
+        sessionCount: true,
+        password: false,
+        courses: false,
+        students: false,
+        sessions: false,
+        createdAt: false,
     }
-
+    updateDocumentProperties(allowUpdate, tutorDoc, req.body)
+    // save the updated document using the .save() method
+    // https://mongoosejs.com/docs/documents.html#updating-using-queries
     const updated = await tutorDoc.save()
 
-    if (!updated) res.status(500).json('failed to update')
-
+    if (!updated) return res.status(500).json('failed to update')
     res.json('tutor updated')
 })
 
-// // future route to update password
-// router.put('/password', async (req, res) => {
-//     const { tutor } = authorizeTutor(req);
-//     if (!tutor) return res.status(401).json('unauthorized');
 
-//     const tutorDoc = await Tutor.findById(tutor._id)
+// update a tutors password
+router.put('/password', async (req, res) => {
+    const authorized = authorizeToken(req);
+    if (!authorized.tutor) return res.status(401).json('unauthorized');
 
-//     // only allow certain values to update at this time
-//     for (const [key, value] of Object.entries(req.body)) {
-//         if (key === 'courses' || key === 'students' || key === 'sessions') continue
-//         tutorDoc[key] = value
-//     }
+    try {
+        const tutor = await getTutorById(authorized.tutor._id)
 
-//     const updated = await tutorDoc.save()
+        const correctPw = await tutor.isCorrectPassword(req.body.password);
+        if (!correctPw) return res.status(401).json('unauthorized');
 
-//     if (!updated) res.status(500).json('failed to update')
+        // update password to overwrite
+        tutor.password = req.body.newPassword
 
-//     res.json('password updated')
-// })
+        const updated = await tutor.save()
+        if (!updated) res.status(500).json('failed to update')
 
-// // delete tutor
-// router.delete('/', async (req, res) => {
+        res.json('password updated')
 
-// })
-
-
-router.post("/login", async ({ body }, res) => {
-    const tutor = await Tutor.findOne({ email: body.email })
-        .populate('students')
-        .populate('sessions');
-    if (!tutor) return res.status(401).json('Incorrect credentials');
-    const correctPw = await tutor.isCorrectPassword(body.password);
-    if (!correctPw) return res.status(401).json('Incorrect credentials');
-    tutor.password = null
-
-    const token = signToken(tutor);
-    res.json({ token, tutor });
-});
-
-
-
-router.post('/session', async (req, res) => {
-    const { tutor } = authorizeTutor(req);
-    if (!tutor) return res.status(401).json('unauthorized');
-
-    const session = await Session.create(req.body);
-    if (!session) return res.statusMessage(500).json('failed to create session');
-
-    const updatedTutor = await Tutor.findOneAndUpdate({ _id: tutor._id }, { $addToSet: { sessions: session._id } });
-    if (!updatedTutor) return res.status(500).json('failed to add student to tutor');
-
-    res.json('session added');
+    } catch (error) {
+        console.log(error)
+        res.status(401).json('unauthorized');
+    }
 })
 
+// delete tutor
+router.delete('/', async (req, res) => {
+    const authorized = authorizeToken(req);
+    if (!authorized.tutor) return res.status(401).json('unauthorized');
+    try {
+        const tutor = await getTutorById(authorized.tutor._id)
+        const correctPw = await tutor.isCorrectPassword(req.body.password);
+        if (!correctPw) return res.status(401).json('unauthorized');
 
+        await Tutor.findByIdAndDelete(tutor._id)
 
+        res.json('tutor deleted')
+
+    } catch (error) {
+        console.log(error)
+        res.status(401).json('unauthorized');
+    }
+
+})
 
 module.exports = router;

@@ -4,7 +4,7 @@ const secret = process.env.SECRET;
 const expiration = '2h';
 
 module.exports = {
-  authorizeTutor: function (req) {
+  authorizeToken: function (req) {
     let token = req.body.token || req.query.token || req.headers.authorization;
     if (req.headers.authorization) token = token.split(' ').pop().trim();
     if (!token) return req;
