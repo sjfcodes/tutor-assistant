@@ -11,6 +11,9 @@ const templateSchema = new Schema({
         default: 'new-student'
         // options: new-student, reassignment, one-time-stand-in, session-confirmation, time-card-correction
     },
+    templateValues: {
+        type: String
+    },
     template: {
         type: String,
         required: true,
