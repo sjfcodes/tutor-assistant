@@ -41,6 +41,15 @@ const hide = (el) => el.addClass('d-none')
 // display an element
 const display = (el) => el.removeClass('d-none')
 
+const testTemplate = (data) => {
+    data.map(({ template, templateValues }) => {
+        const parsedArr = JSON.parse(templateValues.split("'").join('"'))
+        parsedArr.map((value, idx) => template = template.replace(`{{${idx}}}`, value))
+        console.log(template)
+    })
+}
+
+
 // display tutors data
 const displayTutorData = (data) => {
     for (const [key, value] of Object.entries(data)) {
@@ -105,6 +114,12 @@ const loginWithToken = (token) => {
         .catch(error => handleLoginError(error))
 }
 
+const getTemplates = (token) => {
+    axios.get(`${baseUrl}/template`, { headers: { "Authorization": `bearer ${token}` } })
+        .then(({ data }) => testTemplate(data))
+        .catch(error => console.error(error))
+}
+
 const logoutTutor = () => {
     localStorage.removeItem('token')
     tutorInfoContainer.empty()
@@ -122,6 +137,7 @@ const initializePage = () => {
     const token = localStorage.getItem('token')
     if (token) {
         loginWithToken(token)
+        getTemplates(token)
         display(logoutBtn)
     } else {
         display(loginBtn)
