@@ -6,7 +6,7 @@ const { Input, Field, Control, Label, Help } = BulmaForm;
 
 export const Form = () => {
 	return (
-		<Box style={{ width: "50%", margin: 'auto' }}>
+		<Box style={{ width: "50%", margin: "auto" }}>
 			<form>
 				<Field>
 					<Label>Name</Label>
@@ -27,15 +27,15 @@ export const Form = () => {
 					</Control>
 				</Field>
 				<Button
-					fullwidth
 					rounded
 					color="primary"
+					size="medium"
+					className="is-small"
 					onClick={() => console.log("hello")}>
 					Login
 				</Button>
 			</form>
 		</Box>
-		
 	);
 };
 
