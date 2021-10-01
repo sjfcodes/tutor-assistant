@@ -1,13 +1,10 @@
 import React from 'react'
-import { Navbar, Button } from "react-bulma-components";
-const { Brand,
-        Item,
-        Container,
-	} = Navbar;
+import { Navbar } from "react-bulma-components";
+const { Brand, Item, Container, Burger, Menu } = Navbar;
 
 export const Nav = () => {
     return (
-		<Navbar className="is-flex is-justify-content-space-between is-align-items-center">
+		<Navbar>
 			<Brand>
 				<Item href="/">
 					<img
@@ -16,10 +13,18 @@ export const Nav = () => {
 						src="https://rethink.vc/wp-content/uploads/2017/08/trilogy-logo.png"
 					/>
 				</Item>
+				<Burger />
 			</Brand>
-			<Container align="end">
-				<Button size="small" color="primary">Login</Button>
-			</Container>
+			<Menu className="navbar-end is-flex-grow-0" align="end">
+				<Container>
+					<Item size="small" className="is-Nav-links">
+						Login
+					</Item>
+					<Item size="small" className="is-Nav-links">
+						Signup
+					</Item>
+				</Container>
+			</Menu>
 		</Navbar>
 	);
 }

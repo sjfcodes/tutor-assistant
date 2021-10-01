@@ -1,14 +1,20 @@
 import React from 'react'
 import {Hero } from "react-bulma-components";
-const { Header: HeroHeader, Footer: HeroFooter, Body: HeroBody } = Hero;
-export const FullWidthBody = ({ children }) => {
+const { Body: HeroBody } = Hero;
+export const FullWidthBody = ({ children, imgUrl }) => {
 	return (
-		<Hero size="fullheight" className="is-background">
-            <div className="is-overlay" style={{ backgroundImage: "url(/images/bg-image.jpg)", opacity: .35, backgroundSize: "cover", backgroundPosition: "center" }}>
-                <HeroBody>
-                    {children}
-                </HeroBody>
-            </div>
+		<Hero size="fullheight" className="is-background is-relative">
+			{imgUrl ? (
+				<div
+					className="is-overlay"
+					style={{
+						backgroundImage: imgUrl,
+						opacity: 0.35,
+						backgroundSize: "cover",
+						backgroundPosition: "center"
+					}}></div>
+			) : null}
+			<HeroBody>{children}</HeroBody>
 		</Hero>
 	);
 };
