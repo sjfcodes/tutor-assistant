@@ -1,12 +1,16 @@
 import React from 'react';
-import { Form, Nav } from "../../components"
-//import { Nav } from '../../components/Nav';
+import { FullWidthBody, Header, Nav } from "../../components"
+
 
 const Landing = () => {
     return (
 		<div>
-			<Nav/>
-			<Form/>
+			<Header>
+				<Nav />
+			</Header>
+			<FullWidthBody>
+
+			</FullWidthBody>
 		</div>
 	);
 }
