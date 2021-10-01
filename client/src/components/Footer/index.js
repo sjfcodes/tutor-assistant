@@ -10,7 +10,7 @@ export const Footer = () => {
 					<a
 						href="https://github.com/samuelfox1/tutor-assistant-api"
 						className="has-text-weight-bold ">
-						The Tutor Helper
+						Tutor Helper
 					</a>{" "}
 					by{" "}
 					<a
