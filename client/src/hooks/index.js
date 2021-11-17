@@ -1,5 +1,9 @@
 import { signup } from "./signup";
+import { loginWithToken } from "./loginWithToken";
+import { loginWithPassword } from "./loginWithPassword";
 
 export {
-    signup
+    signup,
+    loginWithToken,
+    loginWithPassword
 }

@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState } from 'react'
-import { SignupForm } from '../components/Signup'
-import { loginWithToken } from '../hooks/loginWithToken'
+import { LoginForm, SignupForm } from '../components'
+import { loginWithToken } from '../hooks'
 
 export const AppContext = createContext()
 
@@ -35,7 +35,7 @@ export default function AppProvider({ children }) {
 
             case 'login':
                 // login component
-                setAppComponent('load login component')
+                setAppComponent(<LoginForm />)
                 break;
 
             case 'home':
@@ -49,6 +49,7 @@ export default function AppProvider({ children }) {
         }
 
     }
+
 
     return (
         <AppContext.Provider value={{ AppComponent, updateAppComponent, tutorDetails, setTutorDetails }}>
