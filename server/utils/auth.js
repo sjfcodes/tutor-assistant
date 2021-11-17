@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const secret = process.env.JWT_SECRET;
 // https://www.npmjs.com/package/jsonwebtoken
 // const expiration = '2h';
-const expiration = '1d';
+const expiration = '10d';
 
 module.exports = {
   authorizeToken: function (req) {

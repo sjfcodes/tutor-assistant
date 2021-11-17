@@ -2,7 +2,7 @@ import React from "react";
 import { Icon, Button, Form as BulmaForm, Box } from "react-bulma-components";
 
 
-const { Input, Field, Control, Label, Help } = BulmaForm;
+const { Input, Field, Control, Label } = BulmaForm;
 
 export const Form = () => {
 	return (

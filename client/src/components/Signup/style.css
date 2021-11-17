@@ -1,0 +1,19 @@
+form {
+    width: 300px;
+    padding: 5px;
+    
+    background-color: #080808;
+    color: white;
+
+    border-radius: 5px;
+}
+
+form div{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+form div select {
+    width:154px
+}
