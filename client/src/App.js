@@ -1,33 +1,30 @@
 import React, { useEffect, useContext } from "react";
 import { Home, Landing } from "./pages";
 import {
-	BrowserRouter as Router,
 	Routes,
 	Route,
 	useNavigate
 } from "react-router-dom";
 import "./App.sass";
-import { FullWidthBody, Header, Nav } from "./components";
+import { Nav } from "./components";
 import { AppContext } from "./Context/AppProvider";
 
 const App = () => {
 
-	const nav = useNavigate()
+	const navigate = useNavigate()
 	const { tutorDetails } = useContext(AppContext)
 	const { loggedIn, gitHubUsername } = tutorDetails
 
 	useEffect(() => {
-		if (!loggedIn) return
-		nav(`/${gitHubUsername}`)
+		if (!loggedIn) return navigate('/')
+		navigate(`/${gitHubUsername}`)
 
-	}, [loggedIn, gitHubUsername, nav, tutorDetails])
+	}, [loggedIn, gitHubUsername, navigate, tutorDetails])
 
 
 	return (
 		<>
-			<Header>
-				<Nav />
-			</Header>
+			<Nav />
 
 			<Routes>
 				<Route path='/:tutor' element={<Home />} />

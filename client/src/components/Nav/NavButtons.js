@@ -1,26 +1,25 @@
-import React, { useContext } from 'react'
-import { Button, Navbar } from 'react-bulma-components'
-import { useNavigate } from 'react-router'
-import { AppContext } from '../../Context/AppProvider'
-import { tokenKey } from '../../hooks/config'
+import React, { useContext } from 'react';
+import { Button, Navbar } from 'react-bulma-components';
+import { useNavigate } from 'react-router';
+import { AppContext } from '../../Context/AppProvider';
+import { tokenKey } from '../../hooks/config';
 
-const { Container } = Navbar
 
 export const NavButtons = () => {
 
-    const { tutorDetails, setTutorDetails, updateAppComponent } = useContext(AppContext)
-    const { loggedIn } = tutorDetails
-    const navigate = useNavigate()
-
+    const { tutorDetails, setTutorDetails, updateAppComponent } = useContext(AppContext);
+    const { loggedIn } = tutorDetails;
+    const navigate = useNavigate();
 
     const handleLogout = () => {
-        setTutorDetails({ loggedIn: false })
-        localStorage.removeItem(tokenKey)
-        updateAppComponent(null)
-        navigate('/')
-    }
+        setTutorDetails({ loggedIn: false });
+        localStorage.removeItem(tokenKey);
+        updateAppComponent(null);
+        navigate('/');
+    };
+
     return (
-        <Container align="end">
+        <Navbar.Item>
             {!loggedIn
                 ? <>
                     < Button
@@ -33,6 +32,7 @@ export const NavButtons = () => {
                     <Button
                         size="small"
                         color="primary"
+                        className='ml-4'
                         onClick={() => updateAppComponent('signup')}
                     >
                         signup
@@ -46,6 +46,6 @@ export const NavButtons = () => {
                     Logout
                 </Button>
             }
-        </Container>
-    )
-}
+        </Navbar.Item>
+    );
+};

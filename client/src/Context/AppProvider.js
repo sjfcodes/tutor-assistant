@@ -6,7 +6,7 @@ export const AppContext = createContext()
 
 export default function AppProvider({ children }) {
 
-    const [AppComponent, setAppComponent] = useState()
+    const [AppComponent, setAppComponent] = useState(<LoginForm />)
     const [tutorDetails, setTutorDetails] = useState({ loggedIn: false })
 
     useEffect(() => {
@@ -17,7 +17,7 @@ export default function AppProvider({ children }) {
             const tutor = await loginWithToken(token)
             if (!tutor) return
             setTutorDetails({ ...tutor, loggedIn: true })
-            // updateAppComponent('home')
+            updateAppComponent('home')
             console.log(tutor)
         }
 
