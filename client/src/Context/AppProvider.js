@@ -12,11 +12,17 @@ export default function AppProvider({ children }) {
     useEffect(() => {
         const token = localStorage.getItem('tutor-token')
         if (!token) return
-        try {
-            const tutor = async () => await loginWithToken(token)
+
+        async function loginUser() {
+            const tutor = await loginWithToken(token)
             if (!tutor) return
             setTutorDetails({ ...tutor, loggedIn: true })
-            updateAppComponent('home')
+            // updateAppComponent('home')
+            console.log(tutor)
+        }
+
+        try {
+            loginUser()
         } catch (error) {
             console.error(error)
         }
