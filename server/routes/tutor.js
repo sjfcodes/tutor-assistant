@@ -13,7 +13,8 @@ router.post("/", async ({ body }, res) => {
         const token = signToken(tutor);
         res.json({ token, tutor });
     } catch (error) {
-        res.status(500).json(error.message)
+        console.log(error)
+        res.status(500).json('failed to create tutor')
     }
 });
 
