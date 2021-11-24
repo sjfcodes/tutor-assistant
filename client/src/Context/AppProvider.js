@@ -1,12 +1,10 @@
 import React, { createContext, useEffect, useState } from 'react'
-import { LoginForm, SignupForm } from '../components'
-import { loginWithToken } from '../hooks'
+import { loginWithToken } from '../utils'
 
 export const AppContext = createContext()
 
 export default function AppProvider({ children }) {
 
-    const [AppComponent, setAppComponent] = useState(<LoginForm />)
     const [tutorDetails, setTutorDetails] = useState({ loggedIn: false })
 
     useEffect(() => {
@@ -17,7 +15,6 @@ export default function AppProvider({ children }) {
             const tutor = await loginWithToken(token)
             if (!tutor) return
             setTutorDetails({ ...tutor, loggedIn: true })
-            updateAppComponent('home')
             console.log(tutor)
         }
 
@@ -28,37 +25,9 @@ export default function AppProvider({ children }) {
         }
     }, [])
 
-    const updateAppComponent = (componentName) => {
-
-        switch (componentName) {
-            case null:
-                setAppComponent('')
-                break;
-            case 'signup':
-                // signup component
-                setAppComponent(<SignupForm />)
-                break;
-
-            case 'login':
-                // login component
-                setAppComponent(<LoginForm />)
-                break;
-
-            case 'home':
-                // home component
-                setAppComponent('load home component')
-                break;
-
-            default:
-
-                break;
-        }
-
-    }
-
 
     return (
-        <AppContext.Provider value={{ AppComponent, updateAppComponent, tutorDetails, setTutorDetails }}>
+        <AppContext.Provider value={{ tutorDetails, setTutorDetails }}>
             {children}
         </AppContext.Provider>
     )

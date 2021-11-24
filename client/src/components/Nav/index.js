@@ -1,37 +1,36 @@
-import React, { useContext } from 'react'
-import { Navbar, Dropdown, Icon } from "react-bulma-components";
-import { AppContext } from '../../Context/AppProvider';
+import React, { useContext, useEffect } from 'react'
+import { Button, Navbar } from "react-bulma-components";
 
-import { NavButtons } from './NavButtons';
+import { AppContext } from '../../Context/AppProvider';
+import { logoutTutor } from '../../utils';
 
 const { Brand, Item: NavbarItem, Burger, Menu: NavbarMenu, Container } = Navbar;
-const { Item: DropdownItem } = Dropdown
+
 
 export const Nav = () => {
 
-	const { tutorDetails: { loggedIn, firstName } } = useContext(AppContext)
+	const { tutorDetails: { loggedIn, firstName }, AppComponent } = useContext(AppContext)
 
-	const toggleMenu = () => {
-		const el = document.getElementById('nav-burger')
-		const el2 = document.getElementById('nav-menu')
-		el.classList.toggle('is-active')
-		el2.classList.toggle('is-active')
+	const toggleNavBurger = (forceClose = false) => {
+		const navBurger = document.getElementById('nav-burger')
+		const navMenu = document.getElementById('nav-menu')
+
+		if (forceClose) {
+			navBurger.classList.remove('is-active')
+			navMenu.classList.remove('is-active')
+			return
+		}
+
+		navBurger.classList.toggle('is-active')
+		navMenu.classList.toggle('is-active')
 	}
 
+	useEffect(() => {
+		toggleNavBurger(true)
+	}, [AppComponent])
+
 	return (
-		// <Navbar className="is-flex is-justify-content-space-between is-align-items-center">
-		// 	<Brand>
-		// 		<NavbarItem href="/">
-		// <img
-		// 	alt="tutor app"
-		// 	height="50"
-		// 	src="https://rethink.vc/wp-content/uploads/2017/08/trilogy-logo.png"
-		// />
-		// 		</NavbarItem>
-		// 	</Brand>
-		// 	<NavButtons />
-		// </Navbar >
-		<Navbar>
+		<Navbar className='mb-4'>
 			<Brand>
 				<NavbarItem href="/">
 					<img
@@ -45,63 +44,35 @@ export const Nav = () => {
 							<img
 								className='avatar'
 								alt="user avatar"
-								src="https://i.imgur.com/WGeUGOp.jpg"
+								// src="https://i.imgur.com/WGeUGOp.jpg"
+								src="https://i.imgur.com/zEvf4P4.jpg"
 							/>
 						</NavbarItem>
 						<NavbarItem className='pl-0'>
-							<p>{firstName}</p>
+							{firstName}
 						</NavbarItem>
 					</>
 				}
-				<Burger id='nav-burger' onClick={toggleMenu} />
+				<Burger id='nav-burger' onClick={() => toggleNavBurger()} />
 			</Brand>
 			<NavbarMenu id='nav-menu'>
 				<Container align="right">
-					{/* <NavbarItem>
-						<Dropdown
-							closeOnSelect={false}
-							color=""
-							icon={<Icon><i aria-hidden="true" className="fas fa-angle-down" /></Icon>}
-							label="..."
-						>
-							<DropdownItem
-								renderAs="a"
-								value="item"
-							>
-								Dropdown item
-							</DropdownItem>
-							<DropdownItem
-								renderAs="a"
-								value="other"
-							>
-								Other Dropdown item
-							</DropdownItem>
-							<DropdownItem
-								renderAs="a"
-								value="active"
-							>
-								Active Dropdown item
-							</DropdownItem>
-							<DropdownItem
-								renderAs="a"
-								value="other 2"
-							>
-								Other Dropdown item
-							</DropdownItem>
-							<Dropdown.Divider />
-							<DropdownItem
-								renderAs="a"
-								value="divider"
-							>
-								After divider
-							</DropdownItem>
-						</Dropdown>
-					</NavbarItem> */}
 					<NavbarItem>
-						<NavButtons />
+
+						{loggedIn &&
+							< Button
+								size="small"
+								color="warning"
+								outlined
+								className='is-light'
+								onClick={logoutTutor}
+							>
+								Logout
+							</Button>}
 					</NavbarItem>
 				</Container>
 			</NavbarMenu>
 		</Navbar>
+
 	);
 }

@@ -1,36 +1,130 @@
-import React, { useContext } from 'react'
-import { Box, Container, Heading, Section } from 'react-bulma-components'
-import { FullWidthBody } from '../../components'
-import { AppContext } from '../../Context/AppProvider'
+import React from 'react'
+import { Container, Heading, Section } from 'react-bulma-components'
 import './style.css'
 
 export const Home = () => {
 
-    const styles = {
-        width: 400,
-        margin: 'auto',
-        color: 'black',
-        border: 'solid black 1px'
-    }
-
-    const { tutorDetails: {
-        firstName
-    } } = useContext(AppContext)
-
     return (
-        <Section>
-            <Container>
-                <Heading>
-                    Section
-                </Heading>
-                <Heading subtitle>
-                    A simple container to divide your page into{' '}
-                    <strong>
-                        sections
-                    </strong>
-                    , like the one you are currently reading
-                </Heading>
-            </Container>
-        </Section>
+        <>
+            <Section className='has-background-white m-5'>
+                <Container>
+                    <Heading>
+                        Section 1
+                    </Heading>
+                    <Heading subtitle>
+                        A simple container to divide your page into{' '}
+                        <strong>
+                            sections
+                        </strong>
+                        , like the one you are currently reading
+                    </Heading>
+                </Container>
+            </Section>
+
+            <Section className='has-background-white m-5'>
+                <Container>
+                    <Heading>
+                        Section 2
+                    </Heading>
+                    <Heading subtitle>
+                        A simple container to divide your page into{' '}
+                        <strong>
+                            sections
+                        </strong>
+                        , like the one you are currently reading
+                    </Heading>
+                </Container>
+            </Section>
+
+            <Section className='has-background-white m-5'>
+                <Container>
+                    <Heading>
+                        Section 3
+                    </Heading>
+                    <Heading subtitle>
+                        A simple container to divide your page into{' '}
+                        <strong>
+                            sections
+                        </strong>
+                        , like the one you are currently reading
+                    </Heading>
+                </Container>
+            </Section>
+
+            <Section className='has-background-white m-5'>
+                <Container>
+                    <Heading>
+                        Section 4
+                    </Heading>
+                    <Heading subtitle>
+                        A simple container to divide your page into{' '}
+                        <strong>
+                            sections
+                        </strong>
+                        , like the one you are currently reading
+                    </Heading>
+                </Container>
+            </Section>
+
+            <Section className='has-background-white m-5'>
+                <Container>
+                    <Heading>
+                        Section 4
+                    </Heading>
+                    <Heading subtitle>
+                        A simple container to divide your page into{' '}
+                        <strong>
+                            sections
+                        </strong>
+                        , like the one you are currently reading
+                    </Heading>
+                </Container>
+            </Section>
+
+            <Section className='has-background-white m-5'>
+                <Container>
+                    <Heading>
+                        Section 4
+                    </Heading>
+                    <Heading subtitle>
+                        A simple container to divide your page into{' '}
+                        <strong>
+                            sections
+                        </strong>
+                        , like the one you are currently reading
+                    </Heading>
+                </Container>
+            </Section>
+
+            <Section className='has-background-white m-5'>
+                <Container>
+                    <Heading>
+                        Section 4
+                    </Heading>
+                    <Heading subtitle>
+                        A simple container to divide your page into{' '}
+                        <strong>
+                            sections
+                        </strong>
+                        , like the one you are currently reading
+                    </Heading>
+                </Container>
+            </Section>
+
+            <Section className='has-background-white m-5'>
+                <Container>
+                    <Heading>
+                        Section 4
+                    </Heading>
+                    <Heading subtitle>
+                        A simple container to divide your page into{' '}
+                        <strong>
+                            sections
+                        </strong>
+                        , like the one you are currently reading
+                    </Heading>
+                </Container>
+            </Section>
+        </>
     )
 }

@@ -1,7 +1,10 @@
 import React, { useContext, useState } from 'react'
-import { Form, Icon, Button, Container } from 'react-bulma-components'
+import { Form, Icon, Button } from 'react-bulma-components'
 import { AppContext } from '../../Context/AppProvider'
-import { loginWithPassword } from '../../hooks'
+import { loginWithPassword } from '../../utils'
+
+const { Field, Label, Control, Input } = Form
+
 
 export const LoginForm = () => {
 
@@ -17,7 +20,8 @@ export const LoginForm = () => {
         setInputs({ ...inputs, [name]: value })
     }
 
-    const handleLogin = async () => {
+    const handleLogin = async (e) => {
+        e.preventDefault()
         try {
             const tutor = await loginWithPassword(inputs)
             if (!tutor) return
@@ -29,28 +33,34 @@ export const LoginForm = () => {
         }
     }
     return (
-        <Container>
-            <Form.Field>
-                <Form.Label>Name</Form.Label>
-                <Form.Control>
-                    <Form.Input placeholder="Username" name="email" value={inputs.email} onChange={handleInputChange} />
+        <form>
+            <Field>
+                <Label>Email</Label>
+                <Control>
+                    <Input
+                        placeholder="Username"
+                        type="text"
+                        name="email"
+                        value={inputs.email}
+                        onChange={handleInputChange}
+                    />
                     <Icon align="left">
-                        <i className="github" />
+                        <i className="fas fa-at"></i>
                     </Icon>
-                </Form.Control>
-            </Form.Field>
-            <Form.Field>
-                <Form.Label>Password</Form.Label>
-                <Form.Control>
-                    <Form.Input placeholder="Password" name="password" type="password" value={inputs.password} onChange={handleInputChange} />
+                </Control>
+            </Field>
+            <Field>
+                <Label>Password</Label>
+                <Control>
+                    <Input placeholder="Password" name="password" type="password" value={inputs.password} onChange={handleInputChange} />
                     <Icon align="left">
-                        <i className="github" />
+                        <i className="fas fa-fingerprint"></i>
                     </Icon>
-                </Form.Control>
-            </Form.Field>
+                </Control>
+            </Field>
             <Button.Group>
                 <Button fullwidth rounded color="primary" onClick={handleLogin}>Login</Button>
             </Button.Group>
-        </Container>
+        </form>
     )
 }

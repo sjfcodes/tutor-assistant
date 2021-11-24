@@ -21,10 +21,16 @@ const App = () => {
 
 	}, [loggedIn, gitHubUsername, navigate, tutorDetails])
 
+	const styles = {
+		backgroundImage: "url(/images/bg-image.jpg)",
+		backgroundPosition: "center",
+		backgroundSize: "cover",
+	}
 
 	return (
 		<>
 			<Nav />
+			<div className='background-image' style={styles}></div>
 
 			<Routes>
 				<Route path='/:tutor' element={<Home />} />
