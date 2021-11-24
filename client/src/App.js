@@ -8,6 +8,9 @@ import {
 import "./App.sass";
 import { Nav } from "./components";
 import { AppContext } from "./Context/AppProvider";
+import { Footer } from "./components/Footer";
+import { Section } from "react-bulma-components";
+import { BackgroundImage } from "./components/BackgroundImage";
 
 const App = () => {
 
@@ -21,22 +24,23 @@ const App = () => {
 
 	}, [loggedIn, gitHubUsername, navigate, tutorDetails])
 
-	const styles = {
-		backgroundImage: "url(/images/bg-image.jpg)",
-		backgroundPosition: "center",
-		backgroundSize: "cover",
-	}
+
 
 	return (
 		<>
-			<Nav />
-			<div className='background-image' style={styles}></div>
+			<Section renderAs='header' className='p-0'>
+				<Nav />
+			</Section>
 
-			<Routes>
-				<Route path='/:tutor' element={<Home />} />
-				<Route path='/' element={<Landing />} />
-			</Routes>
+			<Section renderAs='main' className='p-0'>
+				<BackgroundImage url='./images/bg-image.jpg' />
+				<Routes>
+					<Route path='/:tutor' element={<Home />} />
+					<Route path='/' element={<Landing />} />
+				</Routes>
+			</Section>
 
+			<Footer />
 		</>
 	);
 }
