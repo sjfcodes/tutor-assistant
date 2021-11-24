@@ -3,6 +3,7 @@ import { Button, Navbar } from "react-bulma-components";
 
 import { AppContext } from '../../Context/AppProvider';
 import { logoutTutor } from '../../utils';
+import './style.css'
 
 const { Brand, Item: NavbarItem, Burger, Menu: NavbarMenu, Container } = Navbar;
 
@@ -30,7 +31,7 @@ export const Nav = () => {
 	}, [AppComponent])
 
 	return (
-		<Navbar className='mb-4'>
+		<Navbar>
 			<Brand>
 				<NavbarItem href="/">
 					<img

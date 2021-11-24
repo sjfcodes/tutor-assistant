@@ -1,15 +1,15 @@
 import React from 'react'
-import { Container, Heading, Section } from 'react-bulma-components'
+import { Container, Heading, Box } from 'react-bulma-components'
 import './style.css'
 
 export const Home = () => {
 
     return (
         <>
-            <Section className='has-background-white m-5'>
+            <Box className='has-background-white m-5'>
                 <Container>
                     <Heading>
-                        Section 1
+                        Box 1
                     </Heading>
                     <Heading subtitle>
                         A simple container to divide your page into{' '}
@@ -19,12 +19,12 @@ export const Home = () => {
                         , like the one you are currently reading
                     </Heading>
                 </Container>
-            </Section>
+            </Box>
 
-            <Section className='has-background-white m-5'>
+            <Box className='has-background-white m-5'>
                 <Container>
                     <Heading>
-                        Section 2
+                        Box 2
                     </Heading>
                     <Heading subtitle>
                         A simple container to divide your page into{' '}
@@ -34,12 +34,12 @@ export const Home = () => {
                         , like the one you are currently reading
                     </Heading>
                 </Container>
-            </Section>
+            </Box>
 
-            <Section className='has-background-white m-5'>
+            <Box className='has-background-white m-5'>
                 <Container>
                     <Heading>
-                        Section 3
+                        Box 3
                     </Heading>
                     <Heading subtitle>
                         A simple container to divide your page into{' '}
@@ -49,12 +49,12 @@ export const Home = () => {
                         , like the one you are currently reading
                     </Heading>
                 </Container>
-            </Section>
+            </Box>
 
-            <Section className='has-background-white m-5'>
+            <Box className='has-background-white m-5'>
                 <Container>
                     <Heading>
-                        Section 4
+                        Box 4
                     </Heading>
                     <Heading subtitle>
                         A simple container to divide your page into{' '}
@@ -64,12 +64,12 @@ export const Home = () => {
                         , like the one you are currently reading
                     </Heading>
                 </Container>
-            </Section>
+            </Box>
 
-            <Section className='has-background-white m-5'>
+            <Box className='has-background-white m-5'>
                 <Container>
                     <Heading>
-                        Section 4
+                        Box 5
                     </Heading>
                     <Heading subtitle>
                         A simple container to divide your page into{' '}
@@ -79,12 +79,12 @@ export const Home = () => {
                         , like the one you are currently reading
                     </Heading>
                 </Container>
-            </Section>
+            </Box>
 
-            <Section className='has-background-white m-5'>
+            <Box className='has-background-white m-5'>
                 <Container>
                     <Heading>
-                        Section 4
+                        Box 6
                     </Heading>
                     <Heading subtitle>
                         A simple container to divide your page into{' '}
@@ -94,37 +94,7 @@ export const Home = () => {
                         , like the one you are currently reading
                     </Heading>
                 </Container>
-            </Section>
-
-            <Section className='has-background-white m-5'>
-                <Container>
-                    <Heading>
-                        Section 4
-                    </Heading>
-                    <Heading subtitle>
-                        A simple container to divide your page into{' '}
-                        <strong>
-                            sections
-                        </strong>
-                        , like the one you are currently reading
-                    </Heading>
-                </Container>
-            </Section>
-
-            <Section className='has-background-white m-5'>
-                <Container>
-                    <Heading>
-                        Section 4
-                    </Heading>
-                    <Heading subtitle>
-                        A simple container to divide your page into{' '}
-                        <strong>
-                            sections
-                        </strong>
-                        , like the one you are currently reading
-                    </Heading>
-                </Container>
-            </Section>
+            </Box>
         </>
     )
 }
