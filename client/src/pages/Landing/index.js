@@ -1,51 +1,36 @@
-import React from 'react';
-import { Button, Container, Heading } from 'react-bulma-components';
-import { Footer, FullWidthBody, Header, Nav } from "../../components"
+import React, { useState } from 'react';
+import { Box, Columns, Tabs } from 'react-bulma-components';
+import { LoginForm, SignupForm } from '../../components';
 
+const { Column } = Columns
 
-const Landing = () => {
-    return (
-		<div className="is-relative">
-			<div
-				className="is-overlay"
-				style={{
-					backgroundImage: "url(/images/bg-image.jpg)",
-					opacity: 0.35,
-					backgroundSize: "cover",
-					backgroundPosition: "center"
-				}}></div>
+export const Landing = () => {
 
-			<Header>
-				<Nav />
-			</Header>
-			<FullWidthBody>
-				<Container className="has-text-centered">
-					<Heading className="has-text-link-dark is-main-heading">
-						Tutor Helper
-					</Heading>
-					<Heading size={4} subtitle>
-						A tool to help tutors manage emails.
-					</Heading>
-					<figure class="image is-one-fifth is-135x135 m-auto">
-						<img
-							alt="tutor app"
-							className=""
-							src="https://rethink.vc/wp-content/uploads/2017/08/trilogy-logo.png"
-						/>
-						<span>
-							<Button className="button is-small is-Heading-links">
-								Login
-							</Button>
-							<Button className="button is-small is-Heading-links">
-								Sign up
-							</Button>
-						</span>
-					</figure>
-				</Container>
-			</FullWidthBody>
-			<Footer />
-		</div>
+	const [form, setForm] = useState('login')
+
+	return (
+		<Columns>
+			<Column size={8} offset={2}>
+				<Box className='has-background-grey-lighter m-3'>
+					<Tabs>
+						<Tabs.Tab
+							active={form === 'login'}
+							onClick={() => setForm('login')}
+						>
+							login
+						</Tabs.Tab>
+						<Tabs.Tab
+							active={form === 'signup'}
+							onClick={() => setForm('signup')}
+						>
+							signup
+						</Tabs.Tab>
+					</Tabs>
+					{form === 'login' && <LoginForm />}
+					{form === 'signup' && <SignupForm />}
+				</Box>
+			</Column>
+		</Columns>
+
 	);
 }
-
-export default Landing;
