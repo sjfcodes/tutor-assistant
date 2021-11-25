@@ -2,27 +2,31 @@ import React, { useState } from 'react';
 import { Box, Section, Tabs } from 'react-bulma-components';
 import { LoginForm, SignupForm } from '../../components';
 
+const { Tab } = Tabs
+
 
 export const Landing = () => {
 
 	const [form, setForm] = useState('login')
 
 	return (
-		<Section className=''>
-			<Box className='has-background-grey-lighter m-3'>
-				<Tabs>
-					<Tabs.Tab
+		<Section className='mx-3 py-5 ' >
+			<Box className='background-dark-blurred'>
+				<Tabs
+					type='boxed'
+				>
+					<Tab
 						active={form === 'login'}
 						onClick={() => setForm('login')}
 					>
 						login
-					</Tabs.Tab>
-					<Tabs.Tab
+					</Tab>
+					<Tab
 						active={form === 'signup'}
 						onClick={() => setForm('signup')}
 					>
 						signup
-					</Tabs.Tab>
+					</Tab>
 				</Tabs>
 				{form === 'login' && <LoginForm />}
 				{form === 'signup' && <SignupForm />}

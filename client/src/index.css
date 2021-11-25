@@ -7,11 +7,11 @@ nav {
 }
 
 main {
-    min-height: 80vh;
+    min-height: 78vh;
 }
 
 footer {
-    height: 10vh;
+    min-height: 9vh;
 }
 
 .z-1 {
@@ -20,4 +20,10 @@ footer {
 
 .border-red {
     border: solid 1px red;
+}
+
+.background-dark-blurred {
+    background-color: rgba(0, 0, 0, 0.493);
+    backdrop-filter: blur(20px);
+    border-radius: 1em;
 }
