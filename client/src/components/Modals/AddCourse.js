@@ -1,10 +1,43 @@
-import React, { useContext } from 'react'
-import { Button, Content, Image, Media, Modal } from 'react-bulma-components'
+import React, { useContext, useState } from 'react'
+import { Button, Form, Modal, } from 'react-bulma-components'
 import { AppContext } from '../../Context/AppProvider'
+import { addCourse, deleteCourse } from '../../utils'
+
 
 export const AddCourse = () => {
 
     const { openModal, setOpenModal } = useContext(AppContext)
+    const [formInputs, setFormInputs] = useState({ courseName: '' })
+    const [helpMessage, setHelpMessage] = useState()
+
+    const { tutorDetails, setTutorDetails } = useContext(AppContext)
+
+    const { courseName } = formInputs
+
+    const handleInputChange = (e) => {
+        const { target: { name, value } } = e
+        if (helpMessage) setHelpMessage('')
+
+        setFormInputs({ ...formInputs, [name]: value })
+    }
+
+    const handleAddCourse = async (e) => {
+        e.preventDefault()
+        if (!courseName) {
+            setHelpMessage('Please enter a name')
+            return
+        }
+        try {
+            const data = await addCourse(courseName)
+            // const data = await deleteCourse(courseName)
+            setTutorDetails({ ...tutorDetails, courses: data })
+            setFormInputs({ courseName: '' })
+            setOpenModal()
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
 
     return (
         <Modal
@@ -14,36 +47,37 @@ export const AddCourse = () => {
         >
             <Modal.Card >
                 <Modal.Card.Header>
-                    <Modal.Card.Title>Title</Modal.Card.Title>
+                    <Modal.Card.Title>Add Course</Modal.Card.Title>
                 </Modal.Card.Header>
-                <Modal.Card.Body>
-                    <Media>
-                        <Media.Item renderAs="figure" align="left">
-                            <Image
-                                size={64}
-                                alt="64x64"
-                                src="http://bulma.io/images/placeholders/128x128.png"
-                            />
-                        </Media.Item>
-                        <Media.Item>
-                            <Content>
-                                <p>
-                                    <strong>John Smith</strong> <small>@johnsmith</small>{' '}
-                                    <small>31m</small>
-                                    <br />
-                                    If the children of the Modal is a card, the close button
-                                    will be on the Card Head instead than the top-right corner
-                                    You can also pass showClose = false to Card.Head to hide the
-                                    close button
-                                </p>
-                            </Content>
-                        </Media.Item>
-                    </Media>
-                </Modal.Card.Body>
-                <Modal.Card.Footer renderAs={Button.Group} align="right" hasAddons>
-                    <Button color="success">Like</Button>
-                    <Button>Share</Button>
-                </Modal.Card.Footer>
+                <form onSubmit={handleAddCourse}
+                >
+                    <Modal.Card.Body>
+                        <Form.Field>
+                            <Form.Control>
+                                <Form.Label>Name</Form.Label>
+                                <Form.Input
+                                    type='text'
+                                    name='courseName'
+                                    value={courseName}
+                                    onChange={handleInputChange}
+                                />
+                            </Form.Control>
+                            <Form.Help
+                                className='ml-5'
+                                color='danger'
+                            >
+                                {helpMessage}
+                            </Form.Help>
+                        </Form.Field>
+                    </Modal.Card.Body>
+                    <Modal.Card.Footer renderAs={Button.Group} align="right" >
+                        <Button
+                            color='info'
+                        >
+                            Add Course
+                        </Button>
+                    </Modal.Card.Footer>
+                </form>
             </Modal.Card>
         </Modal>
     )

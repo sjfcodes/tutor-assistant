@@ -41,6 +41,7 @@ const tutorSchema = new Schema({
   },
   courses: [{
     type: String,
+    default: []
   }],
   students: [{
     type: Schema.Types.ObjectId,
