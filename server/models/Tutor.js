@@ -40,16 +40,8 @@ const tutorSchema = new Schema({
     minlength: 8,
   },
   courses: [{
-    type: String,
-    default: []
-  }],
-  students: [{
     type: Schema.Types.ObjectId,
-    ref: 'Student'
-  }],
-  meetings: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Meeting',
+    ref: 'Course'
   }],
   createdAt: {
     type: Number,

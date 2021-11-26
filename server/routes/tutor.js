@@ -84,40 +84,6 @@ router.put('/', async (req, res) => {
     res.json('tutor updated')
 })
 
-router.post('/courses', async (req, res) => {
-    const authorized = authorizeToken(req);
-    if (!authorized.tutor) return res.status(401).json('unauthorized');
-    try {
-        const updated = await Tutor.findByIdAndUpdate(
-            authorized.tutor._id,
-            { $addToSet: { courses: req.body.courseName } },
-            { new: true }
-        )
-        res.json(updated.courses)
-
-    } catch (error) {
-        console.log(error)
-        res.status(500).json('error')
-    }
-})
-
-router.delete('/courses', async (req, res) => {
-    const authorized = authorizeToken(req);
-    if (!authorized.tutor) return res.status(401).json('unauthorized');
-    try {
-        const updated = await Tutor.findByIdAndUpdate(
-            authorized.tutor._id,
-            { $pull: { courses: req.body.courseName } },
-            { new: true }
-        )
-        res.json(updated.courses)
-
-    } catch (error) {
-        console.log(error)
-        res.status(500).json('error')
-    }
-})
-
 
 // update a tutors password
 router.put('/password', async (req, res) => {
