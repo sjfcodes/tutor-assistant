@@ -1,6 +1,6 @@
 const { Schema, model } = require('mongoose');
 
-const MeetingSchema = new Schema({
+const meetingSchema = new Schema({
     student_id: {
         type: Schema.Types.ObjectId,
         ref: 'Student',
@@ -22,7 +22,6 @@ const MeetingSchema = new Schema({
     createdAt: {
         type: Number,
         default: () => Math.floor(new Date().getTime() / 1000), // unix timestamp https://www.epochconverter.com/ 
-        // get: (timestamp) => dateFormat(timestamp),
     }
 });
 
