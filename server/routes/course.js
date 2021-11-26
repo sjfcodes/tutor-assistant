@@ -40,7 +40,7 @@ router.put('/', async (req, res) => {
     if (!tutor) return res.status(401).json('unauthorized');
 
     try {
-        const course = await Course.findByIdAndUpdate(req.body._id, req.body);
+        const course = await Course.findByIdAndUpdate(req.body._id, { name: req.body.name });
         if (!course) return res.status(404).json('course not found');
 
         res.json('course updated');
