@@ -7,7 +7,7 @@ module.exports = {
             try {
                 const tutor = await Tutor.findById(id)
                     .populate('students')
-                    .populate('sessions');
+                    .populate('meetings');
                 if (!tutor) return reject('tutor not found');
                 resolve(tutor);
             } catch (error) {
@@ -20,7 +20,7 @@ module.exports = {
             try {
                 const tutor = await Tutor.findOne({ email: email })
                     .populate('students')
-                    .populate('sessions');
+                    .populate('meetings');
                 if (!tutor) return reject('tutor not found');
                 resolve(tutor);
             } catch (error) {

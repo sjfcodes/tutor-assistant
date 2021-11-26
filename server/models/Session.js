@@ -1,6 +1,6 @@
 const { Schema, model } = require('mongoose');
 
-const sessionSchema = new Schema({
+const MeetingSchema = new Schema({
     student_id: {
         type: Schema.Types.ObjectId,
         ref: 'Student',
@@ -26,6 +26,6 @@ const sessionSchema = new Schema({
     }
 });
 
-const Session = model('Session', sessionSchema);
+const Meeting = model('Meeting', meetingSchema);
 
-module.exports = Session;
+module.exports = Meeting;

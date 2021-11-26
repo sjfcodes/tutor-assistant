@@ -23,7 +23,7 @@ router.post('/', async (req, res) => {
     res.json('template added');
 });
 
-// update a sessions information
+// update a templates information
 router.put('/', async (req, res) => {
     const { tutor } = authorizeToken(req);
     if (!tutor) return res.status(401).json('unauthorized');

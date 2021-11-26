@@ -68,11 +68,11 @@ router.put('/', async (req, res) => {
         timeZone: true,
         gitHubUsername: true,
         calendlyLink: true,
-        sessionCount: true,
+        meetingCount: true,
         password: false,
         courses: false,
         students: false,
-        sessions: false,
+        meetings: false,
         createdAt: false,
     }
     updateDocumentProperties(allowUpdate, tutorDoc, req.body)

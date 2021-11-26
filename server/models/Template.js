@@ -9,7 +9,7 @@ const templateSchema = new Schema({
     templateFor: {
         type: String,
         default: 'new-student'
-        // options: new-student, reassignment, one-time-stand-in, session-confirmation, time-card-correction
+        // options: new-student, reassignment, one-time-stand-in, meeting-confirmation, time-card-correction
     },
     templateValues: {
         type: String
@@ -21,7 +21,6 @@ const templateSchema = new Schema({
     createdAt: {
         type: Number,
         default: () => Math.floor(new Date().getTime() / 1000), // unix timestamp https://www.epochconverter.com/ 
-        // get: (timestamp) => dateFormat(timestamp),
     }
 });
 
