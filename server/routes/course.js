@@ -8,11 +8,12 @@ router.post('/', async (req, res) => {
     const { tutor } = authorizeToken(req);
     if (!tutor) return res.status(401).json('unauthorized');
 
+    const { courses } = await getTutorById(tutor._id)
+
     try {
         // check if tutor already has existing course with this name
-        const { courses } = await getTutorById(tutor._id)
         const matchingCourses = courses.filter(({ name }) => name === req.body.name)
-        if (matchingCourses.length) return res.status(401).json('course name must be unique for user')
+        if (matchingCourses.length) return res.status(400).json('course name must be unique for user')
 
     } catch (error) {
         console.log(error);
@@ -24,7 +25,8 @@ router.post('/', async (req, res) => {
 
     try {
         await addModelToTutor(tutor._id, 'courses', course._id);
-        res.json('course added');
+        // respond with updated array of courses
+        res.json([...courses, course]);
 
     } catch (error) {
         console.log(error);
