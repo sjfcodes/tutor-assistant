@@ -17,7 +17,6 @@ export default function AppProvider({ children }) {
             const tutor = await loginWithToken(token)
             if (!tutor) return
             setTutorDetails({ ...tutor, loggedIn: true })
-            console.log(tutor)
         }
 
         try {
