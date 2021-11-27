@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Box, Section, Tabs } from 'react-bulma-components';
-import { LoginForm, SignupForm } from '../../components';
+import { LoginForm, SignupForm } from '../../components/Forms';
 
 const { Tab } = Tabs
 
