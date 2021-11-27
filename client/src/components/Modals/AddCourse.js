@@ -1,22 +1,26 @@
 import React, { useContext, useState } from 'react'
 import { Button, Form, Modal, } from 'react-bulma-components'
 import { AppContext } from '../../Context/AppProvider'
-import { addCourse, deleteCourse } from '../../utils'
+import { addCourse } from '../../utils'
 
 
 export const AddCourse = () => {
 
     const { openModal, setOpenModal } = useContext(AppContext)
     const [formInputs, setFormInputs] = useState({ courseName: '' })
+    const { courseName } = formInputs
     const [helpMessage, setHelpMessage] = useState()
 
     const { tutorDetails, setTutorDetails } = useContext(AppContext)
+    const courseNamesArr = tutorDetails?.courses?.map(({ name }) => name) || []
 
-    const { courseName } = formInputs
+    const resetForm = () => setFormInputs({ courseName: '' })
+
 
     const handleInputChange = (e) => {
         const { target: { name, value } } = e
         if (helpMessage) setHelpMessage('')
+        if (courseNamesArr.indexOf(value) !== -1) setHelpMessage('name already in use')
 
         setFormInputs({ ...formInputs, [name]: value })
     }
@@ -28,14 +32,19 @@ export const AddCourse = () => {
             return
         }
         try {
-            const data = await addCourse(courseName)
+            const data = await addCourse(tutorDetails._id, courseName)
             // const data = await deleteCourse(courseName)
             setTutorDetails({ ...tutorDetails, courses: data })
-            setFormInputs({ courseName: '' })
+            resetForm()
             setOpenModal()
         } catch (error) {
-            console.log(error)
+            console.error(error)
         }
+    }
+
+    const handleCloseModal = () => {
+        setOpenModal()
+        resetForm()
     }
 
 
@@ -43,7 +52,7 @@ export const AddCourse = () => {
         <Modal
             showClose={false}
             show={openModal === 'addCourse'}
-            onClose={() => setOpenModal()}
+            onClose={handleCloseModal}
         >
             <Modal.Card >
                 <Modal.Card.Header>
@@ -72,6 +81,7 @@ export const AddCourse = () => {
                     </Modal.Card.Body>
                     <Modal.Card.Footer renderAs={Button.Group} align="right" >
                         <Button
+                            disabled={helpMessage}
                             color='info'
                         >
                             Add Course

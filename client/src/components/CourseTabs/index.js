@@ -1,6 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { Tabs } from 'react-bulma-components'
-import { v4 } from 'uuid';
 import { AppContext } from '../../Context/AppProvider';
 import { AddCourse } from '../Modals/AddCourse';
 
@@ -12,8 +11,7 @@ export const CourseTabs = ({ courses }) => {
     const [courseTabs, setCourseTabs] = useState(null)
     const { setOpenModal } = useContext(AppContext)
 
-
-    const handleUpdate = (e) => {
+    const handleUpdate = useCallback((e) => {
         if (!courses || !courses.length) return
         const { target: { parentNode: { classList } } } = e
 
@@ -28,28 +26,28 @@ export const CourseTabs = ({ courses }) => {
 
         // toggle new tab on
         classList.toggle('is-active')
-    }
+
+    }, [courses])
 
 
     useEffect(() => {
         if (!courses || !courses.length) return
 
         setCourseTabs(
-            courses.map((courseName, idx) => {
-                const id = v4()
+            courses.map(({ name, _id }, idx) => {
                 return (
                     <Tab
-                        key={id}
-                        id={id}
+                        key={_id}
+                        id={_id}
                         active={idx === 0}
                         onClick={handleUpdate}
                     >
-                        {courseName}
+                        {name}
                     </Tab>
                 )
             })
         )
-    }, [courses])
+    }, [courses, handleUpdate])
 
     return (
         <>

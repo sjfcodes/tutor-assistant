@@ -1,22 +1,23 @@
 const { Schema, model } = require('mongoose');
 
-const templateSchema = new Schema({
-    author_id: {
+const meetingSchema = new Schema({
+    student_id: {
         type: Schema.Types.ObjectId,
         ref: 'Student',
         required: true
     },
-    templateFor: {
-        type: String,
-        default: 'new-student'
-        // options: new-student, reassignment, one-time-stand-in, meeting-confirmation, time-card-correction
+    back2back: {
+        type: Boolean,
+        default: false
     },
-    templateValues: {
-        type: String
+    startingAt: {
+        type: Number,
+        required: true
     },
-    template: {
+    status: {
         type: String,
         required: true,
+        default: 'scheduled'
     },
     createdAt: {
         type: Number,
@@ -24,6 +25,6 @@ const templateSchema = new Schema({
     }
 });
 
-const Template = model('Template', templateSchema);
+const Meeting = model('Meeting', meetingSchema);
 
-module.exports = Template;
+module.exports = Meeting;

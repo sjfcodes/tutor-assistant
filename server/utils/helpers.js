@@ -6,8 +6,7 @@ module.exports = {
         return new Promise(async (resolve, reject) => {
             try {
                 const tutor = await Tutor.findById(id)
-                    .populate('students')
-                    .populate('sessions');
+                    .populate('courses');
                 if (!tutor) return reject('tutor not found');
                 resolve(tutor);
             } catch (error) {
@@ -19,8 +18,7 @@ module.exports = {
         return new Promise(async (resolve, reject) => {
             try {
                 const tutor = await Tutor.findOne({ email: email })
-                    .populate('students')
-                    .populate('sessions');
+                    .populate('courses');
                 if (!tutor) return reject('tutor not found');
                 resolve(tutor);
             } catch (error) {

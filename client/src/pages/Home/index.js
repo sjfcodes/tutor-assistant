@@ -1,6 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { Container, Heading, Box as BulmaBox, Section } from 'react-bulma-components'
+import React, { useContext } from 'react'
+import { Container, Heading, Box as BulmaBox, Section, Columns, Button } from 'react-bulma-components'
 import { CourseTabs } from '../../components/CourseTabs'
+import { AddMeeting, AddStudent } from '../../components/Modals'
 import { AppContext } from '../../Context/AppProvider'
 import './style.css'
 
@@ -9,12 +10,42 @@ const Box = ({ children }) => <BulmaBox className='mx-1'>{children}</BulmaBox>
 
 export const Home = () => {
 
-    const { tutorDetails: { courses } } = useContext(AppContext)
+    const { tutorDetails: { courses }, setOpenModal } = useContext(AppContext)
 
 
     return (
         <Section className='p-3 background-dark-blurred' >
+
             <CourseTabs courses={courses} />
+
+            <Columns
+                className='px-5'
+            >
+                <Columns.Column size={6}>
+                    <Button
+                        fullwidth
+                        rounded
+                        color="primary"
+                        onClick={() => setOpenModal('addStudent')}
+
+                    >
+                        Add Student
+                    </Button>
+                </Columns.Column>
+                <Columns.Column size={6}>
+                    <Button
+                        fullwidth
+                        rounded
+                        color="primary"
+                        onClick={() => setOpenModal('addMeeting')}
+                    >
+                        Add Meeting
+                    </Button>
+                </Columns.Column>
+            </Columns>
+            <AddStudent />
+            <AddMeeting />
+
             <Box>
                 <Container>
                     <Heading>

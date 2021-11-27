@@ -68,11 +68,11 @@ router.put('/', async (req, res) => {
         timeZone: true,
         gitHubUsername: true,
         calendlyLink: true,
-        sessionCount: true,
+        meetingCount: true,
         password: false,
         courses: false,
         students: false,
-        sessions: false,
+        meetings: false,
         createdAt: false,
     }
     updateDocumentProperties(allowUpdate, tutorDoc, req.body)
@@ -82,40 +82,6 @@ router.put('/', async (req, res) => {
 
     if (!updated) return res.status(500).json('failed to update')
     res.json('tutor updated')
-})
-
-router.post('/courses', async (req, res) => {
-    const authorized = authorizeToken(req);
-    if (!authorized.tutor) return res.status(401).json('unauthorized');
-    try {
-        const updated = await Tutor.findByIdAndUpdate(
-            authorized.tutor._id,
-            { $addToSet: { courses: req.body.courseName } },
-            { new: true }
-        )
-        res.json(updated.courses)
-
-    } catch (error) {
-        console.log(error)
-        res.status(500).json('error')
-    }
-})
-
-router.delete('/courses', async (req, res) => {
-    const authorized = authorizeToken(req);
-    if (!authorized.tutor) return res.status(401).json('unauthorized');
-    try {
-        const updated = await Tutor.findByIdAndUpdate(
-            authorized.tutor._id,
-            { $pull: { courses: req.body.courseName } },
-            { new: true }
-        )
-        res.json(updated.courses)
-
-    } catch (error) {
-        console.log(error)
-        res.status(500).json('error')
-    }
 })
 
 

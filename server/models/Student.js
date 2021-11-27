@@ -43,7 +43,7 @@ const studentSchema = new Schema({
     type: String,
     required: true
   },
-  sessionsPerWeek: {
+  meetingsPerWeek: {
     type: Number,
   },
   reassignment: {
@@ -62,8 +62,8 @@ const studentSchema = new Schema({
 });
 
 studentSchema.pre('save', async function (next) {
-  if (!this.sessionsPerWeek) {
-    this.sessionsPerWeek = this.fullTimeCourse ? 2 : 1
+  if (!this.meetingsPerWeek) {
+    this.meetingsPerWeek = this.fullTimeCourse ? 2 : 1
   }
   next();
 });
