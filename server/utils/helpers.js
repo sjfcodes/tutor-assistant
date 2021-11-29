@@ -1,4 +1,4 @@
-const { Tutor } = require('../models');
+const { Tutor, Course } = require('../models');
 
 
 module.exports = {
@@ -51,6 +51,36 @@ module.exports = {
                 if (!updatedTutor) return reject('failed to update tutor');
                 await Model.findByIdAndDelete(modelId);
                 resolve(updatedTutor);
+            } catch (error) {
+                reject(error);
+            };
+        });
+    },
+    addModelToCourse: (courseId, property, modelId) => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const updatedCourse = await Course.findByIdAndUpdate(
+                    courseId,
+                    { $addToSet: { [property]: modelId } },
+                    // { new: true }
+                );
+                if (!updatedCourse) return reject('failed to update Course');
+                resolve(updatedCourse);
+            } catch (error) {
+                reject(error);
+            };
+        });
+    },
+    deleteModelFromCourse: (courseId, property, Model, modelId) => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const updatedCourse = await Course.findByIdAndUpdate(courseId,
+                    { $pullAll: { [property]: [modelId] } },
+                    // { new: true }
+                );
+                if (!updatedCourse) return reject('failed to update Course');
+                await Model.findByIdAndDelete(modelId);
+                resolve(updatedCourse);
             } catch (error) {
                 reject(error);
             };

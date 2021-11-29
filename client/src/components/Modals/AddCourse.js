@@ -1,7 +1,8 @@
 import React, { useContext, useState } from 'react'
 import { Button, Form, Modal, } from 'react-bulma-components'
 import { AppContext } from '../../Context/AppProvider'
-import { addCourse } from '../../utils'
+import { createModel } from '../../utils'
+import { validateFormInputs } from '../Forms/utils'
 
 
 export const AddCourse = () => {
@@ -32,8 +33,8 @@ export const AddCourse = () => {
             return
         }
         try {
-            const data = await addCourse(tutorDetails._id, courseName)
-            // const data = await deleteCourse(courseName)
+            const body = { tutor_id: tutorDetails._id, name: courseName }
+            const data = await createModel('course', body)
             setTutorDetails({ ...tutorDetails, courses: data })
             resetForm()
             setOpenModal()
@@ -81,7 +82,7 @@ export const AddCourse = () => {
                     </Modal.Card.Body>
                     <Modal.Card.Footer renderAs={Button.Group} align="right" >
                         <Button
-                            disabled={helpMessage}
+                            disabled={validateFormInputs(formInputs)}
                             color='info'
                         >
                             Add Course

@@ -1,15 +1,24 @@
-import { apiUrl, tokenKey } from "../config"
+import { apiUrl, tokenKey } from "./config"
 
 
-export const addCourse = (tutor_id, name) => {
-    const url = `${apiUrl}/course`
+/**
+ * provide a model name and a data object to create new db entry
+ * 
+ * @param {String} modelName name of the model to be created
+ * @param {Object} body data to create model with
+ * @param {String} parentModelId id of parent model to add new model to
+ * @returns 
+ */
+export const createModel = (modelName, body, parentModelId = '') => {
+    const model = modelName.trim().toLowerCase()
+    const url = `${apiUrl}/${model}/${parentModelId}`
     const options = {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'authorization': `Bearer: ${localStorage.getItem(tokenKey)}`
         },
-        body: JSON.stringify({ tutor_id, name }),
+        body: JSON.stringify(body),
     }
 
     return new Promise(async (resolve, reject) => {
@@ -26,8 +35,15 @@ export const addCourse = (tutor_id, name) => {
 }
 
 
-export const deleteCourse = (_id) => {
-    const url = `${apiUrl}/course`
+/**
+ * delete a model by id
+ * 
+ * @param {String} modelName name of the model to be deleted
+ * @param {String} _id id of model to be deleted
+ * @returns 
+ */
+export const deleteModel = (modelName, _id) => {
+    const url = `${apiUrl}/${modelName.trim().toLowerCase()}`
     const options = {
         method: 'DELETE',
         headers: {
@@ -50,16 +66,22 @@ export const deleteCourse = (_id) => {
     })
 }
 
-
-export const updateCourse = (_id, name) => {
-    const url = `${apiUrl}/course`
+/**
+ * update a model by id
+ * 
+ * @param {String} modelName name of the model to be updated
+ * @param {Object} body of model to be updated
+ * @returns 
+ */
+export const updateModel = (modelName, body) => {
+    const url = `${apiUrl}/${modelName.trim().toLowerCase()}`
     const options = {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
             'authorization': `Bearer: ${localStorage.getItem(tokenKey)}`
         },
-        body: JSON.stringify({ _id, name }),
+        body: JSON.stringify(body),
     }
 
     return new Promise(async (resolve, reject) => {
