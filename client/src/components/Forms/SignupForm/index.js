@@ -1,7 +1,8 @@
 import React, { useState, useContext } from 'react'
 import { Form, Button, Columns, Icon } from 'react-bulma-components'
 import { AppContext } from '../../../Context/AppProvider'
-import { signup } from '../../../utils'
+import { createModel } from '../../../utils'
+import { validateEmail, validateFormInputs, validatePassword, validateSelect } from '../utils'
 
 const { Field, Label, Control, Input, Select } = Form
 const { Column } = Columns
@@ -15,12 +16,11 @@ export const SignupForm = () => {
         timeZone: '',
         gitHubUsername: 'samuelfox1',
         calendlyLink: 'https://www.calendly.com',
-        courses: '',
         password: 'password',
         confirmPassword: 'password'
     })
 
-    const { firstName, lastName, email, timeZone, gitHubUsername, calendlyLink, courses, password, confirmPassword } = formInputs
+    const { firstName, lastName, email, timeZone, gitHubUsername, calendlyLink, password, confirmPassword } = formInputs
     const { setTutorDetails, updateAppComponent } = useContext(AppContext)
 
     const handleInputChange = (e) => {
@@ -31,7 +31,7 @@ export const SignupForm = () => {
     const handleSignup = async (e) => {
         e.preventDefault()
         try {
-            const tutor = await signup(formInputs)
+            const tutor = await createModel('tutor', formInputs)
             if (!tutor) return
             setTutorDetails({ ...tutor, loggedIn: true })
             updateAppComponent(null)
@@ -40,14 +40,6 @@ export const SignupForm = () => {
             console.error('login failed')
         }
     }
-
-    const validateEmail = (email) => {
-        const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return re.test(email);
-    }
-
-    const validateSelect = (val) => (val && val !== '---')
-    const validatePassword = (pw) => pw.length >= 8
 
 
     return (
@@ -129,7 +121,6 @@ export const SignupForm = () => {
                                 value={timeZone}
                                 onInput={handleInputChange}
                             >
-                                <option>---</option>
                                 <option>Pacific</option>
                                 <option>Mountain</option>
                                 <option>Central</option>
@@ -167,30 +158,6 @@ export const SignupForm = () => {
             </Columns>
 
             <Columns>
-                <Column narrow>
-                    <Label>Course(s)</Label>
-                    <Field kind='addons'>
-                        <Control>
-                            <Select
-                                name='courses'
-                                value={courses}
-                                onInput={handleInputChange}
-                            >
-                                <option>---</option>
-                                <option>Full Stack Web Development</option>
-                                <option>Fin Tech</option>
-                            </Select>
-                        </Control>
-                        <Control>
-                            {validateSelect(courses) &&
-                                <Icon className='ml-2 mt-2'>
-                                    <i className="fas fa-check" />
-                                </Icon>
-                            }
-                        </Control>
-                    </Field>
-                </Column>
-
                 <Column>
                     <Label>Calendly Link</Label>
                     <Control>
@@ -259,6 +226,7 @@ export const SignupForm = () => {
                 rounded
                 color="primary"
                 className='mt-5'
+                disabled={validateFormInputs(formInputs)}
                 onClick={handleSignup}
             >
                 Signup

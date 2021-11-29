@@ -34,7 +34,7 @@ router.post('/', async (req, res) => {
     };
 });
 
-// update a courses information
+// update a course information by id
 router.put('/', async (req, res) => {
     const { tutor } = authorizeToken(req);
     if (!tutor) return res.status(401).json('unauthorized');

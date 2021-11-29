@@ -1,4 +1,4 @@
-const { Schema, Types, model } = require('mongoose');
+const { Schema, model } = require('mongoose');
 // const dateFormat = require('../utils/dateFormat');
 
 const studentSchema = new Schema({
@@ -16,11 +16,6 @@ const studentSchema = new Schema({
     type: String,
     required: true,
     match: [/.+@.+\..+/, 'Must match an email address!'],
-  },
-  course: {
-    type: String,
-    required: true,
-    trim: true,
   },
   classCode: {
     type: String,
@@ -45,12 +40,13 @@ const studentSchema = new Schema({
   },
   meetingsPerWeek: {
     type: Number,
+    default: 1
   },
   reassignment: {
     type: Boolean,
     required: true
   },
-  oneTimeStandIn: {
+  temporary: {
     type: Boolean,
     required: true
   },

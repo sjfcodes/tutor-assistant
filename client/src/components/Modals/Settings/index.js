@@ -1,7 +1,7 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { Button, Modal, Tabs } from 'react-bulma-components'
 import { AppContext } from '../../../Context/AppProvider'
-import { deleteCourse, updateCourse } from '../../../utils'
+import { deleteModel, updateModel } from '../../../utils'
 import { CourseLineItem } from './Course'
 
 const { Tab } = Tabs
@@ -20,7 +20,8 @@ export const Settings = () => {
         if (!_id || !name) return
 
         try {
-            await updateCourse(_id, name)
+            const body = { _id, name }
+            await updateModel('course', body)
 
             const updatedCourses = courses.map(course => course._id === _id ? { ...course, name } : course)
             setTutorDetails({ ...tutorDetails, courses: updatedCourses })
@@ -36,7 +37,7 @@ export const Settings = () => {
         if (!_id) return
 
         try {
-            await deleteCourse(_id)
+            await deleteModel('course', _id)
             const updatedCourses = courses.filter((course) => course._id !== _id)
             setTutorDetails({ ...tutorDetails, courses: updatedCourses })
 
