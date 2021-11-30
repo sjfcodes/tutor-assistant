@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { Button, Form, Modal, } from 'react-bulma-components'
-import { AppContext } from '../../Context/AppProvider'
+import { AppContext } from '../../context0'
 import { createModel } from '../../utils'
 import { validateFormInputs } from '../Forms/utils'
 

@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { Button, Modal, Tabs } from 'react-bulma-components'
-import { AppContext } from '../../../Context/AppProvider'
+import { AppContext } from '../../../context0'
 import { deleteModel, updateModel } from '../../../utils'
 import { CourseLineItem } from './Course'
 

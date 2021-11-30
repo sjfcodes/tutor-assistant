@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react'
-import { Button, Container, Navbar } from "react-bulma-components";
+import { Button, Level, Navbar } from "react-bulma-components";
 
-import { AppContext } from '../../Context/AppProvider';
+import { AppContext } from '../../context0';
 import { logoutTutor } from '../../utils';
 import { Settings } from '../Modals';
 import './style.css'
@@ -60,38 +60,39 @@ export const Nav = () => {
 				}
 				<Burger id='nav-burger' onClick={() => toggleNavBurger()} />
 			</Brand>
-			<Container align="right">
-				<NavbarMenu id='nav-menu'>
-					<NavbarItem>
+			<NavbarMenu id='nav-menu'>
 
-						{loggedIn &&
-							<>
-								<Button.Group>
-									< Button
-										size="small"
-										color="warning"
-										outlined
-										className='is-light'
-										onClick={logoutTutor}
-									>
-										Logout
-									</Button>
-									< Button
-										size="small"
-										color="info"
-										outlined
-										className='is-light'
-										onClick={() => setOpenModal('settings')}
-									>
-										Settings
-									</Button>
-								</Button.Group>
-								<Settings />
-							</>
-						}
-					</NavbarItem>
-				</NavbarMenu>
-			</Container>
+				{loggedIn &&
+					<Level renderAs='div' >
+						<Level.Side align='left'>
+
+						</Level.Side>
+						<Level.Side align='right'>
+							<Button.Group>
+								< Button
+									size="small"
+									color="warning"
+									outlined
+									className='is-light'
+									onClick={logoutTutor}
+								>
+									Logout
+								</Button>
+								< Button
+									size="small"
+									color="info"
+									outlined
+									className='is-light'
+									onClick={() => setOpenModal('settings')}
+								>
+									Settings
+								</Button>
+							</Button.Group>
+						</Level.Side>
+						<Settings />
+					</Level>
+				}
+			</NavbarMenu>
 		</Navbar>
 
 	);
