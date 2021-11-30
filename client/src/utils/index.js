@@ -1,11 +1,14 @@
-import { signup } from "./signup";
 import { loginWithToken } from "./loginWithToken";
 import { loginWithPassword } from "./loginWithPassword";
 import { logoutTutor } from "./logout";
+import { createModel, deleteModel, updateModel } from "./models";
 
 export {
-    signup,
     loginWithToken,
     loginWithPassword,
-    logoutTutor
+    logoutTutor,
+
+    createModel,
+    updateModel,
+    deleteModel
 }

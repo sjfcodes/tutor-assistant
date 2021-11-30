@@ -1,15 +1,19 @@
 import React, { useContext, useEffect } from 'react'
-import { Button, Navbar } from "react-bulma-components";
+import { Button, Level, Navbar } from "react-bulma-components";
 
-import { AppContext } from '../../Context/AppProvider';
+import { AppContext } from '../../context0';
 import { logoutTutor } from '../../utils';
+import { Settings } from '../Modals';
+import './style.css'
 
-const { Brand, Item: NavbarItem, Burger, Menu: NavbarMenu, Container } = Navbar;
+const { Brand, Item: NavbarItem, Burger, Menu: NavbarMenu } = Navbar;
 
 
 export const Nav = () => {
 
-	const { tutorDetails: { loggedIn, firstName }, AppComponent } = useContext(AppContext)
+	const { tutorDetails, AppComponent, setOpenModal, openModal } = useContext(AppContext)
+	const { loggedIn, firstName } = tutorDetails
+
 
 	const toggleNavBurger = (forceClose = false) => {
 		const navBurger = document.getElementById('nav-burger')
@@ -27,10 +31,10 @@ export const Nav = () => {
 
 	useEffect(() => {
 		toggleNavBurger(true)
-	}, [AppComponent])
+	}, [AppComponent, openModal])
 
 	return (
-		<Navbar className='mb-4'>
+		<Navbar>
 			<Brand>
 				<NavbarItem href="/">
 					<img
@@ -46,6 +50,7 @@ export const Nav = () => {
 								alt="user avatar"
 								// src="https://i.imgur.com/WGeUGOp.jpg"
 								src="https://i.imgur.com/zEvf4P4.jpg"
+								onClick={() => console.log(tutorDetails)}
 							/>
 						</NavbarItem>
 						<NavbarItem className='pl-0'>
@@ -56,21 +61,37 @@ export const Nav = () => {
 				<Burger id='nav-burger' onClick={() => toggleNavBurger()} />
 			</Brand>
 			<NavbarMenu id='nav-menu'>
-				<Container align="right">
-					<NavbarItem>
 
-						{loggedIn &&
-							< Button
-								size="small"
-								color="warning"
-								outlined
-								className='is-light'
-								onClick={logoutTutor}
-							>
-								Logout
-							</Button>}
-					</NavbarItem>
-				</Container>
+				{loggedIn &&
+					<Level renderAs='div' >
+						<Level.Side align='left'>
+
+						</Level.Side>
+						<Level.Side align='right'>
+							<Button.Group>
+								< Button
+									size="small"
+									color="warning"
+									outlined
+									className='is-light'
+									onClick={logoutTutor}
+								>
+									Logout
+								</Button>
+								< Button
+									size="small"
+									color="info"
+									outlined
+									className='is-light'
+									onClick={() => setOpenModal('settings')}
+								>
+									Settings
+								</Button>
+							</Button.Group>
+						</Level.Side>
+						<Settings />
+					</Level>
+				}
 			</NavbarMenu>
 		</Navbar>
 

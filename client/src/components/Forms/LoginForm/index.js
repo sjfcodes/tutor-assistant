@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react'
 import { Form, Icon, Button } from 'react-bulma-components'
-import { AppContext } from '../../Context/AppProvider'
-import { loginWithPassword } from '../../utils'
+import { AppContext } from '../../../context0'
+import { loginWithPassword } from '../../../utils'
 
 const { Field, Label, Control, Input } = Form
 
@@ -59,7 +59,15 @@ export const LoginForm = () => {
                 </Control>
             </Field>
             <Button.Group>
-                <Button fullwidth rounded color="primary" onClick={handleLogin}>Login</Button>
+                <Button
+                    className='mt-5'
+                    fullwidth
+                    rounded
+                    color="primary"
+                    onClick={handleLogin}
+                >
+                    Login
+                </Button>
             </Button.Group>
         </form>
     )

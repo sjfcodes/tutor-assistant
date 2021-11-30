@@ -1,25 +1,25 @@
 const router = require("express").Router();
 const { Student } = require('../models')
 const { authorizeToken } = require('../utils/auth');
-const { addModelToTutor, deleteModelFromTutor } = require("../utils/helpers");
+const { addModelToCourse, deleteModelFromCourse } = require("../utils/helpers");
 
 
-// create new student and add to the tutor who created the document 
-router.post("/", async (req, res) => {
+// create new student and add to the course they belong to
+router.post("/:courseId", async (req, res) => {
     const { tutor } = authorizeToken(req);
     if (!tutor) return res.status(401).json('unauthorized');
 
-    const student = await Student.create(req.body);
-    if (!student) return res.status(500).json('failed to create student');
+    const { _id } = await Student.create(req.body);
+    if (!{ _id }) return res.status(500).json('failed to create student');
 
     try {
-        await addModelToTutor(tutor._id, 'students', student._id);
+        await addModelToCourse(req.params.courseId, 'students', _id);
 
-        res.json({ student });
+        res.json({ _id });
 
     } catch (error) {
         console.log(error);
-        await Student.findByIdAndDelete(student._id);
+        await Student.findByIdAndDelete(_id);
         res.status(500).json('failed to add student to tutor');
     };
 });
@@ -47,7 +47,7 @@ router.delete('/', async (req, res) => {
     if (!tutor) return res.status(401).json('unauthorized');
 
     try {
-        await deleteModelFromTutor(tutor._id, "students", Student, req.body._id);
+        await deleteModelFromCourse(tutor._id, "students", Student, req.body._id);
         res.json('student deleted');
 
     } catch (error) {

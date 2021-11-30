@@ -1,4 +1,4 @@
-const { Tutor } = require('../models');
+const { Tutor, Course } = require('../models');
 
 
 module.exports = {
@@ -6,8 +6,7 @@ module.exports = {
         return new Promise(async (resolve, reject) => {
             try {
                 const tutor = await Tutor.findById(id)
-                    .populate('students')
-                    .populate('sessions');
+                    .populate('courses');
                 if (!tutor) return reject('tutor not found');
                 resolve(tutor);
             } catch (error) {
@@ -19,8 +18,7 @@ module.exports = {
         return new Promise(async (resolve, reject) => {
             try {
                 const tutor = await Tutor.findOne({ email: email })
-                    .populate('students')
-                    .populate('sessions');
+                    .populate('courses');
                 if (!tutor) return reject('tutor not found');
                 resolve(tutor);
             } catch (error) {
@@ -53,6 +51,36 @@ module.exports = {
                 if (!updatedTutor) return reject('failed to update tutor');
                 await Model.findByIdAndDelete(modelId);
                 resolve(updatedTutor);
+            } catch (error) {
+                reject(error);
+            };
+        });
+    },
+    addModelToCourse: (courseId, property, modelId) => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const updatedCourse = await Course.findByIdAndUpdate(
+                    courseId,
+                    { $addToSet: { [property]: modelId } },
+                    // { new: true }
+                );
+                if (!updatedCourse) return reject('failed to update Course');
+                resolve(updatedCourse);
+            } catch (error) {
+                reject(error);
+            };
+        });
+    },
+    deleteModelFromCourse: (courseId, property, Model, modelId) => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const updatedCourse = await Course.findByIdAndUpdate(courseId,
+                    { $pullAll: { [property]: [modelId] } },
+                    // { new: true }
+                );
+                if (!updatedCourse) return reject('failed to update Course');
+                await Model.findByIdAndDelete(modelId);
+                resolve(updatedCourse);
             } catch (error) {
                 reject(error);
             };

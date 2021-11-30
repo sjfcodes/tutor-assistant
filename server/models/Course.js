@@ -1,24 +1,23 @@
 const { Schema, model } = require('mongoose');
 
-const sessionSchema = new Schema({
-    student_id: {
+const courseSchema = new Schema({
+    tutor_id: {
         type: Schema.Types.ObjectId,
-        ref: 'Student',
+        ref: 'Tutor',
         required: true
     },
-    back2back: {
-        type: Boolean,
-        default: false
-    },
-    startingAt: {
-        type: Number,
-        required: true
-    },
-    status: {
+    name: {
         type: String,
         required: true,
-        default: 'scheduled'
     },
+    students: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Student'
+    }],
+    meetings: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Meeting',
+    }],
     createdAt: {
         type: Number,
         default: () => Math.floor(new Date().getTime() / 1000), // unix timestamp https://www.epochconverter.com/ 
@@ -26,6 +25,6 @@ const sessionSchema = new Schema({
     }
 });
 
-const Session = model('Session', sessionSchema);
+const Course = model('Course', courseSchema);
 
-module.exports = Session;
+module.exports = Course;

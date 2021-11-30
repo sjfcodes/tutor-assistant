@@ -3,9 +3,11 @@ import { loginWithToken } from '../utils'
 
 export const AppContext = createContext()
 
-export default function AppProvider({ children }) {
+
+export const AppProvider = ({ children }) => {
 
     const [tutorDetails, setTutorDetails] = useState({ loggedIn: false })
+    const [openModal, setOpenModal] = useState();
 
     useEffect(() => {
         const token = localStorage.getItem('tutor-token')
@@ -15,7 +17,6 @@ export default function AppProvider({ children }) {
             const tutor = await loginWithToken(token)
             if (!tutor) return
             setTutorDetails({ ...tutor, loggedIn: true })
-            console.log(tutor)
         }
 
         try {
@@ -27,7 +28,7 @@ export default function AppProvider({ children }) {
 
 
     return (
-        <AppContext.Provider value={{ tutorDetails, setTutorDetails }}>
+        <AppContext.Provider value={{ tutorDetails, setTutorDetails, openModal, setOpenModal }}>
             {children}
         </AppContext.Provider>
     )

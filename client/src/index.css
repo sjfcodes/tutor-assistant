@@ -1,28 +1,29 @@
+header {
+    height: 10vh;
+}
 
 nav {
     border-bottom: black solid 1px;
 }
 
-.background-image {
-    position: fixed;
-    top: 0;
+main {
+    min-height: 78vh;
+}
 
-    width: 100vw;
-    height: 100vh;
-    opacity: .35;
-    z-index: -1;
+footer {
+    min-height: 9vh;
 }
 
 .z-1 {
     z-index: -1;
 }
 
-.avatar {
-    width: 100%;
-    border: solid rgba(0, 0, 0, 0.171) 1px;
-    border-radius: 50%;
-}
-
 .border-red {
     border: solid 1px red;
+}
+
+.background-dark-blurred {
+    background-color: rgba(0, 0, 0, 0.493);
+    backdrop-filter: blur(20px);
+    border-radius: 1em;
 }
