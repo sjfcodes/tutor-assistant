@@ -4,7 +4,7 @@ import { loginWithToken } from '../utils'
 export const AppContext = createContext()
 
 
-export default function AppProvider({ children }) {
+export const AppProvider = ({ children }) => {
 
     const [tutorDetails, setTutorDetails] = useState({ loggedIn: false })
     const [openModal, setOpenModal] = useState();
