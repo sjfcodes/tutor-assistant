@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { Container, Heading, Box as BulmaBox, Section, Columns, Button } from 'react-bulma-components'
 import { CourseTabs } from '../../components/CourseTabs'
 import { AddMeeting, AddStudent } from '../../components/Modals'
-import { AppContext } from '../../context0'
+import { AppContext } from '../../context'
 import './style.css'
 
 

@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 import "./App.sass";
 import { Nav } from "./components";
-import { AppContext } from "./context0";
+import { AppContext } from "./context";
 import { Footer } from "./components/Footer";
 import { Section } from "react-bulma-components";
 import { BackgroundImage } from "./components/BackgroundImage";
