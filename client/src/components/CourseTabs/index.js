@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { Tabs } from 'react-bulma-components'
-import { AppContext } from '../../context0';
+import { AppContext } from '../../context';
 import { AddCourse } from '../Modals/AddCourse';
 
 const { Tab } = Tabs
