@@ -1,13 +1,13 @@
 import React, { useContext, useState } from 'react'
 import { Button, Form, Modal, } from 'react-bulma-components'
-import { AppContext } from '../../context'
+import { AppContext, ModalContext } from '../../context'
 import { createModel } from '../../utils'
 import { validateFormInputs } from '../Forms/utils'
 
 
 export const AddCourse = () => {
 
-    const { openModal, setOpenModal } = useContext(AppContext)
+    const { openModal, setOpenModal } = useContext(ModalContext)
     const [formInputs, setFormInputs] = useState({ courseName: '' })
     const { courseName } = formInputs
     const [helpMessage, setHelpMessage] = useState()

@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { Tabs } from 'react-bulma-components'
-import { AppContext } from '../../context';
+import { ModalContext } from '../../context';
 import { AddCourse } from '../Modals/AddCourse';
 
 const { Tab } = Tabs
@@ -9,7 +9,7 @@ const { Tab } = Tabs
 export const CourseTabs = ({ courses }) => {
 
     const [courseTabs, setCourseTabs] = useState(null)
-    const { setOpenModal } = useContext(AppContext)
+    const { setOpenModal } = useContext(ModalContext)
 
     const handleUpdate = useCallback((e) => {
         if (!courses || !courses.length) return

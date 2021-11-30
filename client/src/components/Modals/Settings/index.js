@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { Button, Modal, Tabs } from 'react-bulma-components'
-import { AppContext } from '../../../context'
+import { AppContext, ModalContext } from '../../../context'
 import { deleteModel, updateModel } from '../../../utils'
 import { CourseLineItem } from './Course'
 
@@ -8,11 +8,12 @@ const { Tab } = Tabs
 
 export const Settings = () => {
 
-    const { openModal, setOpenModal, tutorDetails, setTutorDetails } = useContext(AppContext)
-    const { firstName, courses } = tutorDetails
+    const { tutorDetails, setTutorDetails } = useContext(AppContext)
+    const { openModal, setOpenModal } = useContext(ModalContext)
     const [courseItems, setCourseItems] = useState()
     const [courseToDelete, setCourseToDelete] = useState()
     const [courseToUpdate, setCourseToUpdate] = useState()
+    const { firstName, courses } = tutorDetails
 
 
     const handleUpdateCourse = useCallback(async (_id, name) => {
