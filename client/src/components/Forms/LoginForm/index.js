@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { Form, Icon, Button } from 'react-bulma-components'
-import { AppContext } from '../../../context0'
+import { AppContext } from '../../../context'
 import { loginWithPassword } from '../../../utils'
 
 const { Field, Label, Control, Input } = Form
