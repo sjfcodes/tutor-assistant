@@ -8,28 +8,16 @@ export const AppContext = createContext()
 export const AppProvider = ({ children }) => {
 
     const [tutorDetails, setTutorDetails] = useState({ loggedIn: false })
-    const { setCourseDetails } = useContext(CourseContext)
+    const { setAllCourses } = useContext(CourseContext)
 
     useEffect(() => {
         const token = localStorage.getItem('tutor-token')
         if (!token) return
 
         async function loginUser() {
-            const tutor = await loginWithToken(token)
+            const { tutor, courses } = await loginWithToken(token)
             if (!tutor) return
-
-            if (tutor.courses.length) {
-                const courseObj = {}
-                tutor.courses.forEach(course => {
-                    const key = course._id
-                    const values = { ...course }
-                    delete values._id
-                    delete values.tutor_id
-                    courseObj[key] = values
-                });
-                setCourseDetails(courseObj)
-            }
-
+            setAllCourses(courses)
             setTutorDetails({ ...tutor, loggedIn: true })
         }
 
@@ -39,7 +27,7 @@ export const AppProvider = ({ children }) => {
         } catch (error) {
             console.error(error)
         }
-    }, [setCourseDetails])
+    }, [setAllCourses])
 
 
     return (

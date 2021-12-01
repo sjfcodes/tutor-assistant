@@ -13,7 +13,6 @@ export const Nav = () => {
 
 	const { tutorDetails, AppComponent } = useContext(AppContext)
 	const { setOpenModal, openModal } = useContext(ModalContext)
-	const { courseDetails } = useContext(CourseContext)
 	const { loggedIn, firstName } = tutorDetails
 
 
@@ -33,7 +32,6 @@ export const Nav = () => {
 
 	const handleAvatarClick = () => {
 		console.log(tutorDetails)
-		console.log(courseDetails)
 	}
 
 	useEffect(() => {

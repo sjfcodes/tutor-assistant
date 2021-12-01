@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { Container, Heading, Box as BulmaBox, Section, Columns, Button } from 'react-bulma-components'
 import { CourseTabs } from '../../components/CourseTabs'
 import { AddMeeting, AddStudent } from '../../components/Modals'
-import { AppContext, ModalContext } from '../../context'
+import { ModalContext } from '../../context'
 import './style.css'
 
 
@@ -10,14 +10,13 @@ const Box = ({ children }) => <BulmaBox className='mx-1'>{children}</BulmaBox>
 
 export const Home = () => {
 
-    const { tutorDetails: { courses } } = useContext(AppContext)
     const { setOpenModal } = useContext(ModalContext)
 
 
     return (
         <Section className='p-3 background-dark-blurred' >
 
-            <CourseTabs courses={courses} />
+            <CourseTabs />
 
             <Columns
                 className='px-5'
