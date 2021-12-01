@@ -1,20 +1,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter as Router, } from "react-router-dom";
 import App from './App';
-import { AppProvider } from './context';
+import { AppProvider, CourseProvider, ModalProvider } from './context';
 import reportWebVitals from './reportWebVitals';
-import {
-  BrowserRouter as Router,
-} from "react-router-dom";
 import './index.css'
 
 ReactDOM.render(
   <React.StrictMode>
-    <AppProvider>
-      <Router>
-        <App />
-      </Router>
-    </AppProvider>
+
+    <CourseProvider>
+      <AppProvider>
+        <ModalProvider>
+
+          <Router>
+            <App />
+          </Router>
+
+        </ModalProvider>
+      </AppProvider>
+    </CourseProvider>
+
   </React.StrictMode>,
   document.getElementById('root')
 );

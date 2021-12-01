@@ -1,0 +1,14 @@
+.has-text-white a {
+    color: white !important ;
+    border-top: solid rgb(255, 255, 255) 1px !important;
+    border-left: solid rgb(255, 255, 255) 1px !important;
+}
+.add-course-tab {
+    border-right: solid rgb(255, 255, 255) 1px !important;
+    border-top-right-radius: 4px;
+}
+
+.is-active a, .has-text-white a:hover {
+    color: #09b2f5 !important ;
+    font-size: 1.1rem !important;
+}

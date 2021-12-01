@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { Button, Modal, Tabs } from 'react-bulma-components'
-import { AppContext } from '../../../context'
+import { AppContext, CourseContext, ModalContext } from '../../../context'
 import { deleteModel, updateModel } from '../../../utils'
 import { CourseLineItem } from './Course'
 
@@ -8,11 +8,12 @@ const { Tab } = Tabs
 
 export const Settings = () => {
 
-    const { openModal, setOpenModal, tutorDetails, setTutorDetails } = useContext(AppContext)
-    const { firstName, courses } = tutorDetails
-    const [courseItems, setCourseItems] = useState()
-    const [courseToDelete, setCourseToDelete] = useState()
-    const [courseToUpdate, setCourseToUpdate] = useState()
+    const { tutorDetails: { firstName } } = useContext(AppContext)
+    const { openModal, setOpenModal } = useContext(ModalContext)
+    const { allCourses, setAllCourses } = useContext(CourseContext)
+    const [courseItems, setCourseItems] = useState(null)
+    const [courseToDelete, setCourseToDelete] = useState(null)
+    const [courseToUpdate, setCourseToUpdate] = useState(null)
 
 
     const handleUpdateCourse = useCallback(async (_id, name) => {
@@ -23,13 +24,14 @@ export const Settings = () => {
             const body = { _id, name }
             await updateModel('course', body)
 
-            const updatedCourses = courses.map(course => course._id === _id ? { ...course, name } : course)
-            setTutorDetails({ ...tutorDetails, courses: updatedCourses })
+            const updatedCourses = { ...allCourses }
+            updatedCourses[_id].name = name
+            setAllCourses({ ...updatedCourses })
         } catch (error) {
             console.error(error);
         }
 
-    }, [courses, tutorDetails, setTutorDetails])
+    }, [allCourses, setAllCourses])
 
 
     const handleDeleteCourse = useCallback(async (_id) => {
@@ -38,19 +40,20 @@ export const Settings = () => {
 
         try {
             await deleteModel('course', _id)
-            const updatedCourses = courses.filter((course) => course._id !== _id)
-            setTutorDetails({ ...tutorDetails, courses: updatedCourses })
+            const updatedCourses = { ...allCourses }
+            delete updatedCourses[_id]
+            setAllCourses({ ...updatedCourses })
 
         } catch (error) {
             console.error(error);
         }
-    }, [courses, tutorDetails, setTutorDetails])
+    }, [allCourses, setAllCourses])
 
 
     const update = useCallback(() => {
 
         setCourseItems(
-            courses.map(({ name: courseName, _id: courseId }) => (
+            Object.values(allCourses).map(({ name: courseName, _id: courseId }) => (
                 <CourseLineItem
                     key={courseId}
                     courseId={courseId}
@@ -64,13 +67,13 @@ export const Settings = () => {
                 />
             ))
         )
-    }, [courses, courseToDelete, courseToUpdate, handleDeleteCourse, handleUpdateCourse])
+    }, [allCourses, courseToDelete, courseToUpdate, handleDeleteCourse, handleUpdateCourse])
 
 
     useEffect(() => {
-        if (!courses || !courses?.length) return setCourseItems(null)
+        if (!allCourses) return setCourseItems(null)
         update()
-    }, [courses, courseToDelete, courseToUpdate, update])
+    }, [allCourses, courseToDelete, courseToUpdate, update])
 
 
     return (

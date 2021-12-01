@@ -1,25 +1,25 @@
-import { apiUrl, tokenKey } from "../config"
+import { apiUrl, tokenKey } from "../../config"
 
-export const loginWithToken = (token) => {
-    const url = `${apiUrl}/tutor`
+export const loginWithPassword = (tutor) => {
+    const url = `${apiUrl}/tutor/login`
     const options = {
-        method: 'GET',
+        method: 'POST',
         headers: {
-            'Authorization': `bearer ${token}`,
             'Content-Type': 'application/json',
         },
+        body: JSON.stringify(tutor),
     }
+
     return new Promise(async (resolve, reject) => {
         try {
-            const { token, tutor } = await fetch(url, options).then(res => res.json())
+            const { token, tutor, courses } = await fetch(url, options).then(res => res.json())
             if (!token || !tutor) return reject(null)
             localStorage.setItem(tokenKey, token)
-            resolve(tutor)
+            resolve({ tutor, courses })
 
         } catch (error) {
             console.error(error)
             reject(null)
         }
     })
-
 }

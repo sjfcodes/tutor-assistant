@@ -1,8 +1,7 @@
 import React, { useState, useContext } from 'react'
 import { Form, Button, Columns, Icon } from 'react-bulma-components'
 import { AppContext } from '../../../context'
-import { createModel } from '../../../utils'
-import { validateEmail, validateFormInputs, validatePassword, validateSelect } from '../utils'
+import { createModel, validateEmail, validateFormInputs, validatePassword, validateSelect } from '../../../utils'
 
 const { Field, Label, Control, Input, Select } = Form
 const { Column } = Columns

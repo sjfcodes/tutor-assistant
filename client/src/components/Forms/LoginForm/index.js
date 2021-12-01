@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { Form, Icon, Button } from 'react-bulma-components'
-import { AppContext } from '../../../context'
+import { AppContext, CourseContext } from '../../../context'
 import { loginWithPassword } from '../../../utils'
 
 const { Field, Label, Control, Input } = Form
@@ -14,6 +14,7 @@ export const LoginForm = () => {
     })
 
     const { setTutorDetails, updateAppComponent } = useContext(AppContext)
+    const { setAllCourses } = useContext(CourseContext)
 
     const handleInputChange = (e) => {
         const { target: { name, value } } = e
@@ -23,8 +24,9 @@ export const LoginForm = () => {
     const handleLogin = async (e) => {
         e.preventDefault()
         try {
-            const tutor = await loginWithPassword(inputs)
+            const { tutor, courses } = await loginWithPassword(inputs)
             if (!tutor) return
+            setAllCourses(courses)
             setTutorDetails({ ...tutor, loggedIn: true })
             updateAppComponent('home')
         } catch (error) {

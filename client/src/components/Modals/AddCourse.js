@@ -1,27 +1,35 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Button, Form, Modal, } from 'react-bulma-components'
-import { AppContext } from '../../context'
-import { createModel } from '../../utils'
-import { validateFormInputs } from '../Forms/utils'
+import { AppContext, CourseContext, ModalContext } from '../../context'
+import { createModel, validateFormInputs } from '../../utils'
 
 
 export const AddCourse = () => {
 
-    const { openModal, setOpenModal } = useContext(AppContext)
+    const { openModal, setOpenModal } = useContext(ModalContext)
     const [formInputs, setFormInputs] = useState({ courseName: '' })
     const { courseName } = formInputs
-    const [helpMessage, setHelpMessage] = useState()
+    const [helpMessage, setHelpMessage] = useState(null)
 
-    const { tutorDetails, setTutorDetails } = useContext(AppContext)
-    const courseNamesArr = tutorDetails?.courses?.map(({ name }) => name) || []
+    const { tutorDetails: { _id } } = useContext(AppContext)
+    const { allCourses, setAllCourses } = useContext(CourseContext)
+    const [existingNames, setExistingNames] = useState(null)
+
+    useEffect(() => {
+        if (!allCourses) return
+
+        const arr = Object.values(allCourses).map(({ name }) => name)
+        setExistingNames(arr)
+
+    }, [allCourses])
 
     const resetForm = () => setFormInputs({ courseName: '' })
 
-
     const handleInputChange = (e) => {
         const { target: { name, value } } = e
-        if (helpMessage) setHelpMessage('')
-        if (courseNamesArr.indexOf(value) !== -1) setHelpMessage('name already in use')
+
+        if (helpMessage) setHelpMessage(null)
+        if (existingNames.indexOf(value) !== -1) setHelpMessage('name already in use')
 
         setFormInputs({ ...formInputs, [name]: value })
     }
@@ -33,9 +41,10 @@ export const AddCourse = () => {
             return
         }
         try {
-            const body = { tutor_id: tutorDetails._id, name: courseName }
-            const data = await createModel('course', body)
-            setTutorDetails({ ...tutorDetails, courses: data })
+            const body = { tutor_id: _id, name: courseName }
+            const newCourse = await createModel('course', body)
+            setAllCourses({ ...allCourses, [newCourse._id]: newCourse })
+
             resetForm()
             setOpenModal()
         } catch (error) {
@@ -82,7 +91,7 @@ export const AddCourse = () => {
                     </Modal.Card.Body>
                     <Modal.Card.Footer renderAs={Button.Group} align="right" >
                         <Button
-                            disabled={validateFormInputs(formInputs)}
+                            disabled={helpMessage || validateFormInputs(formInputs)}
                             color='info'
                         >
                             Add Course
