@@ -11,9 +11,6 @@ router.post('/', async (req, res) => {
     const { courses } = await getTutorById(tutor._id)
 
     try {
-        // check if tutor already has existing course with this name
-        const matchingCourses = courses.filter(({ name }) => name === req.body.name)
-        if (matchingCourses.length) return res.status(400).json('course name must be unique for user')
 
     } catch (error) {
         console.log(error);
@@ -25,8 +22,8 @@ router.post('/', async (req, res) => {
 
     try {
         await addModelToTutor(tutor._id, 'courses', course._id);
-        // respond with updated array of courses
-        res.json([...courses, course]);
+        // respond with new course data
+        res.json(course);
 
     } catch (error) {
         console.log(error);

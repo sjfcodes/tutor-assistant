@@ -1,14 +1,22 @@
 const { Tutor, Course } = require('../models');
 
-
 module.exports = {
     getTutorById: (id) => {
         return new Promise(async (resolve, reject) => {
             try {
                 const tutor = await Tutor.findById(id)
-                    .populate('courses');
+                    .populate({
+                        path: 'courses',
+                        populate: {
+                            path: 'students',
+                            model: 'Student',
+                        }
+                    })
+                    .select('-password')
                 if (!tutor) return reject('tutor not found');
-                resolve(tutor);
+
+                resolve({ tutor });
+
             } catch (error) {
                 reject(error);
             };
@@ -20,7 +28,12 @@ module.exports = {
                 const tutor = await Tutor.findOne({ email: email })
                     .populate('courses');
                 if (!tutor) return reject('tutor not found');
-                resolve(tutor);
+
+                const courses = formatCourses(tutor.courses)
+                tutor.courses.length = 0
+
+                resolve({ tutor, courses });
+
             } catch (error) {
                 reject(error);
             };

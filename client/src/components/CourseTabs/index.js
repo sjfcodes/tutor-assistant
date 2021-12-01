@@ -10,13 +10,13 @@ const { Tab } = Tabs
 export const CourseTabs = () => {
 
     const [courseTabs, setCourseTabs] = useState(null)
-    const { allCourses, updateSelectedCourse } = useContext(CourseContext)
+    const { allCourses, selectedCourse, setSelectedCourse } = useContext(CourseContext)
     const { setOpenModal } = useContext(ModalContext)
 
     const handleUpdate = useCallback((e, _id) => {
         if (!allCourses) return
         const { target: { parentNode: { classList } } } = e
-        updateSelectedCourse(_id)
+        setSelectedCourse(_id)
 
         // if selected tab is already active, return
         if (classList.contains('is-active')) return
@@ -30,7 +30,7 @@ export const CourseTabs = () => {
         // toggle new tab on
         classList.toggle('is-active')
 
-    }, [allCourses, updateSelectedCourse])
+    }, [allCourses, setSelectedCourse])
 
 
     useEffect(() => {
@@ -42,19 +42,21 @@ export const CourseTabs = () => {
                 <Tab
                     key={key}
                     id={key}
-                    active={i === 0}
+                    active={!selectedCourse || selectedCourse === _id ? true : false}
                     className='has-text-white'
                     onClick={(e) => handleUpdate(e, _id)}
                 >
                     {name}
                 </Tab>
             )
+            if (!selectedCourse && i === 0) setSelectedCourse(_id)
+
             i++
         }
 
         setCourseTabs(arr)
 
-    }, [allCourses, handleUpdate])
+    }, [allCourses, handleUpdate, selectedCourse, setSelectedCourse])
 
     return (
         <>

@@ -8,18 +8,14 @@ export const CourseProvider = ({ children }) => {
     const [allCourses, setAllCourses] = useState();
     const [selectedCourse, setSelectedCourse] = useState();
 
-    const updateSelectedCourse = (id) => {
-        setSelectedCourse(allCourses[id])
-    }
-
     useEffect(() => {
-        if (!selectedCourse) return
-        console.log(selectedCourse)
-    }, [selectedCourse])
+        if (!allCourses || !selectedCourse) return
 
+        console.log(allCourses[selectedCourse])
+    }, [selectedCourse, allCourses])
 
     return (
-        <CourseContext.Provider value={{ allCourses, setAllCourses, selectedCourse, updateSelectedCourse }}>
+        <CourseContext.Provider value={{ allCourses, setAllCourses, selectedCourse, setSelectedCourse }}>
             {children}
         </CourseContext.Provider>
     )
