@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react'
 import { Button, Level, Navbar } from "react-bulma-components";
 
-import { AppContext, ModalContext, CourseContext } from '../../context';
+import { AppContext, ModalContext } from '../../context';
 import { logoutTutor } from '../../utils';
 import { Settings } from '../Modals';
 import './style.css'

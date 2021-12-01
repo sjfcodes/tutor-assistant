@@ -9,13 +9,13 @@ router.post("/:courseId", async (req, res) => {
     const { tutor } = authorizeToken(req);
     if (!tutor) return res.status(401).json('unauthorized');
 
-    const { _id } = await Student.create(req.body);
+    const { _id, createdAt } = await Student.create(req.body);
     if (!{ _id }) return res.status(500).json('failed to create student');
 
     try {
         await addModelToCourse(req.params.courseId, 'students', _id);
 
-        res.json({ _id });
+        res.json({ _id, createdAt });
 
     } catch (error) {
         console.log(error);
