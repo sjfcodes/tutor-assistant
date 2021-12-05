@@ -1,7 +1,12 @@
 const { Schema, model } = require('mongoose');
 
 const meetingSchema = new Schema({
-    student_id: {
+    tutorId: {
+        type: Schema.Types.ObjectId,
+        ref: 'Tutor',
+        required: true
+    },
+    studentId: {
         type: Schema.Types.ObjectId,
         ref: 'Student',
         required: true
@@ -17,7 +22,6 @@ const meetingSchema = new Schema({
     status: {
         type: String,
         required: true,
-        default: 'scheduled'
     },
     createdAt: {
         type: Number,
