@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Button, Form, Modal, } from 'react-bulma-components'
 import { AppContext, CourseContext, ModalContext } from '../../context'
-import { createModel, validateFormInputs } from '../../utils'
+import { createModel, formIsComplete } from '../../utils'
 
 
 export const AddCourse = () => {
@@ -92,7 +92,7 @@ export const AddCourse = () => {
                     </Modal.Card.Body>
                     <Modal.Card.Footer renderAs={Button.Group} align="right" >
                         <Button
-                            disabled={helpMessage || validateFormInputs(formInputs)}
+                            disabled={helpMessage || !formIsComplete(formInputs)}
                             color='info'
                         >
                             Add Course
