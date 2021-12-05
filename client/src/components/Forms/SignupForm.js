@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react'
 import { Form, Button, Columns, Icon } from 'react-bulma-components'
-import { AppContext } from '../../../context'
-import { createModel, validateEmail, validateFormInputs, validatePassword, validateSelect } from '../../../utils'
+import { AppContext } from '../../context'
+import { createModel, emailIsValid, formIsComplete, passwordIsValid, inputIsSelected } from '../../utils'
 
 const { Field, Label, Control, Input, Select } = Form
 const { Column } = Columns
@@ -128,7 +128,7 @@ export const SignupForm = () => {
                             </Select>
                         </Control>
                         <Control>
-                            {validateSelect(timeZone) &&
+                            {inputIsSelected(timeZone) &&
                                 <Icon className='ml-2 mt-2'>
                                     <i className="fas fa-check" />
                                 </Icon>
@@ -148,7 +148,7 @@ export const SignupForm = () => {
                         <Icon align='left'>
                             <i className="far fa-envelope"></i>
                         </Icon>
-                        {validateEmail(email) &&
+                        {emailIsValid(email) &&
                             <Icon align="right">
                                 <i className="fas fa-check" />
                             </Icon>
@@ -192,7 +192,7 @@ export const SignupForm = () => {
                         <Icon align="left">
                             <i className="fas fa-lock"></i>
                         </Icon>
-                        {validatePassword(password) &&
+                        {passwordIsValid(password) &&
                             <Icon align="right">
                                 <i className="fas fa-check" />
                             </Icon>
@@ -226,7 +226,7 @@ export const SignupForm = () => {
                 rounded
                 color="primary"
                 className='mt-5'
-                disabled={validateFormInputs(formInputs)}
+                disabled={formIsComplete(formInputs)}
                 onClick={handleSignup}
             >
                 Signup
