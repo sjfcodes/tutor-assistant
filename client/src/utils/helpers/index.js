@@ -1,13 +1,3 @@
-export { logoutTutor } from './logout'
-export {
-    validateEmail,
-    validatePassword,
-    validateFormInputs,
-    validateSelect
-} from './forms'
-
-
-
 export const formatCourses = (courses) => {
     if (!courses.length) return null
     const courseObj = {}
@@ -34,3 +24,13 @@ export const formatStudents = (students) => {
     });
     return studentObj
 }
+
+export { logoutTutor } from './logout'
+export {
+    emailIsValid,
+    passwordIsValid,
+    formIsComplete,
+    inputIsSelected,
+    formatDateInput,
+    getFutureDate
+} from './forms'
