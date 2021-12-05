@@ -170,7 +170,7 @@ export const AddStudentForm = ({ formInputs, setFormInputs }) => {
 
             <Columns>
                 <Column narrow>
-                    <Form.Label>Course(s)</Form.Label>
+                    <Form.Label>Graduation Date</Form.Label>
                     <Form.Field kind='addons'>
                         <Form.Control>
                             <Form.Input
