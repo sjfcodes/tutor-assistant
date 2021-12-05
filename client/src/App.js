@@ -9,7 +9,7 @@ import "./App.sass";
 import { Nav } from "./components";
 import { AppContext } from "./context";
 import { Footer } from "./components/Footer";
-import { Section } from "react-bulma-components";
+import { Container, Section } from "react-bulma-components";
 import { BackgroundImage } from "./components/BackgroundImage";
 
 const App = () => {
@@ -34,10 +34,12 @@ const App = () => {
 
 			<Section renderAs='main' className='p-0'>
 				<BackgroundImage url='./images/bg-image.jpg' />
-				<Routes>
-					<Route path='/:tutor' element={<Home />} />
-					<Route path='/' element={<Landing />} />
-				</Routes>
+				<Container className='is-max-desktop'>
+					<Routes>
+						<Route path='/:tutor' element={<Home />} />
+						<Route path='/' element={<Landing />} />
+					</Routes>
+				</Container>
 			</Section>
 
 			<Footer />

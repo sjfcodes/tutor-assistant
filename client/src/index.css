@@ -1,29 +1,67 @@
 header {
-    height: 10vh;
-}
-
-nav {
-    border-bottom: black solid 1px;
+    height: 8vh;
 }
 
 main {
-    min-height: 78vh;
+    min-height: 82vh;
 }
 
 footer {
-    min-height: 9vh;
+    min-height: 10vh;
 }
 
 .z-1 {
     z-index: -1;
 }
 
+.border {
+    border: solid 1px rgb(0, 0, 0);
+}
+.border-bottom {
+    border-bottom: solid 1px rgb(0, 0, 0);
+}
 .border-red {
     border: solid 1px red;
+}
+
+.rounded {
+    border-radius: 6px;
 }
 
 .background-dark-blurred {
     background-color: rgba(0, 0, 0, 0.493);
     backdrop-filter: blur(20px);
+}
+
+.modal-card {
+    overflow: scroll;
+    width: 95%;
     border-radius: 1em;
+    max-height:80vh;
+}
+
+
+/* ICON STYLES */
+.icon-small {
+    font-size: .75em;
+}
+.blue {
+    color: #09b2f580;
+}
+.blue:hover {
+    color: #09b2f5fb;
+}
+.green {
+    color: #09b2f580;
+}
+.green:hover {
+    color: #09b2f5fb;
+}
+.hover:hover {
+    cursor: pointer;
+    transform: scale(1.5);
+}
+.hover-large-item:hover, .button:hover {
+    cursor: pointer;
+    transform: scale(1.02);
 }

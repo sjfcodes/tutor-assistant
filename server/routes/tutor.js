@@ -21,13 +21,13 @@ router.post("/", async ({ body }, res) => {
 // login tutor with email and password
 router.post("/login", async ({ body }, res) => {
     try {
-        const { tutor, courses } = await getTutorByEmail(body.email)
+        const { tutor } = await getTutorByEmail(body.email)
 
         const correctPw = await tutor.isCorrectPassword(body.password);
         if (!correctPw) return res.status(401).json('unauthorized');
 
         const token = signToken(tutor);
-        res.json({ token, tutor, courses });
+        res.json({ token, tutor });
 
     } catch (error) {
         console.log(error)
@@ -41,11 +41,11 @@ router.get('/', async (req, res) => {
     if (!authorized.tutor) return res.status(401).json('unauthorized');
 
     try {
-        const { tutor, courses } = await getTutorById(authorized.tutor._id)
+        const { tutor } = await getTutorById(authorized.tutor._id)
         if (!tutor) return res.status(401).json('unauthorized');
 
         const token = signToken(tutor);
-        res.json({ token, tutor, courses });
+        res.json({ token, tutor });
 
     } catch (error) {
         console.log(error)
