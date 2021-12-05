@@ -18,7 +18,7 @@ export const AddCourse = () => {
     useEffect(() => {
         if (!allCourses) return
 
-        const arr = Object.values(allCourses).map(({ name }) => name)
+        const arr = Object.values(allCourses).map(({ name }) => name.toLowerCase())
         setExistingNames(arr)
 
     }, [allCourses])
@@ -29,9 +29,9 @@ export const AddCourse = () => {
         const { target: { name, value } } = e
 
         if (helpMessage) setHelpMessage(null)
-        if (existingNames.indexOf(value) !== -1) setHelpMessage('name already in use')
-
+        if (existingNames && existingNames.indexOf(value.toLowerCase()) !== -1) setHelpMessage('name already in use')
         setFormInputs({ ...formInputs, [name]: value })
+
     }
 
     const handleAddCourse = async (e) => {
@@ -46,6 +46,7 @@ export const AddCourse = () => {
             setAllCourses({ ...allCourses, [newCourse._id]: newCourse })
 
             resetForm()
+            setHelpMessage()
             setOpenModal()
         } catch (error) {
             console.error(error)

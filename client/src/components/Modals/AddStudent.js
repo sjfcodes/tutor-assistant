@@ -9,7 +9,7 @@ export const AddStudent = () => {
     const i = 0
 
     const { openModal, setOpenModal } = useContext(ModalContext)
-    const { allCourses, setAllCourses, selectedCourse, setSelectedCourse } = useContext(CourseContext)
+    const { allCourses, setAllCourses, selectedCourse } = useContext(CourseContext)
     const [formInputs, setFormInputs] = useState({
         firstName: `Student${i}`,
         lastName: `New${i}`,
@@ -19,7 +19,7 @@ export const AddStudent = () => {
         graduationDate: '2022-01-01',
         fullTimeCourse: "false",
         gitHubUsername: `student${i}`,
-        zoomLink: 'https://zoom-link.com',
+        zoomLink: 'https://zoom.us/j/96314583232?pwd=K1ZsMGpjWEk1MDdQUStKNFlSd3VDZz09',
         meetingsPerWeek: 1,
         reassignment: "false",
         temporary: "false",
@@ -75,12 +75,13 @@ export const AddStudent = () => {
 
     return (
         <Modal
+            className=''
             showClose={false}
             show={openModal === 'addStudent'}
             onClose={() => setOpenModal()}
         >
             <Modal.Card >
-                <Modal.Card.Header showClose={false}
+                <Modal.Card.Header showClose={true}
                 >
                     <Modal.Card.Title>Add Student</Modal.Card.Title>
                 </Modal.Card.Header>

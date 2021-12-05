@@ -120,6 +120,7 @@ export const SignupForm = () => {
                                 value={timeZone}
                                 onInput={handleInputChange}
                             >
+                                <option></option>
                                 <option>Pacific</option>
                                 <option>Mountain</option>
                                 <option>Central</option>

@@ -41,11 +41,12 @@ export const Nav = () => {
 	return (
 		<Navbar>
 			<Brand>
-				<NavbarItem href="/">
-					<img
+				<NavbarItem href="/" className=' py-0'>
+					{/* <img
 						alt="tutor app"
 						src="https://rethink.vc/wp-content/uploads/2017/08/trilogy-logo.png"
-					/>
+					/> */}
+					<h1 className='brand'>tutor.me</h1>
 				</NavbarItem>
 				{loggedIn &&
 					<>
@@ -63,10 +64,9 @@ export const Nav = () => {
 						</NavbarItem>
 					</>
 				}
-				<Burger id='nav-burger' onClick={() => toggleNavBurger()} />
+				<Burger id='nav-burger' className='' onClick={() => toggleNavBurger()} />
 			</Brand>
 			<NavbarMenu id='nav-menu'>
-
 				{loggedIn &&
 					<Level renderAs='div' >
 						<Level.Side align='left'>

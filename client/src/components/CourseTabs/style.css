@@ -8,7 +8,17 @@
     border-top-right-radius: 4px;
 }
 
-.is-active a, .has-text-white a:hover {
+.is-active a {
     color: #09b2f5 !important ;
-    font-size: 1.1rem !important;
+}
+
+.tabs ul li {
+    transition: all .2s ease-in-out ;
+}
+.tabs ul li a:hover {
+    color: #09b2f5 !important;
+}
+
+.tabs ul li:hover { 
+    transform: scale(1.09) translate(5%, 0);
 }

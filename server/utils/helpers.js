@@ -26,13 +26,16 @@ module.exports = {
         return new Promise(async (resolve, reject) => {
             try {
                 const tutor = await Tutor.findOne({ email: email })
-                    .populate('courses');
+                    .populate({
+                        path: 'courses',
+                        populate: {
+                            path: 'students',
+                            model: 'Student',
+                        }
+                    })
                 if (!tutor) return reject('tutor not found');
 
-                const courses = formatCourses(tutor.courses)
-                tutor.courses.length = 0
-
-                resolve({ tutor, courses });
+                resolve({ tutor });
 
             } catch (error) {
                 reject(error);

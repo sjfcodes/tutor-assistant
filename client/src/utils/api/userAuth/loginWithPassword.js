@@ -1,13 +1,13 @@
 import { apiUrl, tokenKey } from "../../config"
 
-export const loginWithPassword = (tutor) => {
+export const loginWithPassword = (inputs) => {
     const url = `${apiUrl}/tutor/login`
     const options = {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(tutor),
+        body: JSON.stringify(inputs),
     }
 
     return new Promise(async (resolve, reject) => {

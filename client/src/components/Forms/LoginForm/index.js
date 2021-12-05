@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react'
 import { Form, Icon, Button } from 'react-bulma-components'
 import { AppContext, CourseContext } from '../../../context'
 import { loginWithPassword } from '../../../utils'
+import { formatCourses, formatStudents } from '../../../utils/helpers'
 
 const { Field, Label, Control, Input } = Form
 
@@ -24,9 +25,14 @@ export const LoginForm = () => {
     const handleLogin = async (e) => {
         e.preventDefault()
         try {
-            const { tutor, courses } = await loginWithPassword(inputs)
+            const { tutor } = await loginWithPassword(inputs)
             if (!tutor) return
+            const formattedCourses = tutor.courses.map(course => {
+                return { ...course, students: formatStudents(course.students) }
+            })
+            const courses = formatCourses(formattedCourses)
             setAllCourses(courses)
+
             setTutorDetails({ ...tutor, loggedIn: true })
             updateAppComponent('home')
         } catch (error) {
