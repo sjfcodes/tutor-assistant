@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Button, Form, Modal, } from 'react-bulma-components'
 import { AppContext, CourseContext, ModalContext } from '../../context'
 import { createModel, formIsComplete } from '../../utils'
+import { formatCourses } from '../../utils/helpers'
 
 
 export const AddCourse = () => {
@@ -12,13 +13,13 @@ export const AddCourse = () => {
     const [helpMessage, setHelpMessage] = useState(null)
 
     const { tutorDetails: { _id } } = useContext(AppContext)
-    const { allCourses, setAllCourses } = useContext(CourseContext)
+    const { allCourses, setAllCourses, setSelectedCourse } = useContext(CourseContext)
     const [existingNames, setExistingNames] = useState(null)
 
     useEffect(() => {
         if (!allCourses) return
 
-        const arr = Object.values(allCourses).map(({ name }) => name.toLowerCase())
+        const arr = Object.values(allCourses).map(({ name }) => name?.toLowerCase())
         setExistingNames(arr)
 
     }, [allCourses])
@@ -43,10 +44,15 @@ export const AddCourse = () => {
         try {
             const body = { tutor_id: _id, name: courseName }
             const newCourse = await createModel('course', body)
+            // initialize meetings and students to empty objects
+            newCourse.meetings = {}
+            newCourse.students = {}
+
             setAllCourses({ ...allCourses, [newCourse._id]: newCourse })
 
             resetForm()
             setHelpMessage()
+            setSelectedCourse(newCourse._id)
             setOpenModal()
         } catch (error) {
             console.error(error)

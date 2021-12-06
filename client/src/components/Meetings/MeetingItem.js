@@ -3,7 +3,7 @@ import { Columns, Icon } from 'react-bulma-components';
 import { CourseContext } from '../../context';
 import { updateModel } from '../../utils';
 
-export const StudentItem = ({ _id, property, value, idx }) => {
+export const MeetingItem = ({ _id, property, value, idx }) => {
 
     const [itemToEdit, setItemToEdit] = useState();
     const [input, setInput] = useState(value);
@@ -22,21 +22,20 @@ export const StudentItem = ({ _id, property, value, idx }) => {
         e.preventDefault();
 
         try {
-            await updateModel('student', { _id, [property]: input });
-
-            // target the current property being edited of the selected student in the selected course
+            await updateModel('meeting', { _id, [property]: input });
+            // target the current property being edited of the selected meeting in the selected course
             const thisCourse = { ...allCourses[selectedCourse] }
-            const allStudents = { ...thisCourse.students }
-            const thisStudent = { ...allStudents[_id] }
+            const allMeetings = { ...thisCourse.meetings }
+            const thisMeeting = { ...allMeetings[_id] }
 
             setAllCourses({
                 ...allCourses,
                 [selectedCourse]: {
                     ...thisCourse,
-                    students: {
-                        ...allStudents,
+                    meetings: {
+                        ...allMeetings,
                         [_id]: {
-                            ...thisStudent,
+                            ...thisMeeting,
                             [property]: input
                         }
                     }
@@ -88,7 +87,7 @@ export const StudentItem = ({ _id, property, value, idx }) => {
             <Columns
                 renderAs='li'
                 // breakpoint='mobile'
-                className={`student-item m-0  ${idx % 2 !== 0 && 'has-background-grey-lighter rounded'}`}
+                className={`meeting-item m-0  ${idx % 2 !== 0 && 'has-background-grey-lighter rounded'}`}
             >
                 <Columns.Column
                     size={3}
@@ -104,9 +103,7 @@ export const StudentItem = ({ _id, property, value, idx }) => {
                         itemToEdit === property
                             ? <input type='input' name={property} value={input} onChange={handleInputChange} />
                             // check for booleans and render with a color code
-                            : String(value) === 'true' || String(value) === 'false'
-                                ? <span className={`has-text-${String(value) === 'true' ? 'link-dark' : 'danger'}`}>{val}</span>
-                                : val
+                            : val
                     }
                     {
                         itemToEdit === property

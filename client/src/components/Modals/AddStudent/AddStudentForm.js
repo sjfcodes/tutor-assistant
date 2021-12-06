@@ -1,13 +1,12 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Columns, Form, Icon, Level } from 'react-bulma-components'
-import { emailIsValid, inputIsSelected } from '../../../utils'
+import { emailIsValid, getCurrentUnix, getUnixFromFormInputs, inputIsSelected } from '../../../utils'
 import { FormInput } from '../../Forms'
 
 const { Column } = Columns
 
 
 export const AddStudentForm = ({ formInputs, setFormInputs }) => {
-
     const {
         firstName,
         lastName,
@@ -23,12 +22,59 @@ export const AddStudentForm = ({ formInputs, setFormInputs }) => {
         temporary
     } = formInputs
 
-    const handleInputChange = (e) => {
-        const { target: { name, value } } = e
-        // meetings per week must be greater then 0
-        if (name === "meetingsPerWeek" && !parseInt(value)) return
-        setFormInputs({ ...formInputs, [name]: value })
+
+    const [displayHelpText, setDisplayHelpText] = useState()
+    const [helpText, setHelpText] = useState(() => {
+        const object = {}
+        Object
+            .keys(formInputs)
+            .forEach(property => { object[property] = '' })
+        return object
+    })
+
+    const updateHelpText = (inputName, message) => setHelpText({
+        ...helpText,
+        [inputName]: message ? message : `missing ${inputName}`
+    })
+
+    const handleInputChange = ({ target: { name: inputName, value: inputValue } }) => {
+
+        switch (inputName) {
+            case "graduationDate":
+                const selectedDate = getUnixFromFormInputs(inputValue)
+                const today = getCurrentUnix()
+                console.log('here', selectedDate < today)
+                if (selectedDate < today) {
+                    updateHelpText(inputName, 'graduation date must be in the future')
+                }
+                break;
+
+            case "meetingsPerWeek":
+                if (!parseInt(inputValue)) return
+                break;
+
+            case "timeZone":
+                if (!inputValue || inputValue === '-') updateHelpText(inputName)
+                break;
+            default:
+                helpText[inputName] && updateHelpText(inputName, '')
+        }
+
+        setFormInputs({ ...formInputs, [inputName]: inputValue })
     }
+
+    useEffect(() => {
+        console.log(helpText)
+
+        setDisplayHelpText(
+            Object.entries(helpText)
+                .map(([key, value]) => {
+                    return value
+                        ? <p key={key}>{value}</p>
+                        : ''
+                })
+        )
+    }, [helpText])
 
 
     return (
@@ -142,7 +188,7 @@ export const AddStudentForm = ({ formInputs, setFormInputs }) => {
             </Columns>
 
             <Columns>
-                <Level>
+                <Level renderAs='div'>
                     <Column>
                         <FormInput
                             label='Meetings Per Week'
@@ -220,6 +266,7 @@ export const AddStudentForm = ({ formInputs, setFormInputs }) => {
                     </Column>
                 </Level>
             </Columns>
+            {displayHelpText}
         </ >
     )
 }

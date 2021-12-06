@@ -33,7 +33,7 @@ export const StudentsSection = () => {
             {
                 allCourses &&
                 selectedCourse &&
-                Object.values(allCourses[selectedCourse].students)
+                Object.values(allCourses[selectedCourse]?.students)
                     .map((student) =>
                         < Student
                             key={student._id}

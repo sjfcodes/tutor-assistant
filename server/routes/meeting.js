@@ -1,19 +1,19 @@
 const router = require('express').Router()
 const { Meeting } = require('../models');
 const { authorizeToken } = require('../utils/auth');
-const { addModelToTutor, deleteModelFromTutor } = require('../utils/helpers');
+const { deleteModelFromTutor, addModelToCourse } = require('../utils/helpers');
 
 
-router.post('/', async (req, res) => {
+router.post('/:id', async (req, res) => {
     const { tutor } = authorizeToken(req);
     if (!tutor) return res.status(401).json('unauthorized');
 
-    const meeting = await Meeting.create(req.body);
-    if (!meeting) return res.statusMessage(500).json('failed to create meeting');
+    const { _id, createdAt } = await Meeting.create(req.body);
+    if (!_id) return res.statusMessage(500).json('failed to create meeting');
 
     try {
-        await addModelToTutor(tutor._id, 'meetings', meeting._id);
-        res.json('meeting added');
+        await addModelToCourse(req.params.id, 'meetings', _id);
+        res.json({ _id, createdAt });
 
     } catch (error) {
         console.log(error);

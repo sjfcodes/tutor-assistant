@@ -1,36 +1,16 @@
-export const formatCourses = (courses) => {
-    if (!courses.length) return null
-    const courseObj = {}
-
-    courses.forEach(course => {
-        const key = course._id
-        const values = { ...course }
-        delete values.tutor_id
-
-        courseObj[key] = values
-    });
-    return courseObj
-}
-
-export const formatStudents = (students) => {
-    if (!students.length) return null
-    const studentObj = {}
-
-    students.forEach(student => {
-        const key = student._id
-        const values = { ...student }
-
-        studentObj[key] = values
-    });
-    return studentObj
-}
-
+export { formatMeetings } from './meeting'
+export { formatStudents } from './student'
+export { formatCourses } from './course'
 export { logoutTutor } from './logout'
+export {
+    getCurrentUnix,
+    getTimeStamp,
+    getUnixFromFormInputs
+} from './dateTime'
+
 export {
     emailIsValid,
     passwordIsValid,
     formIsComplete,
     inputIsSelected,
-    formatDateInput,
-    getFutureDate
 } from './forms'

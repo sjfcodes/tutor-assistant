@@ -10,7 +10,7 @@ export const Settings = () => {
 
     const { tutorDetails: { firstName } } = useContext(AppContext)
     const { openModal, setOpenModal } = useContext(ModalContext)
-    const { allCourses, setAllCourses } = useContext(CourseContext)
+    const { allCourses, setAllCourses, selectedCourse, setSelectedCourse } = useContext(CourseContext)
     const [courseItems, setCourseItems] = useState(null)
     const [courseToDelete, setCourseToDelete] = useState(null)
     const [courseToUpdate, setCourseToUpdate] = useState(null)
@@ -35,19 +35,27 @@ export const Settings = () => {
 
 
     const handleDeleteCourse = useCallback(async (_id) => {
+        const idToDelete = _id
         setCourseToDelete()
         if (!_id) return
 
         try {
             await deleteModel('course', _id)
+
             const updatedCourses = { ...allCourses }
             delete updatedCourses[_id]
+
+            if (idToDelete === selectedCourse) {
+                const keys = Object.keys(updatedCourses)
+                setSelectedCourse(keys.length ? keys[0] : null)
+            }
+
             setAllCourses({ ...updatedCourses })
 
         } catch (error) {
             console.error(error);
         }
-    }, [allCourses, setAllCourses])
+    }, [allCourses, setAllCourses, selectedCourse, setSelectedCourse])
 
 
     const update = useCallback(() => {

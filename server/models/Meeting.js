@@ -11,11 +11,11 @@ const meetingSchema = new Schema({
         ref: 'Student',
         required: true
     },
-    back2back: {
-        type: Boolean,
+    duration: {
+        type: Number,
         default: false
     },
-    startingAt: {
+    startDate: {
         type: Number,
         required: true
     },

@@ -7,10 +7,16 @@ module.exports = {
                 const tutor = await Tutor.findById(id)
                     .populate({
                         path: 'courses',
-                        populate: {
-                            path: 'students',
-                            model: 'Student',
-                        }
+                        populate: [
+                            {
+                                path: 'students',
+                                model: 'Student',
+                            },
+                            {
+                                path: 'meetings',
+                                model: 'Meeting',
+                            }
+                        ]
                     })
                     .select('-password')
                 if (!tutor) return reject('tutor not found');
@@ -28,10 +34,16 @@ module.exports = {
                 const tutor = await Tutor.findOne({ email: email })
                     .populate({
                         path: 'courses',
-                        populate: {
-                            path: 'students',
-                            model: 'Student',
-                        }
+                        populate: [
+                            {
+                                path: 'students',
+                                model: 'Student',
+                            },
+                            {
+                                path: 'meetings',
+                                model: 'Meeting',
+                            }
+                        ]
                     })
                 if (!tutor) return reject('tutor not found');
 
