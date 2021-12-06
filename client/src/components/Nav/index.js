@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react'
 import { Button, Level, Navbar } from "react-bulma-components";
 
-import { AppContext } from '../../context';
+import { AppContext, ModalContext } from '../../context';
 import { logoutTutor } from '../../utils';
 import { Settings } from '../Modals';
 import './style.css'
@@ -11,7 +11,8 @@ const { Brand, Item: NavbarItem, Burger, Menu: NavbarMenu } = Navbar;
 
 export const Nav = () => {
 
-	const { tutorDetails, AppComponent, setOpenModal, openModal } = useContext(AppContext)
+	const { tutorDetails, AppComponent } = useContext(AppContext)
+	const { setOpenModal, openModal } = useContext(ModalContext)
 	const { loggedIn, firstName } = tutorDetails
 
 
@@ -29,6 +30,10 @@ export const Nav = () => {
 		navMenu.classList.toggle('is-active')
 	}
 
+	const handleAvatarClick = () => {
+		console.log(tutorDetails)
+	}
+
 	useEffect(() => {
 		toggleNavBurger(true)
 	}, [AppComponent, openModal])
@@ -36,11 +41,12 @@ export const Nav = () => {
 	return (
 		<Navbar>
 			<Brand>
-				<NavbarItem href="/">
-					<img
+				<NavbarItem href="/" className=' py-0'>
+					{/* <img
 						alt="tutor app"
 						src="https://rethink.vc/wp-content/uploads/2017/08/trilogy-logo.png"
-					/>
+					/> */}
+					<h1 className='brand'>tutor.me</h1>
 				</NavbarItem>
 				{loggedIn &&
 					<>
@@ -50,7 +56,7 @@ export const Nav = () => {
 								alt="user avatar"
 								// src="https://i.imgur.com/WGeUGOp.jpg"
 								src="https://i.imgur.com/zEvf4P4.jpg"
-								onClick={() => console.log(tutorDetails)}
+								onClick={handleAvatarClick}
 							/>
 						</NavbarItem>
 						<NavbarItem className='pl-0'>
@@ -58,10 +64,9 @@ export const Nav = () => {
 						</NavbarItem>
 					</>
 				}
-				<Burger id='nav-burger' onClick={() => toggleNavBurger()} />
+				<Burger id='nav-burger' className='' onClick={() => toggleNavBurger()} />
 			</Brand>
 			<NavbarMenu id='nav-menu'>
-
 				{loggedIn &&
 					<Level renderAs='div' >
 						<Level.Side align='left'>

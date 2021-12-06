@@ -1,0 +1,9 @@
+.student-item {
+    /* max-width: fit-content; */
+    overflow-wrap: break-word;
+}
+
+.student-item .column{
+    padding-top: 0;
+    padding-bottom: 0;
+}

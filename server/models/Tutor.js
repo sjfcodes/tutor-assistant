@@ -48,7 +48,7 @@ const tutorSchema = new Schema({
     default: () => Math.floor(new Date().getTime() / 1000), // unix timestamp https://www.epochconverter.com/ 
     // get: (timestamp) => dateFormat(timestamp),
   },
-});
+})
 
 tutorSchema.pre('save', async function (next) {
   if (this.isNew || this.isModified('password')) {
@@ -58,7 +58,7 @@ tutorSchema.pre('save', async function (next) {
   next();
 });
 
-tutorSchema.methods.isCorrectPassword = async function (password) {
+tutorSchema.methods.isCorrectPassword = function (password) {
   return bcrypt.compare(password, this.password);
 };
 

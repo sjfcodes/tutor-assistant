@@ -1,7 +1,3 @@
-import { LoginForm } from "./LoginForm";
-import { SignupForm } from './SignupForm'
-
-export {
-    LoginForm,
-    SignupForm
-}
+export { LoginForm } from "./LoginForm";
+export { SignupForm } from './SignupForm'
+export { FormInput } from './FormInput'

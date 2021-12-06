@@ -3,7 +3,7 @@ import { Footer as BulmaFooter } from 'react-bulma-components';
 
 export const Footer = () => {
 	return (
-		<BulmaFooter className="has-text-centered p-3 mt-5">
+		<BulmaFooter className="has-text-centered p-3">
 			<p>
 				<a
 					href="https://github.com/samuelfox1/tutor-assistant-api"

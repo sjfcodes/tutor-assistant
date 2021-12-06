@@ -1,11 +1,4 @@
-import { AddCourse } from "./AddCourse";
-import { AddStudent } from "./AddStudent";
-import { AddMeeting } from "./AddMeeting";
-import { Settings } from "./Settings"
-
-export {
-    AddCourse,
-    AddStudent,
-    AddMeeting,
-    Settings
-}
+export { AddCourse } from "./AddCourse";
+export { AddStudent } from "./AddStudent";
+export { AddMeeting } from "./AddMeeting";
+export { Settings } from "./Settings"
