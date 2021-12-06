@@ -17,7 +17,7 @@ const studentSchema = new Schema({
     required: true,
     match: [/.+@.+\..+/, 'Must match an email address!'],
   },
-  classCode: {
+  classId: {
     type: String,
     required: true,
     trim: true,

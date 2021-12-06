@@ -18,7 +18,8 @@ export const Student = ({
     }
 
     return (
-        <Box className='border rounded pl-2 py-1 pr-1 hover-large-item'>
+        <Box className={`border rounded pl-2 py-1 pr-1 ${selectedStudentId !== _id && `hover-large-item`}`}>
+
             <Level
                 renderAs='div'
                 breakpoint='mobile'

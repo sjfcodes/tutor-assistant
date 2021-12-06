@@ -1,23 +1,27 @@
 const { Schema, model } = require('mongoose');
 
 const meetingSchema = new Schema({
-    student_id: {
+    tutorId: {
+        type: Schema.Types.ObjectId,
+        ref: 'Tutor',
+        required: true
+    },
+    studentId: {
         type: Schema.Types.ObjectId,
         ref: 'Student',
         required: true
     },
-    back2back: {
-        type: Boolean,
+    duration: {
+        type: Number,
         default: false
     },
-    startingAt: {
+    startDate: {
         type: Number,
         required: true
     },
     status: {
         type: String,
         required: true,
-        default: 'scheduled'
     },
     createdAt: {
         type: Number,

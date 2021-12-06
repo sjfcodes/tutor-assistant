@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
-import { Box, Heading } from 'react-bulma-components'
-import { CourseContext } from '../../context'
+import { Box, Button, Columns, Heading } from 'react-bulma-components'
+import { CourseContext, ModalContext } from '../../context'
 import { Student } from './Student'
 import './style.css'
 
@@ -8,18 +8,32 @@ import './style.css'
 export const StudentsSection = () => {
 
     const { allCourses, selectedCourse } = useContext(CourseContext)
+    const { setOpenModal } = useContext(ModalContext)
     const [selectedStudentId, setSelectedStudentId] = useState('')
 
 
     return (
         <Box className='has-background-white'>
-            <Heading>
-                Students
-            </Heading>
+            <Columns
+                breakpoint='mobile'>
+                <Columns.Column>
+                    <Heading>
+                        Students
+                    </Heading>
+                </Columns.Column>
+                <Columns.Column align='right'>
+                    <Button
+                        color="primary"
+                        onClick={() => setOpenModal('addStudent')}
+                    >
+                        Add Student
+                    </Button>
+                </Columns.Column>
+            </Columns>
             {
                 allCourses &&
                 selectedCourse &&
-                Object.values(allCourses[selectedCourse].students)
+                Object.values(allCourses[selectedCourse]?.students)
                     .map((student) =>
                         < Student
                             key={student._id}
@@ -29,6 +43,7 @@ export const StudentsSection = () => {
                         />
                     )
             }
+
         </Box>
     )
 }

@@ -1,8 +1,8 @@
 import React, { useContext, useState } from 'react'
 import { Button, Modal } from 'react-bulma-components'
-import { CourseContext, ModalContext } from '../../context'
-import { createModel, validateFormInputs } from '../../utils'
-import { AddStudentForm } from '../Forms'
+import { CourseContext, ModalContext } from '../../../context'
+import { createModel, formIsComplete, getUnixFromFormInputs } from '../../../utils'
+import { AddStudentForm } from './AddStudentForm'
 
 export const AddStudent = () => {
 
@@ -14,9 +14,9 @@ export const AddStudent = () => {
         firstName: `Student${i}`,
         lastName: `New${i}`,
         email: `student${i}@email.com`,
-        classCode: 'ABC123',
+        classId: 'ABC123',
         timeZone: 'Eastern',
-        graduationDate: '2022-01-01',
+        graduationDate: '',
         fullTimeCourse: "false",
         gitHubUsername: `student${i}`,
         zoomLink: 'https://zoom.us/j/96314583232?pwd=K1ZsMGpjWEk1MDdQUStKNFlSd3VDZz09',
@@ -25,24 +25,11 @@ export const AddStudent = () => {
         temporary: "false",
     })
 
-    const getGradDateInUnix = (date) => {
-
-        // UTC time zone - local time zone in seconds
-        const timeZoneOffsetSeconds = new Date().getTimezoneOffset() * 60
-
-        // time in seconds (unix time)
-        const gradDateSeconds = new Date(date).getTime() / 1000
-
-        // console.log(new Date(gradDateSeconds + timeZoneOffsetSeconds * 1000));
-
-        return gradDateSeconds + timeZoneOffsetSeconds
-    }
-
 
     const handleAddStudent = async (e) => {
         e.preventDefault()
         const inputs = { ...formInputs }
-        inputs.graduationDate = getGradDateInUnix(formInputs.graduationDate)
+        inputs.graduationDate = getUnixFromFormInputs(formInputs.graduationDate)
 
 
         try {
@@ -81,24 +68,27 @@ export const AddStudent = () => {
             onClose={() => setOpenModal()}
         >
             <Modal.Card >
-                <Modal.Card.Header showClose={true}
-                >
+                <Modal.Card.Header showClose={true}>
                     <Modal.Card.Title>Add Student</Modal.Card.Title>
                 </Modal.Card.Header>
+
                 <form onSubmit={handleAddStudent}>
+
                     <Modal.Card.Body>
                         <AddStudentForm formInputs={formInputs} setFormInputs={setFormInputs} />
                     </Modal.Card.Body>
+
                     <Modal.Card.Footer renderAs={Button.Group} align="right" hasAddons>
                         <Button type='button' onClick={() => setOpenModal()}>cancel</Button>
                         <Button
                             color="success"
                             type='submit'
-                            disabled={validateFormInputs(formInputs)}
+                            disabled={!formIsComplete(formInputs)}
                         >
                             Add Student
                         </Button>
                     </Modal.Card.Footer>
+
                 </form>
             </Modal.Card>
         </Modal>

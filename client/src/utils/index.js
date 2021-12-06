@@ -9,8 +9,14 @@ export {
 
 export {
     logoutTutor,
-    validateEmail,
-    validatePassword,
-    validateFormInputs,
-    validateSelect
+
+    emailIsValid,
+    passwordIsValid,
+    formIsComplete,
+    inputIsSelected,
+
+    getCurrentUnix,
+    getTimeStamp,
+    getUnixFromFormInputs
+
 } from "./helpers";
