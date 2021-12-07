@@ -1,56 +1,42 @@
 {
-  "env": {
-    "browser": true,
-    "es6": true,
-    "node": true,
-    "jest": true
-  },
-  "extends": [
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:react/jsx-runtime",
-    "plugin:prettier/recommended"
-  ],
-  "parserOptions": {
-    "ecmaFeatures": {
-      "jsx": true
+    "env": {
+        "browser": true,
+        "es2021": true,
+        "jest": true
     },
-    "ecmaVersion": 2021,
-    "sourceType": "module"
-  },
-  "overrides": [
-    {
-      "files": ["*.jsx", "*.js"]
+    "extends": [
+        "plugin:react/recommended",
+        "airbnb/hooks",
+        "airbnb"
+    ],
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 12,
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react"
+    ],
+    "rules": {
+        "react/function-component-definition": [
+            2,
+            {
+                "namedComponents": "arrow-function"
+            }
+        ],
+        "no-console": [
+            "error",
+            {
+                "allow": [
+                    "warn"
+                ]
+            }
+        ],
+        "indent": [
+            "error",
+            2
+        ]
     }
-  ],
-  "plugins": ["react", "prettier"],
-  "rules": {
-    "react/react-in-jsx-scope": "off",
-    "react/no-arrow-function-lifecycle": "off",
-    "react/no-invalid-html-attribute": "off",
-    "react/prop-types": "off",
-    "no-console": "off",
-    "no-unused-vars":"warn",
-    "react/function-component-definition": [
-      2,
-      {
-        "namedComponents": "arrow-function"
-      }
-    ],
-    "no-underscore-dangle": [
-      "error",
-      {
-        "allow": ["_id"]
-      }
-    ],
-    "prettier/prettier": [
-      "warn",
-      {
-        "singleQuote": true,
-        "jsxSingleQuote": false,
-        "parser": "flow",
-        "tabWidth": 2
-      }
-    ]
-  }
 }
