@@ -10,33 +10,22 @@
         "airbnb"
     ],
     "parserOptions": {
-        "ecmaFeatures": {
-            "jsx": true
-        },
+        "ecmaFeatures": { "jsx": true },
         "ecmaVersion": 12,
         "sourceType": "module"
     },
-    "plugins": [
-        "react"
-    ],
+    "plugins": [ "react" ],
     "rules": {
-        "react/function-component-definition": [
-            2,
-            {
-                "namedComponents": "arrow-function"
-            }
-        ],
-        "no-console": [
-            "error",
-            {
-                "allow": [
-                    "warn"
-                ]
-            }
-        ],
-        "indent": [
-            "error",
-            2
-        ]
+        "react/function-component-definition": [ 2, { "namedComponents" : "arrow-function" } ],
+        "no-console": [ "warn",{ "allow": [ "warn" ] } ],
+        "indent": [ "warn", 2 ],
+        "valid-typeof": "warn",
+        "arrow-body-style": ["warn", "as-needed", { "requireReturnForObjectLiteral": false }],
+        "curly": [ "warn", "multi" ],
+        "eqeqeq": [ "warn", "always" ],
+        "multiline-comment-style": [ "warn", "starred-block"],
+        "no-else-return": "warn",
+        "no-nested-ternary": "warn",
+        "no-lonely-if": "warn"
     }
 }
