@@ -1,2 +1,2 @@
-export { loginWithPassword } from './loginWithPassword'
-export { loginWithToken } from './loginWithToken'
+export { loginWithPassword } from './loginWithPassword';
+export { loginWithToken } from './loginWithToken';
