@@ -20,12 +20,14 @@
         "no-console": [ "warn",{ "allow": [ "warn" ] } ],
         "indent": [ "warn", 2 ],
         "valid-typeof": "warn",
-        "arrow-body-style": ["warn", "as-needed", { "requireReturnForObjectLiteral": false }],
         "curly": [ "warn", "multi" ],
         "eqeqeq": [ "warn", "always" ],
         "multiline-comment-style": [ "warn", "starred-block"],
+        "arrow-body-style": ["warn", "as-needed", { "requireReturnForObjectLiteral": false }],
+        "implicit-arrow-linebreak": [ "error", "beside" ],
         "no-else-return": "warn",
         "no-nested-ternary": "warn",
-        "no-lonely-if": "warn"
+        "no-lonely-if": "warn",
+        "no-underscore-dangle": [ "error", { "allow": ["_id"] } ]
     }
 }
