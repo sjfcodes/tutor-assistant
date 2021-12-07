@@ -1,7 +1,4 @@
-import { Landing } from './Landing'
-import { Home } from './Home'
+import Landing from './Landing';
+import Home from './Home';
 
-export {
-    Landing,
-    Home
-}
+export { Landing, Home };
