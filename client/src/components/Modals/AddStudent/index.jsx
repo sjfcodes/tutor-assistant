@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Button, Modal } from 'react-bulma-components';
 import { CourseContext, ModalContext } from '../../../context';
 import {
@@ -12,8 +12,7 @@ const AddStudent = () => {
   const i = 0;
 
   const { openModal, setOpenModal } = useContext(ModalContext);
-  const { allCourses, setAllCourses, selectedCourse } =
-    useContext(CourseContext);
+  const { allCourses, setAllCourses, selectedCourse } = useContext(CourseContext);
   const [formInputs, setFormInputs] = useState({
     firstName: `Student${i}`,
     lastName: `New${i}`,
@@ -21,13 +20,13 @@ const AddStudent = () => {
     classId: 'ABC123',
     timeZone: 'Eastern',
     graduationDate: '',
-    fullTimeCourse: 'false',
+    fullTimeCourse: true,
     gitHubUsername: `student${i}`,
     zoomLink:
       'https://zoom.us/j/96314583232?pwd=K1ZsMGpjWEk1MDdQUStKNFlSd3VDZz09',
     meetingsPerWeek: 1,
-    reassignment: 'false',
-    temporary: 'false',
+    reassignment: false,
+    temporary: false,
   });
 
   const handleAddStudent = async (e) => {
@@ -39,7 +38,7 @@ const AddStudent = () => {
       const { _id: newStudentId, createdAt } = await createModel(
         'student',
         inputs,
-        selectedCourse
+        selectedCourse,
       );
       if (!newStudentId) return;
 
@@ -63,13 +62,13 @@ const AddStudent = () => {
       setOpenModal();
     } catch (error) {
       // login failed
-      console.error('login failed');
+      console.warn('login failed');
     }
   };
 
   return (
     <Modal
-      className=""
+      className=''
       showClose={false}
       show={openModal === 'addStudent'}
       onClose={() => setOpenModal()}
@@ -87,13 +86,13 @@ const AddStudent = () => {
             />
           </Modal.Card.Body>
 
-          <Modal.Card.Footer renderAs={Button.Group} align="right" hasAddons>
-            <Button type="button" onClick={() => setOpenModal()}>
+          <Modal.Card.Footer renderAs={Button.Group} align='right' hasAddons>
+            <Button type='button' onClick={() => setOpenModal()}>
               cancel
             </Button>
             <Button
-              color="success"
-              type="submit"
+              color='success'
+              type='submit'
               disabled={!formIsComplete(formInputs)}
             >
               Add Student

@@ -1,67 +1,57 @@
-const router = require('express').Router()
-const { Course, Tutor } = require('../models');
+const router = require('express').Router();
+const { Course } = require('../models');
 const { authorizeToken } = require('../utils/auth');
-const { addModelToTutor, deleteModelFromTutor, getTutorById } = require('../utils/helpers');
+const { addModelToTutor, deleteModelFromTutor } = require('../utils/helpers');
 
 // create a course
 router.post('/', async (req, res) => {
-    const { tutor } = authorizeToken(req);
-    if (!tutor) return res.status(401).json('unauthorized');
+  const { tutor } = authorizeToken(req);
+  if (!tutor) return res.status(401).json('unauthorized');
 
-    const { courses } = await getTutorById(tutor._id)
+  const course = await Course.create(req.body);
+  if (!course) return res.statusMessage(500).json('failed to create course');
 
-    try {
-
-    } catch (error) {
-        console.log(error);
-        res.status(500).json('course name must be unique');
-    }
-
-    const course = await Course.create(req.body);
-    if (!course) return res.statusMessage(500).json('failed to create course');
-
-    try {
-        await addModelToTutor(tutor._id, 'courses', course._id);
-        // respond with new course data
-        res.json(course);
-
-    } catch (error) {
-        console.log(error);
-        res.status(500).json('failed to update tutor');
-    };
+  try {
+    await addModelToTutor(tutor._id, 'courses', course._id);
+    // respond with new course data
+    res.json(course);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json('failed to update tutor');
+  }
+  return '';
 });
 
 // update a course information by id
 router.put('/', async (req, res) => {
-    const { tutor } = authorizeToken(req);
-    if (!tutor) return res.status(401).json('unauthorized');
+  const { tutor } = authorizeToken(req);
+  if (!tutor) return res.status(401).json('unauthorized');
 
-    try {
-        const course = await Course.findByIdAndUpdate(req.body._id, { name: req.body.name });
-        if (!course) return res.status(404).json('course not found');
+  try {
+    const course = await Course.findByIdAndUpdate(req.body._id, { name: req.body.name });
+    if (!course) return res.status(404).json('course not found');
 
-        res.json('course updated');
-
-    } catch (error) {
-        console.log(error);
-        res.status(500).json('failed to update course');
-    };
+    res.json('course updated');
+  } catch (error) {
+    console.log(error);
+    res.status(500).json('failed to update course');
+  }
+  return '';
 });
 
 // delete a course and remove the reference from the tutor
-router.delete('/', async (req, res) => {
-    const { tutor } = authorizeToken(req);
-    if (!tutor) return res.status(401).json('unauthorized');
+router.delete('/:id', async (req, res) => {
+  const { tutor } = authorizeToken(req);
+  if (!tutor) return res.status(401).json('unauthorized');
 
-    try {
-        await deleteModelFromTutor(tutor._id, "courses", Course, req.body._id);
-        res.json('course deleted');
-
-    } catch (error) {
-        console.log(error);
-        res.status(500).json('failed to delete course');
-    };
-
+  try {
+    await deleteModelFromTutor(tutor._id, 'courses', Course, req.params.id);
+    res.json('course deleted');
+  } catch (error) {
+    console.log(error);
+    res.status(500).json('failed to delete course');
+  }
+  return '';
 });
 
-module.exports = router
+module.exports = router;

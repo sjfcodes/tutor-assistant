@@ -1,4 +1,6 @@
-import { useCallback, useContext, useEffect, useState } from 'react';
+import React, {
+  useCallback, useContext, useEffect, useState,
+} from 'react';
 import { Tabs } from 'react-bulma-components';
 import { CourseContext, ModalContext } from '../../context';
 import { AddCourse } from '../Modals';
@@ -8,8 +10,7 @@ const { Tab } = Tabs;
 
 const CourseTabs = () => {
   const [courseTabs, setCourseTabs] = useState(null);
-  const { allCourses, selectedCourse, setSelectedCourse } =
-    useContext(CourseContext);
+  const { allCourses, selectedCourse, setSelectedCourse } = useContext(CourseContext);
   const { setOpenModal } = useContext(ModalContext);
 
   const handleUpdate = useCallback(
@@ -33,7 +34,7 @@ const CourseTabs = () => {
       // toggle new tab on
       classList.toggle('is-active');
     },
-    [allCourses, setSelectedCourse]
+    [allCourses, setSelectedCourse],
   );
 
   useEffect(() => {
@@ -45,12 +46,12 @@ const CourseTabs = () => {
         <Tab
           key={key}
           id={key}
-          active={!!(!selectedCourse || selectedCourse === _id)}
-          className="has-text-white"
-          onClick={(e) => handleUpdate(e, _id)}
+          className='rounded'
+          active={(!selectedCourse || selectedCourse === _id)}
+          onClick={() => setSelectedCourse(_id)}
         >
           {name}
-        </Tab>
+        </Tab>,
       );
       if (!selectedCourse && i === 0) setSelectedCourse(_id);
     });
@@ -60,10 +61,10 @@ const CourseTabs = () => {
 
   return (
     <>
-      <Tabs type="boxed" id="course-tabs">
+      <Tabs type='boxed' id='course-tabs' className='has-background-white'>
         {courseTabs}
         <Tab
-          className="has-text-white add-course-tab"
+          className='add-course-tab'
           onClick={() => setOpenModal('addCourse')}
         >
           Add Course

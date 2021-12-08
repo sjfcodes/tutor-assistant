@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Button, Form, Modal } from 'react-bulma-components';
 import { AppContext, CourseContext, ModalContext } from '../../context';
 import { createModel, formIsComplete } from '../../utils';
@@ -12,16 +12,13 @@ const AddCourse = () => {
   const {
     tutorDetails: { _id },
   } = useContext(AppContext);
-  const { allCourses, setAllCourses, setSelectedCourse } =
-    useContext(CourseContext);
+  const { allCourses, setAllCourses, setSelectedCourse } = useContext(CourseContext);
   const [existingNames, setExistingNames] = useState(null);
 
   useEffect(() => {
     if (!allCourses) return;
 
-    const arr = Object.values(allCourses).map(({ name }) =>
-      name?.toLowerCase()
-    );
+    const arr = Object.values(allCourses).map(({ name }) => name?.toLowerCase());
     setExistingNames(arr);
   }, [allCourses]);
 
@@ -33,8 +30,7 @@ const AddCourse = () => {
     } = e;
 
     if (helpMessage) setHelpMessage(null);
-    if (existingNames && existingNames.indexOf(value.toLowerCase()) !== -1)
-      setHelpMessage('name already in use');
+    if (existingNames && existingNames.indexOf(value.toLowerCase()) !== -1) setHelpMessage('name already in use');
     setFormInputs({ ...formInputs, [name]: value });
   };
 
@@ -51,14 +47,14 @@ const AddCourse = () => {
       newCourse.meetings = {};
       newCourse.students = {};
 
-      setAllCourses({ ...allCourses, [newCourse._id]: newCourse });
+      setAllCourses((currentState) => ({ ...currentState, [newCourse._id]: newCourse }));
 
       resetForm();
       setHelpMessage();
       setSelectedCourse(newCourse._id);
       setOpenModal();
     } catch (error) {
-      console.error(error);
+      console.warn(error);
     }
   };
 
@@ -83,21 +79,21 @@ const AddCourse = () => {
               <Form.Control>
                 <Form.Label>Name</Form.Label>
                 <Form.Input
-                  type="text"
-                  name="courseName"
+                  type='text'
+                  name='courseName'
                   value={courseName}
                   onChange={handleInputChange}
                 />
               </Form.Control>
-              <Form.Help className="ml-5" color="danger">
+              <Form.Help className='ml-5' color='danger'>
                 {helpMessage}
               </Form.Help>
             </Form.Field>
           </Modal.Card.Body>
-          <Modal.Card.Footer renderAs={Button.Group} align="right">
+          <Modal.Card.Footer renderAs={Button.Group} align='right'>
             <Button
               disabled={helpMessage || !formIsComplete(formInputs)}
-              color="info"
+              color='info'
             >
               Add Course
             </Button>

@@ -1,27 +1,28 @@
-import { apiUrl, tokenKey } from '../../config';
+import { tokenKey } from '../../../config';
+import { handleError } from '../../helpers';
+import { getApiEndpoint } from '../apiAccess';
 
-export const loginWithPassword = (inputs) => {
-  const url = `${apiUrl}/tutor/login`,
-    options = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(inputs),
-    };
+const loginWithPassword = (inputs) => {
+  const options = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(inputs),
+  };
 
   return new Promise((resolve, reject) => {
     try {
-      fetch(url, options)
+      fetch(getApiEndpoint({ model: 'tutor', action: 'login' }), options)
         .then((res) => res.json())
         .then(({ token, tutor, courses }) => {
-          if (!token || !tutor) return reject(null);
+          if (!token || !tutor) return reject(handleError('invalid login'));
           localStorage.setItem(tokenKey, token);
-          resolve({ tutor, courses });
+          return resolve({ tutor, courses });
         });
     } catch (error) {
-      console.error(error);
-      reject(null);
+      reject(handleError(error));
     }
   });
 };
+export default loginWithPassword;

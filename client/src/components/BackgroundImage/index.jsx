@@ -1,4 +1,6 @@
+import React from 'react';
 import './style.css';
+import { string } from 'prop-types';
 
 const BackgroundImage = ({ url }) => {
   const styles = {
@@ -7,7 +9,11 @@ const BackgroundImage = ({ url }) => {
     backgroundSize: 'cover',
   };
 
-  return <div className="background-image" style={styles} />;
+  return <div className='background-image' style={styles} />;
 };
 
 export default BackgroundImage;
+
+BackgroundImage.propTypes = {
+  url: string.isRequired,
+};

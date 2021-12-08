@@ -1,5 +1,7 @@
-import { useState, useContext } from 'react';
-import { Form, Button, Columns, Icon } from 'react-bulma-components';
+import React, { useState, useContext } from 'react';
+import {
+  Form, Button, Columns, Icon,
+} from 'react-bulma-components';
 import { AppContext } from '../../context';
 import {
   createModel,
@@ -9,7 +11,9 @@ import {
   inputIsSelected,
 } from '../../utils';
 
-const { Field, Label, Control, Input, Select } = Form;
+const {
+  Field, Label, Control, Input, Select,
+} = Form;
 const { Column } = Columns;
 
 const SignupForm = () => {
@@ -34,7 +38,7 @@ const SignupForm = () => {
     password,
     confirmPassword,
   } = formInputs;
-  const { setTutorDetails, updateAppComponent } = useContext(AppContext);
+  const { setTutorDetails } = useContext(AppContext);
 
   const handleInputChange = (e) => {
     const {
@@ -49,10 +53,9 @@ const SignupForm = () => {
       const tutor = await createModel('tutor', formInputs);
       if (!tutor) return;
       setTutorDetails({ ...tutor, loggedIn: true });
-      updateAppComponent(null);
     } catch (error) {
       // login failed
-      console.error('login failed');
+      console.warn('login failed');
     }
   };
 
@@ -63,17 +66,17 @@ const SignupForm = () => {
           <Label>First Name</Label>
           <Control>
             <Input
-              type="text"
-              name="firstName"
+              type='text'
+              name='firstName'
               value={firstName}
               onChange={handleInputChange}
             />
-            <Icon align="left">
-              <i className="far fa-address-card" />
+            <Icon align='left'>
+              <i className='far fa-address-card' />
             </Icon>
             {firstName && (
-              <Icon align="right">
-                <i className="fas fa-check" />
+              <Icon align='right'>
+                <i className='fas fa-check' />
               </Icon>
             )}
           </Control>
@@ -83,17 +86,17 @@ const SignupForm = () => {
           <Label>Last Name</Label>
           <Control>
             <Input
-              type="text"
-              name="lastName"
+              type='text'
+              name='lastName'
               value={lastName}
               onChange={handleInputChange}
             />
-            <Icon align="left">
-              <i className="fas fa-address-card" />
+            <Icon align='left'>
+              <i className='fas fa-address-card' />
             </Icon>
             {lastName && (
-              <Icon align="right">
-                <i className="fas fa-check" />
+              <Icon align='right'>
+                <i className='fas fa-check' />
               </Icon>
             )}
           </Control>
@@ -102,17 +105,17 @@ const SignupForm = () => {
           <Label>Github Username</Label>
           <Control>
             <Input
-              type="text"
-              name="gitHubUsername"
+              type='text'
+              name='gitHubUsername'
               value={gitHubUsername}
               onChange={handleInputChange}
             />
-            <Icon align="left">
-              <i className="fab fa-github" />
+            <Icon align='left'>
+              <i className='fab fa-github' />
             </Icon>
             {gitHubUsername && (
-              <Icon align="right">
-                <i className="fas fa-check" />
+              <Icon align='right'>
+                <i className='fas fa-check' />
               </Icon>
             )}
           </Control>
@@ -122,24 +125,25 @@ const SignupForm = () => {
       <Columns>
         <Column narrow>
           <Label>Time Zone</Label>
-          <Field kind="addons">
+          <Field kind='addons'>
             <Control>
               <Select
-                type="text"
-                name="timeZone"
+                type='text'
+                name='timeZone'
                 value={timeZone}
                 onInput={handleInputChange}
               >
-                <option>Pacific</option>
-                <option>Mountain</option>
-                <option>Central</option>
+                <option>-</option>
+                <option value='pacific'>Pacific</option>
+                <option value='mountain'>Mountain</option>
+                <option value='central'>Central</option>
                 <option>Eastern</option>
               </Select>
             </Control>
             <Control>
               {inputIsSelected(timeZone) && (
-                <Icon className="ml-2 mt-2">
-                  <i className="fas fa-check" />
+                <Icon className='ml-2 mt-2'>
+                  <i className='fas fa-check' />
                 </Icon>
               )}
             </Control>
@@ -149,17 +153,17 @@ const SignupForm = () => {
           <Label>Email</Label>
           <Control>
             <Input
-              type="text"
-              name="email"
+              type='text'
+              name='email'
               value={email}
               onChange={handleInputChange}
             />
-            <Icon align="left">
-              <i className="far fa-envelope" />
+            <Icon align='left'>
+              <i className='far fa-envelope' />
             </Icon>
             {emailIsValid(email) && (
-              <Icon align="right">
-                <i className="fas fa-check" />
+              <Icon align='right'>
+                <i className='fas fa-check' />
               </Icon>
             )}
           </Control>
@@ -171,17 +175,17 @@ const SignupForm = () => {
           <Label>Calendly Link</Label>
           <Control>
             <Input
-              type="text"
-              name="calendlyLink"
+              type='text'
+              name='calendlyLink'
               value={calendlyLink}
               onChange={handleInputChange}
             />
-            <Icon align="left">
-              <i className="fas fa-link" />
+            <Icon align='left'>
+              <i className='fas fa-link' />
             </Icon>
             {calendlyLink && (
-              <Icon align="right">
-                <i className="fas fa-check" />
+              <Icon align='right'>
+                <i className='fas fa-check' />
               </Icon>
             )}
           </Control>
@@ -193,17 +197,17 @@ const SignupForm = () => {
           <Label>Password</Label>
           <Control>
             <Input
-              type="password"
-              name="password"
+              type='password'
+              name='password'
               value={password}
               onChange={handleInputChange}
             />
-            <Icon align="left">
-              <i className="fas fa-lock" />
+            <Icon align='left'>
+              <i className='fas fa-lock' />
             </Icon>
             {passwordIsValid(password) && (
-              <Icon align="right">
-                <i className="fas fa-check" />
+              <Icon align='right'>
+                <i className='fas fa-check' />
               </Icon>
             )}
           </Control>
@@ -213,17 +217,17 @@ const SignupForm = () => {
           <Label>Confirm Password</Label>
           <Control>
             <Input
-              type="password"
-              name="confirmPassword"
+              type='password'
+              name='confirmPassword'
               value={confirmPassword}
               onChange={handleInputChange}
             />
-            <Icon align="left">
-              <i className="fas fa-lock" />
+            <Icon align='left'>
+              <i className='fas fa-lock' />
             </Icon>
             {password === confirmPassword && (
-              <Icon align="right">
-                <i className="fas fa-check" />
+              <Icon align='right'>
+                <i className='fas fa-check' />
               </Icon>
             )}
           </Control>
@@ -233,9 +237,9 @@ const SignupForm = () => {
       <Button
         fullwidth
         rounded
-        color="primary"
-        className="mt-5"
-        disabled={formIsComplete(formInputs)}
+        color='primary'
+        className='mt-5'
+        disabled={!formIsComplete(formInputs)}
         onClick={handleSignup}
       >
         Signup

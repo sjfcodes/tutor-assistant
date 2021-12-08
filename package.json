@@ -28,7 +28,5 @@
     "concurrently": "^6.2.2"
   },
   "dependencies": {
-    "bulma-slider": "^2.0.4",
-    "compression": "^1.7.4"
   }
 }

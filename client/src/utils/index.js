@@ -1,9 +1,9 @@
 export {
-  loginWithToken,
   loginWithPassword,
+  loginWithToken,
   createModel,
-  deleteModel,
   updateModel,
+  deleteModel,
 } from './api';
 
 export {

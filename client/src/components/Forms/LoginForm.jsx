@@ -1,10 +1,12 @@
-import { useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Form, Icon, Button } from 'react-bulma-components';
 import { AppContext, CourseContext } from '../../context';
 import { loginWithPassword } from '../../utils';
 import { formatCourses, formatStudents } from '../../utils/helpers';
 
-const { Field, Label, Control, Input } = Form;
+const {
+  Field, Label, Control, Input,
+} = Form;
 
 const LoginForm = () => {
   const [inputs, setInputs] = useState({
@@ -12,13 +14,16 @@ const LoginForm = () => {
     password: 'password',
   });
 
-  const { setTutorDetails, updateAppComponent } = useContext(AppContext);
+  const [helpText, setHelpText] = useState('');
+
+  const { setTutorDetails } = useContext(AppContext);
   const { setAllCourses } = useContext(CourseContext);
 
   const handleInputChange = (e) => {
     const {
       target: { name, value },
     } = e;
+    if (helpText) setHelpText('');
     setInputs({ ...inputs, [name]: value });
   };
 
@@ -27,17 +32,18 @@ const LoginForm = () => {
     try {
       const { tutor } = await loginWithPassword(inputs);
       if (!tutor) return;
-      const formattedCourses = tutor.courses.map((course) => {
-        return { ...course, students: formatStudents(course.students) };
-      });
+      const formattedCourses = tutor.courses
+        .map((course) => ({
+          ...course,
+          students: formatStudents(course.students),
+        }));
+
       const courses = formatCourses(formattedCourses);
       setAllCourses(courses);
 
       setTutorDetails({ ...tutor, loggedIn: true });
-      updateAppComponent('home');
     } catch (error) {
-      // login failed
-      console.error('login failed');
+      setHelpText('** invalid login');
     }
   };
   return (
@@ -46,14 +52,14 @@ const LoginForm = () => {
         <Label>Email</Label>
         <Control>
           <Input
-            placeholder="Username"
-            type="text"
-            name="email"
+            placeholder='Username'
+            type='text'
+            name='email'
             value={inputs.email}
             onChange={handleInputChange}
           />
-          <Icon align="left">
-            <i className="fas fa-at" />
+          <Icon align='left'>
+            <i className='fas fa-at' />
           </Icon>
         </Control>
       </Field>
@@ -61,23 +67,24 @@ const LoginForm = () => {
         <Label>Password</Label>
         <Control>
           <Input
-            placeholder="Password"
-            name="password"
-            type="password"
+            placeholder='Password'
+            name='password'
+            type='password'
             value={inputs.password}
             onChange={handleInputChange}
           />
-          <Icon align="left">
-            <i className="fas fa-fingerprint" />
+          <Icon align='left'>
+            <i className='fas fa-fingerprint' />
           </Icon>
         </Control>
       </Field>
+      {helpText && <h6 className='help-error rounded'>{helpText}</h6>}
       <Button.Group>
         <Button
-          className="mt-5"
+          className='mt-5'
           fullwidth
           rounded
-          color="primary"
+          color='primary'
           onClick={handleLogin}
         >
           Login
