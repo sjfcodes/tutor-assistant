@@ -7,6 +7,8 @@ export const emailIsValid = (email) => {
   return re.test(email);
 };
 
+export const convertStrToBool = (str) => (str === 'true');
+
 export const missingFormInputs = (formInputs) => {
   let missingValue = false;
   Object.values(formInputs).forEach((value) => {

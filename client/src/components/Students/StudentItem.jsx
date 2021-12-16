@@ -5,6 +5,7 @@ import {
 } from 'prop-types';
 import { CourseContext } from '../../context';
 import { updateModel } from '../../utils';
+import { convertStrToBool } from '../../utils/helpers/forms';
 
 const StudentItem = ({
   _id, property, value, idx,
@@ -15,7 +16,12 @@ const StudentItem = ({
   const { allCourses, setAllCourses, selectedCourse } = useContext(CourseContext);
 
   const inputHasBeenModified = () => `${value}`.trim() !== `${input}`.trim();
-  const handleInputChange = ({ target }) => setInput(target.value);
+
+  const handleInputChange = ({ target }) => {
+    let newValue = target.value;
+    if (newValue === 'true' || newValue === 'false') newValue = convertStrToBool(newValue);
+    setInput(newValue);
+  };
 
   const handleCancelEdit = () => {
     setItemToEdit();
