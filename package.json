@@ -2,7 +2,7 @@
   "name": "tutor-assistant",
   "version": "1.0.0",
   "engines": {
-    "node": "17.x"
+    "node": "16.x"
   },
   "description": "manage student data and provide email templates for all processes",
   "main": "server/server.js",
