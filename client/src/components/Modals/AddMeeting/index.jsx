@@ -1,13 +1,12 @@
-import { useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Button, Modal } from 'react-bulma-components';
 import { AppContext, CourseContext, ModalContext } from '../../../context';
-import { createModel, formIsComplete } from '../../../utils';
-import { AddMeetingForm } from './AddMeetingForm';
+import { createModel, missingFormInputs } from '../../../utils';
+import AddMeetingForm from './AddMeetingForm';
 
-export const AddMeeting = () => {
+const AddMeeting = () => {
   const { openModal, setOpenModal } = useContext(ModalContext);
-  const { allCourses, setAllCourses, selectedCourse } =
-    useContext(CourseContext);
+  const { allCourses, setAllCourses, selectedCourse } = useContext(CourseContext);
   const {
     tutorDetails: { _id: tutorId },
   } = useContext(AppContext);
@@ -15,7 +14,7 @@ export const AddMeeting = () => {
     tutorId,
     studentId: '',
     duration: 1,
-    startDate: '',
+    startDate: 0,
     status: 'scheduled',
   });
 
@@ -26,9 +25,9 @@ export const AddMeeting = () => {
       const { _id: newMeetingId, createdAt } = await createModel(
         'meeting',
         formInputs,
-        selectedCourse
+        selectedCourse,
       );
-      if (!newMeetingId) return console.log('failed');
+      if (!newMeetingId) return console.warn('failed');
 
       const currentMeetings = allCourses[selectedCourse].meetings;
       const updatedMeetings = {
@@ -47,23 +46,22 @@ export const AddMeeting = () => {
         ...allCourses,
         [selectedCourse]: updatedCourse,
       });
-      setOpenModal();
+      setOpenModal('');
     } catch (error) {
       // handleAddMeeting failed
-      console.error('handleAddMeeting failed');
+      console.warn('handleAddMeeting failed');
     }
+    return '';
   };
 
   return (
     <Modal
-      className=""
+      className=''
       showClose={false}
       show={openModal === 'addMeeting'}
-      onClose={() => setOpenModal()}
+      onClose={() => setOpenModal('')}
     >
-      <Modal.Card
-      // style={{ width: '50vw', margin: 'auto' }}
-      >
+      <Modal.Card>
         <Modal.Card.Header showClose>
           <Modal.Card.Title>Add Meeting</Modal.Card.Title>
         </Modal.Card.Header>
@@ -74,14 +72,14 @@ export const AddMeeting = () => {
               setFormInputs={setFormInputs}
             />
           </Modal.Card.Body>
-          <Modal.Card.Footer renderAs={Button.Group} align="right" hasAddons>
-            <Button type="button" onClick={() => setOpenModal()}>
+          <Modal.Card.Footer renderAs={Button.Group} align='right' hasAddons>
+            <Button type='button' onClick={() => setOpenModal('')}>
               cancel
             </Button>
             <Button
-              color="success"
-              type="submit"
-              disabled={!formIsComplete(formInputs)}
+              color='success'
+              type='submit'
+              disabled={missingFormInputs(formInputs)}
             >
               Add Meeting
             </Button>

@@ -1,14 +1,16 @@
-import { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Columns, Icon } from 'react-bulma-components';
+import { string, number, oneOfType } from 'prop-types';
 import { CourseContext } from '../../context';
 import { updateModel } from '../../utils';
 
-const MeetingItem = ({ _id, property, value, idx }) => {
+const MeetingItem = ({
+  _id, property, value, idx,
+}) => {
   const [itemToEdit, setItemToEdit] = useState();
   const [input, setInput] = useState(value);
   const [val, setVal] = useState();
-  const { allCourses, setAllCourses, selectedCourse } =
-    useContext(CourseContext);
+  const { allCourses, setAllCourses, selectedCourse } = useContext(CourseContext);
 
   const inputHasBeenModified = () => `${value}`.trim() !== `${input}`.trim();
   const handleInputChange = ({ target }) => setInput(target.value);
@@ -42,7 +44,6 @@ const MeetingItem = ({ _id, property, value, idx }) => {
         },
       });
     } catch (error) {
-      console.log(error);
       setInput(value);
     }
     setItemToEdit();
@@ -50,28 +51,31 @@ const MeetingItem = ({ _id, property, value, idx }) => {
 
   useEffect(() => {
     switch (property) {
-      case 'gitHubUsername':
-        return setVal(
-          <a
-            href={`https://github.com/${value}`}
-            target="_blank"
-            rel="noreferrer"
-          >{`https://github.com/${value}`}</a>
-        );
-      case 'zoomLink':
-        return setVal(
-          <a href={value} target="_blank" rel="noreferrer">
-            {value}
-          </a>
-        );
-      case 'graduationDate':
-        return setVal(
-          <span>{new Date(value * 1000).toLocaleDateString()}</span>
-        );
-      case 'createdAt':
-        return setVal(<span>{String(new Date(value * 1000))}</span>);
-      default:
-        return setVal(<span>{`${value}`}</span>);
+    case 'gitHubUsername':
+      return setVal(
+        <a
+          href={`https://github.com/${value}`}
+          target='_blank'
+          rel='noreferrer'
+        >
+          {`https://github.com/${value}`}
+
+        </a>,
+      );
+    case 'zoomLink':
+      return setVal(
+        <a href={value} target='_blank' rel='noreferrer'>
+          {value}
+        </a>,
+      );
+    case 'graduationDate':
+      return setVal(
+        <span>{new Date(value * 1000).toLocaleDateString()}</span>,
+      );
+    case 'createdAt':
+      return setVal(<span>{String(new Date(value * 1000))}</span>);
+    default:
+      return setVal(<span>{`${value}`}</span>);
     }
   }, [property, value]);
 
@@ -81,21 +85,19 @@ const MeetingItem = ({ _id, property, value, idx }) => {
   }, [itemToEdit, property]);
 
   return (
-    <form name="theForm" onSubmit={handleSubmit}>
+    <form name='theForm' onSubmit={handleSubmit}>
       <Columns
-        renderAs="li"
-        // eslint-disable-next-line prettier/prettier
-        className={`meeting-item m-0  ${
-          idx % 2 !== 0 && 'has-background-grey-lighter rounded'
+        renderAs='li'
+        className={`meeting-item m-0  ${idx % 2 !== 0 && 'has-background-grey-lighter rounded'
         }`}
       >
-        <Columns.Column size={3} align="left">
+        <Columns.Column size={3} align='left' className='py-0'>
           {`${property}:`}
         </Columns.Column>
-        <Columns.Column className=" ml-5">
+        <Columns.Column className=' ml-5 py-0'>
           {itemToEdit === property ? (
             <input
-              type="input"
+              type='input'
               name={property}
               value={input}
               onChange={handleInputChange}
@@ -106,19 +108,19 @@ const MeetingItem = ({ _id, property, value, idx }) => {
           )}
           {itemToEdit === property ? (
             <>
-              <Icon className="ml-4" onClick={handleCancelEdit}>
-                <i className="far fa-times-circle hover has-text-info" />
+              <Icon className='ml-4' onClick={handleCancelEdit}>
+                <i className='far fa-times-circle hover has-text-info' />
               </Icon>
               {inputHasBeenModified() && (
-                <Icon className="ml-4" onClick={handleSubmit}>
-                  <i className="far fa-save hover has-text-success" />
+                <Icon className='ml-4' onClick={handleSubmit}>
+                  <i className='far fa-save hover has-text-success' />
                 </Icon>
               )}
             </>
           ) : (
             property !== 'createdAt' && (
-              <Icon className="ml-4" onClick={() => setItemToEdit(property)}>
-                <i className="fas fa-pen hover icon-small has-text-info" />
+              <Icon className='ml-4' onClick={() => setItemToEdit(property)}>
+                <i className='fas fa-pen hover icon-small has-text-info' />
               </Icon>
             )
           )}
@@ -128,3 +130,10 @@ const MeetingItem = ({ _id, property, value, idx }) => {
   );
 };
 export default MeetingItem;
+
+MeetingItem.propTypes = {
+  _id: string.isRequired,
+  property: string.isRequired,
+  value: oneOfType([string, number]).isRequired,
+  idx: number.isRequired,
+};

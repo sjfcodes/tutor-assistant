@@ -1,34 +1,36 @@
-import { useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Button, Modal } from 'react-bulma-components';
 import { CourseContext, ModalContext } from '../../../context';
 import {
   createModel,
-  formIsComplete,
+  missingFormInputs,
   getUnixFromFormInputs,
 } from '../../../utils';
+import { handleError } from '../../../utils/helpers';
 import AddStudentForm from './AddStudentForm';
 
-const AddStudent = () => {
-  const i = 0;
+const i = 0;
 
+const formDefaults = {
+  firstName: `Student${i}`,
+  lastName: `New${i}`,
+  email: `student${i}@email.com`,
+  classId: 'ABC123',
+  timeZone: 'Eastern',
+  graduationDate: '',
+  fullTimeCourse: true,
+  gitHubUsername: `student${i}`,
+  zoomLink:
+    'https://zoom.us/j/96314583232?pwd=K1ZsMGpjWEk1MDdQUStKNFlSd3VDZz09',
+  meetingsPerWeek: 1,
+  reassignment: false,
+  temporary: false,
+};
+
+const AddStudent = () => {
   const { openModal, setOpenModal } = useContext(ModalContext);
-  const { allCourses, setAllCourses, selectedCourse } =
-    useContext(CourseContext);
-  const [formInputs, setFormInputs] = useState({
-    firstName: `Student${i}`,
-    lastName: `New${i}`,
-    email: `student${i}@email.com`,
-    classId: 'ABC123',
-    timeZone: 'Eastern',
-    graduationDate: '',
-    fullTimeCourse: 'false',
-    gitHubUsername: `student${i}`,
-    zoomLink:
-      'https://zoom.us/j/96314583232?pwd=K1ZsMGpjWEk1MDdQUStKNFlSd3VDZz09',
-    meetingsPerWeek: 1,
-    reassignment: 'false',
-    temporary: 'false',
-  });
+  const { allCourses, setAllCourses, selectedCourse } = useContext(CourseContext);
+  const [formInputs, setFormInputs] = useState(formDefaults);
 
   const handleAddStudent = async (e) => {
     e.preventDefault();
@@ -36,12 +38,8 @@ const AddStudent = () => {
     inputs.graduationDate = getUnixFromFormInputs(formInputs.graduationDate);
 
     try {
-      const { _id: newStudentId, createdAt } = await createModel(
-        'student',
-        inputs,
-        selectedCourse
-      );
-      if (!newStudentId) return;
+      const { _id: newStudentId, createdAt } = await createModel('student', inputs, selectedCourse);
+      if (!newStudentId) return handleError('createModel [student] did not return _id');
 
       const currentStudents = allCourses[selectedCourse].students;
       const updatedStudents = {
@@ -52,27 +50,21 @@ const AddStudent = () => {
           createdAt,
         },
       };
-      const updatedCourse = {
-        ...allCourses[selectedCourse],
-        students: updatedStudents,
-      };
-      setAllCourses({
-        ...allCourses,
-        [selectedCourse]: updatedCourse,
-      });
-      setOpenModal();
+      const updatedCourse = { ...allCourses[selectedCourse], students: updatedStudents };
+      setAllCourses({ ...allCourses, [selectedCourse]: updatedCourse });
+      setOpenModal('');
     } catch (error) {
-      // login failed
-      console.error('login failed');
+      console.warn(error);
     }
+    return '';
   };
 
   return (
     <Modal
-      className=""
+      className=''
       showClose={false}
       show={openModal === 'addStudent'}
-      onClose={() => setOpenModal()}
+      onClose={() => setOpenModal('')}
     >
       <Modal.Card>
         <Modal.Card.Header showClose>
@@ -87,14 +79,14 @@ const AddStudent = () => {
             />
           </Modal.Card.Body>
 
-          <Modal.Card.Footer renderAs={Button.Group} align="right" hasAddons>
-            <Button type="button" onClick={() => setOpenModal()}>
+          <Modal.Card.Footer renderAs={Button.Group} align='right' hasAddons>
+            <Button type='button' onClick={() => setOpenModal('')}>
               cancel
             </Button>
             <Button
-              color="success"
-              type="submit"
-              disabled={!formIsComplete(formInputs)}
+              color='success'
+              type='submit'
+              disabled={missingFormInputs(formInputs)}
             >
               Add Student
             </Button>

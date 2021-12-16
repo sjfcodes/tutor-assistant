@@ -1,4 +1,7 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import React, {
+  createContext, useContext, useEffect, useMemo, useState,
+} from 'react';
+import { node } from 'prop-types';
 import { loginWithToken } from '../utils';
 import {
   formatCourses,
@@ -13,6 +16,15 @@ export const AppProvider = ({ children }) => {
   const [tutorDetails, setTutorDetails] = useState({ loggedIn: false });
   const { setAllCourses } = useContext(CourseContext);
 
+  const tutorMemo = useMemo(
+    () => (
+      {
+        tutorDetails,
+        setTutorDetails,
+      }),
+    [tutorDetails, setTutorDetails],
+  );
+
   useEffect(() => {
     const token = localStorage.getItem('tutor-token');
     if (!token) return;
@@ -20,28 +32,30 @@ export const AppProvider = ({ children }) => {
     async function loginUser() {
       const { tutor } = await loginWithToken(token);
       if (!tutor) return;
-      const formattedCourses = tutor.courses.map((course) => {
-        return {
-          ...course,
-          students: formatStudents(course.students),
-          meetings: formatMeetings(course.meetings),
-        };
-      });
-      const courses = formatCourses(formattedCourses);
-      setAllCourses(courses);
+      const formattedCourses = tutor.courses.map((course) => ({
+        ...course,
+        students: formatStudents(course.students),
+        meetings: formatMeetings(course.meetings),
+      }));
+
+      setAllCourses(formatCourses(formattedCourses));
       setTutorDetails({ ...tutor, loggedIn: true });
     }
 
     try {
       loginUser();
     } catch (error) {
-      console.error(error);
+      console.warn(error);
     }
   }, [setAllCourses]);
 
   return (
-    <AppContext.Provider value={{ tutorDetails, setTutorDetails }}>
+    <AppContext.Provider value={tutorMemo}>
       {children}
     </AppContext.Provider>
   );
+};
+
+AppProvider.propTypes = {
+  children: node.isRequired,
 };

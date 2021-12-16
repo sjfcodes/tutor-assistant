@@ -1,5 +1,7 @@
-import { createContext, useEffect, useMemo, useState } from 'react';
-import PropTypes from 'prop-types';
+import React, {
+  createContext, useEffect, useMemo, useState,
+} from 'react';
+import { oneOfType, arrayOf, node } from 'prop-types';
 
 export const CourseContext = createContext();
 
@@ -9,26 +11,25 @@ export const CourseProvider = ({ children }) => {
 
   useEffect(() => {
     if (!allCourses || !selectedCourse) return;
+    // eslint-disable-next-line no-console
     console.log(allCourses[selectedCourse]);
   }, [selectedCourse, allCourses]);
 
-  const test = useMemo(() => {
-    return {
-      allCourses,
-      setAllCourses,
-      selectedCourse,
-      setSelectedCourse,
-    };
-  }, [allCourses, selectedCourse]);
+  const memo = useMemo(() => ({
+    allCourses,
+    setAllCourses,
+    selectedCourse,
+    setSelectedCourse,
+  }), [allCourses, selectedCourse]);
 
   return (
-    <CourseContext.Provider value={test}>{children}</CourseContext.Provider>
+    <CourseContext.Provider value={memo}>{children}</CourseContext.Provider>
   );
 };
 
 CourseProvider.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
+  children: oneOfType([
+    arrayOf(node),
+    node,
   ]).isRequired,
 };

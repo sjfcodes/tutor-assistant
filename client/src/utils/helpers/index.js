@@ -1,7 +1,17 @@
-export { formatMeetings } from './meeting';
-export { formatStudents } from './student';
-export { formatCourses } from './course';
-export { logoutTutor } from './logout';
+import handleError from './error';
+import logoutTutor from './logout';
+import formatMeetings from './meeting';
+import formatStudents from './student';
+import formatCourses from './course';
+
+export {
+  handleError,
+  logoutTutor,
+  formatMeetings,
+  formatStudents,
+  formatCourses,
+};
+
 export {
   getCurrentUnix,
   getTimeStamp,
@@ -11,6 +21,6 @@ export {
 export {
   emailIsValid,
   passwordIsValid,
-  formIsComplete,
+  missingFormInputs,
   inputIsSelected,
 } from './forms';

@@ -1,36 +1,32 @@
-import { apiUrl, tokenKey } from '../../config';
+import { getApiEndpoint, getRequestHeaders } from '../apiAccess';
+import { handleError } from '../../helpers';
 
 /**
  * Provide a model name and a data object to create new db entry
  *
- * @param {String} modelName name of the model to be created
+ * @param {String} model name of the model to be created
  * @param {Object} body data to create model with
- * @param {String} parentModelId id of parent model to add new model to
+ * @param {String} id id of parent model to add new model to
  * @returns
  */
-export const createModel = (modelName, body, parentModelId = '') => {
-  const model = modelName.trim().toLowerCase(),
-    url = `${apiUrl}/${model}/${parentModelId}`,
-    options = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        authorization: `Bearer: ${localStorage.getItem(tokenKey)}`,
-      },
-      body: JSON.stringify(body),
-    };
+const createModel = (model, body, id = '') => {
+  const options = {
+    method: 'POST',
+    headers: getRequestHeaders(),
+    body: JSON.stringify(body),
+  };
 
   return new Promise((resolve, reject) => {
     try {
-      fetch(url, options)
+      fetch(getApiEndpoint({ model, id }), options)
         .then((res) => (res.status === 200 ? res.json() : null))
         .then((data) => {
-          if (!data) return reject(null);
-          resolve(data);
+          if (!data) return reject(handleError('missing model data'));
+          return resolve(data);
         });
     } catch (error) {
-      console.error(error);
-      reject(null);
+      reject(handleError('request failed'));
     }
   });
 };
+export default createModel;

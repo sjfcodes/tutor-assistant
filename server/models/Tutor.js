@@ -6,12 +6,12 @@ const tutorSchema = new Schema({
   firstName: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
   },
   lastName: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
   },
   email: {
     type: String,
@@ -21,18 +21,18 @@ const tutorSchema = new Schema({
   },
   timeZone: {
     type: String,
-    required: true
+    required: true,
   },
   gitHubUsername: {
-    type: String
+    type: String,
   },
   calendlyLink: {
     type: String,
-    required: true
+    required: true,
   },
   meetingCount: {
     type: Number,
-    default: 0
+    default: 0,
   },
   password: {
     type: String,
@@ -41,15 +41,16 @@ const tutorSchema = new Schema({
   },
   courses: [{
     type: Schema.Types.ObjectId,
-    ref: 'Course'
+    ref: 'Course',
   }],
   createdAt: {
     type: Number,
-    default: () => Math.floor(new Date().getTime() / 1000), // unix timestamp https://www.epochconverter.com/ 
+    default: () => Math.floor(new Date().getTime() / 1000), // unix timestamp https://www.epochconverter.com/
     // get: (timestamp) => dateFormat(timestamp),
   },
-})
+});
 
+// eslint-disable-next-line func-names
 tutorSchema.pre('save', async function (next) {
   if (this.isNew || this.isModified('password')) {
     const saltRounds = 10;
@@ -58,6 +59,7 @@ tutorSchema.pre('save', async function (next) {
   next();
 });
 
+// eslint-disable-next-line func-names
 tutorSchema.methods.isCorrectPassword = function (password) {
   return bcrypt.compare(password, this.password);
 };
