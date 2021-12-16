@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import {
   Form, Button, Columns, Icon,
 } from 'react-bulma-components';
+import { tokenKey } from '../../config';
 import { AppContext } from '../../context';
 import {
   createModel,
@@ -40,18 +41,16 @@ const SignupForm = () => {
   } = formInputs;
   const { setTutorDetails } = useContext(AppContext);
 
-  const handleInputChange = (e) => {
-    const {
-      target: { name, value },
-    } = e;
+  const handleInputChange = ({ target: { name, value } }) => {
     setFormInputs({ ...formInputs, [name]: value });
   };
 
   const handleSignup = async (e) => {
     e.preventDefault();
     try {
-      const tutor = await createModel('tutor', formInputs);
+      const { tutor, token } = await createModel('tutor', formInputs);
       if (!tutor) return;
+      localStorage.setItem(tokenKey, token);
       setTutorDetails({ ...tutor, loggedIn: true });
     } catch (error) {
       // login failed
