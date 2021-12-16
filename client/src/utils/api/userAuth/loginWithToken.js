@@ -17,7 +17,7 @@ const loginWithToken = () => {
           return resolve({ tutor, courses });
         });
     } catch (error) {
-      reject(handleError(error));
+      reject(handleError('failed to login tutor by token'));
     }
   });
 };

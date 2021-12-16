@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/samuelfox1/tutor-assistant-api.git"
+    "url": "git+https://github.com/samuelfox1/tutor-assistant.git"
   },
   "author": "samuel fox",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/samuelfox1/tutor-assistant-api/issues"
+    "url": "https://github.com/samuelfox1/tutor-assistant/issues"
   },
-  "homepage": "https://github.com/samuelfox1/tutor-assistant-api#readme",
+  "homepage": "https://github.com/samuelfox1/tutor-assistant#readme",
   "dependencies": {
     "bcrypt": "^5.0.1",
     "compression": "^1.7.4",

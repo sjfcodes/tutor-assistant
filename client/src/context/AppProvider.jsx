@@ -9,6 +9,7 @@ import {
   formatStudents,
 } from '../utils/helpers';
 import { CourseContext } from './CourseProvider';
+import { tokenKey } from '../config';
 
 export const AppContext = createContext();
 
@@ -30,23 +31,25 @@ export const AppProvider = ({ children }) => {
     if (!token) return;
 
     async function loginUser() {
-      const { tutor } = await loginWithToken(token);
-      if (!tutor) return;
-      const formattedCourses = tutor.courses.map((course) => ({
-        ...course,
-        students: formatStudents(course.students),
-        meetings: formatMeetings(course.meetings),
-      }));
+      try {
+        const { tutor } = await loginWithToken(token);
+        if (!tutor) return;
 
-      setAllCourses(formatCourses(formattedCourses));
-      setTutorDetails({ ...tutor, loggedIn: true });
+        const formattedCourses = tutor.courses.map((course) => ({
+          ...course,
+          students: formatStudents(course.students),
+          meetings: formatMeetings(course.meetings),
+        }));
+
+        setAllCourses(formatCourses(formattedCourses));
+        setTutorDetails({ ...tutor, loggedIn: true });
+      } catch (error) {
+        console.warn(error);
+        localStorage.removeItem(tokenKey);
+      }
     }
 
-    try {
-      loginUser();
-    } catch (error) {
-      console.warn(error);
-    }
+    loginUser();
   }, [setAllCourses]);
 
   return (
