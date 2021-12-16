@@ -1,3 +1,5 @@
+import React from 'react';
+import { string, func } from 'prop-types';
 import { Button, Form, Level } from 'react-bulma-components';
 
 const EditNameLayout = ({
@@ -12,23 +14,25 @@ const EditNameLayout = ({
 
   return (
     <>
-      <Level.Side align="left">
+      <Level.Side align='left'>
         <Level.Item>
-          <Form.Field>
-            <Form.Control>
-              <Form.Input value={formInput} onChange={handleInputChange} />
-            </Form.Control>
-          </Form.Field>
+          <form onSubmit={handleUpdateClick}>
+            <Form.Field>
+              <Form.Control>
+                <Form.Input value={formInput} onChange={handleInputChange} />
+              </Form.Control>
+            </Form.Field>
+          </form>
         </Level.Item>
       </Level.Side>
-      <Level.Side align="right">
+      <Level.Side align='right'>
         <Level.Item>
           <Button.Group>
-            <Button outlined color="info" onClick={() => setCourseToUpdate()}>
+            <Button outlined color='info' onClick={() => setCourseToUpdate('')}>
               cancel
             </Button>
 
-            <Button color="success" onClick={handleUpdateClick}>
+            <Button color='success' onClick={handleUpdateClick}>
               save
             </Button>
           </Button.Group>
@@ -38,3 +42,10 @@ const EditNameLayout = ({
   );
 };
 export default EditNameLayout;
+
+EditNameLayout.propTypes = {
+  formInput: string.isRequired,
+  setFormInput: func.isRequired,
+  setCourseToUpdate: func.isRequired,
+  handleUpdateClick: func.isRequired,
+};

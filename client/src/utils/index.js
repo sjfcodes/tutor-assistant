@@ -1,16 +1,16 @@
 export {
-  loginWithToken,
   loginWithPassword,
+  loginWithToken,
   createModel,
-  deleteModel,
   updateModel,
+  deleteModel,
 } from './api';
 
 export {
   logoutTutor,
   emailIsValid,
   passwordIsValid,
-  formIsComplete,
+  missingFormInputs,
   inputIsSelected,
   getCurrentUnix,
   getTimeStamp,

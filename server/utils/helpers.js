@@ -1,123 +1,117 @@
+const { Error } = require('mongoose');
 const { Tutor, Course } = require('../models');
 
 module.exports = {
-    getTutorById: (id) => {
-        return new Promise(async (resolve, reject) => {
-            try {
-                const tutor = await Tutor.findById(id)
-                    .populate({
-                        path: 'courses',
-                        populate: [
-                            {
-                                path: 'students',
-                                model: 'Student',
-                            },
-                            {
-                                path: 'meetings',
-                                model: 'Meeting',
-                            }
-                        ]
-                    })
-                    .select('-password')
-                if (!tutor) return reject('tutor not found');
 
-                resolve({ tutor });
+  getTutorById: (id) => new Promise((resolve, reject) => {
+    Tutor.findById(id)
+      .populate({
+        path: 'courses',
+        populate: [
+          {
+            path: 'students',
+            model: 'Student',
+          },
+          {
+            path: 'meetings',
+            model: 'Meeting',
+          },
+        ],
+      })
+      .select('-password')
+      .then((tutor) => {
+        if (!tutor) return reject(new Error('tutor not found'));
+        return resolve({ tutor });
+      })
+      .catch((error) => reject(error));
+  }),
 
-            } catch (error) {
-                reject(error);
-            };
-        });
-    },
-    getTutorByEmail: (email) => {
-        return new Promise(async (resolve, reject) => {
-            try {
-                const tutor = await Tutor.findOne({ email: email })
-                    .populate({
-                        path: 'courses',
-                        populate: [
-                            {
-                                path: 'students',
-                                model: 'Student',
-                            },
-                            {
-                                path: 'meetings',
-                                model: 'Meeting',
-                            }
-                        ]
-                    })
-                if (!tutor) return reject('tutor not found');
+  getTutorByEmail: (email) => new Promise((resolve, reject) => {
+    Tutor.findOne({ email })
+      .populate({
+        path: 'courses',
+        populate: [
+          {
+            path: 'students',
+            model: 'Student',
+          },
+          {
+            path: 'meetings',
+            model: 'Meeting',
+          },
+        ],
+      })
+      .then((tutor) => {
+        if (!tutor) return reject(new Error('tutor not found'));
+        return resolve({ tutor });
+      })
+      .catch((error) => reject(error));
+  }),
 
-                resolve({ tutor });
+  addModelToTutor: (tutorId, property, modelId) => new Promise((resolve, reject) => {
+    Tutor.findByIdAndUpdate(
+      tutorId,
+      { $addToSet: { [property]: modelId } },
+      // { new: true }
+    )
+      .then((updatedTutor) => {
+        if (!updatedTutor) return reject(new Error('failed to update tutor'));
+        return resolve(updatedTutor);
+      })
+      .catch((error) => reject(error));
+  }),
 
-            } catch (error) {
-                reject(error);
-            };
-        });
-    },
-    addModelToTutor: (tutorId, property, modelId) => {
-        return new Promise(async (resolve, reject) => {
-            try {
-                const updatedTutor = await Tutor.findByIdAndUpdate(
-                    tutorId,
-                    { $addToSet: { [property]: modelId } },
-                    // { new: true }
-                );
-                if (!updatedTutor) return reject('failed to update tutor');
-                resolve(updatedTutor);
-            } catch (error) {
-                reject(error);
-            };
-        });
-    },
-    deleteModelFromTutor: (tutorId, property, Model, modelId) => {
-        return new Promise(async (resolve, reject) => {
-            try {
-                const updatedTutor = await Tutor.findByIdAndUpdate(tutorId,
-                    { $pullAll: { [property]: [modelId] } },
-                    // { new: true }
-                );
-                if (!updatedTutor) return reject('failed to update tutor');
-                await Model.findByIdAndDelete(modelId);
-                resolve(updatedTutor);
-            } catch (error) {
-                reject(error);
-            };
-        });
-    },
-    addModelToCourse: (courseId, property, modelId) => {
-        return new Promise(async (resolve, reject) => {
-            try {
-                const updatedCourse = await Course.findByIdAndUpdate(
-                    courseId,
-                    { $addToSet: { [property]: modelId } },
-                    // { new: true }
-                );
-                if (!updatedCourse) return reject('failed to update Course');
-                resolve(updatedCourse);
-            } catch (error) {
-                reject(error);
-            };
-        });
-    },
-    deleteModelFromCourse: (courseId, property, Model, modelId) => {
-        return new Promise(async (resolve, reject) => {
-            try {
-                const updatedCourse = await Course.findByIdAndUpdate(courseId,
-                    { $pullAll: { [property]: [modelId] } },
-                    // { new: true }
-                );
-                if (!updatedCourse) return reject('failed to update Course');
-                await Model.findByIdAndDelete(modelId);
-                resolve(updatedCourse);
-            } catch (error) {
-                reject(error);
-            };
-        });
-    },
-    updateDocumentProperties: (allowUpdate, currentDoc, newProps) => {
-        for (const [key, value] of Object.entries(newProps)) {
-            if (key === 'email' && currentDoc.email === newProps.email) continue;
-            if (allowUpdate[key]) currentDoc[key] = value;
-        };
+  deleteModelFromTutor: (tutorId, property, Model, modelId) => new Promise((resolve, reject) => {
+    Tutor.findByIdAndUpdate(
+      tutorId,
+      { $pullAll: { [property]: [modelId] } },
+      // { new: true }
+    ).then((updatedTutor) => {
+      if (!updatedTutor) return reject(new Error('failed to update tutor'));
+      Model.findByIdAndDelete(modelId)
+        .then(() => resolve(updatedTutor))
+        .catch((error) => reject(error));
+      return 'success';
+    })
+      .catch((error) => reject(error));
+  }),
+
+  addModelToCourse: (courseId, property, modelId) => new Promise((resolve, reject) => {
+    Course.findByIdAndUpdate(
+      courseId,
+      { $addToSet: { [property]: modelId } },
+      // { new: true }
+    )
+      .then((updatedCourse) => {
+        if (!updatedCourse) return reject(new Error('failed to update Course'));
+        return resolve(updatedCourse);
+      })
+      .catch((error) => reject(error));
+  }),
+
+  deleteModelFromCourse: (courseId, property, Model, modelId) => new Promise((resolve, reject) => {
+    Course.findByIdAndUpdate(
+      courseId,
+      { $pullAll: { [property]: [modelId] } },
+      // { new: true }
+    )
+      .then((updatedCourse) => {
+        if (!updatedCourse) return reject(new Error('failed to update Course'));
+        Model.findByIdAndDelete(modelId)
+          .then(() => resolve(updatedCourse))
+          .catch((error) => reject(error));
+        return 'success';
+      })
+      .catch((error) => reject(error));
+  }),
+
+  updateDocumentProperties: (allowUpdate, currentDoc, newProps) => {
+    // eslint-disable-next-line no-restricted-syntax
+    for (const [key, value] of Object.entries(newProps)) {
+      // eslint-disable-next-line no-continue
+      if (key === 'email' && currentDoc.email === newProps.email) continue;
+      // eslint-disable-next-line no-param-reassign
+      if (allowUpdate[key]) currentDoc[key] = value;
     }
+  },
 };

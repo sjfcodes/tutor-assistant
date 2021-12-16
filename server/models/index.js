@@ -4,4 +4,6 @@ const Meeting = require('./Meeting');
 const Template = require('./Template');
 const Course = require('./Course');
 
-module.exports = { Tutor, Student, Meeting, Template, Course };
+module.exports = {
+  Tutor, Student, Meeting, Template, Course,
+};

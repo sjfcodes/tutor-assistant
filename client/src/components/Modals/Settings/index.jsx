@@ -1,4 +1,6 @@
-import { useCallback, useContext, useEffect, useState } from 'react';
+import React, {
+  useCallback, useContext, useEffect, useState,
+} from 'react';
 import { Button, Modal, Tabs } from 'react-bulma-components';
 import { AppContext, CourseContext, ModalContext } from '../../../context';
 import { deleteModel, updateModel } from '../../../utils';
@@ -7,19 +9,22 @@ import CourseLineItem from './Course';
 const { Tab } = Tabs;
 
 const Settings = () => {
-  const {
-    tutorDetails: { firstName },
-  } = useContext(AppContext);
+  const { tutorDetails: { firstName } } = useContext(AppContext);
+
   const { openModal, setOpenModal } = useContext(ModalContext);
-  const { allCourses, setAllCourses, selectedCourse, setSelectedCourse } =
-    useContext(CourseContext);
-  const [courseItems, setCourseItems] = useState(null);
-  const [courseToDelete, setCourseToDelete] = useState(null);
-  const [courseToUpdate, setCourseToUpdate] = useState(null);
+
+  const {
+    allCourses, setSelectedCourse,
+    selectedCourse, setAllCourses,
+  } = useContext(CourseContext);
+
+  const [courseItems, setCourseItems] = useState();
+  const [courseToDelete, setCourseToDelete] = useState('');
+  const [courseToUpdate, setCourseToUpdate] = useState('');
 
   const handleUpdateCourse = useCallback(
     async (_id, name) => {
-      setCourseToUpdate();
+      setCourseToUpdate('');
       if (!_id || !name) return;
 
       try {
@@ -30,16 +35,16 @@ const Settings = () => {
         updatedCourses[_id].name = name;
         setAllCourses({ ...updatedCourses });
       } catch (error) {
-        console.error(error);
+        console.warn(error);
       }
     },
-    [allCourses, setAllCourses]
+    [allCourses, setAllCourses],
   );
 
   const handleDeleteCourse = useCallback(
     async (_id) => {
       const idToDelete = _id;
-      setCourseToDelete();
+      setCourseToDelete('');
       if (!_id) return;
 
       try {
@@ -55,10 +60,10 @@ const Settings = () => {
 
         setAllCourses({ ...updatedCourses });
       } catch (error) {
-        console.error(error);
+        console.warn(error);
       }
     },
-    [allCourses, setAllCourses, selectedCourse, setSelectedCourse]
+    [allCourses, setAllCourses, selectedCourse, setSelectedCourse],
   );
 
   const update = useCallback(() => {
@@ -75,7 +80,7 @@ const Settings = () => {
           handleDeleteCourse={handleDeleteCourse}
           handleUpdateCourse={handleUpdateCourse}
         />
-      ))
+      )),
     );
   }, [
     allCourses,
@@ -88,13 +93,14 @@ const Settings = () => {
   useEffect(() => {
     if (!allCourses) return setCourseItems(null);
     update();
+    return '';
   }, [allCourses, courseToDelete, courseToUpdate, update]);
 
   return (
     <Modal
       showClose={false}
       show={openModal === 'settings'}
-      onClose={() => setOpenModal()}
+      onClose={() => setOpenModal('')}
     >
       <Modal.Card>
         <Modal.Card.Header showClose={false}>
@@ -109,8 +115,8 @@ const Settings = () => {
 
           {courseItems}
         </Modal.Card.Body>
-        <Modal.Card.Footer renderAs={Button.Group} align="right">
-          <Button onClick={() => setOpenModal()}>Done</Button>
+        <Modal.Card.Footer renderAs={Button.Group} align='right'>
+          <Button onClick={() => setOpenModal('')}>Done</Button>
         </Modal.Card.Footer>
       </Modal.Card>
     </Modal>

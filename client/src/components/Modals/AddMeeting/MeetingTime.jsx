@@ -1,31 +1,22 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Form, Icon } from 'react-bulma-components';
+import {
+  string, number, func, shape,
+} from 'prop-types';
 import { getUnixFromFormInputs } from '../../../utils';
 
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * WHEN a day is selected
- * THEN set year,month,day to local state --x
- *
- * WHEN an hour is selected
- * THEN set hour to local state --x
- *
- * WHEN am/pm is selected
- * THEN set value to state --x
- *
- * WHEN day, hour & amPm have value
- * THEN
- * -    get unix time for date selected --x
- * -    update main form state with unix time --x
- * -    allow submit button to be clicked
- *
- * WHEN submit button is clicked
- * THEN a post request is made to create the new meeting
- *
- * WHEN post request is successful
- * THEN client recieves _id && new meeting is stored in local state
- */
+export const addMeetingFormPropTypes = {
+  formInputs: shape({
+    tutorId: string.isRequired,
+    studentId: string.isRequired,
+    duration: number.isRequired,
+    startDate: number.isRequired,
+    status: string.isRequired,
+  }).isRequired,
+  setFormInputs: func.isRequired,
+};
 
-export const MeetingTime = ({ formInputs, setFormInputs }) => {
+const MeetingTime = ({ formInputs, setFormInputs }) => {
   const [date, setDate] = useState({
     day: '',
     time: '',
@@ -35,7 +26,7 @@ export const MeetingTime = ({ formInputs, setFormInputs }) => {
   const { day, time, amPm } = date;
   const { studentId, startDate } = formInputs;
 
-  const validateStartDate = ({ day, time, amPm }) => !!(day && time && amPm);
+  const validateStartDate = (data) => !!(data.day && data.time && data.amPm);
 
   const handleInputChange = ({ target: { name, value } }) => {
     const copy = { ...date, [name]: value === '-' ? '' : value };
@@ -44,20 +35,18 @@ export const MeetingTime = ({ formInputs, setFormInputs }) => {
       // if we have all the data, get the unix time
       const unix = getUnixFromFormInputs(copy.day, copy.time, copy.amPm);
       setFormInputs({ ...formInputs, startDate: unix });
-    } else if (startDate) {
-      setFormInputs({ ...formInputs, startDate: '' });
-    }
+    } else if (startDate) setFormInputs({ ...formInputs, startDate: '' });
 
     setDate({ ...date, [name]: value === '-' ? '' : value });
   };
 
   return (
-    <Form.Field kind="addons">
+    <Form.Field kind='addons'>
       <Form.Control>
         <Form.Label>Day</Form.Label>
         <Form.Input
-          type="date"
-          name="day"
+          type='date'
+          name='day'
           value={day}
           onChange={handleInputChange}
           disabled={!studentId}
@@ -67,7 +56,7 @@ export const MeetingTime = ({ formInputs, setFormInputs }) => {
         <Form.Label>Time</Form.Label>
 
         <Form.Select
-          name="time"
+          name='time'
           value={time}
           onChange={handleInputChange}
           disabled={!day}
@@ -90,19 +79,18 @@ export const MeetingTime = ({ formInputs, setFormInputs }) => {
       <Form.Control>
         <Form.Label>AM/PM</Form.Label>
         <Form.Select
-          name="amPm"
+          name='amPm'
           value={amPm}
           onChange={handleInputChange}
           disabled={!time}
         >
           <option>-</option>
-          <option value="AM">AM</option>
-          <option value="PM">PM</option>
+          <option value='AM'>AM</option>
+          <option value='PM'>PM</option>
         </Form.Select>
-        <Icon className="ml-2 mt-2">
+        <Icon className='ml-2 mt-2'>
           <i
-            className={`fas fa-check ${
-              !validateStartDate(date) && `has-text-white`
+            className={`fas fa-check ${!validateStartDate(date) && 'has-text-white'
             }`}
           />
         </Icon>
@@ -110,3 +98,6 @@ export const MeetingTime = ({ formInputs, setFormInputs }) => {
     </Form.Field>
   );
 };
+export default MeetingTime;
+
+MeetingTime.propTypes = addMeetingFormPropTypes;

@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import React, { useContext } from 'react';
 import { Section } from 'react-bulma-components';
 import { MeetingsSection, StudentsSection, CourseTabs } from '../../components';
 import { AddMeeting, AddStudent } from '../../components/Modals';
@@ -8,7 +8,7 @@ const Home = () => {
   const { selectedCourse } = useContext(CourseContext);
 
   return (
-    <Section className="p-3 background-dark-blurred rounded">
+    <Section className='p-3 background-dark-blurred rounded'>
       <CourseTabs />
       {selectedCourse && (
         <>

@@ -1,3 +1,7 @@
+:root {
+  --blue: #09b2f5
+}
+
 .has-text-white a {
   color: white !important ;
   border-top: solid rgb(255, 255, 255) 1px !important;
@@ -10,6 +14,7 @@
 
 .is-active a {
   color: #09b2f5 !important ;
+  border: #09b2f5 solid 1px !important ;
 }
 
 .tabs ul li {
@@ -21,4 +26,6 @@
 
 .tabs ul li:hover {
   transform: scale(1.09) translate(5%, 0);
+  border: #09b2f5 solid 1px !important ;
+
 }
