@@ -46,9 +46,12 @@ const Nav = () => {
         {loggedIn && (
           <>
             <NavbarItem>
-              <button type='button' onClick={handleAvatarClick}>
+              <button
+                type='button'
+                className='avatar'
+                onClick={handleAvatarClick}
+              >
                 <img
-                  className='avatar'
                   alt='user avatar'
                   src='https://i.imgur.com/zEvf4P4.jpg'
                 />
