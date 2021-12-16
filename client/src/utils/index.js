@@ -10,7 +10,7 @@ export {
   logoutTutor,
   emailIsValid,
   passwordIsValid,
-  formIsComplete,
+  missingFormInputs,
   inputIsSelected,
   getCurrentUnix,
   getTimeStamp,

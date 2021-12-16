@@ -26,7 +26,8 @@ const CourseLineItem = ({
     [setCourseToUpdate],
   );
 
-  const handleUpdateClick = useCallback(() => {
+  const handleUpdateClick = useCallback((e) => {
+    e.preventDefault();
     handleUpdateCourse(courseId, formInput.trim());
     setFormInput('');
   }, [courseId, formInput, handleUpdateCourse]);

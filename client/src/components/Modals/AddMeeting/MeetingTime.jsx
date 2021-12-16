@@ -5,12 +5,12 @@ import {
 } from 'prop-types';
 import { getUnixFromFormInputs } from '../../../utils';
 
-export const meetingFormPropTypes = {
+export const addMeetingFormPropTypes = {
   formInputs: shape({
     tutorId: string.isRequired,
     studentId: string.isRequired,
     duration: number.isRequired,
-    startDate: string.isRequired,
+    startDate: number.isRequired,
     status: string.isRequired,
   }).isRequired,
   setFormInputs: func.isRequired,
@@ -100,13 +100,4 @@ const MeetingTime = ({ formInputs, setFormInputs }) => {
 };
 export default MeetingTime;
 
-MeetingTime.propTypes = {
-  formInputs: shape({
-    tutorId: string.isRequired,
-    studentId: string.isRequired,
-    duration: number.isRequired,
-    startDate: string.isRequired,
-    status: string.isRequired,
-  }).isRequired,
-  setFormInputs: func.isRequired,
-};
+MeetingTime.propTypes = addMeetingFormPropTypes;

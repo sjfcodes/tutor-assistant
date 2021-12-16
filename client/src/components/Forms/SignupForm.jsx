@@ -6,7 +6,7 @@ import { AppContext } from '../../context';
 import {
   createModel,
   emailIsValid,
-  formIsComplete,
+  missingFormInputs,
   passwordIsValid,
   inputIsSelected,
 } from '../../utils';
@@ -239,7 +239,7 @@ const SignupForm = () => {
         rounded
         color='primary'
         className='mt-5'
-        disabled={!formIsComplete(formInputs)}
+        disabled={missingFormInputs(formInputs)}
         onClick={handleSignup}
       >
         Signup

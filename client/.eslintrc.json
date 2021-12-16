@@ -23,7 +23,6 @@
         "valid-typeof": "warn",
         "curly": [ "warn", "multi" ],
         "eqeqeq": [ "warn", "always" ],
-        "multiline-comment-style": [ "warn", "starred-block"],
         "arrow-body-style": ["warn", "as-needed", { "requireReturnForObjectLiteral": false }],
         "implicit-arrow-linebreak": [ "error", "beside" ],
         "no-else-return": "warn",

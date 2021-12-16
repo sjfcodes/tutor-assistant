@@ -16,7 +16,7 @@ router.post('/', async (req, res) => {
     // respond with new course data
     res.json(course);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).json('failed to update tutor');
   }
   return '';
@@ -33,7 +33,7 @@ router.put('/', async (req, res) => {
 
     res.json('course updated');
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).json('failed to update course');
   }
   return '';
@@ -48,7 +48,7 @@ router.delete('/:id', async (req, res) => {
     await deleteModelFromTutor(tutor._id, 'courses', Course, req.params.id);
     res.json('course deleted');
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).json('failed to delete course');
   }
   return '';

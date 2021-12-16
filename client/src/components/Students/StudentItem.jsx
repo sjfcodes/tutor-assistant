@@ -54,9 +54,10 @@ const StudentItem = ({
   };
 
   useEffect(() => {
+    let isMounted = true;
     switch (property) {
     case 'gitHubUsername':
-      return setVal(
+      return isMounted && setVal(
         <a
           href={`https://github.com/${value}`}
           target='_blank'
@@ -66,21 +67,22 @@ const StudentItem = ({
         </a>,
       );
     case 'zoomLink':
-      return setVal(
+      return isMounted && setVal(
         <a href={value} target='_blank' rel='noreferrer'>
           {value}
         </a>,
       );
     case 'graduationDate':
-      return setVal(
+      return isMounted && setVal(
         <span>{new Date(value * 1000).toLocaleDateString()}</span>,
       );
     case 'createdAt':
-      return setVal(<span>{String(new Date(value * 1000))}</span>);
+      return isMounted && setVal(<span>{String(new Date(value * 1000))}</span>);
 
     default:
-      return setVal(<span>{`${value}`}</span>);
+      if (isMounted) setVal(<span>{`${value}`}</span>);
     }
+    return () => { isMounted = false; };
   }, [property, value]);
 
   useEffect(() => {

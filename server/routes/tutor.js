@@ -13,7 +13,7 @@ router.post('/', async ({ body }, res) => {
     const token = signToken(tutor);
     res.json({ token, tutor });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).json('failed to create tutor');
   }
 });
@@ -29,7 +29,7 @@ router.post('/login', async ({ body }, res) => {
     const token = signToken(tutor);
     res.json({ token, tutor });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(401).json('unauthorized');
   }
   return 1;
@@ -47,7 +47,7 @@ router.get('/login', async (req, res) => {
     const token = signToken(tutor);
     res.json({ token, tutor });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(401).json('unauthorized');
   }
   return 1;
@@ -103,7 +103,7 @@ router.put('/password', async (req, res) => {
 
     res.json('password updated');
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(401).json('unauthorized');
   }
   return 1;
@@ -122,7 +122,7 @@ router.delete('/', async (req, res) => {
 
     res.json('tutor deleted');
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(401).json('unauthorized');
   }
   return 1;

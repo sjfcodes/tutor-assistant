@@ -2,12 +2,9 @@ import React, { useContext } from 'react';
 import {
   Button, Form, Icon, Level,
 } from 'react-bulma-components';
-import {
-  string, number, func, shape,
-} from 'prop-types';
 import { CourseContext } from '../../../context';
 import { inputIsSelected } from '../../../utils';
-import MeetingTime from './MeetingTime';
+import MeetingTime, { addMeetingFormPropTypes } from './MeetingTime';
 
 const AddMeetingForm = ({ formInputs, setFormInputs }) => {
   const { allCourses, selectedCourse } = useContext(CourseContext);
@@ -63,7 +60,7 @@ const AddMeetingForm = ({ formInputs, setFormInputs }) => {
         </Level.Item>
       </Level.Side>
       <Level.Item>
-        <MeetingTime formInputs setFormInputs />
+        <MeetingTime formInputs={formInputs} setFormInputs={setFormInputs} />
       </Level.Item>
       <Level.Side align='right'>
         <Level.Item>
@@ -107,13 +104,4 @@ const AddMeetingForm = ({ formInputs, setFormInputs }) => {
 };
 export default AddMeetingForm;
 
-AddMeetingForm.propTypes = {
-  formInputs: shape({
-    tutorId: string.isRequired,
-    studentId: string.isRequired,
-    duration: number.isRequired,
-    startDate: string.isRequired,
-    status: string.isRequired,
-  }).isRequired,
-  setFormInputs: func.isRequired,
-};
+AddMeetingForm.propTypes = addMeetingFormPropTypes;

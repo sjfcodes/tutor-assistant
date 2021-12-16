@@ -21,6 +21,6 @@ export {
 export {
   emailIsValid,
   passwordIsValid,
-  formIsComplete,
+  missingFormInputs,
   inputIsSelected,
 } from './forms';

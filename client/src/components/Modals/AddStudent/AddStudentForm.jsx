@@ -6,7 +6,7 @@ import {
   string, number, bool, func, shape,
 } from 'prop-types';
 import {
-  // emailIsValid,
+  emailIsValid,
   getCurrentUnix,
   getUnixFromFormInputs,
   inputIsSelected,
@@ -40,35 +40,34 @@ const AddStudentForm = ({ formInputs, setFormInputs }) => {
     return object;
   });
 
-  const updateHelpText = (inputName, message) => setHelpText({
+  const updateHelpText = (name, message) => setHelpText({
     ...helpText,
-    [inputName]: message || `missing ${inputName}`,
+    [name]: message || `missing ${name}`,
   });
 
-  const handleInputChange = ({
-    target: { name: inputName, value: inputValue },
-  }) => {
-    switch (inputName) {
-    case 'graduationDate':
-      {
-        const selectedDate = getUnixFromFormInputs(inputValue);
-        const today = getCurrentUnix();
-        if (selectedDate < today) updateHelpText(inputName, 'graduation date must be in the future');
-      }
+  const handleInputChange = ({ target: { name, value } }) => {
+    if (value === 'true' || value === 'false') return setFormInputs((currState) => ({ ...currState, [name]: !currState[name] }));
+
+    switch (name) {
+    case 'graduationDate': {
+      const selectedDate = getUnixFromFormInputs(value);
+      const today = getCurrentUnix();
+      if (selectedDate < today) updateHelpText(name, 'graduation date must be in the future');
+    }
       break;
 
     case 'meetingsPerWeek':
-      if (!parseInt(inputValue, 10)) return;
+      if (!parseInt(value, 10)) return '';
       break;
 
     case 'timeZone':
-      if (!inputValue || inputValue === '-') updateHelpText(inputName);
+      if (!value || value === '-') updateHelpText(name);
       break;
     default:
-      if (helpText[inputName]) updateHelpText(inputName, '');
+      if (helpText[name]) updateHelpText(name, '');
     }
 
-    setFormInputs({ ...formInputs, [inputName]: inputValue });
+    return setFormInputs({ ...formInputs, [name]: value });
   };
 
   useEffect(() => {
@@ -156,7 +155,7 @@ const AddStudentForm = ({ formInputs, setFormInputs }) => {
             value={email}
             icon='far fa-envelope'
             onChange={handleInputChange}
-            // validate={emailIsValid}
+            validate={emailIsValid}
           />
         </Column>
       </Columns>
@@ -203,16 +202,18 @@ const AddStudentForm = ({ formInputs, setFormInputs }) => {
               <Form.Radio
                 value='true'
                 name='fullTimeCourse'
-                checked={fullTimeCourse === 'true'}
-                onChange={handleInputChange}
+                checked={fullTimeCourse}
+                onChange={() => null}
+                onClick={handleInputChange}
               >
                 Yes
               </Form.Radio>
               <Form.Radio
                 value='false'
                 name='fullTimeCourse'
-                checked={fullTimeCourse === 'false'}
-                onChange={handleInputChange}
+                checked={!fullTimeCourse}
+                onChange={() => null}
+                onClick={handleInputChange}
               >
                 No
               </Form.Radio>
@@ -225,16 +226,18 @@ const AddStudentForm = ({ formInputs, setFormInputs }) => {
               <Form.Radio
                 value='true'
                 name='reassignment'
-                checked={reassignment === 'true'}
-                onChange={handleInputChange}
+                checked={reassignment}
+                onChange={() => null}
+                onClick={handleInputChange}
               >
                 Yes
               </Form.Radio>
               <Form.Radio
                 value='false'
                 name='reassignment'
-                checked={reassignment === 'false'}
-                onChange={handleInputChange}
+                checked={!reassignment}
+                onChange={() => null}
+                onClick={handleInputChange}
               >
                 No
               </Form.Radio>
@@ -246,16 +249,18 @@ const AddStudentForm = ({ formInputs, setFormInputs }) => {
               <Form.Radio
                 value='true'
                 name='temporary'
-                checked={temporary === 'true'}
-                onChange={handleInputChange}
+                checked={temporary}
+                onChange={() => null}
+                onClick={handleInputChange}
               >
                 Yes
               </Form.Radio>
               <Form.Radio
                 value='false'
                 name='temporary'
-                checked={temporary === 'false'}
-                onChange={handleInputChange}
+                checked={!temporary}
+                onChange={() => null}
+                onClick={handleInputChange}
               >
                 No
               </Form.Radio>

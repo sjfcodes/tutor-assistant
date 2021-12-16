@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Columns, Icon } from 'react-bulma-components';
-import { string, number } from 'prop-types';
+import { string, number, oneOfType } from 'prop-types';
 import { CourseContext } from '../../context';
 import { updateModel } from '../../utils';
 
@@ -91,10 +91,10 @@ const MeetingItem = ({
         className={`meeting-item m-0  ${idx % 2 !== 0 && 'has-background-grey-lighter rounded'
         }`}
       >
-        <Columns.Column size={3} align='left'>
+        <Columns.Column size={3} align='left' className='py-0'>
           {`${property}:`}
         </Columns.Column>
-        <Columns.Column className=' ml-5'>
+        <Columns.Column className=' ml-5 py-0'>
           {itemToEdit === property ? (
             <input
               type='input'
@@ -134,6 +134,6 @@ export default MeetingItem;
 MeetingItem.propTypes = {
   _id: string.isRequired,
   property: string.isRequired,
-  value: string.isRequired,
+  value: oneOfType([string, number]).isRequired,
   idx: number.isRequired,
 };

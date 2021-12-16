@@ -16,11 +16,13 @@ const EditNameLayout = ({
     <>
       <Level.Side align='left'>
         <Level.Item>
-          <Form.Field>
-            <Form.Control>
-              <Form.Input value={formInput} onChange={handleInputChange} />
-            </Form.Control>
-          </Form.Field>
+          <form onSubmit={handleUpdateClick}>
+            <Form.Field>
+              <Form.Control>
+                <Form.Input value={formInput} onChange={handleInputChange} />
+              </Form.Control>
+            </Form.Field>
+          </form>
         </Level.Item>
       </Level.Side>
       <Level.Side align='right'>

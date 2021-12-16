@@ -7,11 +7,14 @@ export const emailIsValid = (email) => {
   return re.test(email);
 };
 
-export const formIsComplete = (formInputs) => {
-  let missingValue = true;
+export const missingFormInputs = (formInputs) => {
+  let missingValue = false;
   Object.values(formInputs).forEach((value) => {
-    if (!value || value === '-') missingValue = false;
+    if (typeof value === 'boolean') return '';
+    if (!value || value === '-') missingValue = true;
+
     return '';
   });
+
   return missingValue;
 };

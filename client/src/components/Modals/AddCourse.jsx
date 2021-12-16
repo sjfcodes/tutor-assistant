@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Button, Form, Modal } from 'react-bulma-components';
 import { AppContext, CourseContext, ModalContext } from '../../context';
-import { createModel, formIsComplete } from '../../utils';
+import { createModel, missingFormInputs } from '../../utils';
 
 const AddCourse = () => {
   const { openModal, setOpenModal } = useContext(ModalContext);
@@ -50,16 +50,16 @@ const AddCourse = () => {
       setAllCourses((currentState) => ({ ...currentState, [newCourse._id]: newCourse }));
 
       resetForm();
-      setHelpMessage();
+      setHelpMessage('');
       setSelectedCourse(newCourse._id);
-      setOpenModal();
+      setOpenModal('');
     } catch (error) {
       console.warn(error);
     }
   };
 
   const handleCloseModal = () => {
-    setOpenModal();
+    setOpenModal('');
     resetForm();
   };
 
@@ -92,7 +92,7 @@ const AddCourse = () => {
           </Modal.Card.Body>
           <Modal.Card.Footer renderAs={Button.Group} align='right'>
             <Button
-              disabled={helpMessage || !formIsComplete(formInputs)}
+              disabled={helpMessage || missingFormInputs(formInputs)}
               color='info'
             >
               Add Course

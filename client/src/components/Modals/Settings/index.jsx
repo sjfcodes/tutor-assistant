@@ -100,7 +100,7 @@ const Settings = () => {
     <Modal
       showClose={false}
       show={openModal === 'settings'}
-      onClose={() => setOpenModal()}
+      onClose={() => setOpenModal('')}
     >
       <Modal.Card>
         <Modal.Card.Header showClose={false}>
@@ -116,7 +116,7 @@ const Settings = () => {
           {courseItems}
         </Modal.Card.Body>
         <Modal.Card.Footer renderAs={Button.Group} align='right'>
-          <Button onClick={() => setOpenModal()}>Done</Button>
+          <Button onClick={() => setOpenModal('')}>Done</Button>
         </Modal.Card.Footer>
       </Modal.Card>
     </Modal>

@@ -5,12 +5,12 @@ const studentSchema = new Schema({
   firstName: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
   },
   lastName: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
   },
   email: {
     type: String,
@@ -23,43 +23,44 @@ const studentSchema = new Schema({
     trim: true,
   },
   timeZone: {
-    type: String
+    type: String,
   },
   graduationDate: {
-    type: Number //unix
+    type: Number, // unix
   },
   fullTimeCourse: {
-    type: Boolean
+    type: Boolean,
   },
   gitHubUsername: {
-    type: String
+    type: String,
   },
   zoomLink: {
     type: String,
-    required: true
+    required: true,
   },
   meetingsPerWeek: {
     type: Number,
-    default: 1
+    default: 1,
   },
   reassignment: {
     type: Boolean,
-    required: true
+    required: true,
   },
   temporary: {
     type: Boolean,
-    required: true
+    required: true,
   },
   createdAt: {
     type: Number,
-    default: () => Math.floor(new Date().getTime() / 1000), // unix timestamp https://www.epochconverter.com/ 
+    default: () => Math.floor(new Date().getTime() / 1000), // unix timestamp https://www.epochconverter.com/
     // get: (timestamp) => dateFormat(timestamp),
   },
 });
 
+// eslint-disable-next-line func-names
 studentSchema.pre('save', async function (next) {
   if (!this.meetingsPerWeek) {
-    this.meetingsPerWeek = this.fullTimeCourse ? 2 : 1
+    this.meetingsPerWeek = this.fullTimeCourse ? 2 : 1;
   }
   next();
 });

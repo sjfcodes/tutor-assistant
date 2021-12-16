@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { Button, Modal } from 'react-bulma-components';
 import { AppContext, CourseContext, ModalContext } from '../../../context';
-import { createModel, formIsComplete } from '../../../utils';
+import { createModel, missingFormInputs } from '../../../utils';
 import AddMeetingForm from './AddMeetingForm';
 
 const AddMeeting = () => {
@@ -14,7 +14,7 @@ const AddMeeting = () => {
     tutorId,
     studentId: '',
     duration: 1,
-    startDate: '',
+    startDate: 0,
     status: 'scheduled',
   });
 
@@ -46,7 +46,7 @@ const AddMeeting = () => {
         ...allCourses,
         [selectedCourse]: updatedCourse,
       });
-      setOpenModal();
+      setOpenModal('');
     } catch (error) {
       // handleAddMeeting failed
       console.warn('handleAddMeeting failed');
@@ -59,7 +59,7 @@ const AddMeeting = () => {
       className=''
       showClose={false}
       show={openModal === 'addMeeting'}
-      onClose={() => setOpenModal()}
+      onClose={() => setOpenModal('')}
     >
       <Modal.Card>
         <Modal.Card.Header showClose>
@@ -73,13 +73,13 @@ const AddMeeting = () => {
             />
           </Modal.Card.Body>
           <Modal.Card.Footer renderAs={Button.Group} align='right' hasAddons>
-            <Button type='button' onClick={() => setOpenModal()}>
+            <Button type='button' onClick={() => setOpenModal('')}>
               cancel
             </Button>
             <Button
               color='success'
               type='submit'
-              disabled={!formIsComplete(formInputs)}
+              disabled={missingFormInputs(formInputs)}
             >
               Add Meeting
             </Button>

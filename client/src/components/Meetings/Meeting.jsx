@@ -1,47 +1,19 @@
 import React, { useContext } from 'react';
 import { Box, Icon, Level } from 'react-bulma-components';
-import { string } from 'prop-types';
+import { v4 as uuid } from 'uuid';
+import {
+  func, number, shape, string,
+} from 'prop-types';
 import { CourseContext } from '../../context';
 import MeetingItem from './MeetingItem';
 
 const Meeting = ({ meeting, setSelectedMeetingId, selectedMeetingId }) => {
-  /*
-   * {
-   *     "_id": "61adc7db792988890c3a95ca",
-   *     "tutorId": "61aad6de9d2aa1b146848d13",
-   *     "studentId": "61aad9f260ee915ea21d1953",
-   *     "duration": 1,
-   *     "startDate": 1639386000,
-   *     "status": "scheduled",
-   *     "createdAt": 1638778843,
-   *     "__v": 0
-   * }
-   */
   const { allCourses, selectedCourse } = useContext(CourseContext);
   const { _id, studentId, startDate } = meeting;
   const { firstName, lastName } = allCourses[selectedCourse].students[studentId];
-  /*
-   * {
-   *     "_id": "61aad9f260ee915ea21d1953",
-   *     "firstName": "Samuel",
-   *     "lastName": "Fox",
-   *     "email": "student0@email.com",
-   *     "classCode": "ABC123",
-   *     "timeZone": "Pacific",
-   *     "graduationDate": 1641024000,
-   *     "fullTimeCourse": false,
-   *     "gitHubUsername": "student0",
-   *     "zoomLink": "https://zoom.us/j/96314583232?pwd=K1ZsMGpjWEk1MDdQUStKNFlSd3VDZz09",
-   *     "meetingsPerWeek": 1,
-   *     "reassignment": false,
-   *     "temporary": false,
-   *     "createdAt": 1638586866,
-   *     "__v": 0
-   * }
-   */
 
   const toggleViewMeeting = () => (selectedMeetingId === _id
-    ? setSelectedMeetingId()
+    ? setSelectedMeetingId('')
     : setSelectedMeetingId(_id));
 
   const date = new Date(startDate * 1000).toLocaleDateString();
@@ -85,10 +57,11 @@ const Meeting = ({ meeting, setSelectedMeetingId, selectedMeetingId }) => {
                 if (doNotDisplay.indexOf(property) !== -1) return null;
                 return (
                   <MeetingItem
-                    key={_id}
-                    value={value}
+                    key={uuid()}
                     _id={_id}
-                    idx={idx}
+                    // idx is used for striped background, +1 adjusts first items color
+                    idx={idx + 1}
+                    value={value}
                     property={property}
                   />
                 );
@@ -102,7 +75,13 @@ const Meeting = ({ meeting, setSelectedMeetingId, selectedMeetingId }) => {
 export default Meeting;
 
 Meeting.propTypes = {
-  meeting: string.isRequired,
-  setSelectedMeetingId: string.isRequired,
+  meeting: shape({
+    _id: string.isRequired,
+    duration: number.isRequired,
+    startDate: number.isRequired,
+    status: string.isRequired,
+    createdAt: number.isRequired,
+  }).isRequired,
   selectedMeetingId: string.isRequired,
+  setSelectedMeetingId: func.isRequired,
 };
