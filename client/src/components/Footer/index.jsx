@@ -5,7 +5,7 @@ const Footer = () => (
   <BulmaFooter className='has-text-centered p-3'>
     <p>
       <a
-        href='https://github.com/samuelfox1/tutor-assistant-api'
+        href='https://github.com/samuelfox1/tutor-assistant'
         className='has-text-weight-bold '
       >
         Tutor Helper

@@ -1,6 +1,9 @@
 {
   "name": "tutor-assistant",
   "version": "1.0.0",
+  "engines": {
+    "node": "17.x"
+  },
   "description": "manage student data and provide email templates for all processes",
   "main": "server/server.js",
   "scripts": {
@@ -12,14 +15,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/samuelfox1/tutor-assistant-api.git"
+    "url": "git+https://github.com/samuelfox1/tutor-assistant.git"
   },
   "author": "samuel fox & daniel soledad",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/samuelfox1/tutor-assistant-api/issues"
+    "url": "https://github.com/samuelfox1/tutor-assistant/issues"
   },
-  "homepage": "https://github.com/samuelfox1/tutor-assistant-api#readme",
+  "homepage": "https://github.com/samuelfox1/tutor-assistant#readme",
   "devDependencies": {
     "concurrently": "^6.2.2"
   },
