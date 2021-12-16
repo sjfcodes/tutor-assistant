@@ -1,4 +1,4 @@
-import { tokenKey } from '../../config';
+import { APIBase, tokenKey } from '../../config';
 
 /**
  * the url based on the paramaters passed in
@@ -9,7 +9,7 @@ import { tokenKey } from '../../config';
 export const getApiEndpoint = ({ model, action, id }) => {
   // https://myserver.com
   // let url = APIBase;
-  let url = '';
+  let url = APIBase;
   // https://myserver.com/modelName
   if (model) url += `/${model}`;
   // https://myserver.com/modelName/action
