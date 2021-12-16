@@ -1,17 +1,12 @@
 {
-  "name": "tutor-assistant-api",
+  "name": "tutor-assistant",
   "version": "1.0.0",
   "description": "manage student data and provide email templates for all processes",
   "main": "server/server.js",
   "scripts": {
     "test": "npm run lint && npm run mocha",
-    "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
-    "start:prod": "node server/index.js",
-    "start:dev": "concurrently \"npm run server\" \"npm run client\"",
-    "client": "cd client && npm run start",
-    "server": "cd server && npm run dev",
-    "lint": "eslint --quiet .",
-    "fix": "eslint --fix .",
+    "start": "node server/server.js",
+    "develop": "concurrently \"cd server && npm run dev\" \"cd client && npm start\"",
     "install": "cd server && npm i && cd ../client && npm i"
   },
   "repository": {
