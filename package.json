@@ -5,7 +5,7 @@
   "main": "server/server.js",
   "scripts": {
     "test": "npm run lint && npm run mocha",
-    "start": "node server/server.js && node client/",
+    "start": "node server/server.js && cd client && npm run build",
     "develop": "concurrently \"cd server && npm run dev\" \"cd client && npm start\"",
     "install": "cd server && npm i && cd ../client && npm i"
   },
