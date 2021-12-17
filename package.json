@@ -12,7 +12,7 @@
     "start": "node server/server.js",
     "dev": "concurrently \"cd server && npm run dev\" \"cd client && npm start\"",
     "seed": "cd server && npm run seed && cd ../",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false cd client && npm install && npm run build "
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false cd client && npm install && npm run build && npm run seed"
   },
   "repository": {
     "type": "git",

@@ -7,7 +7,7 @@ const emailTemplateSeeds = require('./emailTemplateSeeds.json');
 const tutorSeeds = require('./tutorSeeds.json');
 
 /**
- * hash for 'password'
+ * hash for password: 'password'
  * $2b$10$BQjgtZGdeDL1yxU3sJSNzucXFHETbx8dEQdRbuvVFih4eeRk7Cg3q
  */
 
