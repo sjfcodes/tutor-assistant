@@ -16,6 +16,7 @@ export {
   getCurrentUnix,
   getTimeStamp,
   getUnixFromFormInputs,
+  getLocalDateString,
 } from './dateTime';
 
 export {

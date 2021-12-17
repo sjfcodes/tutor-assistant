@@ -33,8 +33,10 @@ const getZeroBasedHour = (hr, ampm) => {
     // If 1-9 return 01-09
     if (hr < 10) return `0${hr}`;
     return hr;
+
   case 'pm':
     return `${hr + 12}`;
+
   default:
     return hr;
   }
@@ -56,6 +58,19 @@ const getUnixFromFormInputs = (date, hour = 12, amPm = 'AM') => {
   return unix;
 };
 
+// const date = new Date(startDate * 1000).toLocaleDateString();
+// const time = new Date(startDate * 1000).toLocaleTimeString().split(':');
+
+const getLocalDateString = (unix) => {
+  const date = new Date(unix * 1000).toLocaleDateString();
+  const time = new Date(unix * 1000).toLocaleTimeString().split(':');
+  const ampm = time[2].split(' ').pop();
+  const formatTime = `${time[0]}:${time[1]} ${ampm}`;
+  console.log(formatTime);
+
+  return `${date} ${formatTime}`;
+};
+
 export {
-  getCurrentUnix, getTimeStamp, getUnixFromFormInputs, getZeroBasedHour,
+  getCurrentUnix, getTimeStamp, getUnixFromFormInputs, getZeroBasedHour, getLocalDateString,
 };
