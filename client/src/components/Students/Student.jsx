@@ -1,10 +1,9 @@
 import React from 'react';
 import { Box, Icon, Level } from 'react-bulma-components';
-import { v4 as uuid } from 'uuid';
 import {
   string, number, bool, func, shape,
 } from 'prop-types';
-import StudentItem from './StudentItem';
+import StudentList from './StudentList';
 
 const Student = ({
   student,
@@ -21,23 +20,22 @@ const Student = ({
 
   return (
     <Box
-      className={`border rounded pl-2 py-1 pr-1 ${
-        selectedStudentId !== _id && 'hover-large-item'
-      }`}
+      className={`border rounded px-0 py-1 
+      ${selectedStudentId !== _id && 'hover-large-item'}`}
     >
       <Level
         renderAs='div'
         breakpoint='mobile'
-        className={`${selectedStudentId === _id && 'border-bottom pb-3 mb-1'}`}
+        className={`${selectedStudentId === _id && 'border-bottom pb-1 mb-0'}`}
         onClick={toggleViewStudent}
       >
-        <Level.Side align='left'>
-          <Level.Item>{`${firstName} ${lastName}`}</Level.Item>
+        <Level.Side>
+          <Level.Item className='ml-3'>{`${firstName} ${lastName}`}</Level.Item>
         </Level.Side>
 
-        <Level.Side align='left'>
+        <Level.Side>
           <Level.Item>
-            <Icon>
+            <Icon className='mr-2'>
               <i
                 className={`fas fa-chevron-${
                   selectedStudentId === _id ? 'up' : 'down'
@@ -48,23 +46,10 @@ const Student = ({
         </Level.Side>
       </Level>
 
-      {selectedStudentId === _id && (
-        <ul>
-          {Object.entries(student).map(([property, value], idx) => {
-            const doNotDisplay = ['_id', '__v'];
-            if (doNotDisplay.indexOf(property) !== -1) return null;
-            return (
-              <StudentItem
-                key={uuid()}
-                value={value}
-                _id={_id}
-                idx={idx}
-                property={property}
-              />
-            );
-          })}
-        </ul>
-      )}
+      {
+        selectedStudentId === _id
+        && <StudentList _id={_id} student={student} />
+      }
     </Box>
   );
 };
@@ -80,7 +65,7 @@ Student.propTypes = {
     graduationDate: number.isRequired,
     fullTimeCourse: bool.isRequired,
     githubUsername: string.isRequired,
-    zoomLink: string.isRequired,
+    meetingLink: string.isRequired,
     meetingsPerWeek: number.isRequired,
     reassignment: bool.isRequired,
     temporary: bool.isRequired,

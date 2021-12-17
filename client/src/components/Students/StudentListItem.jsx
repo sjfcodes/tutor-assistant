@@ -1,14 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Columns, Icon } from 'react-bulma-components';
+import { Level, Icon } from 'react-bulma-components';
 import {
   string, number, oneOfType, bool,
 } from 'prop-types';
 import { CourseContext } from '../../context';
-import { updateModel } from '../../utils';
+import { getLocalDateString, updateModel } from '../../utils';
 import { convertStrToBool } from '../../utils/helpers/forms';
 
-const StudentItem = ({
-  _id, property, value, idx,
+const StudentListItem = ({
+  _id, property, value, count,
 }) => {
   const [itemToEdit, setItemToEdit] = useState();
   const [input, setInput] = useState(value);
@@ -66,15 +66,16 @@ const StudentItem = ({
       return isMounted && setVal(
         <a
           href={`https://github.com/${value}`}
+          className='break'
           target='_blank'
           rel='noreferrer'
         >
           {`https://github.com/${value}`}
         </a>,
       );
-    case 'zoomLink':
+    case 'meetingLink':
       return isMounted && setVal(
-        <a href={value} target='_blank' rel='noreferrer'>
+        <a href={value} className='break' target='_blank' rel='noreferrer'>
           {value}
         </a>,
       );
@@ -83,8 +84,14 @@ const StudentItem = ({
         <span>{new Date(value * 1000).toLocaleDateString()}</span>,
       );
     case 'createdAt':
-      return isMounted && setVal(<span>{String(new Date(value * 1000))}</span>);
+      return isMounted && setVal(<span>{getLocalDateString(value)}</span>);
 
+    case 'fullTimeCourse':
+      return isMounted && setVal(
+        <span className={`has-text-${value ? 'link-dark' : 'danger'}`}>
+          {value}
+        </span>,
+      );
     default:
       if (isMounted) setVal(<span>{`${value}`}</span>);
     }
@@ -97,68 +104,69 @@ const StudentItem = ({
   }, [itemToEdit, property]);
 
   return (
-    <form name='theForm' onSubmit={handleSubmit}>
-      <Columns
+    <form name='studentItemForm' onSubmit={handleSubmit}>
+      <Level
         renderAs='li'
-        // breakpoint='mobile'
-        className={`student-item m-0  ${idx % 2 !== 0 && 'has-background-grey-lighter rounded'
+        className={`student-li is-mobile px-3 ${(count % 2 !== 0) && 'has-background-grey-lighter'
         }`}
       >
-        <Columns.Column size={3} align='left'>
-          {`${property}:`}
-        </Columns.Column>
-        <Columns.Column className=' ml-5'>
-          {
-            itemToEdit === property
-              ? (
-                <input
-                  type='input'
-                  name={property}
-                  value={input}
-                  onChange={handleInputChange}
-                />
-              /*
-               * ) : String(value) === 'true' || String(value) === 'false'
-               *   ? (
-               *     <span
-               *       className={`has-text-${String(value) === 'true' ? 'link-dark' : 'danger'
-               *       }`}
-               *     >
-               *       {val}
-               *     </span>
-               */
-              ) : (
-                val
-              )
-          }
-          {itemToEdit === property ? (
-            <>
-              <Icon className='ml-4' onClick={handleCancelEdit}>
-                <i className='far fa-times-circle hover has-text-info' />
-              </Icon>
-              {inputHasBeenModified() && (
-                <Icon className='ml-4' onClick={handleSubmit}>
-                  <i className='far fa-save hover has-text-success' />
-                </Icon>
-              )}
-            </>
-          ) : (
-            property !== 'createdAt' && (
-              <Icon className='ml-4' onClick={() => setItemToEdit(property)}>
-                <i className='fas fa-pen hover icon-small has-text-info' />
-              </Icon>
-            )
-          )}
-        </Columns.Column>
-      </Columns>
+        <Level.Side>
+          <Level.Item>
+            {`${property}:`}
+          </Level.Item>
+        </Level.Side>
+        <Level.Side>
+          <Level.Item>
+            {
+              itemToEdit === property
+                ? (
+                  <>
+                    <input
+                      type='input'
+                      name={property}
+                      value={input}
+                      className='li-input mr-5 mb-2'
+                      onChange={handleInputChange}
+                    />
+                    {
+                      inputHasBeenModified()
+                      && (
+                        <Icon className='save-icon mb-1 mr-1' onClick={handleSubmit}>
+                          <i className='far fa-save hover has-text-success' />
+                        </Icon>
+                      )
+                    }
+
+                  </>
+                )
+                : <span className='mr-5'>{val}</span>
+            }
+            {
+              itemToEdit === property
+                ? (
+                  <Icon className='edit-icon mr-1' onClick={handleCancelEdit}>
+                    <i className='far fa-times-circle hover has-text-info' />
+                  </Icon>
+
+                ) : (
+                  property !== 'createdAt' && (
+                    <Icon className='edit-icon mr-1' onClick={() => setItemToEdit(property)}>
+                      <i className='fas fa-pen hover icon-small has-text-info' />
+                    </Icon>
+                  )
+                )
+            }
+          </Level.Item>
+        </Level.Side>
+      </Level>
     </form>
   );
 };
-export default StudentItem;
+export default StudentListItem;
 
-StudentItem.propTypes = {
+StudentListItem.propTypes = {
   _id: string.isRequired,
   property: string.isRequired,
   value: oneOfType([string, number, bool]).isRequired,
-  idx: number.isRequired,
+  count: number.isRequired,
 };
