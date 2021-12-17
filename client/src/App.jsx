@@ -1,8 +1,10 @@
 import React, { useEffect, useContext } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import {
+  Routes, Route, useNavigate, useLocation,
+} from 'react-router-dom';
 import { Container, Section } from 'react-bulma-components';
 import { Nav, Footer, BackgroundImage } from './components';
-import { Home, Landing } from './pages';
+import { Home, Landing, EmailManager } from './pages';
 import { AppContext } from './context';
 import './App.sass';
 
@@ -10,12 +12,15 @@ const App = () => {
   const navigate = useNavigate();
   const { tutorDetails } = useContext(AppContext);
   const { loggedIn, githubUsername } = tutorDetails;
+  const location = useLocation();
 
   useEffect(() => {
-    if (!loggedIn) return navigate('/');
-    navigate(`/${githubUsername}`);
+    if (location.pathname !== '/' && !loggedIn) return navigate('/');
+    if (location.pathname === '/' && githubUsername) navigate(`/${githubUsername}`);
+
+    // if (location.pathname === '/' && githubUsername) navigate('/email');
     return '';
-  }, [loggedIn, githubUsername, navigate, tutorDetails]);
+  }, [loggedIn, githubUsername, navigate, tutorDetails, location.pathname]);
 
   return (
     <>
@@ -27,6 +32,7 @@ const App = () => {
         <BackgroundImage url='./images/bg-image.jpg' />
         <Container className='is-max-desktop'>
           <Routes>
+            <Route exact path='/email' element={<EmailManager />} />
             <Route path='/:tutor' element={<Home />} />
             <Route path='/' element={<Landing />} />
           </Routes>

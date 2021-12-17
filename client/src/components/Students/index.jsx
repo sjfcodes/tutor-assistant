@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import {
-  Box, Button, Columns, Heading,
+  Box, Button, Heading, Level,
 } from 'react-bulma-components';
 import { CourseContext, ModalContext } from '../../context';
 import Student from './Student';
@@ -13,16 +13,24 @@ const StudentsSection = () => {
 
   return (
     <Box className='has-background-white'>
-      <Columns breakpoint='mobile'>
-        <Columns.Column>
-          <Heading>Students</Heading>
-        </Columns.Column>
-        <Columns.Column align='right'>
-          <Button color='primary' onClick={() => setOpenModal('addStudent')}>
-            Add Student
-          </Button>
-        </Columns.Column>
-      </Columns>
+      <Level renderAs='div' className='is-mobile'>
+        <Level.Side>
+          <Level.Item>
+            <Heading>Students</Heading>
+          </Level.Item>
+        </Level.Side>
+        <Level.Side>
+          <Level.Item>
+            <Button
+              color='primary'
+              size='small'
+              onClick={() => setOpenModal('addStudent')}
+            >
+              Add Student
+            </Button>
+          </Level.Item>
+        </Level.Side>
+      </Level>
       {
         allCourses[selectedCourse]
         && Object
