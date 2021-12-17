@@ -20,7 +20,7 @@ const formDefaults = {
   graduationDate: '',
   fullTimeCourse: true,
   githubUsername: `student${i}`,
-  zoomLink:
+  meetingLink:
     'https://zoom.us/j/96314583232?pwd=K1ZsMGpjWEk1MDdQUStKNFlSd3VDZz09',
   meetingsPerWeek: 1,
   reassignment: false,

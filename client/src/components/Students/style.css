@@ -1,9 +1,30 @@
-.student-item {
-  /* max-width: fit-content; */
-  overflow-wrap: break-word;
+
+.student-list {
+  overflow-x:  hidden;
+}
+.student-li {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
 }
 
-.student-item .column {
-  padding-top: 0;
-  padding-bottom: 0;
+.break {
+  overflow-wrap: break-all;
+  word-wrap: break-all;
+}
+
+.edit-icon {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.save-icon {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
+.li-input {
+  width: 260px;
 }

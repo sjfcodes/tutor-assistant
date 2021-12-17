@@ -12,7 +12,7 @@ const meetingSchema = new Schema({
   },
   duration: {
     type: Number,
-    default: false,
+    default: 1,
   },
   startDate: {
     type: Number,

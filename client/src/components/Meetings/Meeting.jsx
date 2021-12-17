@@ -1,11 +1,10 @@
 import React, { useContext } from 'react';
 import { Box, Icon, Level } from 'react-bulma-components';
-import { v4 as uuid } from 'uuid';
 import {
   func, number, shape, string,
 } from 'prop-types';
 import { CourseContext } from '../../context';
-import MeetingItem from './MeetingItem';
+import MeetingList from './MeetingList';
 
 const Meeting = ({ meeting, setSelectedMeetingId, selectedMeetingId }) => {
   const { allCourses, selectedCourse } = useContext(CourseContext);
@@ -21,23 +20,24 @@ const Meeting = ({ meeting, setSelectedMeetingId, selectedMeetingId }) => {
 
   return (
     <Box
-      className={`border rounded pl-2 py-1 pr-1 ${selectedMeetingId !== _id && 'hover-large-item'
-      }`}
+      className={`border rounded px-0 py-1 
+      ${selectedMeetingId !== _id && 'hover-large-item'}`}
     >
-      {`${firstName} ${lastName}`}
+
       <Level
         renderAs='div'
         breakpoint='mobile'
-        className={`${selectedMeetingId === _id && 'border-bottom pb-3 mb-1'}`}
+        className={`${selectedMeetingId === _id && 'border-bottom pb-1 mb-0'}`}
         onClick={toggleViewMeeting}
       >
-        <Level.Side align='left'>
-          <Level.Item>{`${date} @ ${time[0]}:${time[2]}`}</Level.Item>
+        <Level.Side>
+          <Level.Item className='ml-3'>{`${firstName} ${lastName}`}</Level.Item>
         </Level.Side>
 
-        <Level.Side align='left'>
+        <Level.Side>
           <Level.Item>
-            <Icon>
+            <p className='mr-1'>{`${date} @ ${time[0]}:${time[2]}`}</p>
+            <Icon className='mr-2'>
               <i
                 className={`fas fa-chevron-${selectedMeetingId === _id ? 'up' : 'down'
                 }`}
@@ -47,28 +47,10 @@ const Meeting = ({ meeting, setSelectedMeetingId, selectedMeetingId }) => {
         </Level.Side>
       </Level>
 
-      {selectedMeetingId === _id && (
-        <ul>
-          {
-            Object
-              .entries(meeting)
-              .map(([property, value], idx) => {
-                const doNotDisplay = ['_id', '__v', 'tutorId', 'studentId'];
-                if (doNotDisplay.indexOf(property) !== -1) return null;
-                return (
-                  <MeetingItem
-                    key={uuid()}
-                    _id={_id}
-                    // idx is used for striped background, +1 adjusts first items color
-                    idx={idx + 1}
-                    value={value}
-                    property={property}
-                  />
-                );
-              })
-          }
-        </ul>
-      )}
+      {
+        selectedMeetingId === _id
+        && <MeetingList meeting={meeting} _id={_id} />
+      }
     </Box>
   );
 };

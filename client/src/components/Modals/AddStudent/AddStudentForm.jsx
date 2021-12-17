@@ -25,7 +25,7 @@ const AddStudentForm = ({ formInputs, setFormInputs }) => {
     graduationDate,
     fullTimeCourse,
     githubUsername,
-    zoomLink,
+    meetingLink,
     meetingsPerWeek,
     reassignment,
     temporary,
@@ -175,8 +175,8 @@ const AddStudentForm = ({ formInputs, setFormInputs }) => {
         <Column>
           <FormInput
             label='Zoom Link'
-            name='zoomLink'
-            value={zoomLink}
+            name='meetingLink'
+            value={meetingLink}
             onChange={handleInputChange}
             icon='fas fa-link'
           />
@@ -284,7 +284,7 @@ AddStudentForm.propTypes = {
     graduationDate: string.isRequired,
     fullTimeCourse: bool.isRequired,
     githubUsername: string.isRequired,
-    zoomLink: string.isRequired,
+    meetingLink: string.isRequired,
     meetingsPerWeek: number.isRequired,
     reassignment: bool.isRequired,
     temporary: bool.isRequired,

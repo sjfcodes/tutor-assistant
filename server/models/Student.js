@@ -23,7 +23,7 @@ const studentSchema = new Schema({
   timeZoneOffset: {
     type: String,
   },
-  zoomLink: {
+  meetingLink: {
     type: String,
     required: true,
   },

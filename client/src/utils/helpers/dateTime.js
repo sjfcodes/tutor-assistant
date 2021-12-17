@@ -66,7 +66,6 @@ const getLocalDateString = (unix) => {
   const time = new Date(unix * 1000).toLocaleTimeString().split(':');
   const ampm = time[2].split(' ').pop();
   const formatTime = `${time[0]}:${time[1]} ${ampm}`;
-  console.log(formatTime);
 
   return `${date} ${formatTime}`;
 };
