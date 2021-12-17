@@ -9,22 +9,20 @@ import {
 import { handleError } from '../../../utils/helpers';
 import AddStudentForm from './AddStudentForm';
 
-const i = 0;
-
 const formDefaults = {
-  firstName: `Student${i}`,
-  lastName: `New${i}`,
-  email: `student${i}@email.com`,
-  classId: 'ABC123',
-  timeZoneOffset: 'Eastern',
+  firstName: '',
+  lastName: '',
+  email: '',
+  classId: '',
+  timeZoneOffset: '',
   graduationDate: '',
-  fullTimeCourse: true,
-  githubUsername: `student${i}`,
+  fullTimeCourse: false,
+  githubUsername: '',
   meetingLink:
-    'https://zoom.us/j/96314583232?pwd=K1ZsMGpjWEk1MDdQUStKNFlSd3VDZz09',
+    '',
   meetingsPerWeek: 1,
   reassignment: false,
-  temporary: false,
+  recurringMeeting: true,
 };
 
 const AddStudent = () => {

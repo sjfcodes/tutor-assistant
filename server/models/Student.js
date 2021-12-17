@@ -46,7 +46,7 @@ const studentSchema = new Schema({
     type: Boolean,
     required: true,
   },
-  temporary: {
+  recurringMeeting: {
     type: Boolean,
     required: true,
   },

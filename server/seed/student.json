@@ -12,21 +12,21 @@
         "meetingsPerWeek": 1,
         "fullTimeCourse": true,
         "reassignment": false,
-        "temporary": false
+        "recurringMeeting": true
     },
     {
-        "_id" : "61bc1de5afe0e50f52099a85",
-        "firstName" : "Mi",
-        "lastName" : "Lee",
-        "email" : "mlee@email.com",
-        "githubUsername" : "mlee",
-        "timeZoneOffset" : "Eastern",
-        "meetingLink" : "https://zoom.us/j/96314583232?pwd=K1ZsMGpjWEk1MDdQUStKNFlSd3VDZz09",
-        "classId" : "ABC123",
-        "graduationDate" : 1641024000,
-        "meetingsPerWeek" : 2,
-        "fullTimeCourse" : true,
-        "reassignment" : false,
-        "temporary" : false
+        "_id": "61bc1de5afe0e50f52099a85",
+        "firstName": "Mi",
+        "lastName": "Lee",
+        "email": "mlee@email.com",
+        "githubUsername": "mlee",
+        "timeZoneOffset": "Eastern",
+        "meetingLink": "https://zoom.us/j/96314583232?pwd=K1ZsMGpjWEk1MDdQUStKNFlSd3VDZz09",
+        "classId": "ABC123",
+        "graduationDate": 1641024000,
+        "meetingsPerWeek": 2,
+        "fullTimeCourse": true,
+        "reassignment": false,
+        "recurringMeeting": true
     }
 ]

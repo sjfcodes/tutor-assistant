@@ -19,14 +19,14 @@ const { Column } = Columns;
 
 const SignupForm = () => {
   const [formInputs, setFormInputs] = useState({
-    firstName: 'Sam',
-    lastName: 'Fox',
-    email: 'sam@email.com',
+    firstName: '',
+    lastName: '',
+    email: '',
     timeZoneOffset: '',
-    githubUsername: 'samuelfox1',
-    calendlyLink: 'https://www.calendly.com',
-    password: 'password',
-    confirmPassword: 'password',
+    githubUsername: '',
+    calendlyLink: '',
+    password: '',
+    confirmPassword: '',
   });
 
   const {

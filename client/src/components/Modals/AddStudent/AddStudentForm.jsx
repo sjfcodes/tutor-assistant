@@ -28,7 +28,7 @@ const AddStudentForm = ({ formInputs, setFormInputs }) => {
     meetingLink,
     meetingsPerWeek,
     reassignment,
-    temporary,
+    recurringMeeting,
   } = formInputs;
 
   const [displayHelpText, setDisplayHelpText] = useState();
@@ -248,8 +248,8 @@ const AddStudentForm = ({ formInputs, setFormInputs }) => {
             <Form.Control>
               <Form.Radio
                 value='true'
-                name='temporary'
-                checked={temporary}
+                name='recurringMeeting'
+                checked={recurringMeeting}
                 onChange={() => null}
                 onClick={handleInputChange}
               >
@@ -257,8 +257,8 @@ const AddStudentForm = ({ formInputs, setFormInputs }) => {
               </Form.Radio>
               <Form.Radio
                 value='false'
-                name='temporary'
-                checked={!temporary}
+                name='recurringMeeting'
+                checked={!recurringMeeting}
                 onChange={() => null}
                 onClick={handleInputChange}
               >
@@ -287,7 +287,7 @@ AddStudentForm.propTypes = {
     meetingLink: string.isRequired,
     meetingsPerWeek: number.isRequired,
     reassignment: bool.isRequired,
-    temporary: bool.isRequired,
+    recurringMeeting: bool.isRequired,
   }).isRequired,
   setFormInputs: func.isRequired,
 };

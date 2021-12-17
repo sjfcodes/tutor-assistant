@@ -43,7 +43,7 @@ StudentList.propTypes = {
     meetingLink: string.isRequired,
     meetingsPerWeek: number.isRequired,
     reassignment: bool.isRequired,
-    temporary: bool.isRequired,
+    recurringMeeting: bool.isRequired,
     createdAt: number.isRequired,
   }).isRequired,
 };

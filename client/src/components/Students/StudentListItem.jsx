@@ -60,6 +60,7 @@ const StudentListItem = ({
   };
 
   useEffect(() => {
+    const formatBooleanSpan = (boolean) => <span className={`has-text-${value ? 'success' : 'danger'}`}>{`${boolean}`}</span>;
     let isMounted = true;
     switch (property) {
     case 'githubUsername':
@@ -87,11 +88,14 @@ const StudentListItem = ({
       return isMounted && setVal(<span>{getLocalDateString(value)}</span>);
 
     case 'fullTimeCourse':
-      return isMounted && setVal(
-        <span className={`has-text-${value ? 'link-dark' : 'danger'}`}>
-          {value}
-        </span>,
-      );
+      return isMounted && setVal(formatBooleanSpan(value));
+
+    case 'reassignment':
+      return isMounted && setVal(formatBooleanSpan(value));
+
+    case 'recurringMeeting':
+      return isMounted && setVal(formatBooleanSpan(value));
+
     default:
       if (isMounted) setVal(<span>{`${value}`}</span>);
     }
