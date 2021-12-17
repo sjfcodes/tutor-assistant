@@ -1,0 +1,14 @@
+[
+    {
+        "_id": "61bc0c0dc3a0a4429a77522d",
+        "firstName": "Sam",
+        "lastName": "Fox",
+        "email": "sam@email.com",
+        "timeZoneOffset": 0,
+        "githubUsername": "samuelfox1",
+        "calendlyLink": "https://calendly.com/samueljfox-2u/tutor-session",
+        "password": "password",
+        "courses": ["61bc110c6e2aa9094fcc3060"],
+        "emailTemplates": ["61bc0c0dc3a0a4429a77522f"]
+    }
+]

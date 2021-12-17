@@ -3,8 +3,12 @@ const db = require('../config/connection');
 const {
   Tutor, EmailTemplate, Course, Student, Meeting,
 } = require('../models');
-const emailTemplateSeeds = require('./emailTemplateSeeds.json');
-const tutorSeeds = require('./tutorSeeds.json');
+
+const tutorSeeds = require('./tutor.json');
+const emailTemplateSeeds = require('./emailTemplate.json');
+const courseSeeds = require('./course.json');
+const studentSeeds = require('./student.json');
+const meetingSeeds = require('./meeting');
 
 /**
  * hash for password: 'password'
@@ -23,6 +27,9 @@ db.once('open', async () => {
 
     await Tutor.create(tutorSeeds);
     await EmailTemplate.create(emailTemplateSeeds);
+    await Course.create(courseSeeds);
+    await Student.create(studentSeeds);
+    await Meeting.create(meetingSeeds);
 
     console.log('==> db seeds success\n');
   } catch (error) {
