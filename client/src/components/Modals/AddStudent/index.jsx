@@ -16,10 +16,10 @@ const formDefaults = {
   lastName: `New${i}`,
   email: `student${i}@email.com`,
   classId: 'ABC123',
-  timeZone: 'Eastern',
+  timeZoneOffset: 'Eastern',
   graduationDate: '',
   fullTimeCourse: true,
-  gitHubUsername: `student${i}`,
+  githubUsername: `student${i}`,
   zoomLink:
     'https://zoom.us/j/96314583232?pwd=K1ZsMGpjWEk1MDdQUStKNFlSd3VDZz09',
   meetingsPerWeek: 1,

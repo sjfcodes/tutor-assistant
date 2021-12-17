@@ -62,7 +62,7 @@ const StudentItem = ({
   useEffect(() => {
     let isMounted = true;
     switch (property) {
-    case 'gitHubUsername':
+    case 'githubUsername':
       return isMounted && setVal(
         <a
           href={`https://github.com/${value}`}

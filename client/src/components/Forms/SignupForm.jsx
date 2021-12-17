@@ -22,8 +22,8 @@ const SignupForm = () => {
     firstName: 'Sam',
     lastName: 'Fox',
     email: 'sam@email.com',
-    timeZone: '',
-    gitHubUsername: 'samuelfox1',
+    timeZoneOffset: '',
+    githubUsername: 'samuelfox1',
     calendlyLink: 'https://www.calendly.com',
     password: 'password',
     confirmPassword: 'password',
@@ -33,8 +33,8 @@ const SignupForm = () => {
     firstName,
     lastName,
     email,
-    timeZone,
-    gitHubUsername,
+    timeZoneOffset,
+    githubUsername,
     calendlyLink,
     password,
     confirmPassword,
@@ -105,14 +105,14 @@ const SignupForm = () => {
           <Control>
             <Input
               type='text'
-              name='gitHubUsername'
-              value={gitHubUsername}
+              name='githubUsername'
+              value={githubUsername}
               onChange={handleInputChange}
             />
             <Icon align='left'>
               <i className='fab fa-github' />
             </Icon>
-            {gitHubUsername && (
+            {githubUsername && (
               <Icon align='right'>
                 <i className='fas fa-check' />
               </Icon>
@@ -128,8 +128,8 @@ const SignupForm = () => {
             <Control>
               <Select
                 type='text'
-                name='timeZone'
-                value={timeZone}
+                name='timeZoneOffset'
+                value={timeZoneOffset}
                 onInput={handleInputChange}
               >
                 <option>-</option>
@@ -140,7 +140,7 @@ const SignupForm = () => {
               </Select>
             </Control>
             <Control>
-              {inputIsSelected(timeZone) && (
+              {inputIsSelected(timeZoneOffset) && (
                 <Icon className='ml-2 mt-2'>
                   <i className='fas fa-check' />
                 </Icon>

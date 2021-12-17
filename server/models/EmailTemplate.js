@@ -1,20 +1,14 @@
 const { Schema, model } = require('mongoose');
 
 const templateSchema = new Schema({
-  author_id: {
+  name: {
+    type: String,
+    required: true,
+  },
+  tutorId: {
     type: Schema.Types.ObjectId,
     ref: 'Student',
     required: true,
-  },
-  /**
-   * templateFor option ideas
-   *
-   * new-student, reassignment, one-time-stand-in,
-   * meeting-confirmation, time-card-correction
-   *  */
-  templateFor: {
-    type: String,
-    default: 'new-student',
   },
   templateValues: {
     type: String,
@@ -29,6 +23,6 @@ const templateSchema = new Schema({
   },
 });
 
-const Template = model('Template', templateSchema);
+const EmailTemplate = model('EmailTemplate', templateSchema);
 
-module.exports = Template;
+module.exports = EmailTemplate;

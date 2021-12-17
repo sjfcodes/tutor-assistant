@@ -10,7 +10,7 @@ const formatCourses = (courses) => {
   courses.forEach((course) => {
     const key = course._id;
     const values = { ...course };
-    delete values.tutor_id;
+    delete values.tutorId;
     courseObj[key] = values;
   });
   return courseObj;

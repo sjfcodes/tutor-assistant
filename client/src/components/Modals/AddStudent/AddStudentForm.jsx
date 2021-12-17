@@ -21,10 +21,10 @@ const AddStudentForm = ({ formInputs, setFormInputs }) => {
     lastName,
     email,
     classId,
-    timeZone,
+    timeZoneOffset,
     graduationDate,
     fullTimeCourse,
-    gitHubUsername,
+    githubUsername,
     zoomLink,
     meetingsPerWeek,
     reassignment,
@@ -60,7 +60,7 @@ const AddStudentForm = ({ formInputs, setFormInputs }) => {
       if (!parseInt(value, 10)) return '';
       break;
 
-    case 'timeZone':
+    case 'timeZoneOffset':
       if (!value || value === '-') updateHelpText(name);
       break;
     default:
@@ -112,8 +112,8 @@ const AddStudentForm = ({ formInputs, setFormInputs }) => {
         <Column>
           <FormInput
             label='Github Username'
-            name='gitHubUsername'
-            value={gitHubUsername}
+            name='githubUsername'
+            value={githubUsername}
             icon='fab fa-github'
             onChange={handleInputChange}
           />
@@ -127,8 +127,8 @@ const AddStudentForm = ({ formInputs, setFormInputs }) => {
             <Form.Control>
               <Form.Select
                 type='text'
-                name='timeZone'
-                value={timeZone}
+                name='timeZoneOffset'
+                value={timeZoneOffset}
                 onInput={handleInputChange}
               >
                 <option>-</option>
@@ -139,7 +139,7 @@ const AddStudentForm = ({ formInputs, setFormInputs }) => {
               </Form.Select>
             </Form.Control>
             <Form.Control>
-              {inputIsSelected(timeZone) && (
+              {inputIsSelected(timeZoneOffset) && (
                 <Icon className='ml-2 mt-2'>
                   <i className='fas fa-check' />
                 </Icon>
@@ -280,10 +280,10 @@ AddStudentForm.propTypes = {
     lastName: string.isRequired,
     email: string.isRequired,
     classId: string.isRequired,
-    timeZone: string.isRequired,
+    timeZoneOffset: string.isRequired,
     graduationDate: string.isRequired,
     fullTimeCourse: bool.isRequired,
-    gitHubUsername: string.isRequired,
+    githubUsername: string.isRequired,
     zoomLink: string.isRequired,
     meetingsPerWeek: number.isRequired,
     reassignment: bool.isRequired,
