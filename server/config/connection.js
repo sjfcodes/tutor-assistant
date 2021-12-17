@@ -6,7 +6,7 @@ const uri = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/tutor-assistan
 mongoose
   .connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
   // eslint-disable-next-line no-console
-  .then(() => console.log('\ndb connected\n'))
+  .then(() => console.log('==> db connection success'))
   .catch((err) => console.error(err));
 
 module.exports = mongoose.connection;

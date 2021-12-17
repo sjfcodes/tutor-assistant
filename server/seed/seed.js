@@ -13,7 +13,7 @@ const tutorSeeds = require('./tutorSeeds.json');
 
 db.once('open', async () => {
   try {
-    console.log('running seeds');
+    console.log('==> start db seeds');
 
     await Tutor.deleteMany({});
     await EmailTemplate.deleteMany({});
@@ -21,23 +21,10 @@ db.once('open', async () => {
     await Student.deleteMany({});
     await Meeting.deleteMany({});
 
-    const tutorArr = await Tutor.create(tutorSeeds);
-    const formattedTemplates = emailTemplateSeeds
-      .map((template) => (
-        {
-          tutorId: tutorArr[0]._id,
-          ...template,
-        }
-      ));
-    const emailTemplate = await EmailTemplate.create(formattedTemplates);
+    await Tutor.create(tutorSeeds);
+    await EmailTemplate.create(emailTemplateSeeds);
 
-    await Tutor.findByIdAndUpdate(
-      tutorArr[0]._id,
-      {
-        $addToSet: { emailTemplates: emailTemplate[0]._id },
-      },
-    );
-    console.log('seeds success');
+    console.log('==> db seeds success\n');
   } catch (error) {
     console.error(error);
   }
