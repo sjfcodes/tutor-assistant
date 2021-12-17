@@ -1,0 +1,11 @@
+[
+    {
+        "firstName":"Sam",
+        "lastName":"Fox",
+        "email": "sam@email.com",
+        "timeZoneOffset": 0,
+        "githubUsername":"samuelfox1",
+        "calendlyLink": "https://calendly.com/samueljfox-2u/tutor-session",
+        "password":"password"
+    }
+]
