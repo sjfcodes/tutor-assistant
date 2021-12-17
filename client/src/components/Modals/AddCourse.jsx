@@ -41,7 +41,7 @@ const AddCourse = () => {
       return;
     }
     try {
-      const body = { tutor_id: _id, name: courseName };
+      const body = { tutorId: _id, name: courseName };
       const newCourse = await createModel('course', body);
       // initialize meetings and students to empty objects
       newCourse.meetings = {};

@@ -9,13 +9,13 @@ import './App.sass';
 const App = () => {
   const navigate = useNavigate();
   const { tutorDetails } = useContext(AppContext);
-  const { loggedIn, gitHubUsername } = tutorDetails;
+  const { loggedIn, githubUsername } = tutorDetails;
 
   useEffect(() => {
     if (!loggedIn) return navigate('/');
-    navigate(`/${gitHubUsername}`);
+    navigate(`/${githubUsername}`);
     return '';
-  }, [loggedIn, gitHubUsername, navigate, tutorDetails]);
+  }, [loggedIn, githubUsername, navigate, tutorDetails]);
 
   return (
     <>

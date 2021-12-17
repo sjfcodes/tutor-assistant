@@ -51,7 +51,7 @@ const MeetingItem = ({
 
   useEffect(() => {
     switch (property) {
-    case 'gitHubUsername':
+    case 'githubUsername':
       return setVal(
         <a
           href={`https://github.com/${value}`}

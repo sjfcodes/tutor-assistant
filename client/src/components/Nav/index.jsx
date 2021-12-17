@@ -45,6 +45,11 @@ const Nav = () => {
         </NavbarItem>
         {loggedIn && (
           <>
+            <NavbarItem className='pl-0'>
+              Welcome,
+              {' '}
+              {firstName}
+            </NavbarItem>
             <NavbarItem>
               <button
                 type='button'
@@ -57,7 +62,6 @@ const Nav = () => {
                 />
               </button>
             </NavbarItem>
-            <NavbarItem className='pl-0'>{firstName}</NavbarItem>
           </>
         )}
         <Burger

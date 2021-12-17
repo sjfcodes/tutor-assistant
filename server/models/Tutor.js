@@ -19,20 +19,16 @@ const tutorSchema = new Schema({
     unique: true,
     match: [/.+@.+\..+/, 'Must match an email address!'],
   },
-  timeZone: {
+  timeZoneOffset: {
     type: String,
     required: true,
   },
-  gitHubUsername: {
+  githubUsername: {
     type: String,
   },
   calendlyLink: {
     type: String,
     required: true,
-  },
-  meetingCount: {
-    type: Number,
-    default: 0,
   },
   password: {
     type: String,
@@ -42,6 +38,10 @@ const tutorSchema = new Schema({
   courses: [{
     type: Schema.Types.ObjectId,
     ref: 'Course',
+  }],
+  emailTemplates: [{
+    type: Schema.Types.ObjectId,
+    ref: 'EmailTemplate',
   }],
   createdAt: {
     type: Number,
