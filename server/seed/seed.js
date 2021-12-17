@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const db = require('../config/connection');
 const {
   Tutor, EmailTemplate, Course, Student, Meeting,
@@ -12,6 +13,8 @@ const tutorSeeds = require('./tutorSeeds.json');
 
 db.once('open', async () => {
   try {
+    console.log('running seeds');
+
     await Tutor.deleteMany({});
     await EmailTemplate.deleteMany({});
     await Course.deleteMany({});
@@ -19,7 +22,6 @@ db.once('open', async () => {
     await Meeting.deleteMany({});
 
     const tutorArr = await Tutor.create(tutorSeeds);
-
     const formattedTemplates = emailTemplateSeeds
       .map((template) => (
         {
@@ -27,7 +29,6 @@ db.once('open', async () => {
           ...template,
         }
       ));
-
     const emailTemplate = await EmailTemplate.create(formattedTemplates);
 
     await Tutor.findByIdAndUpdate(
@@ -36,6 +37,7 @@ db.once('open', async () => {
         $addToSet: { emailTemplates: emailTemplate[0]._id },
       },
     );
+    console.log('seeds success');
   } catch (error) {
     console.error(error);
   }
