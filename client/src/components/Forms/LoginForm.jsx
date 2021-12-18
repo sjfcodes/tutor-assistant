@@ -83,7 +83,6 @@ const LoginForm = () => {
         <Button
           className='mt-5'
           fullwidth
-          rounded
           color='primary'
           onClick={handleLogin}
         >
