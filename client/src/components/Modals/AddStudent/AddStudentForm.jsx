@@ -63,6 +63,7 @@ const AddStudentForm = ({ formInputs, setFormInputs }) => {
     case 'timeZoneOffset':
       if (!value || value === '-') updateHelpText(name);
       break;
+
     default:
       if (helpText[name]) updateHelpText(name, '');
     }
@@ -126,7 +127,6 @@ const AddStudentForm = ({ formInputs, setFormInputs }) => {
           <Form.Field kind='addons'>
             <Form.Control>
               <Form.Select
-                type='text'
                 name='timeZoneOffset'
                 value={timeZoneOffset}
                 onInput={handleInputChange}
