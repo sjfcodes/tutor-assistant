@@ -8,7 +8,7 @@ const courseRoutes = require('./course');
 router.use('/tutor', tutorRoutes);
 router.use('/student', studentRoutes);
 router.use('/meeting', meetingRoutes);
-router.use('/template', emailTemplateRoutes);
+router.use('/email-template', emailTemplateRoutes);
 router.use('/course', courseRoutes);
 
 module.exports = router;
