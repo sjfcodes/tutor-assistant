@@ -235,7 +235,6 @@ const SignupForm = () => {
 
       <Button
         fullwidth
-        rounded
         color='primary'
         className='mt-5'
         disabled={missingFormInputs(formInputs)}
