@@ -10,7 +10,7 @@ const {
 
 const LoginForm = () => {
   const [inputs, setInputs] = useState({
-    email: 'sam@email.com',
+    email: 'demo@email.com',
     password: 'password',
   });
 
