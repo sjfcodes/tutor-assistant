@@ -7,7 +7,7 @@ import MeetingListItem from './MeetingListItem';
 
 const MeetingList = ({ _id, meeting }) => {
   let count = 0;
-  const doNotDisplay = ['_id', '__v', 'tutorId', 'studentId'];
+  const doNotDisplay = ['_id', '__v', 'tutorId', 'createdAt', 'studentId'];
   return (
     <ul className='student-list'>
       {
