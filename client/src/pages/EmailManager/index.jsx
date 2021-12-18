@@ -120,7 +120,7 @@ const EmailManager = () => {
               <h1>Editor</h1>
               <textarea
                 name='template'
-                className='template-editor'
+                className='template-editor p-2'
                 value={selected.template}
                 onChange={handleInputChange}
               />
@@ -128,7 +128,7 @@ const EmailManager = () => {
             <Box>
               <h1>Preview</h1>
               <textarea
-                className='template-editor'
+                className='template-editor p-2'
                 value={preview}
                 onChange={() => null}
               />
