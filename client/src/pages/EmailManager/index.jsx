@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Box, Icon } from 'react-bulma-components';
+import { Box, Columns, Icon } from 'react-bulma-components';
 import { AppContext } from '../../context';
 import readModel from '../../utils/api/modelCRUD/read';
 import formatEmailTemplates from '../../utils/helpers/emailTemplates';
@@ -89,35 +89,35 @@ const EmailManager = () => {
 
   const { tutorDetails: { githubUsername } } = useContext(AppContext);
   return (
-    <Box className='pt-0'>
+    <>
+      <Box className='mb-1 py-2'>
 
-      <Link to={`/${githubUsername}`} className='mt-0 pl-0'>
-        <Icon className='fas fa-chevron-left is-small' />
-        home
-      </Link>
-      <Box>
+        <Link to={`/${githubUsername}`} className='mt-0 pl-0'>
+          <Icon className='fas fa-chevron-left is-small' />
+          home
+        </Link>
         <TemplateSelector
           selected={selected}
           templates={templates}
           handleSelectChange={handleSelectChange}
         />
-
       </Box>
       {
         selected._id
         && (
           <>
 
-            <Box>
-              <h1>Values</h1>
-              <InputValues
-                selected={selected}
-                setSelected={setSelected}
-
-              />
+            <Box className='mb-1 pt-0'>
+              <h1 className='is-size-4 mb-2'>Values</h1>
+              <Columns className='is-mobile'>
+                <InputValues
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+              </Columns>
             </Box>
-            <Box>
-              <h1>Editor</h1>
+            <Box className='mb-1 pt-0'>
+              <h1 className='is-size-4'>Editor</h1>
               <textarea
                 name='template'
                 className='template-editor p-2'
@@ -125,10 +125,10 @@ const EmailManager = () => {
                 onChange={handleInputChange}
               />
             </Box>
-            <Box>
-              <h1>Preview</h1>
+            <Box className='mb-1 pt-0'>
+              <h1 className='is-size-4'>Preview</h1>
               <textarea
-                className='template-editor p-2'
+                className='template-preview p-2'
                 value={preview}
                 onChange={() => null}
               />
@@ -136,7 +136,7 @@ const EmailManager = () => {
           </>
         )
       }
-    </Box>
+    </>
   );
 };
 export default EmailManager;

@@ -3,7 +3,7 @@ import {
   bool, number, object, oneOfType, shape, string,
 } from 'prop-types';
 
-export const Input = ({
+export const InputTextarea = ({
   // eslint-disable-next-line react/prop-types
   type, name, value, className, selected, setSelected,
 }) => {
@@ -19,7 +19,7 @@ export const Input = ({
     );
   };
   return (
-    <input
+    <textarea
       type={type}
       name={name}
       value={value}
@@ -28,9 +28,9 @@ export const Input = ({
     />
   );
 };
-export default Input;
+export default InputTextarea;
 
-Input.propTypes = {
+InputTextarea.propTypes = {
   type: string,
   name: string.isRequired,
   value: oneOfType([string, number, bool]).isRequired,
@@ -41,7 +41,7 @@ Input.propTypes = {
   }).isRequired,
 };
 
-Input.defaultProps = {
+InputTextarea.defaultProps = {
   type: '',
   className: '',
 };

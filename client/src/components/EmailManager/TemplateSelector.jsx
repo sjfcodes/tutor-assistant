@@ -17,7 +17,7 @@ const TemplateSelector = ({ templates, selected, handleSelectChange }) => {
 
   return (
     <Select
-      className='p-1'
+      className='ml-5 p-1'
       name={selected?.name}
       options={options}
       onChange={handleSelectChange}

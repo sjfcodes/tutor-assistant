@@ -3,3 +3,12 @@
     max-width:100%;
     min-height:10vh;
 }
+.template-preview {
+    min-width:100%;
+    max-width:100%;
+    min-height:30vh;
+}
+
+textarea, select {
+    font-size: 16px;
+}
