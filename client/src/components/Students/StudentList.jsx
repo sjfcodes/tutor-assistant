@@ -43,7 +43,7 @@ const StudentList = ({ _id, student }) => {
       </Level>
       <ul className='student-list'>
         {Object.entries(student).map(([property, value]) => {
-          const doNotDisplay = ['_id', '__v'];
+          const doNotDisplay = ['_id', 'createdAt', '__v'];
           if (doNotDisplay.indexOf(property) !== -1) return null;
           count += 1;
           return (
