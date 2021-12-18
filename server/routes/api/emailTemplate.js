@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Template } = require('../../models');
+const { EmailTemplate } = require('../../models');
 const { authorizeToken } = require('../../utils/auth');
 
 router.get('/', async (req, res) => {
@@ -7,8 +7,13 @@ router.get('/', async (req, res) => {
   try {
     if (!tutor) return res.status(401).json('unauthorized');
 
-    const templates = await Template.find({});
-    if (!templates) return res.status(500).json('failed to find templates');
+    const templates = await EmailTemplate.find({ tutorId: tutor._id });
+    if (!templates.length) {
+      // seeded demo template id is "61bc0f049a7e2491c818fc0a"
+      const demoTemplate = await EmailTemplate.findById('61bc0f049a7e2491c818fc0a');
+      demoTemplate.tutorId = tutor._id;
+      return res.json(demoTemplate);
+    }
 
     res.json(templates);
   } catch (error) {
@@ -23,7 +28,7 @@ router.post('/', async (req, res) => {
   try {
     if (!tutor) return res.status(401).json('unauthorized');
 
-    const template = await Template.create(req.body);
+    const template = await EmailTemplate.create(req.body);
     if (!template) return res.statusMessage(500).json('failed to create template');
 
     res.json('template added');
@@ -40,7 +45,7 @@ router.put('/', async (req, res) => {
   try {
     if (!tutor) return res.status(401).json('unauthorized');
 
-    const template = await Template.findByIdAndUpdate(req.body._id, req.body);
+    const template = await EmailTemplate.findByIdAndUpdate(req.body._id, req.body);
     if (!template) return res.status(404).json('template not found');
 
     res.json('template updated');
@@ -57,7 +62,7 @@ router.delete('/', async (req, res) => {
   try {
     if (!tutor) return res.status(401).json('unauthorized');
 
-    await Template.findByIdAndDelete(req.body._id);
+    await EmailTemplate.findByIdAndDelete(req.body._id);
 
     res.json('template deleted');
   } catch (error) {

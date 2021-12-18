@@ -4,7 +4,7 @@ const path = require('path');
 const cors = require('cors');
 const compression = require('compression');
 require('./config/connection');
-// make sure the `baseUrl` in the front-end matches the `PORT`
+
 const PORT = process.env.PORT || 3001;
 const app = express();
 
