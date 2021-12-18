@@ -1,4 +1,5 @@
 .template-editor {
-    width:100%;
-    min-height:25vh;
+    min-width:100%;
+    max-width:100%;
+    min-height:10vh;
 }

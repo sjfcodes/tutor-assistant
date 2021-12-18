@@ -3,7 +3,7 @@ const formatEmailTemplates = (templates) => {
   const templateObj = {};
   templates.forEach((template) => {
     const key = template._id;
-    const values = { ...template };
+    const values = { ...template, values: JSON.parse(template.values.split('\'').join('"')) };
     templateObj[key] = values;
   });
   return templateObj;
