@@ -2,10 +2,10 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Level } from 'react-bulma-components';
 import { string, func } from 'prop-types';
 import DeleteCourseLayout from './DeleteCourseLayout';
-import EditNameLayout from './EditNameLayout';
-import LineItemDefault from './LineItemDefault';
+import EditCourseNameLayout from './EditCourseNameLayout';
+import DefaultCourseLayout from './DefaultCourseLayout';
 
-const CourseLineItem = ({
+const CouseLayouts = ({
   courseName,
   courseId,
   courseToUpdate,
@@ -36,7 +36,7 @@ const CourseLineItem = ({
     switch (courseId) {
     case courseToUpdate:
       setLayout(
-        <EditNameLayout
+        <EditCourseNameLayout
           formInput={formInput}
           setFormInput={setFormInput}
           setCourseToUpdate={setCourseToUpdate}
@@ -58,7 +58,7 @@ const CourseLineItem = ({
 
     default:
       setLayout(
-        <LineItemDefault
+        <DefaultCourseLayout
           courseId={courseId}
           courseName={courseName}
           handleEditNameClick={handleEditNameClick}
@@ -86,9 +86,9 @@ const CourseLineItem = ({
 
   return <Level className='is-mobile'>{layout}</Level>;
 };
-export default CourseLineItem;
+export default CouseLayouts;
 
-CourseLineItem.propTypes = {
+CouseLayouts.propTypes = {
   courseName: string.isRequired,
   courseId: string.isRequired,
 

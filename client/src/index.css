@@ -36,7 +36,11 @@ footer {
   overflow: scroll;
   width: 95%;
   border-radius: 1em;
-  max-height: 80vh;
+  max-height: 80vh !important;
+  min-height: 80vh !important;
+}
+form {
+  display: contents;
 }
 
 /* HELP-TEXT */

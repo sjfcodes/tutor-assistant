@@ -7,7 +7,7 @@ import {
   getUnixFromFormInputs,
 } from '../../../utils';
 import { handleError } from '../../../utils/helpers';
-import AddStudentForm from './AddStudentForm';
+import { AddStudentForm } from '../../Forms';
 
 const formDefaults = {
   firstName: '',

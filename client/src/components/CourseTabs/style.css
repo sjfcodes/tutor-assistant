@@ -11,10 +11,9 @@
   border-right: solid rgb(255, 255, 255) 1px !important;
   border-top-right-radius: 4px;
 }
-
-.is-active a {
-  color: #09b2f5 !important ;
-  border: #09b2f5 solid 1px !important ;
+.tabs ul {
+  margin-top:5px;
+  max-height: 42px;
 }
 
 .tabs ul li {
@@ -27,5 +26,4 @@
 .tabs ul li:hover {
   transform: scale(1.09) translate(5%, 0);
   border: #09b2f5 solid 1px !important ;
-
 }
