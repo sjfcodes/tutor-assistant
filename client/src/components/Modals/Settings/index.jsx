@@ -1,100 +1,74 @@
+/* eslint-disable no-unused-vars */
 import React, {
-  useCallback, useContext, useEffect, useState,
+  useState, useContext, useEffect, useCallback,
 } from 'react';
 import { Button, Modal, Tabs } from 'react-bulma-components';
-import { AppContext, CourseContext, ModalContext } from '../../../context';
-import { deleteModel, updateModel } from '../../../utils';
-import CourseLineItem from './Course';
-
-const { Tab } = Tabs;
+import { AppContext, ModalContext } from '../../../context';
+import { EditCourseForm } from '../../Forms';
 
 const Settings = () => {
-  const { tutorDetails: { firstName } } = useContext(AppContext);
+  const [disableControls, setDisableControls] = useState(false);
+  const [activeTab, setActiveTab] = useState('courses');
+  const [component, setComponent] = useState('');
 
+  const { tutorDetails: { firstName } } = useContext(AppContext);
   const { openModal, setOpenModal } = useContext(ModalContext);
 
-  const {
-    allCourses, setSelectedCourse,
-    selectedCourse, setAllCourses,
-  } = useContext(CourseContext);
+  const handleUpdate = useCallback(
+    (e, courseName) => {
+      const {
+        target: {
+          parentNode: { classList },
+        },
+      } = e;
 
-  const [courseItems, setCourseItems] = useState();
-  const [courseToDelete, setCourseToDelete] = useState('');
-  const [courseToUpdate, setCourseToUpdate] = useState('');
+      // if selected tab is already active, return
+      if (classList.contains('is-active')) return '';
+      // console.log(e.target.parentNode.classList);
 
-  const handleUpdateCourse = useCallback(
-    async (_id, name) => {
-      setCourseToUpdate('');
-      if (!_id || !name) return;
+      // // toggle current active tab off
+      document
+        .querySelector('#settings-tabs ul li.is-active')
+        .classList.toggle('is-active');
 
-      try {
-        const body = { _id, name };
-        await updateModel('course', body);
-
-        const updatedCourses = { ...allCourses };
-        updatedCourses[_id].name = name;
-        setAllCourses({ ...updatedCourses });
-      } catch (error) {
-        console.warn(error);
-      }
+      // // toggle new tab on
+      classList.toggle('is-active');
+      setActiveTab(courseName);
+      return '';
     },
-    [allCourses, setAllCourses],
+    [],
   );
-
-  const handleDeleteCourse = useCallback(
-    async (_id) => {
-      const idToDelete = _id;
-      setCourseToDelete('');
-      if (!_id) return;
-
-      try {
-        await deleteModel('course', _id);
-
-        const updatedCourses = { ...allCourses };
-        delete updatedCourses[_id];
-
-        if (idToDelete === selectedCourse) {
-          const keys = Object.keys(updatedCourses);
-          setSelectedCourse(keys.length ? keys[0] : null);
-        }
-
-        setAllCourses({ ...updatedCourses });
-      } catch (error) {
-        console.warn(error);
-      }
-    },
-    [allCourses, setAllCourses, selectedCourse, setSelectedCourse],
-  );
-
-  const update = useCallback(() => {
-    setCourseItems(
-      Object.values(allCourses).map(({ name: courseName, _id: courseId }) => (
-        <CourseLineItem
-          key={courseId}
-          courseId={courseId}
-          courseName={courseName}
-          courseToUpdate={courseToUpdate}
-          setCourseToUpdate={setCourseToUpdate}
-          courseToDelete={courseToDelete}
-          setCourseToDelete={setCourseToDelete}
-          handleDeleteCourse={handleDeleteCourse}
-          handleUpdateCourse={handleUpdateCourse}
-        />
-      )),
-    );
-  }, [
-    allCourses,
-    courseToDelete,
-    courseToUpdate,
-    handleDeleteCourse,
-    handleUpdateCourse,
-  ]);
 
   useEffect(() => {
-    if (!allCourses) return setCourseItems(null);
-    update();
-    return '';
-  }, [allCourses, courseToDelete, courseToUpdate, update]);
+    let isMounted = true;
+    switch (activeTab) {
+    case 'courses':
+      if (isMounted) return setComponent(
+        <EditCourseForm setDisableControls={setDisableControls} />,
+      );
+      break;
+
+    case 'students':
+      if (isMounted) return setComponent(
+        <h1>Students</h1>,
+      );
+      break;
+
+    case 'meetings':
+      if (isMounted) return setComponent(
+        <h1>Meetings</h1>,
+      );
+      break;
+
+    default:
+      if (isMounted) return console.warn('no component selected');
+      break;
+    }
+
+    return () => {
+      isMounted = false;
+    };
+  }, [activeTab]);
 
   return (
     <Modal
@@ -107,16 +81,39 @@ const Settings = () => {
           <Modal.Card.Title>{`${firstName}'s Settings`}</Modal.Card.Title>
         </Modal.Card.Header>
         <Modal.Card.Body>
-          <Tabs>
-            <Tab active>Courses</Tab>
-            <Tab>Students</Tab>
-            <Tab>Meetings</Tab>
+          <Tabs type='boxed' id='settings-tabs' className='has-background-white'>
+            <Tabs.Tab
+              className='rounded'
+              active={activeTab === 'courses'}
+              onClick={(e) => handleUpdate(e, 'courses')}
+            >
+              Courses
+            </Tabs.Tab>
+            <Tabs.Tab
+              className='rounded'
+              active={activeTab === 'students'}
+              onClick={(e) => handleUpdate(e, 'students')}
+            >
+              Students
+            </Tabs.Tab>
+            <Tabs.Tab
+              className='rounded'
+              active={activeTab === 'meetings'}
+              onClick={(e) => handleUpdate(e, 'meetings')}
+            >
+              Meetings
+            </Tabs.Tab>
           </Tabs>
 
-          {courseItems}
+          {component}
         </Modal.Card.Body>
         <Modal.Card.Footer renderAs={Button.Group} align='right'>
-          <Button onClick={() => setOpenModal('')}>Done</Button>
+          <Button
+            disabled={disableControls}
+            onClick={() => setOpenModal('')}
+          >
+            Done
+          </Button>
         </Modal.Card.Footer>
       </Modal.Card>
     </Modal>

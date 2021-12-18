@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Level } from 'react-bulma-components';
 import { string, func } from 'prop-types';
 
-const LineItemDefault = ({
+const DefaultCourseLayout = ({
   courseName,
   courseId,
   handleEditNameClick,
@@ -35,9 +35,9 @@ const LineItemDefault = ({
     </Level.Side>
   </>
 );
-export default LineItemDefault;
+export default DefaultCourseLayout;
 
-LineItemDefault.propTypes = {
+DefaultCourseLayout.propTypes = {
   courseName: string.isRequired,
   courseId: string.isRequired,
   setCourseToDelete: func.isRequired,

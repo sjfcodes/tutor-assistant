@@ -2,7 +2,7 @@ import React from 'react';
 import { string, func } from 'prop-types';
 import { Button, Form, Level } from 'react-bulma-components';
 
-const EditNameLayout = ({
+const EditCourseNameLayout = ({
   formInput,
   setFormInput,
   setCourseToUpdate,
@@ -41,9 +41,9 @@ const EditNameLayout = ({
     </>
   );
 };
-export default EditNameLayout;
+export default EditCourseNameLayout;
 
-EditNameLayout.propTypes = {
+EditCourseNameLayout.propTypes = {
   formInput: string.isRequired,
   setFormInput: func.isRequired,
   setCourseToUpdate: func.isRequired,

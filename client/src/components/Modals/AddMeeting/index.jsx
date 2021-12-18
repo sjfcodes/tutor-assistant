@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { Button, Modal } from 'react-bulma-components';
 import { AppContext, CourseContext, ModalContext } from '../../../context';
 import { createModel, missingFormInputs } from '../../../utils';
-import AddMeetingForm from './AddMeetingForm';
+import { AddMeetingForm } from '../../Forms';
 
 const AddMeeting = () => {
   const { openModal, setOpenModal } = useContext(ModalContext);
@@ -56,7 +56,6 @@ const AddMeeting = () => {
 
   return (
     <Modal
-      className=''
       showClose={false}
       show={openModal === 'addMeeting'}
       onClose={() => setOpenModal('')}
@@ -65,6 +64,7 @@ const AddMeeting = () => {
         <Modal.Card.Header showClose>
           <Modal.Card.Title>Add Meeting</Modal.Card.Title>
         </Modal.Card.Header>
+
         <form onSubmit={handleAddMeeting}>
           <Modal.Card.Body>
             <AddMeetingForm
