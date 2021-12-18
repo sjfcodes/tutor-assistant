@@ -4,21 +4,26 @@ import { Button, Level } from 'react-bulma-components';
 
 const DeleteCourseLayout = ({ courseName, courseId, handleDeleteCourse }) => (
   <>
-    <Level.Side align='left'>
+    <Level.Side>
       <Level.Item>{courseName}</Level.Item>
     </Level.Side>
-    <Level.Side align='right'>
+    <Level.Side>
       <Level.Item>
-        <Button.Group>
+        <Button.Group className='mb-1'>
           <Button
             outlined
+            size='small'
             color='danger'
             onClick={() => handleDeleteCourse(null)}
           >
             cancel
           </Button>
 
-          <Button color='danger' onClick={() => handleDeleteCourse(courseId)}>
+          <Button
+            size='small'
+            color='danger'
+            onClick={() => handleDeleteCourse(courseId)}
+          >
             confirm
           </Button>
         </Button.Group>

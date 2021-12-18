@@ -84,7 +84,7 @@ const CourseLineItem = ({
     updateLayout();
   }, [updateLayout, handleDeleteCourse, handleUpdateCourse]);
 
-  return <Level>{layout}</Level>;
+  return <Level className='is-mobile'>{layout}</Level>;
 };
 export default CourseLineItem;
 

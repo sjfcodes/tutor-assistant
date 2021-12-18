@@ -1,7 +1,7 @@
 const router = require('express').Router();
-const { Student } = require('../models');
-const { authorizeToken } = require('../utils/auth');
-const { addModelToCourse, deleteModelFromCourse } = require('../utils/helpers');
+const { Student } = require('../../models');
+const { authorizeToken } = require('../../utils/auth');
+const { addModelToCourse, deleteModelFromCourse } = require('../../utils/helpers');
 
 // create new student and add to the course they belong to
 router.post('/:courseId', async (req, res) => {

@@ -1,6 +1,6 @@
 const router = require('express').Router();
-const { Template } = require('../models');
-const { authorizeToken } = require('../utils/auth');
+const { Template } = require('../../models');
+const { authorizeToken } = require('../../utils/auth');
 
 router.get('/', async (req, res) => {
   const { tutor } = authorizeToken(req);
