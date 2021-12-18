@@ -1,18 +1,19 @@
 import React from 'react';
-import Input from './Input';
+import { Columns } from 'react-bulma-components';
+import InputTextarea from './InputTextarea';
 
 export const InputValues = ({ selected, setSelected }) => Object.entries(selected?.values)
   .map(([key, value]) => (
-    <div key={`template-val-${key}`}>
+    <Columns.Column className='is-narrow my-0 py-0' key={`template-val-${key}`}>
       <p>{key}</p>
-      <Input
+      <InputTextarea
         type='text'
         name={key}
         value={value}
         selected={selected}
         setSelected={setSelected}
       />
-    </div>
+    </Columns.Column>
   ));
 
 export default InputValues;
