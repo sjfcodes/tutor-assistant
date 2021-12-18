@@ -1,7 +1,7 @@
 const router = require('express').Router();
-const { Meeting } = require('../models');
-const { authorizeToken } = require('../utils/auth');
-const { deleteModelFromTutor, addModelToCourse } = require('../utils/helpers');
+const { Meeting } = require('../../models');
+const { authorizeToken } = require('../../utils/auth');
+const { deleteModelFromTutor, addModelToCourse } = require('../../utils/helpers');
 
 router.post('/:id', async (req, res) => {
   const { tutor } = authorizeToken(req);

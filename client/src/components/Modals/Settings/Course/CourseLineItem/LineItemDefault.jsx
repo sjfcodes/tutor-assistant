@@ -14,8 +14,9 @@ const LineItemDefault = ({
     </Level.Side>
     <Level.Side align='right'>
       <Level.Item>
-        <Button.Group>
+        <Button.Group className='mb-1'>
           <Button
+            size='small'
             color='info'
             onClick={() => handleEditNameClick(courseName, courseId)}
           >
@@ -23,6 +24,7 @@ const LineItemDefault = ({
           </Button>
           <Button
             outlined
+            size='small'
             color='danger'
             onClick={() => setCourseToDelete(courseId)}
           >

@@ -1,9 +1,9 @@
 const router = require('express').Router();
-const { Tutor } = require('../models');
-const { signToken, authorizeToken } = require('../utils/auth');
+const { Tutor } = require('../../models');
+const { signToken, authorizeToken } = require('../../utils/auth');
 const {
   updateDocumentProperties, getTutorByEmail, getTutorById,
-} = require('../utils/helpers');
+} = require('../../utils/helpers');
 
 // create a new tutor
 router.post('/', async ({ body }, res) => {

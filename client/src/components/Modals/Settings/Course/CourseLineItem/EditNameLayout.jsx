@@ -27,12 +27,12 @@ const EditNameLayout = ({
       </Level.Side>
       <Level.Side align='right'>
         <Level.Item>
-          <Button.Group>
-            <Button outlined color='info' onClick={() => setCourseToUpdate('')}>
+          <Button.Group className='mb-1'>
+            <Button size='small' outlined color='info' onClick={() => setCourseToUpdate('')}>
               cancel
             </Button>
 
-            <Button color='success' onClick={handleUpdateClick}>
+            <Button size='small' color='success' onClick={handleUpdateClick}>
               save
             </Button>
           </Button.Group>
