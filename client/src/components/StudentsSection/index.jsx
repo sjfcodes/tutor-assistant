@@ -12,7 +12,7 @@ const StudentsSection = () => {
   const [selectedStudentId, setSelectedStudentId] = useState('');
 
   return (
-    <Box className='has-background-white p-3'>
+    <Box className='has-background-white p-3 mb-3'>
       <Level renderAs='div' className='is-mobile mb-1'>
         <Level.Side>
           <Level.Item>
