@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from 'react';
 import {
   Routes, Route, useNavigate, useLocation,
 } from 'react-router-dom';
-import { Container, Section } from 'react-bulma-components';
+import { Columns, Container, Section } from 'react-bulma-components';
 import { Nav, Footer, BackgroundImage } from './components';
 import { Home, Landing, EmailTemplateManager } from './pages';
 import { AppContext } from './context';
@@ -29,13 +29,20 @@ const App = () => {
         <Nav />
       </Section>
 
-      <Section renderAs='main'>
-        <Container className='is max-desktop'>
-          <Routes>
-            <Route exact path='/email' element={<EmailTemplateManager />} />
-            <Route path='/:tutor' element={<Home />} />
-            <Route path='/' element={<Landing />} />
-          </Routes>
+      <Section renderAs='main' className='p-0'>
+        <Container className='is-max-desktop'>
+          <Columns centered>
+            <Columns.Column
+              desktop={{ size: 10 }}
+              tablet={{ size: 8 }}
+            >
+              <Routes>
+                <Route exact path='/email' element={<EmailTemplateManager />} />
+                <Route path='/:tutor' element={<Home />} />
+                <Route path='/' element={<Landing />} />
+              </Routes>
+            </Columns.Column>
+          </Columns>
         </Container>
       </Section>
 
