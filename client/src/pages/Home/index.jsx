@@ -8,7 +8,7 @@ const Home = () => {
   const { selectedCourse } = useContext(CourseContext);
 
   return (
-    <Box className='background-dark-blurred pt-1 px-3'>
+    <Box className='background-dark-blurred py-1 px-3'>
       <CourseTabs className='mb-0 pt-3 pl-2' />
       {selectedCourse && (
         <>

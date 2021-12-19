@@ -12,8 +12,8 @@ const StudentsSection = () => {
   const [selectedStudentId, setSelectedStudentId] = useState('');
 
   return (
-    <Box className='has-background-white p-3 mb-3'>
-      <Level renderAs='div' className='is-mobile mb-1'>
+    <Box className='has-background-white py-1 px-3 mb-3'>
+      <Level renderAs='div' className='is-mobile mt-2 mb-4'>
         <Level.Side>
           <Level.Item>
             <Heading>Students</Heading>

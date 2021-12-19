@@ -20,8 +20,8 @@ const Student = ({
 
   return (
     <Box
-      className={`border rounded px-0 py-1 my-2 
-      ${selectedStudentId !== _id && 'hover-large-item'}`}
+      className={`border rounded px-0 py-1 mb-3
+      ${selectedStudentId !== _id && ' hover-large-item'}`}
     >
       <Level
         renderAs='div'

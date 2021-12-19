@@ -116,7 +116,7 @@ const EmailTemplateManager = () => {
               {' '}
               students.
             </p>
-            <p className='mb-2'>Use the special keywords to represent a students information.</p>
+            <p className='mb-2'>Use the available placeholder keywords to to represent student information.</p>
 
             <p className='mb-0'>Available student keywords are:</p>
             <p className='ml-4 mb-0'>[student-firstName]</p>
@@ -130,8 +130,6 @@ const EmailTemplateManager = () => {
             <p className='ml-4 mb-0'>[tutor-calendlyLink]</p>
             <p className='ml-4 mb-0'>[tutor-githubUsername]</p>
             <p className='ml-4 mb-2'>[tutor-email]</p>
-
-            <p className='mb--2'>To use a keyword, add [person-keyWord] in the editor.</p>
           </blockquote>
         </Content>
       </Box>

@@ -24,13 +24,13 @@ const App = () => {
 
   return (
     <>
+      <BackgroundImage url='./images/bg-image.jpg' />
       <Section renderAs='header' className='p-0'>
         <Nav />
       </Section>
 
-      <Section renderAs='main' className='p-0'>
-        <BackgroundImage url='./images/bg-image.jpg' />
-        <Container className='is-max-tablet'>
+      <Section renderAs='main'>
+        <Container className='is max-desktop'>
           <Routes>
             <Route exact path='/email' element={<EmailTemplateManager />} />
             <Route path='/:tutor' element={<Home />} />
