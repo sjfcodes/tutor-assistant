@@ -30,7 +30,7 @@ const App = () => {
 
       <Section renderAs='main' className='p-0'>
         <BackgroundImage url='./images/bg-image.jpg' />
-        <Container className='background-dark-blurred rounded is-max-tablet'>
+        <Container className='is-max-tablet'>
           <Routes>
             <Route exact path='/email' element={<EmailTemplateManager />} />
             <Route path='/:tutor' element={<Home />} />

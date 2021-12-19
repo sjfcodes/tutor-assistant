@@ -8,9 +8,11 @@ import './style.css';
 
 const { Tab } = Tabs;
 
-const CourseTabs = () => {
+// eslint-disable-next-line react/prop-types
+const CourseTabs = ({ className }) => {
   const [courseTabs, setCourseTabs] = useState(null);
   const { allCourses, selectedCourse, setSelectedCourse } = useContext(CourseContext);
+  // eslint-disable-next-line no-unused-vars
   const { setOpenModal } = useContext(ModalContext);
 
   const handleUpdate = useCallback(
@@ -60,10 +62,16 @@ const CourseTabs = () => {
 
   return (
     <>
-      <Tabs type='boxed' id='course-tabs' className='has-background-white rounded'>
+      <Tabs
+        align='left'
+        type='boxed'
+        id='course-tabs'
+        // className='background-clear'
+        className={className}
+      >
         {courseTabs}
         <Tab
-          className='add-course-tab'
+          className=''
           onClick={() => setOpenModal('addCourse')}
         >
           Add Course
