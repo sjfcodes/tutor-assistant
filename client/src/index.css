@@ -1,9 +1,12 @@
+html, body {
+  min-height: 100vh;
+}
 header {
   height: 8vh;
 }
 
 main {
-  min-height: 82vh;
+  min-height: 84vh;
 }
 
 footer {

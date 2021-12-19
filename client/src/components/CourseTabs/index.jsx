@@ -40,7 +40,7 @@ const CourseTabs = ({ className }) => {
 
   useEffect(() => {
     if (!allCourses) return;
-    const i = 0;
+    let i = 0;
     const arr = [];
     Object.entries(allCourses).forEach(([key, { name, _id }]) => {
       arr.push(
@@ -55,6 +55,7 @@ const CourseTabs = ({ className }) => {
         </Tab>,
       );
       if (!selectedCourse && i === 0) setSelectedCourse(_id);
+      i += 1;
     });
 
     setCourseTabs(arr);
