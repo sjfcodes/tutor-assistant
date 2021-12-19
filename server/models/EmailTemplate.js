@@ -10,9 +10,6 @@ const templateSchema = new Schema({
     ref: 'Student',
     required: true,
   },
-  values: {
-    type: String,
-  },
   template: {
     type: String,
     required: true,

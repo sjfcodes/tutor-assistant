@@ -20,7 +20,7 @@ const Meeting = ({ meeting, setSelectedMeetingId, selectedMeetingId }) => {
 
   return (
     <Box
-      className={`border rounded px-0 py-1 
+      className={`border rounded px-0 py-1 my-2 
       ${selectedMeetingId !== _id && 'hover-large-item'}`}
     >
 

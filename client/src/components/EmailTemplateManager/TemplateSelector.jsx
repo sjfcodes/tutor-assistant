@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import {
-  string, shape, func, object,
+  string, shape, func,
 } from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import Select from '../Forms/Select';
 
-const TemplateSelector = ({ templates, selected, handleSelectChange }) => {
-  // eslint-disable-next-line no-console
-  const [options, setOptions] = useState();
+const TemplateSelector = ({
+  className, templates, selected, handleSelectChange,
+}) => {
+  const [options, setOptions] = useState('');
 
   useEffect(() => {
     const arr = Object.values(templates)
@@ -17,7 +18,7 @@ const TemplateSelector = ({ templates, selected, handleSelectChange }) => {
 
   return (
     <Select
-      className='ml-5 p-1'
+      className={className}
       name={selected?.name}
       options={options}
       onChange={handleSelectChange}
@@ -26,35 +27,32 @@ const TemplateSelector = ({ templates, selected, handleSelectChange }) => {
 };
 
 TemplateSelector.propTypes = {
+  className: string,
   templates: shape({
     _id: string,
     name: string,
     tutorId: string,
-    values: string,
     template: string,
   }),
   selected: shape({
     _id: string,
     name: string,
-    // eslint-disable-next-line react/forbid-prop-types
-    values: object,
     template: string,
   }),
   handleSelectChange: func.isRequired,
 };
 
 TemplateSelector.defaultProps = {
+  className: '',
   templates: shape({
     _id: '',
     name: '',
     tutorId: '',
-    values: {},
     template: '',
   }),
   selected: shape({
     _id: '',
     name: '',
-    values: '',
     template: '',
   }),
 };

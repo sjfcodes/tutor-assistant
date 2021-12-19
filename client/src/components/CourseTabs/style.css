@@ -2,10 +2,10 @@
   --blue: #09b2f5
 }
 
-.has-text-white a {
-  color: white !important ;
-  border-top: solid rgb(255, 255, 255) 1px !important;
-  border-left: solid rgb(255, 255, 255) 1px !important;
+.tabs li a {
+  color:inherit;
+  /* border-top: solid rgb(255, 255, 255) 1px !important; */
+  /* border-left: solid rgb(255, 255, 255) 1px !important; */
 }
 .add-course-tab {
   border-right: solid rgb(255, 255, 255) 1px !important;
