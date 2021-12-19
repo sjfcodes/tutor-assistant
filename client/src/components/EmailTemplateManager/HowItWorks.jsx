@@ -41,7 +41,7 @@ const HowItWorks = () => {
               {' '}
               students.
             </p>
-            <p className='mb-2'>Use the available placeholder keywords to to represent student information.</p>
+            <p className='mb-2'>Use the available placeholder keywords to represent student information.</p>
             <Columns centered className='is-mobile has-text-left'>
               <Columns.Column narrow>
                 <p className='mb-0'>Available student keywords are:</p>
