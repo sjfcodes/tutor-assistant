@@ -1,7 +1,6 @@
 const router = require('express').Router();
 const { EmailTemplate } = require('../../models');
 const { authorizeToken } = require('../../utils/auth');
-// eslint-disable-next-line no-unused-vars
 const { addModelToTutor } = require('../../utils/helpers');
 
 router.get('/', async (req, res) => {
@@ -9,12 +8,12 @@ router.get('/', async (req, res) => {
   try {
     if (!tutor) return res.status(401).json('unauthorized');
 
-    const templates = await EmailTemplate.find({ tutorId: tutor._id });
+    const templates = await EmailTemplate.find({ authorId: tutor._id });
     if (!templates.length) {
       // seeded demo template id is "61bc0f049a7e2491c818fc0a"
       const demoTemplate = await EmailTemplate.findById('61bc0f049a7e2491c818fc0a');
-      demoTemplate.tutorId = tutor._id;
-      return res.json(demoTemplate);
+      // send demo template with
+      return res.json({ ...demoTemplate, authorId: tutor._id });
     }
 
     res.json(templates);
@@ -33,7 +32,7 @@ router.post('/', async (req, res) => {
     const template = await EmailTemplate.create(req.body);
     if (!template) return res.statusMessage(500).json('failed to create template');
     await addModelToTutor(tutor._id, 'emailTemplates', template._id);
-    res.json(template);
+    res.json({ _id: template._id });
   } catch (error) {
     console.error(error);
     res.status(500).json('error');

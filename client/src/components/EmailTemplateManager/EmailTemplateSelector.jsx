@@ -14,7 +14,8 @@ export const defaultEmailTemplate = {
 };
 
 const EmailTemplateSelector = ({
-  className, templates, selected, setSelected, setDisplayEditor,
+  className, allTemplates, helpMessage,
+  selected, setSelected, setDisplayEditor,
 }) => {
   const [options, setOptions] = useState('');
   const { tutorDetails: { githubUsername } } = useContext(AppContext);
@@ -26,14 +27,14 @@ const EmailTemplateSelector = ({
       return;
     }
     setDisplayEditor(true);
-    setSelected(templates[target.value]);
+    setSelected(allTemplates[target.value]);
   };
 
   useEffect(() => {
-    const arr = Object.values(templates)
+    const arr = Object.values(allTemplates)
       .map((template) => <option key={uuidv4()} value={template._id}>{template.name}</option>);
     setOptions(arr);
-  }, [templates]);
+  }, [allTemplates]);
 
   return (
 
@@ -45,6 +46,10 @@ const EmailTemplateSelector = ({
             home
           </Link>
         </Level.Side>
+        <Level.Item>
+          <p className='has-text-success'>{helpMessage}</p>
+
+        </Level.Item>
         <Level.Side>
           <Level.Item>
             <Select
@@ -62,10 +67,10 @@ const EmailTemplateSelector = ({
 
 EmailTemplateSelector.propTypes = {
   className: string,
-  templates: shape({
+  allTemplates: shape({
     _id: string,
     name: string,
-    tutorId: string,
+    authorId: string,
     template: string,
   }),
   selected: shape({
@@ -73,16 +78,18 @@ EmailTemplateSelector.propTypes = {
     name: string,
     template: string,
   }),
+  helpMessage: string,
   setSelected: func.isRequired,
   setDisplayEditor: func.isRequired,
 };
 
 EmailTemplateSelector.defaultProps = {
   className: '',
-  templates: shape({
+  helpMessage: '',
+  allTemplates: shape({
     _id: '',
     name: '',
-    tutorId: '',
+    authorId: '',
     template: '',
   }),
   selected: shape({

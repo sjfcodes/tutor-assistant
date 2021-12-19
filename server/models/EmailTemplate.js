@@ -5,9 +5,9 @@ const templateSchema = new Schema({
     type: String,
     required: true,
   },
-  tutorId: {
+  authorId: {
     type: Schema.Types.ObjectId,
-    ref: 'Student',
+    ref: 'Tutor',
     required: true,
   },
   template: {
