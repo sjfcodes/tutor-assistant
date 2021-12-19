@@ -1,7 +1,7 @@
 [
     {
         "_id":"61bc0f049a7e2491c818fc0a",
-        "tutorId":"61bc0c0dc3a0a4429a77522d",
+        "authorId":"61bc0c0dc3a0a4429a77522d",
         "name": "new-student",
         "template": "Hi [student-firstName],\nMy name is [tutor-firstName], I am looking forward to working with you!\n\nSchedule a meeting here:\n[tutor-calendlyLink]\n\nThanks!\nSamuel fox\nFull-Stack Web Developer\nsamueljfox.com"
     }

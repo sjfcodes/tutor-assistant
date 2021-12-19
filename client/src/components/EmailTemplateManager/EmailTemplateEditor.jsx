@@ -7,11 +7,11 @@ import { updateModel } from '../../utils';
 import createModel from '../../utils/api/modelCRUD/create';
 
 const demoStudent = {
-  firstName: 'Mo',
-  lastName: 'Jito',
-  email: 'mo@email.com',
-  meetingLink: 'https://zoom.us/mo',
-  githubUsername: 'mo',
+  firstName: 'Demo',
+  lastName: 'Student',
+  email: 'semostudent@email.com',
+  meetingLink: 'https://zoom.us/demo',
+  githubUsername: 'demo',
 };
 
 const buildTemplatePreview = ({ template, student, tutor }) => {
@@ -25,7 +25,10 @@ const buildTemplatePreview = ({ template, student, tutor }) => {
   return updatedTemplate;
 };
 
-const EmailTemplateEditor = ({ selected, setSelected, setTemplates }) => {
+const EmailTemplateEditor = ({
+  selected, setSelected, allTemplates, setAllTemplates,
+  setViewHelp, setHelpMessage, setDisplayEditor,
+}) => {
   const [preview, setPreview] = useState('');
   const { tutorDetails } = useContext(AppContext);
 
@@ -35,18 +38,21 @@ const EmailTemplateEditor = ({ selected, setSelected, setTemplates }) => {
   };
 
   const handleSaveTemplate = async () => {
-    console.log(selected);
-
     try {
-      let data;
-      if (selected._id) data = await updateModel('email-template', selected);
-      else {
+      if (selected._id) {
+        const response = await updateModel('email-template', selected);
+        setAllTemplates({ ...allTemplates, [selected._id]: selected });
+        setHelpMessage(`successfully updated ${selected.name}`);
+      } else {
         const { name, template } = selected;
-        const body = { name, template, tutorId: tutorDetails._id };
-        data = await createModel('email-template', body);
+        const newTemplate = { name, template, authorId: tutorDetails._id };
+        const { _id } = await createModel('email-template', newTemplate);
+        setAllTemplates({ ...allTemplates, [_id]: { ...newTemplate, _id } });
+        setHelpMessage(`successfully created ${newTemplate.name}`);
       }
-
-      console.log(data);
+      setViewHelp(false);
+      setDisplayEditor(false);
+      setSelected({});
     } catch (error) {
       console.warn(error);
     }
@@ -67,7 +73,7 @@ const EmailTemplateEditor = ({ selected, setSelected, setTemplates }) => {
       <Box className='mb-1 py-1'>
         <h1 className='is-size-5 has-text-centered has-text-weight-bold'>Editor</h1>
 
-        <form>
+        <form onSubmit={(e) => e.preventDefault()}>
           <Form.Field>
             <Form.Label className='mb-0'>name</Form.Label>
             <Form.Control>

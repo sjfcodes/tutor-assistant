@@ -11,13 +11,17 @@ import {
 } from '../../components';
 
 const EmailTemplateManager = () => {
-  const [templates, setTemplates] = useState({});
-  const [selected, setSelected] = useState({});
   const [displayEditor, setDisplayEditor] = useState(false);
+  const [allTemplates, setAllTemplates] = useState({});
+  const [selected, setSelected] = useState({});
+  const [viewHelp, setViewHelp] = useState(true);
+  const [helpMessage, setHelpMessage] = useState('');
 
   const handledisplayEditor = () => {
-    setDisplayEditor(true);
     setSelected({ ...defaultEmailTemplate });
+    setViewHelp(false);
+    setHelpMessage('');
+    setDisplayEditor(true);
   };
 
   useEffect(() => {
@@ -26,7 +30,7 @@ const EmailTemplateManager = () => {
       try {
         const templateArr = await readModel('email-template');
         if (!isMounted) return;
-        setTemplates(formatEmailTemplates(templateArr));
+        setAllTemplates(formatEmailTemplates(templateArr));
       } catch (error) {
         console.warn(error);
       }
@@ -36,9 +40,9 @@ const EmailTemplateManager = () => {
     return () => { isMounted = false; };
   }, []);
 
-  useEffect(() => {
-    console.log(selected);
-  }, [selected]);
+  // useEffect(() => {
+  //   console.log(allTemplates);
+  // }, [allTemplates]);
 
   return (
     <Box className='background-dark-blurred p-3'>
@@ -46,12 +50,16 @@ const EmailTemplateManager = () => {
         <Columns.Column className='pb-0'>
           <EmailTemplateSelector
             className='p-1'
+            helpMessage={helpMessage}
             selected={selected}
             setSelected={setSelected}
             setDisplayEditor={setDisplayEditor}
-            templates={templates}
+            allTemplates={allTemplates}
           />
-          <HowItWorks />
+          <HowItWorks
+            viewHelp={viewHelp}
+            setViewHelp={setViewHelp}
+          />
         </Columns.Column>
 
         {
@@ -72,8 +80,12 @@ const EmailTemplateManager = () => {
               <Columns.Column className='pt-0'>
                 <EmailTemplateEditor
                   selected={selected}
+                  setViewHelp={setViewHelp}
+                  setHelpMessage={setHelpMessage}
                   setSelected={setSelected}
-                  setTemplates={setTemplates}
+                  allTemplates={allTemplates}
+                  setAllTemplates={setAllTemplates}
+                  setDisplayEditor={setDisplayEditor}
                 />
               </Columns.Column>
             )
