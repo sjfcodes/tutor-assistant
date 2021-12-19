@@ -1,6 +1,8 @@
 const router = require('express').Router();
 const { EmailTemplate } = require('../../models');
 const { authorizeToken } = require('../../utils/auth');
+// eslint-disable-next-line no-unused-vars
+const { addModelToTutor } = require('../../utils/helpers');
 
 router.get('/', async (req, res) => {
   const { tutor } = authorizeToken(req);
@@ -30,8 +32,8 @@ router.post('/', async (req, res) => {
 
     const template = await EmailTemplate.create(req.body);
     if (!template) return res.statusMessage(500).json('failed to create template');
-
-    res.json('template added');
+    await addModelToTutor(tutor._id, 'emailTemplates', template._id);
+    res.json(template);
   } catch (error) {
     console.error(error);
     res.status(500).json('error');
