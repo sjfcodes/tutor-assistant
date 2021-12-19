@@ -1,7 +1,7 @@
 .template-editor {
     min-width:100%;
     max-width:100%;
-    min-height:10vh;
+    min-height:20vh;
 }
 .template-preview {
     min-width:100%;
@@ -11,4 +11,13 @@
 
 textarea, select {
     font-size: 16px;
+}
+
+.template-input {
+  width:100%;
+  max-width: 100%;
+}
+
+.student-ul li {
+    margin-top: 0 !important;
 }

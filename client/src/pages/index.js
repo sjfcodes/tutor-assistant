@@ -1,5 +1,5 @@
 import Landing from './Landing';
 import Home from './Home';
-import EmailManager from './EmailManager';
+import EmailTemplateManager from './EmailTemplateEditor';
 
-export { Landing, Home, EmailManager };
+export { Landing, Home, EmailTemplateManager };

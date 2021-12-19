@@ -3,7 +3,6 @@
         "_id":"61bc0f049a7e2491c818fc0a",
         "tutorId":"61bc0c0dc3a0a4429a77522d",
         "name": "new-student",
-        "values": "{ 'student':'Racquel','zoomLink':'https://zoom.us/' }",
-        "template": "Hi {{student}},\nI am looking forward to working with you!\n\nOur meeting will be held here\n{{zoomLink}}\n\nThanks!\nSamuel fox\nFull-Stack Web Developer\nsamueljfox.com"
+        "template": "Hi [firstName],\nI am looking forward to working with you!\n\nOur meeting will be at[meetingLink]\n\nThanks!\nSamuel fox\nFull-Stack Web Developer\nsamueljfox.com"
     }
 ]

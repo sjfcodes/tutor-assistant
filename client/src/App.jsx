@@ -4,7 +4,7 @@ import {
 } from 'react-router-dom';
 import { Container, Section } from 'react-bulma-components';
 import { Nav, Footer, BackgroundImage } from './components';
-import { Home, Landing, EmailManager } from './pages';
+import { Home, Landing, EmailTemplateManager } from './pages';
 import { AppContext } from './context';
 import './App.sass';
 
@@ -30,9 +30,9 @@ const App = () => {
 
       <Section renderAs='main' className='p-0'>
         <BackgroundImage url='./images/bg-image.jpg' />
-        <Container className='is-max-desktop'>
+        <Container className='background-dark-blurred rounded is-max-tablet'>
           <Routes>
-            <Route exact path='/email' element={<EmailManager />} />
+            <Route exact path='/email' element={<EmailTemplateManager />} />
             <Route path='/:tutor' element={<Home />} />
             <Route path='/' element={<Landing />} />
           </Routes>

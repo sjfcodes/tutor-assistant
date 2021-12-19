@@ -13,31 +13,31 @@ const StudentList = ({ _id, student }) => {
     <>
       <Level
         renderAs='div'
-        className='is-mobile mx-3 my-2 py-3'
+        className='is-mobile p-2 border-bottom mb-0'
       >
         <Level.Side>
           <Level.Item>
-            <Button
-              size='small'
-              className='is-link is-light is-outlined'
-            >
-              <Link to='/history'>
+            {/* <Link to='/history'>
+              <Button
+                size='small'
+                color='primary'
+              >
                 meeting history
-              </Link>
-            </Button>
+              </Button>
+            </Link> */}
           </Level.Item>
 
         </Level.Side>
         <Level.Side>
           <Level.Item>
-            <Button
-              size='small'
-              className='button is-link is-light is-outlined'
-            >
-              <Link to='/email'>
+            <Link to='/email'>
+              <Button
+                size='small'
+                color='primary'
+              >
                 send email
-              </Link>
-            </Button>
+              </Button>
+            </Link>
           </Level.Item>
         </Level.Side>
       </Level>
