@@ -6,6 +6,7 @@ import {
 import { CourseContext } from '../../context';
 import { getLocalDateString, updateModel } from '../../utils';
 import { convertStrToBool } from '../../utils/helpers/forms';
+import { GraduationDate } from '../DateTime';
 
 const StudentListItem = ({
   _id, property, value, count,
@@ -82,7 +83,7 @@ const StudentListItem = ({
       );
     case 'graduationDate':
       return isMounted && setVal(
-        <span>{new Date(value * 1000).toLocaleDateString()}</span>,
+        <GraduationDate iso8601={value} />,
       );
     case 'createdAt':
       return isMounted && setVal(<span>{getLocalDateString(value)}</span>);
@@ -153,11 +154,9 @@ const StudentListItem = ({
                   </Icon>
 
                 ) : (
-                  property !== 'createdAt' && (
-                    <Icon className='edit-icon mr-1' onClick={() => setItemToEdit(property)}>
-                      <i className='fas fa-pen hover icon-small has-text-info' />
-                    </Icon>
-                  )
+                  <Icon className='edit-icon mr-1' onClick={() => setItemToEdit(property)}>
+                    <i className='fas fa-pen hover icon-small has-text-info' />
+                  </Icon>
                 )
             }
           </Level.Item>

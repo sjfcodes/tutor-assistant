@@ -10,7 +10,7 @@ export const addMeetingFormPropTypes = {
     tutorId: string.isRequired,
     studentId: string.isRequired,
     duration: number.isRequired,
-    startDate: number.isRequired,
+    startDate: string.isRequired,
     status: string.isRequired,
   }).isRequired,
   setFormInputs: func.isRequired,

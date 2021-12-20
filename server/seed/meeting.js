@@ -1,43 +1,46 @@
-// 86400 seconds in a day
-// 3600 sedonds in an hour
-
-const getUnixCurrentHour = () => {
-  const currUnixTime = Math.floor(Date.now() / 1000);
-  const currUnixHour = currUnixTime - (currUnixTime % 3600);
-  return currUnixHour;
-};
-const getUnixPastHour = (x) => getUnixCurrentHour() - 3600 * (x);
-const getUnixFutureHour = (x) => getUnixCurrentHour() + 3600 * (x);
+const { getISOPastHour, getISOFutureHour, getISOCurrentHour } = require('../utils/dateTime');
 
 const meetingSeeds = [
   {
     _id: '61bc17bd9d98682321c8d478',
     status: 'scheduled',
     studentId: '61bc1de5afe0e50f52099a85',
+    duration: 2,
+    notes: 'html & css',
+    startDate: getISOPastHour(3),
+  },
+  {
+    _id: '61bc17bd9d98682321c8d477',
+    status: 'scheduled',
+    studentId: '61bc1de5afe0e50f52099a85',
     duration: 1,
-    startDate: getUnixPastHour(1),
+    notes: 'javascript ',
+    startDate: getISOPastHour(1),
   },
   {
     _id: '61bc17bd9d98682321c8d479',
     status: 'scheduled',
     studentId: '61bc17044b5faaa82f1e5691',
-    duration: 1,
-    startDate: getUnixCurrentHour(),
+    duration: 2,
+    notes: '3rd party APIs',
+    startDate: getISOFutureHour(2),
+
   },
   {
     _id: '61bc17bd9d98682321c8d480',
     status: 'scheduled',
     studentId: '61bc1de5afe0e50f52099a85',
     duration: 1,
-    startDate: getUnixFutureHour(1),
+    notes: 'MERN',
+    startDate: getISOFutureHour(1),
   },
   {
     _id: '61bc17bd9d98682321c8d481',
     status: 'scheduled',
     studentId: '61bc17044b5faaa82f1e5691',
-    duration: 1,
-    startDate: getUnixFutureHour(2),
-
+    duration: 2,
+    notes: 'React',
+    startDate: getISOCurrentHour(),
   },
 ];
 

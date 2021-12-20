@@ -14,7 +14,7 @@ const AddMeeting = () => {
     tutorId,
     studentId: '',
     duration: 1,
-    startDate: 0,
+    startDate: '',
     status: 'scheduled',
   });
 

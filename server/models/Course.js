@@ -1,4 +1,5 @@
 const { Schema, model } = require('mongoose');
+const { getISOCurrentDateStamp } = require('../utils/dateTime');
 
 const courseSchema = new Schema({
   name: {
@@ -19,9 +20,8 @@ const courseSchema = new Schema({
     ref: 'Meeting',
   }],
   createdAt: {
-    type: Number,
-    default: () => Math.floor(new Date().getTime() / 1000), // unix timestamp https://www.epochconverter.com/
-    // get: (timestamp) => dateFormat(timestamp),
+    type: String,
+    default: () => getISOCurrentDateStamp(),
   },
 });
 

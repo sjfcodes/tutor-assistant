@@ -7,13 +7,8 @@ const {
 const tutorSeeds = require('./tutor.json');
 const emailTemplateSeeds = require('./emailTemplate.json');
 const courseSeeds = require('./course.json');
-const studentSeeds = require('./student.json');
+const studentSeeds = require('./student');
 const meetingSeeds = require('./meeting');
-
-/**
- * hash for password: 'password'
- * $2b$10$BQjgtZGdeDL1yxU3sJSNzucXFHETbx8dEQdRbuvVFih4eeRk7Cg3q
- */
 
 db.once('open', async () => {
   try {

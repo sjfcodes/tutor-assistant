@@ -1,0 +1,36 @@
+const { getISOFutureHour } = require('../utils/dateTime');
+
+module.exports = [
+  {
+    _id: '61bc17044b5faaa82f1e5691',
+    firstName: 'Mo',
+    lastName: 'Jito',
+    email: 'moJito@email.com',
+    githubUsername: 'samuelfox1',
+    timeZoneOffset: 'Pacific',
+    meetingLink: 'https://zoom.us/j/96314583232?pwd=K1ZsMGpjWEk1MDdQUStKNFlSd3VDZz09',
+    classId: 'DOG123',
+    graduationDate: getISOFutureHour(1000),
+    meetingsPerWeek: 1,
+    fullTimeCourse: true,
+    reassignment: false,
+    recurringMeeting: true,
+    notes: 'first student added!',
+  },
+  {
+    _id: '61bc1de5afe0e50f52099a85',
+    firstName: 'Mi',
+    lastName: 'Lee',
+    email: 'mlee@email.com',
+    githubUsername: 'mlee',
+    timeZoneOffset: 'Eastern',
+    meetingLink: 'https://zoom.us/j/96314583232?pwd=K1ZsMGpjWEk1MDdQUStKNFlSd3VDZz09',
+    classId: 'ABC123',
+    graduationDate: getISOFutureHour(500),
+    meetingsPerWeek: 2,
+    fullTimeCourse: true,
+    reassignment: false,
+    recurringMeeting: true,
+    notes: 'just started school',
+  },
+];

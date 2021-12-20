@@ -1,6 +1,6 @@
 const { Schema, model } = require('mongoose');
 const bcrypt = require('bcrypt');
-// const dateFormat = require('../utils/dateFormat');
+const { getISOCurrentDateStamp } = require('../utils/dateTime');
 
 const tutorSchema = new Schema({
   firstName: {
@@ -44,9 +44,8 @@ const tutorSchema = new Schema({
     ref: 'EmailTemplate',
   }],
   createdAt: {
-    type: Number,
-    default: () => Math.floor(new Date().getTime() / 1000), // unix timestamp https://www.epochconverter.com/
-    // get: (timestamp) => dateFormat(timestamp),
+    type: String,
+    default: () => getISOCurrentDateStamp(),
   },
 });
 
