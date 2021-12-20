@@ -18,6 +18,5 @@ export { SignupForm, LoginForm } from './Forms';
 export {
   EmailTemplateSelector,
   EmailTemplateEditor,
-  defaultEmailTemplate,
   HowItWorks,
 } from './EmailTemplateManager';

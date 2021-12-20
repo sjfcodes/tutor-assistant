@@ -1,12 +1,12 @@
 .template-editor {
     min-width:100%;
     max-width:100%;
-    min-height:20vh;
+    min-height:10vh !important;
 }
 .template-preview {
     min-width:100%;
     max-width:100%;
-    min-height:30vh;
+    min-height:30vh !important;
 }
 
 textarea, select {

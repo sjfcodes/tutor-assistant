@@ -5,7 +5,7 @@ import {
 
 // eslint-disable-next-line react/prop-types
 const HowItWorks = ({ viewHelp, setViewHelp }) => (
-  <Box className='mb-1 px-3 py-1'>
+  <Box className='px-3 py-1'>
     <Level
       renderAs='div'
       className='is-mobile px-0 mb-0'
@@ -13,13 +13,13 @@ const HowItWorks = ({ viewHelp, setViewHelp }) => (
     >
       <Level.Side>
         <Level.Item className=''>
-          <h1 className='is-size-5 has-text-weight-bold'>How it works</h1>
+          <h1 className='is-size-5 has-text-weight-bold'>How It Works</h1>
         </Level.Item>
       </Level.Side>
 
       <Level.Side>
         <Level.Item>
-          <p>{viewHelp ? 'hide' : 'show'}</p>
+          <p className='is-size-5'>{viewHelp ? 'hide' : 'show'}</p>
           <Icon className=''>
             <i
               className={`fas fa-chevron-${viewHelp ? 'up' : 'down'}`}
