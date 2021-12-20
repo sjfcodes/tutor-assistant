@@ -7,7 +7,7 @@ import { updateModel } from '../../utils';
 import createModel from '../../utils/api/modelCRUD/create';
 
 const demoStudent = {
-  firstName: 'Demo',
+  firstName: '',
   lastName: 'Student',
   email: 'semostudent@email.com',
   meetingLink: 'https://zoom.us/demo',
@@ -27,9 +27,8 @@ const buildTemplatePreview = ({ template, student, tutor }) => {
 
 const EmailTemplateEditor = ({
   selected, setSelected, allTemplates, setAllTemplates,
-  setViewHelp, setHelpMessage, setDisplayEditor,
+  setViewHelp, setHelpMessage, setDisplayEditor, setPreview,
 }) => {
-  const [preview, setPreview] = useState('');
   const { tutorDetails } = useContext(AppContext);
 
   const handleInputChange = ({ target }) => {
@@ -66,55 +65,42 @@ const EmailTemplateEditor = ({
       tutor: tutorDetails,
     };
     setPreview(buildTemplatePreview(data));
-  }, [selected, tutorDetails]);
+  }, [selected, tutorDetails, setPreview]);
 
   return (
-    <>
-      <Box className='mb-1 py-1'>
-        <h1 className='is-size-5 has-text-centered has-text-weight-bold'>Editor</h1>
-
-        <form onSubmit={(e) => e.preventDefault()}>
-          <Form.Field>
-            <Form.Label className='mb-0'>name</Form.Label>
-            <Form.Control>
-              <Form.Input
-                name='name'
-                value={selected.name}
-                onChange={handleInputChange}
-              />
-            </Form.Control>
-          </Form.Field>
-
-          <Form.Field>
-            <Form.Label className='my-0'>template</Form.Label>
-            <Form.Control>
-              <textarea
-                name='template'
-                className='template-editor rounded p-2'
-                value={selected.template}
-                onChange={handleInputChange}
-              />
-            </Form.Control>
-          </Form.Field>
-        </form>
-      </Box>
-      <Box className='mb-1 pt-1'>
-        <h1 className='is-size-5 has-text-centered has-text-weight-bold'>Preview</h1>
-        <textarea
-          className='template-preview rounded p-2'
-          value={preview}
-          onChange={() => null}
-        />
-        <Button
-          fullwidth
-          color='primary'
-          className='mt-5'
-          onClick={handleSaveTemplate}
-        >
-          Save
-        </Button>
-      </Box>
-    </>
+    <Box className='px-3 pt-1 pb-3'>
+      <h1 className='is-size-5 has-text-weight-bold'>Editor</h1>
+      <Form.Field>
+        <Form.Control>
+          <Form.Input
+            color={selected.name ? 'success' : 'danger'}
+            placeholder='enter a template name'
+            name='name'
+            value={selected.name}
+            onChange={handleInputChange}
+          />
+        </Form.Control>
+      </Form.Field>
+      <Form.Field>
+        <Form.Control>
+          <Form.Textarea
+            color={selected.template ? 'success' : 'danger'}
+            name='template'
+            className='template-editor rounded p-1'
+            value={selected.template}
+            onChange={handleInputChange}
+          />
+        </Form.Control>
+      </Form.Field>
+      <Button
+        disabled={!selected.name || !selected.template}
+        fullwidth
+        color='primary'
+        onClick={handleSaveTemplate}
+      >
+        Save
+      </Button>
+    </Box>
   );
 };
 

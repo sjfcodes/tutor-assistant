@@ -8,11 +8,6 @@ import { Link } from 'react-router-dom';
 import Select from '../Forms/Select';
 import { AppContext } from '../../context';
 
-export const defaultEmailTemplate = {
-  name: 'new-template',
-  template: 'Hi [student-firstName]\n\nMy name is [tutor-firstName]',
-};
-
 const EmailTemplateSelector = ({
   className, allTemplates, helpMessage,
   selected, setSelected, setDisplayEditor,
