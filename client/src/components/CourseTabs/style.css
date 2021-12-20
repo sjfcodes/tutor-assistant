@@ -18,9 +18,8 @@
 
 .tabs ul li a {
   padding-top: 4px !important;
-  padding-bottom: 4px !important;
 }
-.tabs ul li a:hover {
+.tabs ul li a strong:hover {
   color: #09b2f5 !important;
 }
 

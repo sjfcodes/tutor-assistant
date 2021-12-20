@@ -17,14 +17,15 @@ const StudentList = ({ _id, student }) => {
         className='is-mobile p-2 border-bottom mb-0'
       >
         <LevelSide>
-          {/* <Link to='/history'>
-              <Button
-                size='small'
-                color='primary'
-              >
-                meeting history
-              </Button>
-            </Link> */}
+          <Link to='/history'>
+            <Button
+              disabled
+              size='small'
+              color='primary'
+            >
+              meeting history
+            </Button>
+          </Link>
 
         </LevelSide>
         <LevelSide>

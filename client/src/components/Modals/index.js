@@ -1,11 +1,11 @@
 import AddCourse from './AddCourse';
 import AddStudent from './AddStudent';
 import AddMeeting from './AddMeeting';
-import Settings from './Settings';
+import SettingsModal from './Settings';
 
 export {
   AddCourse,
   AddStudent,
   AddMeeting,
-  Settings,
+  SettingsModal,
 };

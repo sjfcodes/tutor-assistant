@@ -6,7 +6,7 @@ import { Button, Modal, Tabs } from 'react-bulma-components';
 import { AppContext, ModalContext } from '../../../context';
 import { EditCourseForm } from '../../Forms';
 
-const Settings = () => {
+const SettingsModal = () => {
   const [disableControls, setDisableControls] = useState(false);
   const [activeTab, setActiveTab] = useState('courses');
   const [component, setComponent] = useState('');
@@ -87,7 +87,7 @@ const Settings = () => {
               active={activeTab === 'courses'}
               onClick={(e) => handleUpdate(e, 'courses')}
             >
-              Courses
+              <strong className={activeTab !== 'courses' ? 'has-text-grey-lighter' : ''}>Courses</strong>
             </Tabs.Tab>
             <Tabs.Tab
               className='rounded'
@@ -119,4 +119,4 @@ const Settings = () => {
     </Modal>
   );
 };
-export default Settings;
+export default SettingsModal;

@@ -1,9 +1,13 @@
-import React, { useContext, useEffect } from 'react';
+/* eslint-disable no-unused-vars */
+/* eslint-disable jsx-a11y/anchor-is-valid */
+import React, { useContext, useEffect, useState } from 'react';
 import { Button, Level, Navbar } from 'react-bulma-components';
 
 import { AppContext, ModalContext } from '../../context';
 import { logoutTutor } from '../../utils';
-import { Settings } from '../Modals';
+import { LevelSide } from '../BulmaHelpers';
+import MoreMenu from './MoreMenu';
+import SettingsMenu from './SettingsMenu';
 import './style.css';
 
 const {
@@ -14,70 +18,65 @@ const Nav = () => {
   const { tutorDetails } = useContext(AppContext);
   const { loggedIn, firstName } = tutorDetails;
   const { openModal, setOpenModal } = useContext(ModalContext);
+  const [displayNavMenu, setDisplayNavMenu] = useState(false);
+  const [displayDropdown, setDisplayDropdown] = useState('');
 
-  const toggleNavBurger = (forceClose = false) => {
-    const navBurger = document.getElementById('nav-burger');
-    const navMenu = document.getElementById('nav-menu');
-
-    if (forceClose) {
-      navBurger.classList.remove('is-active');
-      navMenu.classList.remove('is-active');
-      return;
-    }
-
-    navBurger.classList.toggle('is-active');
-    navMenu.classList.toggle('is-active');
-  };
-
-  const handleAvatarClick = () => {
-    console.warn(tutorDetails);
+  const toggleNavBurger = (_, forceClose = false) => {
+    if (forceClose) return setDisplayNavMenu(false);
+    return setDisplayNavMenu((curr) => !curr);
   };
 
   useEffect(() => {
-    toggleNavBurger(true);
+    if (openModal) toggleNavBurger(null, true);
   }, [openModal]);
-
   return (
-    <Navbar>
-      <Brand>
-        <NavbarItem href='/' className=' py-0'>
+    <Navbar fixed='top'>
+      <Navbar.Brand>
+        <Navbar.Item className='py-0' onClick={() => console.log(tutorDetails)}>
           <h1 className='brand'>tutor.me</h1>
-        </NavbarItem>
-        {loggedIn && (
-          <>
-            <NavbarItem className='pl-0'>
-              Welcome,
-              {' '}
-              {firstName}
-            </NavbarItem>
-            <NavbarItem>
-              <button
-                type='button'
-                className='avatar'
-                onClick={handleAvatarClick}
+          {/* <img src='https://bulma.io/images/bulma-logo.png' width='112' height='28' alt='bulma logo' /> */}
+        </Navbar.Item>
+
+        <Navbar.Burger onClick={toggleNavBurger} />
+      </Navbar.Brand>
+
+      <Navbar.Menu id='navMenu' className={displayNavMenu ? 'is-active' : ''}>
+        <div className='navbar-start'>
+          <Navbar.Item href='/'>
+            Home
+          </Navbar.Item>
+          <Navbar.Item href='https://github.com/samuelfox1/tutor-assistant/blob/dev/README.md' target='_blank' rel='noreferrer'>
+            <span>
+              D
+              <i className='fab fa-github is-size-7 ' />
+              cumentation
+            </span>
+          </Navbar.Item>
+          <MoreMenu
+            displayDropdown={displayDropdown}
+            setDisplayDropdown={setDisplayDropdown}
+          />
+
+          {
+            loggedIn && (
+              <SettingsMenu
+                toggleNavBurger={toggleNavBurger}
+                displayDropdown={displayDropdown}
+                setDisplayDropdown={setDisplayDropdown}
+              />
+            )
+          }
+        </div>
+
+        {
+          loggedIn && (
+            <div className='navbar-end'>
+              <Navbar.Item
+                renderAs='div'
+                justifyContent='end'
+                className='is-flex '
               >
-                <img
-                  alt='user avatar'
-                  src='https://i.imgur.com/zEvf4P4.jpg'
-                />
-              </button>
-            </NavbarItem>
-          </>
-        )}
-        <Burger
-          id='nav-burger'
-          className=''
-          onClick={() => toggleNavBurger()}
-        />
-      </Brand>
-      <NavbarMenu id='nav-menu'>
-        {loggedIn && (
-          <Level renderAs='div'>
-            <Level.Side align='left' />
-            <Level.Side align='right'>
-              <Button.Group>
                 <Button
-                  size='small'
                   color='warning'
                   outlined
                   className='is-light'
@@ -85,21 +84,11 @@ const Nav = () => {
                 >
                   Logout
                 </Button>
-                <Button
-                  size='small'
-                  color='info'
-                  outlined
-                  className='is-light'
-                  onClick={() => setOpenModal('settings')}
-                >
-                  Settings
-                </Button>
-              </Button.Group>
-            </Level.Side>
-            <Settings />
-          </Level>
-        )}
-      </NavbarMenu>
+              </Navbar.Item>
+            </div>
+          )
+        }
+      </Navbar.Menu>
     </Navbar>
   );
 };

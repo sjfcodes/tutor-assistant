@@ -41,13 +41,13 @@ const EmailTemplateEditor = ({
       if (selected._id) {
         const response = await updateModel('email-template', selected);
         setAllTemplates({ ...allTemplates, [selected._id]: selected });
-        setHelpMessage(`successfully updated ${selected.name}`);
+        setHelpMessage(`updated ${selected.name}`);
       } else {
         const { name, template } = selected;
         const newTemplate = { name, template, authorId: tutorDetails._id };
         const { _id } = await createModel('email-template', newTemplate);
         setAllTemplates({ ...allTemplates, [_id]: { ...newTemplate, _id } });
-        setHelpMessage(`successfully created ${newTemplate.name}`);
+        setHelpMessage(`created ${newTemplate.name}`);
       }
       setViewHelp(false);
       setDisplayEditor(false);
