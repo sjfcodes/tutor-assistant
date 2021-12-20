@@ -4,6 +4,7 @@ import {
   string, number, bool, func, shape,
 } from 'prop-types';
 import StudentList from './StudentList';
+import { LevelSide } from '../BulmaHelpers';
 
 const Student = ({
   student,
@@ -33,17 +34,15 @@ const Student = ({
           <Level.Item className='ml-3'>{`${firstName} ${lastName}`}</Level.Item>
         </Level.Side>
 
-        <Level.Side>
-          <Level.Item>
-            <Icon className='mr-2'>
-              <i
-                className={`fas fa-chevron-${
-                  selectedStudentId === _id ? 'up' : 'down'
-                }`}
-              />
-            </Icon>
-          </Level.Item>
-        </Level.Side>
+        <LevelSide>
+          <Icon className='mr-2'>
+            <i
+              className={`fas fa-chevron-${
+                selectedStudentId === _id ? 'up' : 'down'
+              }`}
+            />
+          </Icon>
+        </LevelSide>
       </Level>
 
       {

@@ -6,6 +6,7 @@ import {
 import { CourseContext } from '../../context';
 import MeetingList from './MeetingList';
 import { MeetingDate } from '../DateTime';
+import { LevelSide } from '../BulmaHelpers';
 
 const Meeting = ({ meeting, setSelectedMeetingId, selectedMeetingId }) => {
   const { allCourses, selectedCourse } = useContext(CourseContext);
@@ -28,14 +29,12 @@ const Meeting = ({ meeting, setSelectedMeetingId, selectedMeetingId }) => {
         className={`${selectedMeetingId === _id && 'border-bottom pb-1 mb-0'}`}
         onClick={toggleViewMeeting}
       >
-        <Level.Side>
-          <Level.Item>
-            <MeetingDate
-              className='ml-3'
-              iso8601={startDate}
-            />
-          </Level.Item>
-        </Level.Side>
+        <LevelSide>
+          <MeetingDate
+            className='ml-3'
+            iso8601={startDate}
+          />
+        </LevelSide>
 
         <Level.Side>
           <Level.Item className='ml-3'>{`${firstName} ${lastName}`}</Level.Item>

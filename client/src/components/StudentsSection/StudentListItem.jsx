@@ -7,6 +7,7 @@ import { CourseContext } from '../../context';
 import { getLocalDateString, updateModel } from '../../utils';
 import { convertStrToBool } from '../../utils/helpers/forms';
 import { GraduationDate } from '../DateTime';
+import { LevelSide } from '../BulmaHelpers';
 
 const StudentListItem = ({
   _id, property, value, count,
@@ -115,52 +116,48 @@ const StudentListItem = ({
         className={`student-li is-mobile px-3 ${(count % 2 !== 0) && 'has-background-grey-lighter'
         }`}
       >
-        <Level.Side>
-          <Level.Item>
-            {`${property}:`}
-          </Level.Item>
-        </Level.Side>
-        <Level.Side>
-          <Level.Item>
-            {
-              itemToEdit === property
-                ? (
-                  <>
-                    <input
-                      type='input'
-                      name={property}
-                      value={input}
-                      className='li-input mr-5 mb-2'
-                      onChange={handleInputChange}
-                    />
-                    {
-                      inputHasBeenModified()
+        <LevelSide>
+          {`${property}:`}
+        </LevelSide>
+        <LevelSide>
+          {
+            itemToEdit === property
+              ? (
+                <>
+                  <input
+                    type='input'
+                    name={property}
+                    value={input}
+                    className='li-input mr-5 mb-2'
+                    onChange={handleInputChange}
+                  />
+                  {
+                    inputHasBeenModified()
                       && (
                         <Icon className='save-icon mb-1 mr-1' onClick={handleSubmit}>
                           <i className='far fa-save hover has-text-success' />
                         </Icon>
                       )
-                    }
+                  }
 
-                  </>
-                )
-                : <span className='mr-5'>{val}</span>
-            }
-            {
-              itemToEdit === property
-                ? (
-                  <Icon className='edit-icon mr-1' onClick={handleCancelEdit}>
-                    <i className='far fa-times-circle hover has-text-info' />
-                  </Icon>
+                </>
+              )
+              : <span className='mr-5'>{val}</span>
+          }
+          {
+            itemToEdit === property
+              ? (
+                <Icon className='edit-icon mr-1' onClick={handleCancelEdit}>
+                  <i className='far fa-times-circle hover has-text-info' />
+                </Icon>
 
-                ) : (
-                  <Icon className='edit-icon mr-1' onClick={() => setItemToEdit(property)}>
-                    <i className='fas fa-pen hover icon-small has-text-info' />
-                  </Icon>
-                )
-            }
-          </Level.Item>
-        </Level.Side>
+              ) : (
+                <Icon className='edit-icon mr-1' onClick={() => setItemToEdit(property)}>
+                  <i className='fas fa-pen hover icon-small has-text-info' />
+                </Icon>
+              )
+          }
+        </LevelSide>
       </Level>
     </form>
   );

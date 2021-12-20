@@ -4,6 +4,7 @@ import {
 } from 'react-bulma-components';
 import { CourseContext } from '../../../context';
 import { inputIsSelected } from '../../../utils';
+import { LevelSide } from '../../BulmaHelpers';
 import MeetingTime, { addMeetingFormPropTypes } from './MeetingTime';
 
 const AddMeetingForm = ({ formInputs, setFormInputs }) => {
@@ -25,80 +26,76 @@ const AddMeetingForm = ({ formInputs, setFormInputs }) => {
 
   return (
     <Level renderAs='div'>
-      <Level.Side align='left'>
-        <Level.Item>
-          <Form.Field kind='addons'>
-            <Form.Control>
-              <Form.Label>Student</Form.Label>
-              <Form.Select
-                name='studentId'
-                value={studentId}
-                placeholder='student'
-                onInput={handleInputChange}
-              >
-                <option value=''>-</option>
-                {Object.entries(allCourses[selectedCourse].students).map(
-                  ([key, { firstName, lastName }]) => (
-                    <option
-                      key={key}
-                      value={key}
-                    >
-                      {`${firstName} ${lastName}`}
+      <LevelSide>
+        <Form.Field kind='addons'>
+          <Form.Control>
+            <Form.Label>Student</Form.Label>
+            <Form.Select
+              name='studentId'
+              value={studentId}
+              placeholder='student'
+              onInput={handleInputChange}
+            >
+              <option value=''>-</option>
+              {Object.entries(allCourses[selectedCourse].students).map(
+                ([key, { firstName, lastName }]) => (
+                  <option
+                    key={key}
+                    value={key}
+                  >
+                    {`${firstName} ${lastName}`}
 
-                    </option>
-                  ),
-                )}
-              </Form.Select>
-              <Icon className='ml-2 mt-2'>
-                <i
-                  className={`fas fa-check ${!inputIsSelected(studentId) && 'has-text-white'
-                  }`}
-                />
-              </Icon>
-            </Form.Control>
-          </Form.Field>
-        </Level.Item>
-      </Level.Side>
+                  </option>
+                ),
+              )}
+            </Form.Select>
+            <Icon className='ml-2 mt-2'>
+              <i
+                className={`fas fa-check ${!inputIsSelected(studentId) && 'has-text-white'
+                }`}
+              />
+            </Icon>
+          </Form.Control>
+        </Form.Field>
+      </LevelSide>
       <Level.Item>
         <MeetingTime formInputs={formInputs} setFormInputs={setFormInputs} />
       </Level.Item>
-      <Level.Side align='right'>
-        <Level.Item>
-          <Form.Field kind='addons'>
-            <Form.Control>
-              <Form.Label>Duration (hours)</Form.Label>
+      <LevelSide>
+        <Form.Field kind='addons'>
+          <Form.Control>
+            <Form.Label>Duration (hours)</Form.Label>
 
-              <Form.Input
-                disabled
-                style={{
-                  width: '50px',
-                  backgroundColor: 'inherit',
-                  borderColor: `${startDate && 'inherit'}`,
-                  color: `${startDate && 'inherit'}`,
-                }}
-                value={duration}
-              />
+            <Form.Input
+              disabled
+              style={{
+                width: '50px',
+                backgroundColor: 'inherit',
+                borderColor: `${startDate && 'inherit'}`,
+                color: `${startDate && 'inherit'}`,
+              }}
+              value={duration}
+            />
 
-              <Button
-                type='button'
-                className='py-0'
-                onClick={() => updateDuration(1)}
-                disabled={!startDate}
-              >
-                +
-              </Button>
-              <Button
-                disabled={!startDate || duration === 1}
-                type='button'
-                className='py-0'
-                onClick={() => updateDuration(-1)}
-              >
-                -
-              </Button>
-            </Form.Control>
-          </Form.Field>
-        </Level.Item>
-      </Level.Side>
+            <Button
+              type='button'
+              className='py-0'
+              onClick={() => updateDuration(1)}
+              disabled={!startDate}
+            >
+              +
+            </Button>
+            <Button
+              disabled={!startDate || duration === 1}
+              type='button'
+              className='py-0'
+              onClick={() => updateDuration(-1)}
+            >
+              -
+            </Button>
+          </Form.Control>
+        </Form.Field>
+      </LevelSide>
     </Level>
   );
 };
