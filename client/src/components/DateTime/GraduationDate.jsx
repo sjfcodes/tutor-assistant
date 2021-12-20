@@ -9,12 +9,12 @@ const GraduationDate = ({ iso8601, className }) => {
 
   return (
     <p className={className}>
-      <DateItem str={d[0]} size={7} />
-      {' '}
+      {/* <DateItem str={d[0]} size={7} />
+      {' '} */}
       <DateItem str={d[1]} size={7} />
       {' '}
       <DateItem str={d[2]} />
-      {' / '}
+      <DateItem str=' / ' size={7} />
       <DateItem str={d[3]} />
     </p>
   );

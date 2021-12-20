@@ -1,10 +1,10 @@
-const { getISOFutureHour } = require('../utils/dateTime');
+const { getISOFutureHour, getISOPastHour } = require('../utils/dateTime');
 
 module.exports = [
   {
     _id: '61bc17044b5faaa82f1e5691',
-    firstName: 'Mo',
-    lastName: 'Jito',
+    firstName: 'Moe',
+    lastName: 'B',
     email: 'moJito@email.com',
     githubUsername: 'samuelfox1',
     timeZoneOffset: 'Pacific',
@@ -15,12 +15,13 @@ module.exports = [
     fullTimeCourse: true,
     reassignment: false,
     recurringMeeting: true,
-    notes: 'first student added!',
+    notes: 'loves to learn',
+    createdAt: getISOPastHour(24),
   },
   {
     _id: '61bc1de5afe0e50f52099a85',
-    firstName: 'Mi',
-    lastName: 'Lee',
+    firstName: 'Miley',
+    lastName: 'K',
     email: 'mlee@email.com',
     githubUsername: 'mlee',
     timeZoneOffset: 'Eastern',
@@ -32,5 +33,23 @@ module.exports = [
     reassignment: false,
     recurringMeeting: true,
     notes: 'just started school',
+    createdAt: getISOPastHour(48),
+  },
+  {
+    _id: '61bc1de5afe0e50f52099a84',
+    firstName: 'Kel',
+    lastName: 'Fox',
+    email: 'kel@email.com',
+    githubUsername: 'kel',
+    timeZoneOffset: 'Eastern',
+    meetingLink: 'https://zoom.us/j/96314583232?pwd=K1ZsMGpjWEk1MDdQUStKNFlSd3VDZz09',
+    classId: 'ABC123',
+    graduationDate: getISOFutureHour(500),
+    meetingsPerWeek: 2,
+    fullTimeCourse: true,
+    reassignment: false,
+    recurringMeeting: true,
+    notes: 'super wiz',
+    createdAt: getISOPastHour(1),
   },
 ];
