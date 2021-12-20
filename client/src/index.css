@@ -1,56 +1,52 @@
+/* ~ ~ ~ ~ ~ MAIN LAYOUT ~ ~ ~ ~ ~ ~ */
 html, body {
   min-height: 100vh;
 }
 header {
   height: 8vh;
 }
-
 main {
   min-height: 84vh;
 }
-
 footer {
   min-height: 10vh;
 }
-
 .z-1 {
   z-index: -1;
 }
 
-.border {
-  border: solid 1px rgb(0, 0, 0);
+/* ~ ~ ~ ~ ~ ~ ~ BACKGROUND ~ ~ ~ ~ ~ ~ ~ */
+.background-dark-blurred {
+  background-color: rgba(0, 0, 0, 0.493);
+  backdrop-filter: blur(20px);
 }
-.border-bottom {
-  border-bottom: solid 1px rgb(0, 0, 0);
+.background-clear {
+  background-color: rgba(255, 255, 255, 0);
+}
+
+/* ~ ~ ~ ~ ~ ~ ~ BORDER ~ ~ ~ ~ ~ ~ ~ */
+.border {
+  border: solid 1px rgba(0, 0, 0, 0.658);
+}
+.border-bold {
+  border: solid 2px rgb(0, 0, 0);
 }
 .border-red {
   border: solid 1px red;
+}
+.border-bottom {
+  border-bottom: solid 1px rgb(0, 0, 0);
 }
 .rounded {
   border-radius: 4px;
 }
 
-.background-dark-blurred {
-  background-color: rgba(0, 0, 0, 0.493);
-  backdrop-filter: blur(20px);
-}
-
-.background-clear {
- background-color: rgba(255, 255, 255, 0);
-}
-
-.modal-card {
-  overflow: scroll;
-  width: 95%;
-  border-radius: 1em;
-  max-height: 80vh !important;
-  min-height: 80vh !important;
-}
+/* ~ ~ ~ ~ ~ ~ ~ FORM ~ ~ ~ ~ ~ ~ ~ */
 form {
   display: contents;
 }
 
-/* HELP-TEXT */
+/* ~ ~ ~ ~ ~ ~ ~ HELP-TEXT ~ ~ ~ ~ ~ ~ ~ */
 .help-error {
   color: rgba(175, 41, 41, 0.69);
   background-color: whitesmoke;
@@ -61,7 +57,7 @@ form {
   color: rgba(28, 161, 28, 0.69);
 }
 
-/* ICON STYLES */
+/* ~ ~ ~ ~ ~ ~ ~ ICON ~ ~ ~ ~ ~ ~ ~ */
 .icon-small {
   font-size: 0.75em;
 }
@@ -85,4 +81,13 @@ form {
 .button:hover {
   cursor: pointer;
   transform: scale(1.02);
+}
+
+/* ~ ~ ~ ~ ~ ~ ~ MODAL ~ ~ ~ ~ ~ ~ ~ */
+.modal-card {
+  overflow: scroll;
+  width: 95%;
+  border-radius: 1em;
+  max-height: 80vh !important;
+  min-height: 80vh !important;
 }

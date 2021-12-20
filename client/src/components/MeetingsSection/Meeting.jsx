@@ -5,6 +5,7 @@ import {
 } from 'prop-types';
 import { CourseContext } from '../../context';
 import MeetingList from './MeetingList';
+import { MeetingDate } from '../DateTime';
 
 const Meeting = ({ meeting, setSelectedMeetingId, selectedMeetingId }) => {
   const { allCourses, selectedCourse } = useContext(CourseContext);
@@ -14,9 +15,6 @@ const Meeting = ({ meeting, setSelectedMeetingId, selectedMeetingId }) => {
   const toggleViewMeeting = () => (selectedMeetingId === _id
     ? setSelectedMeetingId('')
     : setSelectedMeetingId(_id));
-
-  const date = new Date(startDate * 1000).toLocaleDateString();
-  const time = new Date(startDate * 1000).toLocaleTimeString().split(':');
 
   return (
     <Box
@@ -31,19 +29,19 @@ const Meeting = ({ meeting, setSelectedMeetingId, selectedMeetingId }) => {
         onClick={toggleViewMeeting}
       >
         <Level.Side>
-          <Level.Item className='ml-3'>{`${firstName} ${lastName}`}</Level.Item>
+          <Level.Item>
+            <MeetingDate
+              className='ml-3'
+              iso8601={startDate}
+            />
+          </Level.Item>
         </Level.Side>
 
         <Level.Side>
-          <Level.Item>
-            <p className='mr-1'>{`${date} @ ${time[0]}:${time[2]}`}</p>
-            <Icon className='mr-2'>
-              <i
-                className={`fas fa-chevron-${selectedMeetingId === _id ? 'up' : 'down'
-                }`}
-              />
-            </Icon>
-          </Level.Item>
+          <Level.Item className='ml-3'>{`${firstName} ${lastName}`}</Level.Item>
+          <Icon className='mr-2'>
+            <i className={`fas fa-chevron-${selectedMeetingId === _id ? 'up' : 'down'}`} />
+          </Icon>
         </Level.Side>
       </Level>
 
@@ -60,9 +58,9 @@ Meeting.propTypes = {
   meeting: shape({
     _id: string.isRequired,
     duration: number.isRequired,
-    startDate: number.isRequired,
+    startDate: string.isRequired,
     status: string.isRequired,
-    createdAt: number.isRequired,
+    createdAt: string.isRequired,
   }).isRequired,
   selectedMeetingId: string.isRequired,
   setSelectedMeetingId: func.isRequired,

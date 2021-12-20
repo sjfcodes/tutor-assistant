@@ -17,12 +17,12 @@ const getCurrentUnix = () => Math.floor(new Date().getTime() / 1000);
  * @param {Number} unix number of seconds sincs unix epoch, defaults to current unix time
  * @returns {String} timestamp formatted to users Local timeZoneOffset
  */
-const getTimeStamp = (unix = getCurrentUnix()) => new Date(unix * 1000);
+const getTimeStamp = (unix = getCurrentUnix()) => new Date(unix * 1000).toISOString();
 
 /**
  * @param {Number} hour
  * @param {String} amPm
- * @returns {String} String from 00-23
+ * @returns {String} String representing an hour from 00-23
  * @refernce https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/Date#examples
  */
 const getZeroBasedHour = (hr, ampm) => {
@@ -43,10 +43,10 @@ const getZeroBasedHour = (hr, ampm) => {
 };
 
 /**
- * @param {String} date a date in YYYY-MM-DD format
- * @param {Number }      hour number from 1-12
- * @param {String}       amPm value of either AM or PM
- * @returns {Number} unix time
+ * @param {String}  date a date in YYYY-MM-DD format
+ * @param {Number } hour number from 1-12
+ * @param {String}  amPm value of either AM or PM
+ * @returns {Number} unix time from form input selection
  */
 const getUnixFromFormInputs = (date, hour = 12, amPm = 'AM') => {
   //  New date object from parameters
@@ -58,16 +58,18 @@ const getUnixFromFormInputs = (date, hour = 12, amPm = 'AM') => {
   return unix;
 };
 
-// const date = new Date(startDate * 1000).toLocaleDateString();
-// const time = new Date(startDate * 1000).toLocaleTimeString().split(':');
+const getLocalDateString = (iso8601) => {
+  const d = new Date(iso8601).toString().split(' ');
+  // Ex: [ "Sun", "Dec", "19", "2021", "20:00:00", "GMT-0800", "(Pacific", "Standard", "Time)"]
 
-const getLocalDateString = (unix) => {
-  const date = new Date(unix * 1000).toLocaleDateString();
-  const time = new Date(unix * 1000).toLocaleTimeString().split(':');
-  const ampm = time[2].split(' ').pop();
-  const formatTime = `${time[0]}:${time[1]} ${ampm}`;
+  const date = `${d[0]} ${d[1]} ${d[2]}`;
+  // Ex: Sun Dec 19
 
-  return `${date} ${formatTime}`;
+  const time = new Date(iso8601).toLocaleTimeString().split(':');
+  // Ex: ["8","00","00 PM"]
+  if (time[0].length === 1) time[0] = `0${time[0]}`;
+  time[2] = time[2].substring(3);
+  return `${date} @ ${time[0]}:${time[1]} ${time[2]}`;
 };
 
 export {

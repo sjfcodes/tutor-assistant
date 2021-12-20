@@ -40,8 +40,8 @@ MeetingList.propTypes = {
   meeting: shape({
     _id: string.isRequired,
     duration: number.isRequired,
-    startDate: number.isRequired,
+    startDate: string.isRequired,
     status: string.isRequired,
-    createdAt: number.isRequired,
+    createdAt: string.isRequired,
   }).isRequired,
 };
