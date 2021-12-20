@@ -35,6 +35,14 @@ const StudentsSection = () => {
         allCourses[selectedCourse]
         && Object
           .values(allCourses[selectedCourse].students)
+          .sort(({ createdAt: a }, { createdAt: b }) => {
+            const unixA = new Date(a).getTime() / 1000;
+            // sort newest students first
+            const unixB = new Date(b).getTime() / 1000;
+            if (unixA === unixB) return 0;
+            if (unixA < unixB) return -1;
+            return 1;
+          })
           .map((student) => (
             <Student
               key={student._id}
