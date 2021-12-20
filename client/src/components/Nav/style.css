@@ -4,9 +4,17 @@ nav {
   border-bottom: black solid 1px;
 }
 .brand {
-  font-family: "Shadows Into Light", cursive;
+  font-family: "Shadows Into Light";
   color: #09b2f5;
   font-size: 2em;
+}
+
+.navbar-dropdown a:hover {
+  color:#09b2f5 !important;
+}
+.navbar-dropdown a.issue:hover {
+  /* bulma danger => https://bulma.io/documentation/helpers/color-helpers/ */
+  color:hsl(348, 100%, 61%) !important;
 }
 
 .avatar {

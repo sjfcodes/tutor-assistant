@@ -47,9 +47,9 @@ const EmailTemplateManager = () => {
     return () => { isMounted = false; };
   }, []);
 
-  // useEffect(() => {
-  //   console.log(allTemplates);
-  // }, [allTemplates]);
+  useEffect(() => {
+    if (selected.name) setHelpMessage('');
+  }, [selected]);
 
   return (
     <Box className='background-dark-blurred p-3 '>

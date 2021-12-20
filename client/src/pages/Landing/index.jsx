@@ -10,20 +10,20 @@ const Landing = () => {
   return (
 
     <Box className='background-dark-blurred pt-1'>
-      <Tabs type='boxed' align='right' className=' mb-0 pt-3 pr-2'>
+      <Tabs type='boxed' align='left' className=' mb-0 pt-3 pl-2'>
         <Tab
-          className={form !== 'login' && 'has-text-white'}
+          className={form !== 'login' ? 'has-text-white' : ''}
           active={form === 'login'}
           onClick={() => setForm('login')}
         >
-          login
+          <strong className={`py-2 ${form !== 'login' ? 'has-text-grey-lighter' : ''}`}>Login</strong>
         </Tab>
         <Tab
-          className={`rounded-tr ${form !== 'signup' && 'has-text-white'}`}
+          className='rounded-tr'
           active={form === 'signup'}
           onClick={() => setForm('signup')}
         >
-          signup
+          <strong className={`py-2 ${form !== 'signup' ? 'has-text-grey-lighter' : ''}`}>Signup</strong>
         </Tab>
       </Tabs>
       <Box className='rounded'>
