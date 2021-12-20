@@ -2,6 +2,7 @@ import React from 'react';
 import {
   Box, Columns, Content, Icon, Level,
 } from 'react-bulma-components';
+import { LevelSide } from '../BulmaHelpers';
 
 // eslint-disable-next-line react/prop-types
 const HowItWorks = ({ viewHelp, setViewHelp }) => (
@@ -11,22 +12,18 @@ const HowItWorks = ({ viewHelp, setViewHelp }) => (
       className='is-mobile px-0 mb-0'
       onClick={() => setViewHelp((current) => !current)}
     >
-      <Level.Side>
-        <Level.Item className=''>
-          <h1 className='is-size-5 has-text-weight-bold'>How It Works</h1>
-        </Level.Item>
-      </Level.Side>
+      <LevelSide>
+        <h1 className='is-size-5 has-text-weight-bold'>How It Works</h1>
+      </LevelSide>
 
-      <Level.Side>
-        <Level.Item>
-          <p className='is-size-5'>{viewHelp ? 'hide' : 'show'}</p>
-          <Icon className=''>
-            <i
-              className={`fas fa-chevron-${viewHelp ? 'up' : 'down'}`}
-            />
-          </Icon>
-        </Level.Item>
-      </Level.Side>
+      <LevelSide>
+        <p className='is-size-5'>{viewHelp ? 'hide' : 'show'}</p>
+        <Icon className=''>
+          <i
+            className={`fas fa-chevron-${viewHelp ? 'up' : 'down'}`}
+          />
+        </Icon>
+      </LevelSide>
     </Level>
 
     {viewHelp && (

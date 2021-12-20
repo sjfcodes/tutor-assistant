@@ -1,8 +1,9 @@
 import React, { useContext, useState } from 'react';
 import {
-  Box, Button, Heading, Level,
+  Box, Heading, Icon, Level,
 } from 'react-bulma-components';
 import { CourseContext, ModalContext } from '../../context';
+import { LevelSide } from '../BulmaHelpers';
 import Meeting from './Meeting';
 
 const MeetingsSection = () => {
@@ -12,23 +13,19 @@ const MeetingsSection = () => {
 
   return (
     <Box className='has-background-white py-1 px-3 mb-3'>
-      <Level renderAs='div' className='is-mobile mt-2 mb-4'>
-        <Level.Side>
-          <Level.Item>
-            <Heading>Meetings</Heading>
-          </Level.Item>
-        </Level.Side>
-        <Level.Side>
-          <Level.Item>
-            <Button
-              color='primary'
-              size='small'
-              onClick={() => setOpenModal('addMeeting')}
-            >
-              Add Meeting
-            </Button>
-          </Level.Item>
-        </Level.Side>
+      <Level renderAs='div' className='is-mobile mt-2 mb-3'>
+        <LevelSide>
+          <Heading size={4}>Meetings</Heading>
+        </LevelSide>
+        <LevelSide>
+          <Icon
+            className='p-4 mr-1 hover'
+            color='primary'
+            onClick={() => setOpenModal('addMeeting')}
+          >
+            <i className='fas fa-plus' />
+          </Icon>
+        </LevelSide>
       </Level>
       {
         allCourses[selectedCourse]

@@ -6,6 +6,7 @@ import {
 } from 'prop-types';
 import { Button, Level } from 'react-bulma-components';
 import StudentListItem from './StudentListItem';
+import { LevelSide } from '../BulmaHelpers';
 
 const StudentList = ({ _id, student }) => {
   let count = 0;
@@ -15,9 +16,8 @@ const StudentList = ({ _id, student }) => {
         renderAs='div'
         className='is-mobile p-2 border-bottom mb-0'
       >
-        <Level.Side>
-          <Level.Item>
-            {/* <Link to='/history'>
+        <LevelSide>
+          {/* <Link to='/history'>
               <Button
                 size='small'
                 color='primary'
@@ -25,21 +25,18 @@ const StudentList = ({ _id, student }) => {
                 meeting history
               </Button>
             </Link> */}
-          </Level.Item>
 
-        </Level.Side>
-        <Level.Side>
-          <Level.Item>
-            <Link to='/email'>
-              <Button
-                size='small'
-                color='primary'
-              >
-                send email
-              </Button>
-            </Link>
-          </Level.Item>
-        </Level.Side>
+        </LevelSide>
+        <LevelSide>
+          <Link to='/email'>
+            <Button
+              size='small'
+              color='primary'
+            >
+              send email
+            </Button>
+          </Link>
+        </LevelSide>
       </Level>
       <ul className='student-list'>
         {Object.entries(student).map(([property, value]) => {
