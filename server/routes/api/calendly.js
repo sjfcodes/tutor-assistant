@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const { authorizeToken } = require('../../utils/auth');
 // const axios = require('axios');
 
 // console.log(process.env.CALENDLY_API_TOKEN);
@@ -29,7 +30,7 @@ const router = require('express').Router();
  * Get request to collect all upcoming events
  */
 
-router.get('/users/me', (req, res) => {
+router.get('/users/me', authorizeToken, (req, res) => {
   res.json('yo');
 });
 

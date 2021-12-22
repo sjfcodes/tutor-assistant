@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Button, Form, Modal } from 'react-bulma-components';
 import { AppContext, CourseContext, ModalContext } from '../../../context';
-import { createModel, missingFormInputs } from '../../../utils';
+import { createModel } from '../../../utils';
 
 const AddCourseModal = () => {
   const { openModal, setOpenModal } = useContext(ModalContext);
@@ -25,9 +25,7 @@ const AddCourseModal = () => {
   const resetForm = () => setFormInputs({ courseName: '' });
 
   const handleInputChange = (e) => {
-    const {
-      target: { name, value },
-    } = e;
+    const { target: { name, value } } = e;
 
     if (helpMessage) setHelpMessage(null);
     if (existingNames && existingNames.indexOf(value.toLowerCase()) !== -1) setHelpMessage('name already in use');
@@ -91,12 +89,12 @@ const AddCourseModal = () => {
             </Form.Field>
           </Modal.Card.Body>
           <Modal.Card.Footer renderAs={Button.Group} align='right'>
-            <Button
+            {/* <Button
               disabled={helpMessage || missingFormInputs(formInputs)}
               color='info'
             >
               Add Course
-            </Button>
+            </Button> */}
           </Modal.Card.Footer>
         </form>
       </Modal.Card>
