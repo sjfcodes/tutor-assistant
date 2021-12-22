@@ -5,7 +5,7 @@ import { ModalContext } from '../../context';
 import { SettingsModal } from '../Modals';
 
 // eslint-disable-next-line no-unused-vars
-export const SettingsMenu = ({ toggleNavBurger, setDisplayDropdown }) => {
+export const SettingsMenu = ({ toggleNavBurger }) => {
   const { setOpenModal } = useContext(ModalContext);
 
   return (
@@ -18,9 +18,9 @@ export const SettingsMenu = ({ toggleNavBurger, setDisplayDropdown }) => {
           <Navbar.Item
             onClick={() => setOpenModal('settings')}
           >
-            Profile
+            All
           </Navbar.Item>
-          <Navbar.Item
+          {/* <Navbar.Item
             onClick={() => setOpenModal('settings')}
           >
             Courses
@@ -34,7 +34,7 @@ export const SettingsMenu = ({ toggleNavBurger, setDisplayDropdown }) => {
             onClick={() => setOpenModal('settings')}
           >
             Meetings
-          </Navbar.Item>
+          </Navbar.Item> */}
         </Navbar.Dropdown>
       </Navbar.Item>
       <SettingsModal />
@@ -45,5 +45,5 @@ export default SettingsMenu;
 
 SettingsMenu.propTypes = {
   toggleNavBurger: func.isRequired,
-  setDisplayDropdown: func.isRequired,
+
 };

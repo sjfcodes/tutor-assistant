@@ -1,15 +1,36 @@
 /* ~ ~ ~ ~ ~ MAIN LAYOUT ~ ~ ~ ~ ~ ~ */
-html, body {
+html,
+body {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+
   min-height: 100vh;
+  max-height: 100vh;
+
+  min-width: 100vw;
+  max-width: 100vw;
 }
-header {
-  height: 8vh;
+
+#root header {
+  margin-top: 0;
+  margin-bottom: 0;
+
+  min-height: 8vh;
+  max-height: 8vh;
 }
+
 main {
-  min-height: 84vh;
+  margin-top: 0;
+  margin-bottom: 0;
+
+  min-height: 85vh;
 }
 footer {
-  min-height: 10vh;
+  margin-top: 0;
+  margin-bottom: 0;
+
+  min-height: 7vh ;
+  max-height: 7vh  ;
 }
 .z-1 {
   z-index: -1;
@@ -38,7 +59,13 @@ footer {
   border: solid 2px rgb(0, 0, 0);
 }
 .border-red {
-  border: solid 1px red;
+  border: solid 3px red;
+}
+.border-green {
+  border: solid 3px green;
+}
+.border-orange {
+  border: solid 3px orange;
 }
 .rounded {
   border-radius: 4px;
@@ -70,20 +97,19 @@ form {
 .blue:hover {
   color: #09b2f5fb;
 }
-.green {
-  color: #09b2f580;
-}
-.green:hover {
-  color: #09b2f5fb;
-}
 .hover:hover {
   cursor: pointer;
-  transform: scale(1.5);
+  transform: scale(1.5)!important;
 }
 .hover-large-item:hover,
 .button:hover {
   cursor: pointer;
-  transform: scale(1.02);
+  color: rgb(0, 0, 0);
+  transform: scale(1.02) !important;
+}
+a.hover-large-item:hover {
+  color: #09b2f5;
+  font-size: scale(1.02);
 }
 
 /* ~ ~ ~ ~ ~ ~ ~ MODAL ~ ~ ~ ~ ~ ~ ~ */

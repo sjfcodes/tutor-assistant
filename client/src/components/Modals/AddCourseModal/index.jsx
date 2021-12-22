@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Button, Form, Modal } from 'react-bulma-components';
-import { AppContext, CourseContext, ModalContext } from '../../context';
-import { createModel, missingFormInputs } from '../../utils';
+import { AppContext, CourseContext, ModalContext } from '../../../context';
+import { createModel, missingFormInputs } from '../../../utils';
 
-const AddCourse = () => {
+const AddCourseModal = () => {
   const { openModal, setOpenModal } = useContext(ModalContext);
   const [formInputs, setFormInputs] = useState({ courseName: '' });
   const { courseName } = formInputs;
@@ -103,4 +103,4 @@ const AddCourse = () => {
     </Modal>
   );
 };
-export default AddCourse;
+export default AddCourseModal;

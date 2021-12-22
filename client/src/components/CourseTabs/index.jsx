@@ -3,7 +3,6 @@ import React, {
 } from 'react';
 import { Tabs } from 'react-bulma-components';
 import { CourseContext, ModalContext } from '../../context';
-import { AddCourse } from '../Modals';
 import './style.css';
 
 const { Tab } = Tabs;
@@ -51,7 +50,11 @@ const CourseTabs = ({ className }) => {
           active={(!selectedCourse || selectedCourse === _id)}
           onClick={() => setSelectedCourse(_id)}
         >
-          <strong className={`py-2 ${selectedCourse !== _id ? 'has-text-grey-lighter' : ''}`}>{name}</strong>
+          <strong
+            className={`py-2 ${selectedCourse !== _id ? 'has-text-grey-lighter' : ''}`}
+          >
+            {name}
+          </strong>
         </Tab>,
       );
       if (!selectedCourse && i === 0) setSelectedCourse(_id);
@@ -62,24 +65,18 @@ const CourseTabs = ({ className }) => {
   }, [allCourses, handleUpdate, selectedCourse, setSelectedCourse]);
 
   return (
-    <>
-      <Tabs
-        align='left'
-        type='boxed'
-        id='course-tabs'
-        // className='background-clear'
-        className={className}
-      >
-        {courseTabs}
-        <Tab
-          className=''
-          onClick={() => setOpenModal('addCourse')}
-        >
-          <strong className='py-2 has-text-grey-lighter'>Add Course</strong>
-        </Tab>
-      </Tabs>
-      <AddCourse />
-    </>
+    <Tabs
+      align='left'
+      type='boxed'
+      id='course-tabs'
+      // className='background-clear'
+      className={className}
+    >
+      {courseTabs}
+      <Tab onClick={() => setOpenModal('addCourse')}>
+        <strong className='py-2 has-text-grey-lighter'>Add Course</strong>
+      </Tab>
+    </Tabs>
   );
 };
 export default CourseTabs;

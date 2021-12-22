@@ -2,9 +2,9 @@ import React, { useContext } from 'react';
 import {
   Button, Form, Icon, Level,
 } from 'react-bulma-components';
-import { CourseContext } from '../../../context';
-import { inputIsSelected } from '../../../utils';
-import { LevelSide } from '../../BulmaHelpers';
+import { LevelSide } from '../../../BulmaHelpers';
+import { inputIsSelected } from '../../../../utils';
+import { CourseContext } from '../../../../context';
 import MeetingTime, { addMeetingFormPropTypes } from './MeetingTime';
 
 const AddMeetingForm = ({ formInputs, setFormInputs }) => {

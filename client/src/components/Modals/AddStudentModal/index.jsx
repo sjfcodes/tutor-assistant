@@ -1,13 +1,14 @@
+/* eslint-disable no-unused-vars */
 import React, { useContext, useState } from 'react';
 import { Button, Modal } from 'react-bulma-components';
 import { CourseContext, ModalContext } from '../../../context';
 import {
   createModel,
   missingFormInputs,
-  getUnixFromFormInputs,
+  getISO8601TimeStamp,
 } from '../../../utils';
 import { handleError } from '../../../utils/helpers';
-import { AddStudentForm } from '../../Forms';
+import AddStudentForm from './AddStudentForm';
 
 const formDefaults = {
   firstName: '',
@@ -25,15 +26,16 @@ const formDefaults = {
   recurringMeeting: true,
 };
 
-const AddStudent = () => {
+const AddStudentModal = () => {
   const { openModal, setOpenModal } = useContext(ModalContext);
+
   const { allCourses, setAllCourses, selectedCourse } = useContext(CourseContext);
   const [formInputs, setFormInputs] = useState(formDefaults);
 
   const handleAddStudent = async (e) => {
     e.preventDefault();
     const inputs = { ...formInputs };
-    inputs.graduationDate = getUnixFromFormInputs(formInputs.graduationDate);
+    inputs.graduationDate = getISO8601TimeStamp(formInputs.graduationDate);
 
     try {
       const { _id: newStudentId, createdAt } = await createModel('student', inputs, selectedCourse);
@@ -94,4 +96,4 @@ const AddStudent = () => {
     </Modal>
   );
 };
-export default AddStudent;
+export default AddStudentModal;

@@ -12,10 +12,6 @@ nav {
 .navbar-dropdown a:hover {
   color:#09b2f5 !important;
 }
-.navbar-dropdown a.issue:hover {
-  /* bulma danger => https://bulma.io/documentation/helpers/color-helpers/ */
-  color:hsl(348, 100%, 61%) !important;
-}
 
 .avatar {
   max-width: 100px;
