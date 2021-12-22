@@ -7,15 +7,16 @@ const expiration = '1d';
 
 module.exports = {
   authorizeToken: (req, res, next) => {
-    let token = req.body.token || req.query.token || req.headers.authorization;
+    let token = req.headers.authorization;
     if (req.headers.authorization) token = token.split(' ').pop().trim();
-    if (!token) return res.status(401).json('unauthorized');
+    if (!token) return res.status(401).json('unauthorized:12');
 
     try {
       const { data } = jwt.verify(token, secret, { maxAge: expiration });
       req.tutor = data;
     } catch (error) {
-      return res.status(401).json('unauthorized');
+      console.error(error);
+      return res.status(401).json('unauthorized:18');
     }
 
     return next();
