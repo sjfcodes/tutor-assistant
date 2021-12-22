@@ -5,7 +5,9 @@ const meetingRoutes = require('./meeting');
 const emailTemplateRoutes = require('./emailTemplate');
 const courseRoutes = require('./course');
 const calendlyRoutes = require('./calendly');
+const accessTokenRoutes = require('./accessToken');
 
+router.use('/access-token', accessTokenRoutes);
 router.use('/calendly', calendlyRoutes);
 router.use('/course', courseRoutes);
 router.use('/email-template', emailTemplateRoutes);

@@ -43,6 +43,10 @@ const tutorSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'EmailTemplate',
   }],
+  accessTokens: [{
+    type: Schema.Types.ObjectId,
+    ref: 'AccessToken',
+  }],
   createdAt: {
     type: String,
     default: () => getISOCurrentDateStamp(),
