@@ -10,8 +10,8 @@ import {
   getCurrentUnix,
   getUnixFromFormInputs,
   inputIsSelected,
-} from '../../utils';
-import FormInput from './FormInput';
+} from '../../../utils';
+import { FormInput } from '../../Forms';
 
 const { Column } = Columns;
 

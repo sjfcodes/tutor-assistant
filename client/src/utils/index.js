@@ -13,7 +13,8 @@ export {
   missingFormInputs,
   inputIsSelected,
   getCurrentUnix,
-  getTimeStamp,
+  getISO8601TimeStamp,
   getUnixFromFormInputs,
+  getISO8601FromFormInputs,
   getLocalDateString,
 } from './helpers';

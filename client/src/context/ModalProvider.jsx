@@ -1,5 +1,7 @@
 import React, { createContext, useMemo, useState } from 'react';
 import { node } from 'prop-types';
+// eslint-disable-next-line no-unused-vars
+import { AddCourseModal, AddStudentModal, SettingsModal } from '../components/Modals';
 
 export const ModalContext = createContext();
 

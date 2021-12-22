@@ -18,13 +18,12 @@ const SettingsModal = () => {
     (e, courseName) => {
       const {
         target: {
-          parentNode: { classList },
+          parentNode: { parentNode: { classList } },
         },
       } = e;
 
       // if selected tab is already active, return
       if (classList.contains('is-active')) return '';
-      // console.log(e.target.parentNode.classList);
 
       // // toggle current active tab off
       document
@@ -42,6 +41,11 @@ const SettingsModal = () => {
   useEffect(() => {
     let isMounted = true;
     switch (activeTab) {
+    case 'profile':
+      if (isMounted) return setComponent(
+        <h1>Profile</h1>,
+      );
+      break;
     case 'courses':
       if (isMounted) return setComponent(
         <EditCourseForm setDisableControls={setDisableControls} />,
@@ -81,27 +85,54 @@ const SettingsModal = () => {
           <Modal.Card.Title>{`${firstName}'s Settings`}</Modal.Card.Title>
         </Modal.Card.Header>
         <Modal.Card.Body>
-          <Tabs type='boxed' id='settings-tabs' className='has-background-white'>
+          <Tabs
+            align='left'
+            type='boxed'
+            id='settings-tabs'
+          >
+            <Tabs.Tab
+              className='rounded'
+              active={activeTab === 'profile'}
+              onClick={(e) => handleUpdate(e, 'profile')}
+            >
+              <strong
+                className={activeTab !== 'profile' ? 'has-text-grey-lighter' : ''}
+              >
+                Profile
+              </strong>
+            </Tabs.Tab>
             <Tabs.Tab
               className='rounded'
               active={activeTab === 'courses'}
               onClick={(e) => handleUpdate(e, 'courses')}
             >
-              <strong className={activeTab !== 'courses' ? 'has-text-grey-lighter' : ''}>Courses</strong>
+              <strong
+                className={activeTab !== 'courses' ? 'has-text-grey-lighter' : ''}
+              >
+                Courses
+              </strong>
             </Tabs.Tab>
             <Tabs.Tab
               className='rounded'
               active={activeTab === 'students'}
               onClick={(e) => handleUpdate(e, 'students')}
             >
-              Students
+              <strong
+                className={activeTab !== 'students' ? 'has-text-grey-lighter' : ''}
+              >
+                Students
+              </strong>
             </Tabs.Tab>
             <Tabs.Tab
               className='rounded'
               active={activeTab === 'meetings'}
               onClick={(e) => handleUpdate(e, 'meetings')}
             >
-              Meetings
+              <strong
+                className={activeTab !== 'meetings' ? 'has-text-grey-lighter' : ''}
+              >
+                Meetings
+              </strong>
             </Tabs.Tab>
           </Tabs>
 

@@ -17,7 +17,7 @@ const getCurrentUnix = () => Math.floor(new Date().getTime() / 1000);
  * @param {Number} unix number of seconds sincs unix epoch, defaults to current unix time
  * @returns {String} timestamp formatted to users Local timeZoneOffset
  */
-const getTimeStamp = (unix = getCurrentUnix()) => new Date(unix * 1000).toISOString();
+const getISO8601TimeStamp = (unix = getCurrentUnix()) => new Date(unix * 1000).toISOString();
 
 /**
  * @param {Number} hour
@@ -58,6 +58,10 @@ const getUnixFromFormInputs = (date, hour = 12, amPm = 'AM') => {
   return unix;
 };
 
+const getISO8601FromFormInputs = (str) => {
+  console.log(str);
+};
+
 const getLocalDateString = (iso8601) => {
   const d = new Date(iso8601).toString().split(' ');
   // Ex: [ "Sun", "Dec", "19", "2021", "20:00:00", "GMT-0800", "(Pacific", "Standard", "Time)"]
@@ -73,5 +77,6 @@ const getLocalDateString = (iso8601) => {
 };
 
 export {
-  getCurrentUnix, getTimeStamp, getUnixFromFormInputs, getZeroBasedHour, getLocalDateString,
+  getCurrentUnix, getISO8601TimeStamp, getUnixFromFormInputs,
+  getZeroBasedHour, getLocalDateString, getISO8601FromFormInputs,
 };

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useContext } from 'react';
 import {
   Routes, Route, useNavigate, useLocation,
@@ -7,6 +8,7 @@ import { Nav, Footer, BackgroundImage } from './components';
 import { Home, Landing, EmailTemplateManager } from './pages';
 import { AppContext } from './context';
 import './App.sass';
+import AllModals from './components/Modals';
 
 const App = () => {
   const navigate = useNavigate();
@@ -17,21 +19,22 @@ const App = () => {
   useEffect(() => {
     if (location.pathname !== '/' && !loggedIn) return navigate('/');
     if (location.pathname === '/' && githubUsername) navigate(`/${githubUsername}`);
-
-    // if (location.pathname === '/' && githubUsername) navigate('/email');
     return '';
   }, [loggedIn, githubUsername, navigate, tutorDetails, location.pathname]);
 
   return (
     <>
-      <BackgroundImage url='./images/bg-image.jpg' />
-      <Section renderAs='header' className='p-0'>
+      <Section renderAs='header' className='p-0 m-0'>
         <Nav />
       </Section>
 
-      <Section renderAs='main' className='p-0'>
+      <BackgroundImage url='./images/bg-image.jpg' />
+
+      {loggedIn && <AllModals />}
+
+      <Section renderAs='main' className='p-0 m-0'>
         <Container className='is-max-desktop'>
-          <Columns centered>
+          <Columns centered className='m-0'>
             <Columns.Column
               desktop={{ size: 10 }}
               tablet={{ size: 8 }}
@@ -46,7 +49,7 @@ const App = () => {
         </Container>
       </Section>
 
-      <Footer />
+      <Footer className='pt-3 pb-0 m-0 border-top' />
     </>
   );
 };
