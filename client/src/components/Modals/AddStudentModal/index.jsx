@@ -83,13 +83,13 @@ const AddStudentModal = () => {
             <Button type='button' onClick={() => setOpenModal('')}>
               cancel
             </Button>
-            <Button
+            {/* <Button
               color='success'
               type='submit'
               disabled={missingFormInputs(formInputs)}
             >
               Add Student
-            </Button>
+            </Button> */}
           </Modal.Card.Footer>
         </form>
       </Modal.Card>

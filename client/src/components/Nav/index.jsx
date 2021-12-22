@@ -25,7 +25,10 @@ const Nav = () => {
   return (
     <Navbar className='my-0'>
       <Navbar.Brand>
-        <Navbar.Item className='py-0' onClick={() => console.log(tutorDetails)}>
+        <Navbar.Item
+          className='py-0'
+          // onClick={() => console.log(tutorDetails)}
+        >
           <h1 className='brand'>tutor-me.io</h1>
         </Navbar.Item>
         <Navbar.Burger onClick={toggleNavBurger} />
@@ -42,10 +45,11 @@ const Nav = () => {
                 renderAs='div'
               >
                 <Button
-                  className='tag is-rounded pt-0'
+                  color='primary'
+                  className='tag is-rounded'
                   onClick={() => setOpenModal('settings')}
                 >
-                  . . .
+                  Settings
                 </Button>
               </Navbar.Item>
               <Navbar.Item
