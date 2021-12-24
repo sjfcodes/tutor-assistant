@@ -1,12 +1,12 @@
 import React, {
   useCallback, useContext, useEffect, useState,
 } from 'react';
-import { CourseContext } from '../../../context';
-import { deleteModel, updateModel } from '../../../utils';
+import { CourseContext } from '../../../../context';
+import { deleteModel, updateModel } from '../../../../utils';
 import CouseLayouts from './CourseLayouts';
 
 // eslint-disable-next-line react/prop-types
-const EditCourseForm = ({ setDisableControls }) => {
+const CourseSettings = ({ setDisableControls }) => {
   const [courseItems, setCourseItems] = useState();
   const [courseToDelete, setCourseToDelete] = useState('');
   const [courseToUpdate, setCourseToUpdate] = useState('');
@@ -102,4 +102,4 @@ const EditCourseForm = ({ setDisableControls }) => {
     </div>
   );
 };
-export default EditCourseForm;
+export default CourseSettings;

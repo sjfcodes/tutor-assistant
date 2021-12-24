@@ -47,6 +47,10 @@ const tutorSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'AccessToken',
   }],
+  resources: {
+    type: Object,
+    default: {},
+  },
   createdAt: {
     type: String,
     default: () => getISOCurrentDateStamp(),

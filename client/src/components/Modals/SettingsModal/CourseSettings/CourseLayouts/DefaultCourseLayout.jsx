@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from 'react-bulma-components';
 import { string, func } from 'prop-types';
-import { LevelSide } from '../../../BulmaHelpers';
+import { LevelSide } from '../../../../BulmaHelpers';
 
 const DefaultCourseLayout = ({
   courseName,
