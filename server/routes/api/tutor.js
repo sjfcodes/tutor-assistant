@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const { Tutor } = require('../../models');
 const { signToken, authorizeToken } = require('../../utils/auth');
+const { encryptToken } = require('../../utils/encryption');
 const {
   updateDocumentProperties, getTutorByEmail, getTutorById,
 } = require('../../utils/helpers');
@@ -24,7 +25,8 @@ router.post('/login', async ({ body }, res) => {
     const { tutor } = await getTutorByEmail(body.email);
     const correctPw = await tutor.isCorrectPassword(body.password);
     if (!correctPw) return res.status(401).json('unauthorized');
-    const token = signToken(tutor);
+    const accountKey = encryptToken(body.password, process.env.JWT_SECRET);
+    const token = signToken({ email: tutor.email, _id: tutor._id, accountKey });
     return res.json({ token, tutor });
   } catch (error) {
     console.error(error);

@@ -15,7 +15,7 @@ export const SyncCalendlyDetails = ({ password }) => {
     setLoading(true);
     try {
       const { resource } = await syncCalendlyResource({ password });
-      setTutorDetails({ ...tutorDetails, resource: { calendly: resource } });
+      setTutorDetails({ ...tutorDetails, resources: { calendly: resource } });
       setButtonText('success!');
       setLoading(false);
     } catch (error) {
