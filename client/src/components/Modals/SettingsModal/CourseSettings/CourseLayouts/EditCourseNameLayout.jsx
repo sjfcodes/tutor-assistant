@@ -1,7 +1,7 @@
 import React from 'react';
 import { string, func } from 'prop-types';
 import { Button, Form } from 'react-bulma-components';
-import { LevelSide } from '../../../BulmaHelpers';
+import { LevelSide } from '../../../../BulmaHelpers';
 
 const EditCourseNameLayout = ({
   formInput,

@@ -4,7 +4,8 @@ import React, {
 } from 'react';
 import { Button, Modal, Tabs } from 'react-bulma-components';
 import { AppContext, ModalContext } from '../../../context';
-import { EditCourseForm } from '../../Forms';
+import CalendlySettings from './CalendlySettings';
+import CourseSettings from './CourseSettings';
 
 const SettingsModal = () => {
   const [disableControls, setDisableControls] = useState(false);
@@ -48,7 +49,7 @@ const SettingsModal = () => {
       break;
     case 'courses':
       if (isMounted) return setComponent(
-        <EditCourseForm setDisableControls={setDisableControls} />,
+        <CourseSettings setDisableControls={setDisableControls} />,
       );
       break;
 
@@ -61,6 +62,12 @@ const SettingsModal = () => {
     case 'meetings':
       if (isMounted) return setComponent(
         <h1>Meetings</h1>,
+      );
+      break;
+
+    case 'calendly':
+      if (isMounted) return setComponent(
+        <CalendlySettings />,
       );
       break;
 
@@ -114,6 +121,17 @@ const SettingsModal = () => {
             </Tabs.Tab>
             <Tabs.Tab
               className='rounded'
+              active={activeTab === 'calendly'}
+              onClick={(e) => handleUpdate(e, 'calendly')}
+            >
+              <strong
+                className={activeTab !== 'calendly' ? 'has-text-grey-lighter' : ''}
+              >
+                Calendly
+              </strong>
+            </Tabs.Tab>
+            <Tabs.Tab
+              className='rounded'
               active={activeTab === 'students'}
               onClick={(e) => handleUpdate(e, 'students')}
             >
@@ -135,7 +153,6 @@ const SettingsModal = () => {
               </strong>
             </Tabs.Tab>
           </Tabs>
-
           {component}
         </Modal.Card.Body>
         <Modal.Card.Footer renderAs={Button.Group} align='right'>

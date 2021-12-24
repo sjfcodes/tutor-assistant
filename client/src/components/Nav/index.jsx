@@ -27,9 +27,9 @@ const Nav = () => {
       <Navbar.Brand>
         <Navbar.Item
           className='py-0'
-          // onClick={() => console.log(tutorDetails)}
+          onClick={() => console.log(tutorDetails)}
         >
-          <h1 className='brand'>tutor-me.io</h1>
+          <h1 className='brand'>tutorly</h1>
         </Navbar.Item>
         <Navbar.Burger onClick={toggleNavBurger} />
       </Navbar.Brand>

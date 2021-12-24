@@ -1,7 +1,7 @@
 import React from 'react';
 import { func, string } from 'prop-types';
 import { Button, Level } from 'react-bulma-components';
-import { LevelSide } from '../../../BulmaHelpers';
+import { LevelSide } from '../../../../BulmaHelpers';
 
 const DeleteCourseLayout = ({ courseName, courseId, handleDeleteCourse }) => (
   <>
