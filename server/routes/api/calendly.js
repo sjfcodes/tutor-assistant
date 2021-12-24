@@ -1,8 +1,8 @@
 const router = require('express').Router();
 const axios = require('axios');
-const { AES, enc } = require('crypto-js');
 const { Tutor } = require('../../models');
 const { authorizeToken } = require('../../utils/auth');
+const { decryptToken } = require('../../utils/encryption');
 
 // console.log(process.env.CALENDLY_API_TOKEN);
 // const url = 'https://api.calendly.com/scheduled_events';
@@ -45,11 +45,10 @@ router.post('/users/me', authorizeToken, async (req, res) => {
   }
 
   try {
-    // get calendly token
+    // get encrypted calendly token
     const { token } = tutor.accessTokens.filter(({ name }) => name === 'calendly')[0];
-    // decypt token with cryptoJS & user pw
-    const bytes = AES.decrypt(token, req.body.password);
-    decryptedToken = bytes.toString(enc.Utf8);
+    // decypt token
+    decryptedToken = decryptToken(token, req.body.password);
   } catch (error) {
     console.error(error);
     return res.status(500).json('failed:1');
