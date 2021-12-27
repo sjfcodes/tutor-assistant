@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Columns, Form, Level,
+  Columns, Form, Icon, Level,
 } from 'react-bulma-components';
 import {
   string, number, bool, func, shape,
@@ -12,7 +12,7 @@ import {
   inputIsSelected,
 } from '../../../utils';
 import { FormInput } from '../../Forms';
-import TimeZonePicker from '../../Forms/TimeZonePicker';
+import TimeZoneSelector from '../../Forms/TimeZoneSelector';
 
 const { Column } = Columns;
 
@@ -115,11 +115,25 @@ const AddStudentForm = ({ formInputs, setFormInputs }) => {
 
       <Columns>
         <Column narrow>
-          <TimeZonePicker
-            name='timeZoneName'
-            value={timeZoneName}
-            onChange={handleInputChange}
-          />
+          <Form.Label>Time Zone</Form.Label>
+          <Form.Field kind='addons'>
+            <Form.Control>
+              <TimeZoneSelector
+                name='timeZoneName'
+                value={timeZoneName}
+                onChange={handleInputChange}
+              />
+
+            </Form.Control>
+            <Form.Control>
+              {inputIsSelected(timeZoneName) && (
+                <Icon className='ml-2 mt-2'>
+                  <i className='fas fa-check' />
+                </Icon>
+              )}
+            </Form.Control>
+          </Form.Field>
+
         </Column>
         <Column>
           <FormInput

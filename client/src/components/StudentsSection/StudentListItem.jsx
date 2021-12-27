@@ -8,6 +8,7 @@ import { getLocalDateString, updateModel } from '../../utils';
 import { convertStrToBool } from '../../utils/helpers/forms';
 import { GraduationDate } from '../DateTime';
 import { LevelSide } from '../BulmaHelpers';
+import { TimeZoneSelector } from '../Forms';
 
 const StudentListItem = ({
   _id, property, value, count,
@@ -17,13 +18,38 @@ const StudentListItem = ({
   const [val, setVal] = useState();
   const { allCourses, setAllCourses, selectedCourse } = useContext(CourseContext);
 
-  const inputHasBeenModified = () => `${value}`.trim() !== `${input}`.trim();
-
   const handleInputChange = ({ target }) => {
     let newValue = target.value;
     if (newValue === 'true' || newValue === 'false') newValue = convertStrToBool(newValue);
     setInput(newValue);
   };
+
+  const getFormInputType = (propertyName) => {
+    switch (propertyName) {
+    case 'timeZoneName':
+      return (
+        <TimeZoneSelector
+          name={property}
+          value={input}
+          className='li-input mr-5 mb-2'
+          onChange={handleInputChange}
+        />
+      );
+
+    default:
+      return (
+        <input
+          type='input'
+          name={property}
+          value={input}
+          className='li-input mr-5 mb-2'
+          onChange={handleInputChange}
+        />
+      );
+    }
+  };
+
+  const inputHasBeenModified = () => `${value}`.trim() !== `${input}`.trim();
 
   const handleCancelEdit = () => {
     setItemToEdit();
@@ -62,7 +88,7 @@ const StudentListItem = ({
   };
 
   useEffect(() => {
-    const formatBooleanSpan = (boolean) => <span className={`has-text-${value ? 'success' : 'danger'}`}>{`${boolean}`}</span>;
+    const formatBooleanSpan = (boolean) => <span className={`has-text-${boolean ? 'success' : 'danger'}`}>{`${boolean}`}</span>;
     let isMounted = true;
     switch (property) {
     case 'githubUsername':
@@ -106,7 +132,8 @@ const StudentListItem = ({
 
   useEffect(() => {
     if (!property || !itemToEdit) return;
-    document.querySelector(`input[name=${property}]`).focus();
+    const selectedElement = document.querySelector(`input[name=${property}]`);
+    if (selectedElement) selectedElement.focus();
   }, [itemToEdit, property]);
 
   return (
@@ -124,13 +151,8 @@ const StudentListItem = ({
             itemToEdit === property
               ? (
                 <>
-                  <input
-                    type='input'
-                    name={property}
-                    value={input}
-                    className='li-input mr-5 mb-2'
-                    onChange={handleInputChange}
-                  />
+
+                  {getFormInputType(property)}
                   {
                     inputHasBeenModified()
                       && (
