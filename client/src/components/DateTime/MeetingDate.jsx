@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
-import { string, number } from 'prop-types';
+import { string } from 'prop-types';
 import DateItem from './DateItem';
 
 const MeetingDate = ({ iso8601, className }) => {

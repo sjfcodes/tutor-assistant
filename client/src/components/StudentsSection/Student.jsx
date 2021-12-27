@@ -5,13 +5,16 @@ import {
 } from 'prop-types';
 import StudentList from './StudentList';
 import { LevelSide } from '../BulmaHelpers';
+import { TimeZoneAbbreviation } from '../DateTime';
 
 const Student = ({
   student,
   setSelectedStudentId,
   selectedStudentId,
 }) => {
-  const { _id, firstName, lastName } = student;
+  const {
+    _id, firstName, lastName, timeZoneName,
+  } = student;
 
   const toggleViewStudent = () => (
     selectedStudentId === _id
@@ -31,7 +34,12 @@ const Student = ({
         onClick={toggleViewStudent}
       >
         <Level.Side>
-          <Level.Item className='ml-3'>{`${firstName} ${lastName}`}</Level.Item>
+          <Level.Item className='ml-3 mr-1'>{`${firstName} ${lastName}`}</Level.Item>
+          <Level.Item>
+            <p>
+              <TimeZoneAbbreviation timeZone={timeZoneName} className='is-size-7 has-text-grey' />
+            </p>
+          </Level.Item>
         </Level.Side>
 
         <LevelSide>
