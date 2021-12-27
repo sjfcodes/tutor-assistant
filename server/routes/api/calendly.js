@@ -43,22 +43,29 @@ router.post('/scheduled_events', authorizeToken, async (req, res) => {
   }
   console.log(req.body.uri);
   const url = 'https://api.calendly.com/scheduled_events';
-  const options = {
-    headers: {
-      authorization: `Bearer ${decryptedToken}`,
-      'Content-Type': 'application/json',
-    },
-    params: {
-      user: req.body.uri,
-      count: 3,
-      min_start_time: new Date().toISOString(),
-    },
+
+  const headers = {
+    authorization: `Bearer ${decryptedToken}`,
+    'Content-Type': 'application/json',
+  };
+
+  const params = {
+    user: req.body.uri,
+    // count: 3,
+    min_start_time: new Date().toISOString(),
   };
 
   try {
-    // make request with calendly token
-    const { data } = await axios.get(url, options);
-    return res.json(data);
+    // get events
+    const { data: { collection } } = await axios.get(url, { headers, params });
+    // get invitee info for all events
+    const withInviteeInfo = await Promise.all(collection.map(async (event) => {
+      const copy = { ...event };
+      copy.invitee_info = await axios.get(`${event.uri}/invitees`, { headers }).then(({ data }) => data.collection);
+      return copy;
+    }));
+
+    return res.json(withInviteeInfo);
   } catch (error) {
     console.error(error.message);
     return res.status(500).json('failed:2');
