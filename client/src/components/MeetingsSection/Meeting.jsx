@@ -30,14 +30,18 @@ const Meeting = ({ meeting, setSelectedMeetingId, selectedMeetingId }) => {
         onClick={toggleViewMeeting}
       >
         <LevelSide>
-          <MeetingDate
-            className='ml-3'
-            iso8601={startDate}
-          />
+          <Level.Item>
+            <div className='has-text-left'>
+              <MeetingDate
+                className='ml-3'
+                iso8601={startDate}
+              />
+              <p className='ml-3'>{`${firstName} ${lastName}`}</p>
+            </div>
+          </Level.Item>
         </LevelSide>
 
         <Level.Side>
-          <Level.Item className='ml-3'>{`${firstName} ${lastName}`}</Level.Item>
           <Icon className='mr-2'>
             <i className={`fas fa-chevron-${selectedMeetingId === _id ? 'up' : 'down'}`} />
           </Icon>

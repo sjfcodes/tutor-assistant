@@ -1,17 +1,28 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useContext, useEffect, useState } from 'react';
+import React, {
+  useCallback, useContext, useEffect, useState,
+} from 'react';
 import { Button, Navbar } from 'react-bulma-components';
 
 import { AppContext, ModalContext } from '../../context';
 import { logoutTutor } from '../../utils';
+import { MeetingDate, TimeZoneAbbreviation } from '../DateTime';
 // import SettingsMenu from './SettingsMenu';
 import './style.css';
 
 const Nav = () => {
   const { tutorDetails } = useContext(AppContext);
-  const { loggedIn } = tutorDetails;
+  const { loggedIn, timeZoneName } = tutorDetails;
   const { openModal, setOpenModal } = useContext(ModalContext);
   const [displayNavMenu, setDisplayNavMenu] = useState(false);
+
+  const getCurrentTime = useCallback(() => (
+    <MeetingDate
+      iso8601={new Date().toISOString()}
+    />
+  ), []);
+
+  const [date, setDate] = useState(getCurrentTime());
 
   const toggleNavBurger = (e, forceClose = false) => {
     if (forceClose) return setDisplayNavMenu(false);
@@ -22,6 +33,18 @@ const Nav = () => {
     if (openModal) toggleNavBurger(null, true);
   }, [openModal]);
 
+  useEffect(() => {
+    let isMounted = true;
+
+    setTimeout(() => {
+      if (isMounted) setDate(getCurrentTime());
+    }, 1000);
+
+    return () => {
+      isMounted = false;
+    };
+  }, [date, getCurrentTime]);
+
   return (
     <Navbar className='my-0'>
       <Navbar.Brand>
@@ -30,6 +53,17 @@ const Nav = () => {
           onClick={() => console.log(tutorDetails)}
         >
           <h1 className='brand'>tutorly</h1>
+        </Navbar.Item>
+        <Navbar.Item
+          renderAs='h1'
+          className='px-0'
+        >
+          {date}
+        </Navbar.Item>
+        <Navbar.Item
+          className='pl-1'
+        >
+          <TimeZoneAbbreviation timeZone={timeZoneName} className='is-size-7 has-text-grey' />
         </Navbar.Item>
         <Navbar.Burger onClick={toggleNavBurger} />
       </Navbar.Brand>
