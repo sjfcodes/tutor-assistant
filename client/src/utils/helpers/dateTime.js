@@ -1,23 +1,37 @@
-/**
- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * JavaScript Date objects use milliseconds
- * Unix is number of seconds since midnight Jan. 1,1970
- *
- * Unix is global standard so I decided to manage dates using unix
- *
- * test unix @ https://www.unixtimestamp.com/index.php
- */
+import { rawTimeZones } from '@vvo/tzdb';
+
+const getTimeZoneAbbreviation = (timeZone) => {
+  if (!timeZone) return '…';
+  const { abbreviation } = rawTimeZones.find((tz) => tz.name === timeZone) || {};
+  return abbreviation;
+};
+
+const getSortedTimeZones = () => rawTimeZones
+  .sort(({ abbreviation: a }, { abbreviation: b }) => {
+    if (a > b) return 1;
+    if (a === b) return 0;
+    return -1;
+  });
 
 /**
- * @returns {Number} unix time
- */
+   * @returns {Number} unix time
+   */
 const getCurrentUnix = () => Math.floor(new Date().getTime() / 1000);
 
 /**
- * @param {Number} unix number of seconds sincs unix epoch, defaults to current unix time
- * @returns {String} timestamp formatted to users Local timeZoneName
- */
+   * @param {Number} unix number of seconds sincs unix epoch, defaults to current unix time
+   * @returns {String} timestamp formatted to users Local timeZoneName
+   */
 const getISO8601TimeStamp = (unix = getCurrentUnix()) => new Date(unix * 1000).toISOString();
+
+const convertDatePickerToISO8601 = (datePicker) => `${datePicker}T00:00:00.000Z`;
+
+const convertISO8601ToDatePicker = (iso8601) => {
+  const d = new Date(iso8601);
+  return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
+};
+
+const getCurrentDatePicker = () => convertISO8601ToDatePicker(getISO8601TimeStamp());
 
 /**
  * @param {Number} hour
@@ -58,7 +72,7 @@ const getUnixFromFormInputs = (date, hour = 12, amPm = 'AM') => {
   return unix;
 };
 
-const getISO8601FromFormInputs = (str) => {
+const convertAddMeetingFormToISO8601 = (str) => {
   console.log(str);
 };
 
@@ -78,5 +92,7 @@ const getLocalDateString = (iso8601) => {
 
 export {
   getCurrentUnix, getISO8601TimeStamp, getUnixFromFormInputs,
-  getZeroBasedHour, getLocalDateString, getISO8601FromFormInputs,
+  getZeroBasedHour, getLocalDateString, convertAddMeetingFormToISO8601,
+  getTimeZoneAbbreviation, getSortedTimeZones, convertDatePickerToISO8601,
+  convertISO8601ToDatePicker, getCurrentDatePicker,
 };

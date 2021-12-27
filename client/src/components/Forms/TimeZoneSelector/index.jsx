@@ -1,27 +1,22 @@
 import { func, string } from 'prop-types';
 import React from 'react';
 import { Form } from 'react-bulma-components';
-import { rawTimeZones } from '@vvo/tzdb';
 import { v4 as uuidv4 } from 'uuid';
 import './style.css';
+import { getSortedTimeZones } from '../../../utils/helpers';
 
 const TimeZoneSelector = ({
   className, name, value, onChange,
 }) => (
   <Form.Select
-    className={`${className} time-zone-picker`}
+    className={`${className} time-zone-selector`}
     name={name}
     value={value}
     onChange={onChange}
   >
     <option>-</option>
     {
-      rawTimeZones
-        .sort(({ abbreviation: a }, { abbreviation: b }) => {
-          if (a > b) return 1;
-          if (a === b) return 0;
-          return -1;
-        })
+      getSortedTimeZones()
         .map(
           ({ name: tzName, abbreviation }) => <option key={uuidv4()} value={tzName}>{`${abbreviation} - ${tzName}`}</option>,
         )
