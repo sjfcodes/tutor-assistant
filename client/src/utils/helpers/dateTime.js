@@ -15,7 +15,7 @@ const getCurrentUnix = () => Math.floor(new Date().getTime() / 1000);
 
 /**
  * @param {Number} unix number of seconds sincs unix epoch, defaults to current unix time
- * @returns {String} timestamp formatted to users Local timeZoneOffset
+ * @returns {String} timestamp formatted to users Local timeZoneName
  */
 const getISO8601TimeStamp = (unix = getCurrentUnix()) => new Date(unix * 1000).toISOString();
 

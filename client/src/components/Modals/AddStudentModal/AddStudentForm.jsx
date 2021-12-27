@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Columns, Form, Icon, Level,
+  Columns, Form, Level,
 } from 'react-bulma-components';
 import {
   string, number, bool, func, shape,
@@ -12,23 +12,15 @@ import {
   inputIsSelected,
 } from '../../../utils';
 import { FormInput } from '../../Forms';
+import TimeZonePicker from '../../Forms/TimeZonePicker';
 
 const { Column } = Columns;
 
 const AddStudentForm = ({ formInputs, setFormInputs }) => {
   const {
-    firstName,
-    lastName,
-    email,
-    classId,
-    timeZoneOffset,
-    graduationDate,
-    fullTimeCourse,
-    githubUsername,
-    meetingLink,
-    meetingsPerWeek,
-    reassignment,
-    recurringMeeting,
+    firstName, lastName, email, classId, timeZoneName,
+    graduationDate, fullTimeCourse, githubUsername, meetingLink,
+    meetingsPerWeek, reassignment, recurringMeeting,
   } = formInputs;
 
   const [displayHelpText, setDisplayHelpText] = useState();
@@ -60,8 +52,8 @@ const AddStudentForm = ({ formInputs, setFormInputs }) => {
       if (!parseInt(value, 10)) return '';
       break;
 
-    case 'timeZoneOffset':
-      if (!value || value === '-') updateHelpText(name);
+    case 'timeZoneName':
+      if (!inputIsSelected(value)) updateHelpText(name);
       break;
 
     default:
@@ -123,29 +115,11 @@ const AddStudentForm = ({ formInputs, setFormInputs }) => {
 
       <Columns>
         <Column narrow>
-          <Form.Label>Time Zone</Form.Label>
-          <Form.Field kind='addons'>
-            <Form.Control>
-              <Form.Select
-                name='timeZoneOffset'
-                value={timeZoneOffset}
-                onInput={handleInputChange}
-              >
-                <option>-</option>
-                <option>Pacific</option>
-                <option>Mountain</option>
-                <option>Central</option>
-                <option>Eastern</option>
-              </Form.Select>
-            </Form.Control>
-            <Form.Control>
-              {inputIsSelected(timeZoneOffset) && (
-                <Icon className='ml-2 mt-2'>
-                  <i className='fas fa-check' />
-                </Icon>
-              )}
-            </Form.Control>
-          </Form.Field>
+          <TimeZonePicker
+            name='timeZoneName'
+            value={timeZoneName}
+            onChange={handleInputChange}
+          />
         </Column>
         <Column>
           <FormInput
@@ -280,7 +254,7 @@ AddStudentForm.propTypes = {
     lastName: string.isRequired,
     email: string.isRequired,
     classId: string.isRequired,
-    timeZoneOffset: string.isRequired,
+    timeZoneName: string.isRequired,
     graduationDate: string.isRequired,
     fullTimeCourse: bool.isRequired,
     githubUsername: string.isRequired,

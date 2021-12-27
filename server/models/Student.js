@@ -20,7 +20,7 @@ const studentSchema = new Schema({
   githubUsername: {
     type: String,
   },
-  timeZoneOffset: {
+  timeZoneName: {
     type: String,
   },
   meetingLink: {

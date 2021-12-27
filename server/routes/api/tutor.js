@@ -58,7 +58,7 @@ router.put('/', authorizeToken, async (req, res) => {
       firstName: true,
       lasName: true,
       email: true,
-      timeZoneOffset: true,
+      timeZoneName: true,
       githubUsername: true,
       calendlyLink: true,
       meetingCount: true,

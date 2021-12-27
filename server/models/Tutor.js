@@ -19,7 +19,7 @@ const tutorSchema = new Schema({
     unique: true,
     match: [/.+@.+\..+/, 'Must match an email address!'],
   },
-  timeZoneOffset: {
+  timeZoneName: {
     type: String,
     required: true,
   },
