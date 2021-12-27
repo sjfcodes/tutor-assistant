@@ -3,7 +3,7 @@ import { Form, Icon } from 'react-bulma-components';
 import {
   string, number, func, shape,
 } from 'prop-types';
-import { getISO8601FromFormInputs, getUnixFromFormInputs } from '../../../../utils';
+import { convertAddMeetingFormToISO8601, getUnixFromFormInputs } from '../../../../utils';
 
 export const addMeetingFormPropTypes = {
   formInputs: shape({
@@ -33,7 +33,7 @@ const MeetingTime = ({ formInputs, setFormInputs }) => {
 
     if (validateStartDate(copy)) {
       // work in progress
-      getISO8601FromFormInputs(copy);
+      convertAddMeetingFormToISO8601(copy);
 
       // if we have all the data, get the unix time
       const unix = getUnixFromFormInputs(copy.day, copy.time, copy.amPm);

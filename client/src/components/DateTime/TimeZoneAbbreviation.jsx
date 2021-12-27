@@ -1,19 +1,10 @@
-import { rawTimeZones } from '@vvo/tzdb';
 import { string } from 'prop-types';
 import React from 'react';
+import { getTimeZoneAbbreviation } from '../../utils/helpers';
 
-const TimeZoneAbbreviation = ({ timeZone, className }) => {
-  if (!timeZone) return <span className={`${className} is-size-7`}>loading…</span>;
-  const { abbreviation } = rawTimeZones.find((tz) => tz.name === timeZone) || {};
-
-  return (
-    <span className={className}>
-      (
-      {abbreviation}
-      )
-    </span>
-  );
-};
+const TimeZoneAbbreviation = ({ timeZone, className }) => (
+  <span className={className}>{`(${getTimeZoneAbbreviation(timeZone)})`}</span>
+);
 
 export default TimeZoneAbbreviation;
 TimeZoneAbbreviation.propTypes = {

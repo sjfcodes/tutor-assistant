@@ -1,11 +1,12 @@
 /* eslint-disable no-unused-vars */
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Button, Modal } from 'react-bulma-components';
 import { CourseContext, ModalContext } from '../../../context';
 import {
   createModel,
   missingFormInputs,
-  getISO8601TimeStamp,
+  convertDatePickerToISO8601,
+  getCurrentDatePicker,
 } from '../../../utils';
 import { handleError } from '../../../utils/helpers';
 import AddStudentForm from './AddStudentForm';
@@ -18,7 +19,7 @@ const formDefaults = {
   email: '',
   classId: '',
   timeZoneName: clientTimeZone || '',
-  graduationDate: '',
+  graduationDate: getCurrentDatePicker() || '',
   fullTimeCourse: false,
   githubUsername: '',
   meetingLink:
@@ -37,7 +38,7 @@ const AddStudentModal = () => {
   const handleAddStudent = async (e) => {
     e.preventDefault();
     const inputs = { ...formInputs };
-    inputs.graduationDate = getISO8601TimeStamp(formInputs.graduationDate);
+    inputs.graduationDate = convertDatePickerToISO8601(formInputs.graduationDate);
 
     try {
       const { _id: newStudentId, createdAt } = await createModel('student', inputs, selectedCourse);
@@ -60,6 +61,10 @@ const AddStudentModal = () => {
     }
     return '';
   };
+
+  useEffect(() => {
+    console.log(formInputs);
+  }, [formInputs]);
 
   return (
     <Modal
@@ -85,13 +90,13 @@ const AddStudentModal = () => {
             <Button type='button' onClick={() => setOpenModal('')}>
               cancel
             </Button>
-            {/* <Button
+            <Button
               color='success'
               type='submit'
               disabled={missingFormInputs(formInputs)}
             >
               Add Student
-            </Button> */}
+            </Button>
           </Modal.Card.Footer>
         </form>
       </Modal.Card>
