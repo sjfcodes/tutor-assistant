@@ -25,8 +25,10 @@ router.post('/login', async ({ body }, res) => {
     const { tutor } = await getTutorByEmail(body.email);
     const correctPw = await tutor.isCorrectPassword(body.password);
     if (!correctPw) return res.status(401).json('unauthorized');
+    // store encrypted password to access a users encrypted api keys
     const accountKey = encryptToken(body.password, process.env.JWT_SECRET);
     const token = signToken({ email: tutor.email, _id: tutor._id, accountKey });
+    tutor.password = '';
     return res.json({ token, tutor });
   } catch (error) {
     console.error(error);

@@ -1,0 +1,296 @@
+[
+    {
+        "created_at": "2021-12-21T09:28:28.382948Z",
+        "end_time": "2022-01-07T23:50:00.000000Z",
+        "event_guests": [],
+        "event_memberships": [
+            {
+                "user": "https://api.calendly.com/users/CAGFV4L437ZGBDQI"
+            }
+        ],
+        "event_type": "https://api.calendly.com/event_types/FDB26SXKQJIG4R2O",
+        "invitees_counter": {
+            "active": 1,
+            "limit": 1,
+            "total": 1
+        },
+        "location": {
+            "location": "I will email a zoom link",
+            "type": "custom"
+        },
+        "name": "tutor-session",
+        "start_time": "2022-01-07T23:00:00.000000Z",
+        "status": "active",
+        "updated_at": "2021-12-21T09:28:29.179517Z",
+        "uri": "https://api.calendly.com/scheduled_events/1f9c2730-539a-4e04-84b3-1cb35f085a6e",
+        "invitee_info": [
+            {
+                "cancel_url": "https://calendly.com/cancellations/835382cf-fc0b-4942-acaf-78532677a09c",
+                "created_at": "2021-12-21T09:28:28.405874Z",
+                "email": "jennifer0keene@gmail.com",
+                "event": "https://api.calendly.com/scheduled_events/1f9c2730-539a-4e04-84b3-1cb35f085a6e",
+                "first_name": null,
+                "last_name": null,
+                "name": "Jenny Keene",
+                "new_invitee": null,
+                "old_invitee": null,
+                "payment": null,
+                "questions_and_answers": [
+                    {
+                        "answer": "Central (CST)",
+                        "position": 0,
+                        "question": "Confirm: time-zone"
+                    },
+                    {
+                        "answer": "5pm",
+                        "position": 1,
+                        "question": "Confirm: Meeting Start Time"
+                    },
+                    {
+                        "answer": "Jennyk1989",
+                        "position": 2,
+                        "question": "GitHub Username"
+                    },
+                    {
+                        "answer": "Advice in general about the course and “real-world” application",
+                        "position": 3,
+                        "question": "What would you like to discuss during our meeting?"
+                    }
+                ],
+                "reschedule_url": "https://calendly.com/reschedulings/835382cf-fc0b-4942-acaf-78532677a09c",
+                "rescheduled": false,
+                "status": "active",
+                "text_reminder_number": null,
+                "timezone": "America/Chicago",
+                "tracking": {
+                    "utm_campaign": null,
+                    "utm_source": null,
+                    "utm_medium": null,
+                    "utm_content": null,
+                    "utm_term": null,
+                    "salesforce_uuid": null
+                },
+                "updated_at": "2021-12-21T09:28:28.405874Z",
+                "uri": "https://api.calendly.com/scheduled_events/1f9c2730-539a-4e04-84b3-1cb35f085a6e/invitees/835382cf-fc0b-4942-acaf-78532677a09c"
+            }
+        ]
+    },
+    {
+        "created_at": "2021-12-24T19:51:05.444607Z",
+        "end_time": "2021-12-29T21:50:00.000000Z",
+        "event_guests": [],
+        "event_memberships": [
+            {
+                "user": "https://api.calendly.com/users/CAGFV4L437ZGBDQI"
+            }
+        ],
+        "event_type": "https://api.calendly.com/event_types/FDB26SXKQJIG4R2O",
+        "invitees_counter": {
+            "active": 1,
+            "limit": 1,
+            "total": 1
+        },
+        "location": {
+            "location": "I will email a zoom link",
+            "type": "custom"
+        },
+        "name": "tutor-session",
+        "start_time": "2021-12-29T21:00:00.000000Z",
+        "status": "active",
+        "updated_at": "2021-12-24T19:51:06.146194Z",
+        "uri": "https://api.calendly.com/scheduled_events/24882e09-4200-45f9-b1a4-dedc328f76a0",
+        "invitee_info": [
+            {
+                "cancel_url": "https://calendly.com/cancellations/1fdd09fc-db5d-462c-9ce9-2c2f5ab6b03a",
+                "created_at": "2021-12-24T19:51:05.463061Z",
+                "email": "sun.kumiko@protonmail.com",
+                "event": "https://api.calendly.com/scheduled_events/24882e09-4200-45f9-b1a4-dedc328f76a0",
+                "first_name": null,
+                "last_name": null,
+                "name": "Kumiko Yamagata",
+                "new_invitee": null,
+                "old_invitee": null,
+                "payment": null,
+                "questions_and_answers": [
+                    {
+                        "answer": "Central (CST)",
+                        "position": 0,
+                        "question": "Confirm: time-zone"
+                    },
+                    {
+                        "answer": "3:00 PM",
+                        "position": 1,
+                        "question": "Confirm: Meeting Start Time"
+                    },
+                    {
+                        "answer": "Homework challenge",
+                        "position": 3,
+                        "question": "What would you like to discuss during our meeting?"
+                    }
+                ],
+                "reschedule_url": "https://calendly.com/reschedulings/1fdd09fc-db5d-462c-9ce9-2c2f5ab6b03a",
+                "rescheduled": false,
+                "status": "active",
+                "text_reminder_number": null,
+                "timezone": "America/Chicago",
+                "tracking": {
+                    "utm_campaign": null,
+                    "utm_source": null,
+                    "utm_medium": null,
+                    "utm_content": null,
+                    "utm_term": null,
+                    "salesforce_uuid": null
+                },
+                "updated_at": "2021-12-24T19:51:05.463061Z",
+                "uri": "https://api.calendly.com/scheduled_events/24882e09-4200-45f9-b1a4-dedc328f76a0/invitees/1fdd09fc-db5d-462c-9ce9-2c2f5ab6b03a"
+            }
+        ]
+    },
+    {
+        "created_at": "2021-12-26T06:54:49.135460Z",
+        "end_time": "2021-12-28T17:50:00.000000Z",
+        "event_guests": [],
+        "event_memberships": [
+            {
+                "user": "https://api.calendly.com/users/CAGFV4L437ZGBDQI"
+            }
+        ],
+        "event_type": "https://api.calendly.com/event_types/FDB26SXKQJIG4R2O",
+        "invitees_counter": {
+            "active": 1,
+            "limit": 1,
+            "total": 1
+        },
+        "location": {
+            "location": "I will email a zoom link",
+            "type": "custom"
+        },
+        "name": "tutor-session",
+        "start_time": "2021-12-28T17:00:00.000000Z",
+        "status": "active",
+        "updated_at": "2021-12-26T06:54:49.942783Z",
+        "uri": "https://api.calendly.com/scheduled_events/8fc64f5c-c1de-4f10-9027-408ab41689e4",
+        "invitee_info": [
+            {
+                "cancel_url": "https://calendly.com/cancellations/0e9ec48f-abf5-4ef8-8b46-8f66f2655819",
+                "created_at": "2021-12-26T06:54:49.158073Z",
+                "email": "keppleramy@gmail.com",
+                "event": "https://api.calendly.com/scheduled_events/8fc64f5c-c1de-4f10-9027-408ab41689e4",
+                "first_name": null,
+                "last_name": null,
+                "name": "Amy",
+                "new_invitee": null,
+                "old_invitee": null,
+                "payment": null,
+                "questions_and_answers": [
+                    {
+                        "answer": "Pacific (PST)",
+                        "position": 0,
+                        "question": "Confirm: time-zone"
+                    },
+                    {
+                        "answer": "9:00 am",
+                        "position": 1,
+                        "question": "Confirm: Meeting Start Time"
+                    },
+                    {
+                        "answer": "Indexed db",
+                        "position": 3,
+                        "question": "What would you like to discuss during our meeting?"
+                    }
+                ],
+                "reschedule_url": "https://calendly.com/reschedulings/0e9ec48f-abf5-4ef8-8b46-8f66f2655819",
+                "rescheduled": false,
+                "status": "active",
+                "text_reminder_number": null,
+                "timezone": "America/Los_Angeles",
+                "tracking": {
+                    "utm_campaign": null,
+                    "utm_source": null,
+                    "utm_medium": null,
+                    "utm_content": null,
+                    "utm_term": null,
+                    "salesforce_uuid": null
+                },
+                "updated_at": "2021-12-26T06:54:49.158073Z",
+                "uri": "https://api.calendly.com/scheduled_events/8fc64f5c-c1de-4f10-9027-408ab41689e4/invitees/0e9ec48f-abf5-4ef8-8b46-8f66f2655819"
+            }
+        ]
+    },
+    {
+        "created_at": "2021-12-27T16:24:07.251472Z",
+        "end_time": "2021-12-30T18:20:00.000000Z",
+        "event_guests": [],
+        "event_memberships": [
+            {
+                "user": "https://api.calendly.com/users/CAGFV4L437ZGBDQI"
+            }
+        ],
+        "event_type": "https://api.calendly.com/event_types/FDB26SXKQJIG4R2O",
+        "invitees_counter": {
+            "active": 1,
+            "limit": 1,
+            "total": 1
+        },
+        "location": {
+            "location": "I will email a zoom link",
+            "type": "custom"
+        },
+        "name": "tutor-session",
+        "start_time": "2021-12-30T17:30:00.000000Z",
+        "status": "active",
+        "updated_at": "2021-12-27T16:24:08.006829Z",
+        "uri": "https://api.calendly.com/scheduled_events/e3112047-8cc1-4c59-8f71-f9271eea202f",
+        "invitee_info": [
+            {
+                "cancel_url": "https://calendly.com/cancellations/2178e712-7def-4735-9e21-56ca76f1f121",
+                "created_at": "2021-12-27T16:24:07.272213Z",
+                "email": "josephpalmisano2022@u.northwestern.edu",
+                "event": "https://api.calendly.com/scheduled_events/e3112047-8cc1-4c59-8f71-f9271eea202f",
+                "first_name": null,
+                "last_name": null,
+                "name": "Joe Palmisano",
+                "new_invitee": null,
+                "old_invitee": null,
+                "payment": null,
+                "questions_and_answers": [
+                    {
+                        "answer": "Central (CST)",
+                        "position": 0,
+                        "question": "Confirm: time-zone"
+                    },
+                    {
+                        "answer": "12:30",
+                        "position": 1,
+                        "question": "Confirm: Meeting Start Time"
+                    },
+                    {
+                        "answer": "joepamedia",
+                        "position": 2,
+                        "question": "GitHub Username"
+                    },
+                    {
+                        "answer": "JavaScript",
+                        "position": 3,
+                        "question": "What would you like to discuss during our meeting?"
+                    }
+                ],
+                "reschedule_url": "https://calendly.com/reschedulings/2178e712-7def-4735-9e21-56ca76f1f121",
+                "rescheduled": false,
+                "status": "active",
+                "text_reminder_number": null,
+                "timezone": "America/New_York",
+                "tracking": {
+                    "utm_campaign": null,
+                    "utm_source": null,
+                    "utm_medium": null,
+                    "utm_content": null,
+                    "utm_term": null,
+                    "salesforce_uuid": null
+                },
+                "updated_at": "2021-12-27T16:24:07.272213Z",
+                "uri": "https://api.calendly.com/scheduled_events/e3112047-8cc1-4c59-8f71-f9271eea202f/invitees/2178e712-7def-4735-9e21-56ca76f1f121"
+            }
+        ]
+    }
+]
