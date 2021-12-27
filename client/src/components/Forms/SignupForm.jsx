@@ -7,10 +7,11 @@ import { AppContext } from '../../context';
 import {
   createModel,
   emailIsValid,
+  inputIsSelected,
   missingFormInputs,
   passwordIsValid,
 } from '../../utils';
-import TimeZonePicker from './TimeZonePicker';
+import TimeZoneSelector from './TimeZoneSelector';
 
 const {
   Label, Control, Input,
@@ -125,11 +126,24 @@ const SignupForm = () => {
 
       <Columns>
         <Column narrow>
-          <TimeZonePicker
-            name='timeZoneName'
-            value={timeZoneName}
-            onChange={handleInputChange}
-          />
+          <Form.Label>Time Zone</Form.Label>
+          <Form.Field kind='addons'>
+            <Form.Control>
+              <TimeZoneSelector
+                name='timeZoneName'
+                value={timeZoneName}
+                onChange={handleInputChange}
+              />
+
+            </Form.Control>
+            <Form.Control>
+              {inputIsSelected(timeZoneName) && (
+                <Icon className='ml-2 mt-2'>
+                  <i className='fas fa-check' />
+                </Icon>
+              )}
+            </Form.Control>
+          </Form.Field>
         </Column>
         <Column>
           <Label>Email</Label>
