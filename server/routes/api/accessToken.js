@@ -1,8 +1,8 @@
 const router = require('express').Router();
-const { AES } = require('crypto-js');
 const { authorizeToken } = require('../../utils/auth');
 const { AccessToken, Tutor } = require('../../models');
 const { addModelToTutor } = require('../../utils/helpers');
+const { encryptToken } = require('../../utils/encryption');
 
 router.post('/', authorizeToken, async (req, res) => {
   let encryptedToken;
@@ -16,7 +16,7 @@ router.post('/', authorizeToken, async (req, res) => {
     if (!correctPw) return res.status(401).json('unauthorized');
 
     //  encrypt token with current password
-    encryptedToken = AES.encrypt(req.body.token, req.body.password).toString();
+    encryptedToken = encryptToken(req.body.token, req.body.password);
     existingToken = tutor.accessTokens.filter(({ name }) => name === req.body.name);
   } catch (error) {
     console.error(error);

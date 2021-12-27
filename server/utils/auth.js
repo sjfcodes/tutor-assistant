@@ -16,13 +16,19 @@ module.exports = {
       req.tutor = data;
     } catch (error) {
       console.error(error);
-      return res.status(401).json('unauthorized:18');
+      return res.status(401).json('unauthorized:19');
     }
 
     return next();
   },
-  signToken: ({ email, username, _id }) => {
-    const payload = { email, username, _id };
+  signToken: ({
+    email, _id, accountKey,
+  }) => {
+    const payload = {
+      email, _id, accountKey,
+    };
+    console.log(payload);
     return jwt.sign({ data: payload }, secret, { expiresIn: expiration });
   },
+
 };

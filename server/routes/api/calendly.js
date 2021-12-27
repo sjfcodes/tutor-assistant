@@ -1,8 +1,8 @@
 const router = require('express').Router();
 const axios = require('axios');
-const { AES, enc } = require('crypto-js');
 const { Tutor } = require('../../models');
 const { authorizeToken } = require('../../utils/auth');
+const { getCalendlyToken, decryptToken } = require('../../utils/encryption');
 
 // console.log(process.env.CALENDLY_API_TOKEN);
 // const url = 'https://api.calendly.com/scheduled_events';
@@ -29,44 +29,76 @@ const { authorizeToken } = require('../../utils/auth');
  * Get request to collect all upcoming events
  */
 
+router.post('/scheduled_events', authorizeToken, async (req, res) => {
+  let decryptedToken;
+  console.log(req.tutor);
+  try {
+    // get decrypted calendly token
+    const userPw = decryptToken(req.tutor.accountKey, process.env.JWT_SECRET);
+    console.log(userPw);
+    decryptedToken = await getCalendlyToken(req.tutor._id, userPw);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json('failed:3');
+  }
+  console.log(req.body.uri);
+  const url = 'https://api.calendly.com/scheduled_events';
+
+  const headers = {
+    authorization: `Bearer ${decryptedToken}`,
+    'Content-Type': 'application/json',
+  };
+
+  const params = {
+    user: req.body.uri,
+    // count: 3,
+    min_start_time: new Date().toISOString(),
+  };
+
+  try {
+    // get events
+    const { data: { collection } } = await axios.get(url, { headers, params });
+    // get invitee info for all events
+    const withInviteeInfo = await Promise.all(collection.map(async (event) => {
+      const copy = { ...event };
+      copy.invitee_info = await axios.get(`${event.uri}/invitees`, { headers }).then(({ data }) => data.collection);
+      return copy;
+    }));
+
+    return res.json(withInviteeInfo);
+  } catch (error) {
+    console.error(error.message);
+    return res.status(500).json('failed:2');
+  }
+});
+
 router.post('/users/me', authorizeToken, async (req, res) => {
-  let tutor;
   let decryptedToken;
 
   try {
-    //  get tutor object
-    tutor = await Tutor.findById(req.tutor._id).populate('accessTokens');
-    // compare request password to tutor objec password
-    const correctPw = await tutor.isCorrectPassword(req.body.password);
-    if (!correctPw) return res.status(401).json('unauthorized');
+    // get decrypted calendly token
+    decryptedToken = await getCalendlyToken(req.tutor._id, req.body.password);
   } catch (error) {
     console.error(error);
-    return res.status(500).json('failed:0');
+    return res.status(500).json('failed:3');
   }
 
-  try {
-    // get calendly token
-    const { token } = tutor.accessTokens.filter(({ name }) => name === 'calendly')[0];
-    // decypt token with cryptoJS & user pw
-    const bytes = AES.decrypt(token, req.body.password);
-    decryptedToken = bytes.toString(enc.Utf8);
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json('failed:1');
-  }
+  const url = 'https://api.calendly.com/users/me';
+  const options = {
+    headers: {
+      authorization: `Bearer ${decryptedToken}`,
+      'Content-Type': 'application/json',
+    },
+  };
 
   try {
     // make request with calendly token
-    const url = 'https://api.calendly.com/users/me';
-    const { data: { resource } } = await axios.get(url, {
-      headers: {
-        authorization: `Bearer ${decryptedToken}`,
-        'Content-Type': 'application/json',
-      },
-    });
+    const { data: { resource } } = await axios.get(url, options);
+    // if resource is object is empty
     if (!Object.keys(resource).length) return res.status(500).json('failed:2');
-    tutor.resources.calendly = resource;
-    tutor.save();
+    // update tutors details
+    await Tutor.findByIdAndUpdate(req.tutor._id, { resources: { calendly: resource } });
+    // send resource to client to update local state
     return res.json({ resource });
   } catch (error) {
     console.error(error);
