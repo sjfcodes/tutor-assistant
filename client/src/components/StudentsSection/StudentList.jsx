@@ -68,7 +68,7 @@ StudentList.propTypes = {
     lastName: string.isRequired,
     email: string.isRequired,
     classId: string.isRequired,
-    timeZoneOffset: string.isRequired,
+    timeZoneName: string.isRequired,
     graduationDate: string.isRequired,
     fullTimeCourse: bool.isRequired,
     githubUsername: string.isRequired,

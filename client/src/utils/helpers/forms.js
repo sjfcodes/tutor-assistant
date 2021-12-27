@@ -1,4 +1,4 @@
-export const inputIsSelected = (val) => val && val !== '-';
+export const inputIsSelected = (val) => (val && val !== '-');
 
 export const passwordIsValid = (pw) => pw.length >= 8;
 

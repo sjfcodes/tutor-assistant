@@ -9,20 +9,22 @@ import {
   emailIsValid,
   missingFormInputs,
   passwordIsValid,
-  inputIsSelected,
 } from '../../utils';
+import TimeZonePicker from './TimeZonePicker';
 
 const {
-  Field, Label, Control, Input, Select,
+  Label, Control, Input,
 } = Form;
 const { Column } = Columns;
 
 const SignupForm = () => {
+  const clientTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
   const [formInputs, setFormInputs] = useState({
     firstName: '',
     lastName: '',
     email: '',
-    timeZoneOffset: '',
+    timeZoneName: clientTimeZone || '',
     githubUsername: '',
     calendlyLink: '',
     password: '',
@@ -33,7 +35,7 @@ const SignupForm = () => {
     firstName,
     lastName,
     email,
-    timeZoneOffset,
+    timeZoneName,
     githubUsername,
     calendlyLink,
     password,
@@ -123,30 +125,11 @@ const SignupForm = () => {
 
       <Columns>
         <Column narrow>
-          <Label>Time Zone</Label>
-          <Field kind='addons'>
-            <Control>
-              <Select
-                type='text'
-                name='timeZoneOffset'
-                value={timeZoneOffset}
-                onInput={handleInputChange}
-              >
-                <option>-</option>
-                <option value='pacific'>Pacific</option>
-                <option value='mountain'>Mountain</option>
-                <option value='central'>Central</option>
-                <option>Eastern</option>
-              </Select>
-            </Control>
-            <Control>
-              {inputIsSelected(timeZoneOffset) && (
-                <Icon className='ml-2 mt-2'>
-                  <i className='fas fa-check' />
-                </Icon>
-              )}
-            </Control>
-          </Field>
+          <TimeZonePicker
+            name='timeZoneName'
+            value={timeZoneName}
+            onChange={handleInputChange}
+          />
         </Column>
         <Column>
           <Label>Email</Label>

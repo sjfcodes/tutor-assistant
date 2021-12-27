@@ -10,12 +10,14 @@ import {
 import { handleError } from '../../../utils/helpers';
 import AddStudentForm from './AddStudentForm';
 
+const clientTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
 const formDefaults = {
   firstName: '',
   lastName: '',
   email: '',
   classId: '',
-  timeZoneOffset: '',
+  timeZoneName: clientTimeZone || '',
   graduationDate: '',
   fullTimeCourse: false,
   githubUsername: '',
