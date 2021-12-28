@@ -62,10 +62,6 @@ const AddStudentModal = () => {
     return '';
   };
 
-  useEffect(() => {
-    console.log(formInputs);
-  }, [formInputs]);
-
   return (
     <Modal
       className=''

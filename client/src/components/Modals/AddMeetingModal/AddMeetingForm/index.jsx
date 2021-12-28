@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import {
-  Button, Form, Icon, Level,
+  Button, Form, Icon, Columns,
 } from 'react-bulma-components';
 import { LevelSide } from '../../../BulmaHelpers';
 import { inputIsSelected } from '../../../../utils';
@@ -25,8 +25,8 @@ const AddMeetingForm = ({ formInputs, setFormInputs }) => {
   };
 
   return (
-    <Level renderAs='div'>
-      <LevelSide>
+    <Columns>
+      <Columns.Column>
         <Form.Field kind='addons'>
           <Form.Control>
             <Form.Label>Student</Form.Label>
@@ -57,10 +57,10 @@ const AddMeetingForm = ({ formInputs, setFormInputs }) => {
             </Icon>
           </Form.Control>
         </Form.Field>
-      </LevelSide>
-      <Level.Item>
+      </Columns.Column>
+      <Columns.Column>
         <MeetingTime formInputs={formInputs} setFormInputs={setFormInputs} />
-      </Level.Item>
+      </Columns.Column>
       <LevelSide>
         <Form.Field kind='addons'>
           <Form.Control>
@@ -96,7 +96,7 @@ const AddMeetingForm = ({ formInputs, setFormInputs }) => {
           </Form.Control>
         </Form.Field>
       </LevelSide>
-    </Level>
+    </Columns>
   );
 };
 export default AddMeetingForm;
