@@ -5,7 +5,7 @@ const { addModelToTutor } = require('../../utils/helpers');
 
 router.get('/', authorizeToken, async (req, res) => {
   try {
-    const templates = await EmailTemplate.find({ authorId: req._id });
+    const templates = await EmailTemplate.find({ authorId: req.tutor._id });
     if (!templates.length) {
       // seeded demo template id is "61bc0f049a7e2491c818fc0a"
       const demoTemplate = await EmailTemplate.findById('61bc0f049a7e2491c818fc0a');
