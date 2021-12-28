@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Button, Modal } from 'react-bulma-components';
 import { AppContext, CourseContext, ModalContext } from '../../../context';
 import { createModel, missingFormInputs } from '../../../utils';
@@ -7,16 +7,18 @@ import AddMeetingForm from './AddMeetingForm';
 const AddMeetingModal = () => {
   const { openModal, setOpenModal } = useContext(ModalContext);
   const { allCourses, setAllCourses, selectedCourse } = useContext(CourseContext);
-  const {
-    tutorDetails: { _id: tutorId },
-  } = useContext(AppContext);
+  const { tutorDetails: { _id: tutorId } } = useContext(AppContext);
   const [formInputs, setFormInputs] = useState({
     tutorId,
     studentId: '',
-    duration: 1,
-    startDate: '',
+    endTime: '',
+    startTime: '',
     status: 'scheduled',
   });
+
+  useEffect(() => {
+    console.log(formInputs);
+  }, [formInputs]);
 
   const handleAddMeeting = async (e) => {
     e.preventDefault();

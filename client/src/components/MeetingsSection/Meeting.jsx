@@ -1,8 +1,6 @@
 import React, { useContext } from 'react';
 import { Box, Icon, Level } from 'react-bulma-components';
-import {
-  func, number, shape, string,
-} from 'prop-types';
+import { func, shape, string } from 'prop-types';
 import { CourseContext } from '../../context';
 import MeetingList from './MeetingList';
 import { MeetingDate } from '../DateTime';
@@ -10,7 +8,7 @@ import { LevelSide } from '../BulmaHelpers';
 
 const Meeting = ({ meeting, setSelectedMeetingId, selectedMeetingId }) => {
   const { allCourses, selectedCourse } = useContext(CourseContext);
-  const { _id, studentId, startDate } = meeting;
+  const { _id, studentId, startTime } = meeting;
   const { firstName, lastName } = allCourses[selectedCourse].students[studentId];
 
   const toggleViewMeeting = () => (selectedMeetingId === _id
@@ -34,7 +32,7 @@ const Meeting = ({ meeting, setSelectedMeetingId, selectedMeetingId }) => {
             <div className='has-text-left'>
               <MeetingDate
                 className='ml-3'
-                iso8601={startDate}
+                iso8601={startTime}
               />
               <p className='ml-3'>{`${firstName} ${lastName}`}</p>
             </div>
@@ -60,8 +58,8 @@ export default Meeting;
 Meeting.propTypes = {
   meeting: shape({
     _id: string.isRequired,
-    duration: number.isRequired,
-    startDate: string.isRequired,
+    endTime: string.isRequired,
+    startTime: string.isRequired,
     status: string.isRequired,
     createdAt: string.isRequired,
   }).isRequired,

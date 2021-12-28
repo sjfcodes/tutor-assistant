@@ -14,7 +14,8 @@ export const SyncCalendlyDetails = ({ password }) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const { resource } = await syncCalendlyResource({ password });
+      const { resource, meetings } = await syncCalendlyResource({ password });
+      console.log(meetings);
       setTutorDetails({ ...tutorDetails, resources: { calendly: resource } });
       setButtonText('success!');
       setLoading(false);

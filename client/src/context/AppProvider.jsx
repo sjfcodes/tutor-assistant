@@ -30,7 +30,7 @@ export const AppProvider = ({ children }) => {
     const token = localStorage.getItem('tutor-token');
     if (!token) return;
 
-    async function loginUser() {
+    const loginUser = async () => {
       try {
         const { tutor } = await loginWithToken(token);
         if (!tutor) return;
@@ -47,7 +47,7 @@ export const AppProvider = ({ children }) => {
         console.warn(error);
         localStorage.removeItem(tokenKey);
       }
-    }
+    };
 
     loginUser();
   }, [setAllCourses]);

@@ -16,7 +16,7 @@ const MeetingListItem = ({
   const inputHasBeenModified = () => `${value}`.trim() !== `${input}`.trim();
   const handleInputChange = ({ target }) => {
     let newValue = target.value;
-    if (target.name === 'duration') newValue = newValue ? parseInt(newValue, 10) : 0;
+    if (target.name === 'endTime') newValue = newValue ? parseInt(newValue, 10) : 0;
     setInput(newValue);
   };
 
@@ -58,30 +58,16 @@ const MeetingListItem = ({
     let isMounted = true;
 
     switch (property) {
-    case 'githubUsername':
-      return isMounted && setVal(
-        <a
-          href={`https://github.com/${value}`}
-          target='_blank'
-          rel='noreferrer'
-        >
-          {`https://github.com/${value}`}
-
-        </a>,
-      );
     case 'meetingLink':
       return isMounted && setVal(
         <a href={value} target='_blank' rel='noreferrer'>
           {value}
         </a>,
       );
-    case 'graduationDate':
+    case 'startTime':
       return isMounted && setVal(<span>{getLocalDateString(value)}</span>);
 
-    case 'startDate':
-      return isMounted && setVal(<span>{getLocalDateString(value)}</span>);
-
-    case 'createdAt':
+    case 'endTime':
       return isMounted && setVal(<span>{getLocalDateString(value)}</span>);
 
     default:

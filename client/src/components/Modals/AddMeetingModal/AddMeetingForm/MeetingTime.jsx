@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { Form, Icon } from 'react-bulma-components';
 import {
-  string, number, func, shape,
+  string, func, shape,
 } from 'prop-types';
 import { convertAddMeetingFormToISO8601 } from '../../../../utils';
 import { AppContext } from '../../../../context';
@@ -10,14 +10,14 @@ export const addMeetingFormPropTypes = {
   formInputs: shape({
     tutorId: string.isRequired,
     studentId: string.isRequired,
-    duration: number.isRequired,
-    startDate: string.isRequired,
+    endTime: string.isRequired,
+    startTime: string.isRequired,
     status: string.isRequired,
   }).isRequired,
   setFormInputs: func.isRequired,
 };
 
-const MeetingTime = ({ formInputs, setFormInputs }) => {
+const MeetingTime = ({ formInputs, setFormInputs, updateDuration }) => {
   const [date, setDate] = useState({
     day: '',
     hour: '',
@@ -25,19 +25,20 @@ const MeetingTime = ({ formInputs, setFormInputs }) => {
   });
 
   const { day, hour, amPm } = date;
-  const { studentId, startDate } = formInputs;
+  const { studentId, startTime } = formInputs;
   const { tutorDetails: { timeZoneName } } = useContext(AppContext);
 
-  const validateStartDate = (data) => !!(data.day && data.hour && data.amPm);
+  const validatestartTime = (data) => !!(data.day && data.hour && data.amPm);
 
   const handleInputChange = ({ target: { name, value } }) => {
     const copy = { ...date, [name]: value === '-' ? '' : value };
 
-    if (validateStartDate(copy)) {
+    if (validatestartTime(copy)) {
       const utcIso8601 = convertAddMeetingFormToISO8601({ ...copy, timeZoneName });
       // if we have all the data, get the timestamp representation
-      setFormInputs({ ...formInputs, startDate: utcIso8601 });
-    } else if (startDate) setFormInputs({ ...formInputs, startDate: '' });
+      updateDuration(0, utcIso8601);
+      setFormInputs((curr) => ({ ...curr, startTime: utcIso8601 }));
+    } else if (startTime) setFormInputs({ ...formInputs, startTime: '', endTime: '' });
 
     setDate({ ...date, [name]: value === '-' ? '' : value });
   };
@@ -94,7 +95,7 @@ const MeetingTime = ({ formInputs, setFormInputs }) => {
           </Form.Select>
           <Icon className='ml-2 mt-2'>
             <i
-              className={`fas fa-check ${!validateStartDate(date) && 'has-text-white'
+              className={`fas fa-check ${!validatestartTime(date) && 'has-text-white'
               }`}
             />
           </Icon>
@@ -105,4 +106,7 @@ const MeetingTime = ({ formInputs, setFormInputs }) => {
 };
 export default MeetingTime;
 
-MeetingTime.propTypes = addMeetingFormPropTypes;
+MeetingTime.propTypes = {
+  ...addMeetingFormPropTypes,
+  updateDuration: func.isRequired,
+};
