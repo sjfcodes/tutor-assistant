@@ -11,6 +11,7 @@ import {
   missingFormInputs,
   passwordIsValid,
 } from '../../utils';
+import { getClientTimeZone } from '../../utils/helpers/dateTime';
 import TimeZoneSelector from './TimeZoneSelector';
 
 const {
@@ -19,7 +20,7 @@ const {
 const { Column } = Columns;
 
 const SignupForm = () => {
-  const clientTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const clientTimeZone = getClientTimeZone();
 
   const [formInputs, setFormInputs] = useState({
     firstName: '',

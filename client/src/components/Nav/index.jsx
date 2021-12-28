@@ -6,6 +6,7 @@ import { Button, Navbar } from 'react-bulma-components';
 
 import { AppContext, ModalContext } from '../../context';
 import { logoutTutor } from '../../utils';
+import { getClientTimeZone } from '../../utils/helpers/dateTime';
 import { MeetingDate, TimeZoneAbbreviation } from '../DateTime';
 // import SettingsMenu from './SettingsMenu';
 import './style.css';
@@ -63,7 +64,7 @@ const Nav = () => {
         <Navbar.Item
           className='pl-1'
         >
-          <TimeZoneAbbreviation timeZone={timeZoneName} className='is-size-7 has-text-grey' />
+          <TimeZoneAbbreviation timeZone={timeZoneName || getClientTimeZone()} className='is-size-7 has-text-grey' />
         </Navbar.Item>
         <Navbar.Burger onClick={toggleNavBurger} />
       </Navbar.Brand>

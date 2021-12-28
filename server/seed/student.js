@@ -37,7 +37,7 @@ module.exports = [
   },
   {
     _id: '61bc1de5afe0e50f52099a84',
-    firstName: 'Kel',
+    firstName: 'Rocky',
     lastName: 'Fox',
     email: 'kel@email.com',
     githubUsername: 'kel',
