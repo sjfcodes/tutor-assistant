@@ -41,18 +41,22 @@ const getCurrentDatePicker = () => convertISO8601ToDatePicker(getISO8601TimeStam
  */
 const getZeroBasedHour = (hr, ampm) => {
   switch (ampm.toLowerCase()) {
-  case 'am':
+  case 'am': {
     //  If 12AM return 00
     if (hr === 12) return '00';
     // If 1-9 return 01-09
     if (hr < 10) return `0${hr}`;
+    // If 10 or 11
     return hr;
-
-  case 'pm':
+  }
+  case 'pm': {
+    //  If 12PM return 12
+    if (hr === 12) return '12';
+    // If 1-9 return hour plus 12 to get 13-23
     return `${hr + 12}`;
-
+  }
   default:
-    return hr;
+    throw new Error('missing ampm while attempting to get zero based number');
   }
 };
 
@@ -62,9 +66,9 @@ const getZeroBasedHour = (hr, ampm) => {
  * @param {String}  amPm value of either AM or PM
  * @returns {Number} unix time from form input selection
  */
-const getUnixFromFormInputs = (date, hour = 12, amPm = 'AM') => {
-  //  New date object from parameters
-  const d = new Date(`${date}T${getZeroBasedHour(parseInt(hour, 10), amPm)}:00:00`);
+const getUnixFromFormInputs = (day, hour = 12, amPm = 'AM') => {
+  //  New day object from parameters
+  const d = new Date(`${day}T${getZeroBasedHour(parseInt(hour, 10), amPm)}:00:00.000Z`);
   const unix = Math.floor(d.getTime() / 1000);
 
   if (Number.isNaN(unix)) throw new Error('unix isNaN');
@@ -72,8 +76,24 @@ const getUnixFromFormInputs = (date, hour = 12, amPm = 'AM') => {
   return unix;
 };
 
-const convertAddMeetingFormToISO8601 = (str) => {
-  console.log(str);
+const convertAddMeetingFormToISO8601 = ({
+  hour, day, amPm, timeZoneName,
+}) => {
+  // get meeting time as unix
+  const zbh = getZeroBasedHour(parseInt(hour, 10), amPm);
+  const unix = new Date(`${day}T${zbh}:00:00.000Z`).getTime() / 1000;
+
+  // get client timezone offset in minutes (with leading minus if needed)
+  const { rawOffsetInMinutes } = rawTimeZones.find((tz) => tz.name === timeZoneName);
+  // client timezone offset converted to unix
+  const offsetInSeconds = rawOffsetInMinutes * 60;
+
+  // time in unix
+  const meetingUnix = unix - offsetInSeconds;
+  console.log(meetingUnix);
+
+  // UTC meeting time as iso8601 timestamp
+  return new Date(meetingUnix * 1000).toISOString();
 };
 
 const getLocalDateString = (iso8601) => {

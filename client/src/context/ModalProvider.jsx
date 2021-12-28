@@ -4,7 +4,7 @@ import { node } from 'prop-types';
 export const ModalContext = createContext();
 
 export const ModalProvider = ({ children }) => {
-  const [openModal, setOpenModal] = useState();
+  const [openModal, setOpenModal] = useState('');
 
   const modalMemo = useMemo(() => ({ openModal, setOpenModal }), [openModal, setOpenModal]);
 

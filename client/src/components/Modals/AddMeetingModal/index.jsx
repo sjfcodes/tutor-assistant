@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Button, Modal } from 'react-bulma-components';
 import { AppContext, CourseContext, ModalContext } from '../../../context';
 import { createModel, missingFormInputs } from '../../../utils';
@@ -53,6 +53,11 @@ const AddMeetingModal = () => {
     }
     return '';
   };
+
+  useEffect(() => {
+    console.log(formInputs);
+    console.log(new Date(formInputs.startDate));
+  }, [formInputs]);
 
   return (
     <Modal
