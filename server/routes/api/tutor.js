@@ -36,7 +36,7 @@ router.post('/login', async (req, res) => {
     const token = signToken({ _id, email, accountKey });
     tutor.password = '';
 
-    if (tutor.resources?.calendly) {
+    if (tutor.resources?.calendly?.uri) {
       req.tutor = { _id, email, accountKey };
       req.body.uri = tutor.resources.calendly.uri;
       const calendlyMeetings = await getCalendlyEvents(req);
