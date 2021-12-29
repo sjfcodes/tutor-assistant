@@ -48,6 +48,10 @@ const tutorSchema = new Schema({
     ref: 'AccessToken',
   }],
   resources: {
+    calendly: {
+      type: Object,
+      default: {},
+    },
   },
   createdAt: {
     type: String,

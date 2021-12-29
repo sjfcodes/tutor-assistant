@@ -11,10 +11,11 @@ export const SyncCalendlyDetails = ({ password }) => {
     e.preventDefault();
     setLoading(true);
     try {
-      await syncCalendlyResource({ password });
+      const data = await syncCalendlyResource({ password });
+      console.log(data);
       setButtonText('success! page reloading');
       setLoading(false);
-      setTimeout(() => { window.location.reload(); }, 100);
+      // setTimeout(() => { window.location.reload(); }, 100);
     } catch (error) {
       console.error(error);
       setButtonText('must add a token first');
