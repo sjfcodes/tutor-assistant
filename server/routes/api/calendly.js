@@ -25,15 +25,14 @@ router.post('/users/me', authorizeToken, async (req, res) => {
     const updated = await Tutor
       .findByIdAndUpdate(
         req.tutor._id,
-        { $set: { resources: { calendly: resource } } },
+        { $set: { resources: { calendly: { ...resource } } } },
         { new: true },
       ).then(() => console.log('updated'))
       .catch((error) => console.error(error));
     console.log(updated);
     // send resource to client to update local state
     req.body.uri = resource.uri;
-    const meetings = await getCalendlyEvents(req);
-    return res.json({ resource, meetings });
+    return res.json({ resource });
   } catch (error) {
     console.error(error);
     return res.status(500).json('failed:3');
