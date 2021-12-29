@@ -8,6 +8,7 @@ const getCalendlyToken = (tutorId, tutorPw) => new Promise((resolve, reject) => 
   //  get tutor object
   Tutor.findById(tutorId).populate('accessTokens')
     .then((tutor) => {
+      if (!tutor) return reject(new Error('tutor not found'));
       // compare request password to tutor objec password
       const correctPw = tutor.isCorrectPassword(tutorPw);
       if (!correctPw) return reject(new Error('unauthorized'));

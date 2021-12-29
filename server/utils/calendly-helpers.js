@@ -39,16 +39,26 @@ module.exports = {
           .then(({ data: { collection } }) => Promise
             .all(collection
               .map(async (event) => {
-                const inviteeInfo = await axios
+                const i = await axios
                   .get(`${event.uri}/invitees`, { headers: getCalendlyHeaders(decryptedToken) })
-                  .then(({ data }) => data.collection)
+                  .then(({ data }) => data.collection[0])
                   .catch((error) => console.error(error));
 
                 return {
+                  _id: event.uri,
+                  eventName: event.name,
                   startTime: event.start_time,
                   endTime: event.end_time,
-                  student: inviteeInfo,
                   status: event.status,
+                  cancelUrl: i.cancel_url,
+                  email: i.email,
+                  studentName: i.name,
+                  questionsAndAnswers: i.questions_and_answers,
+                  rescheduleUrl: i.reschedule_url,
+                  rescheduled: i.rescheduled,
+                  timeZoneName: i.timezone,
+                  updatedAt: i.updated_at,
+                  createdAt: event.created_at,
                 };
               })))
           .then((data) => resolve(data))

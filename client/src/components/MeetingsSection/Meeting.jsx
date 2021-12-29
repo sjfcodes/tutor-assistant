@@ -9,7 +9,13 @@ import { LevelSide } from '../BulmaHelpers';
 const Meeting = ({ meeting, setSelectedMeetingId, selectedMeetingId }) => {
   const { allCourses, selectedCourse } = useContext(CourseContext);
   const { _id, studentId, startTime } = meeting;
-  const { firstName, lastName } = allCourses[selectedCourse].students[studentId];
+  const student = allCourses[selectedCourse].students[studentId];
+
+  const getDisplayName = () => {
+    if (student) return `${student.firstName} ${student.lastName}`;
+    if (meeting.studentName) return `${meeting.studentName}`;
+    return 'work in progress';
+  };
 
   const toggleViewMeeting = () => (selectedMeetingId === _id
     ? setSelectedMeetingId('')
@@ -34,7 +40,7 @@ const Meeting = ({ meeting, setSelectedMeetingId, selectedMeetingId }) => {
                 className='ml-3'
                 iso8601={startTime}
               />
-              <p className='ml-3'>{`${firstName} ${lastName}`}</p>
+              <p className='ml-3'>{getDisplayName()}</p>
             </div>
           </Level.Item>
         </LevelSide>

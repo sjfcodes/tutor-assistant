@@ -27,18 +27,24 @@ export const AppProvider = ({ children }) => {
   );
 
   useEffect(() => {
-    const token = localStorage.getItem('tutor-token');
-    if (!token) return;
+    const prevToken = localStorage.getItem(tokenKey);
+    if (!prevToken) return;
 
     const loginUser = async () => {
       try {
-        const { tutor } = await loginWithToken(token);
-        if (!tutor) return;
+        const data = await loginWithToken(prevToken);
+        const { tutor, token } = data;
+        if (!tutor || !token) return;
+        // console.log(data.calendlyMeetings);
 
         const formattedCourses = tutor.courses.map((course) => ({
           ...course,
           students: formatStudents(course.students),
-          meetings: formatMeetings(course.meetings),
+          meetings: formatMeetings(
+            data.calendlyMeetings
+              ? [...course.meetings, ...data.calendlyMeetings]
+              : course.meetings,
+          ),
         }));
 
         setAllCourses(formatCourses(formattedCourses));
