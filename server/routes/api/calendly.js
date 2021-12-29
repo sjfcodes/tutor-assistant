@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const axios = require('axios');
-// const { Tutor, Calendly } = require('../../models');
+const { Calendly } = require('../../models');
 const { authorizeToken } = require('../../utils/auth');
 const { getCalendlyEvents, getCalendlyHeaders } = require('../../utils/calendly-helpers');
 const { getCalendlyToken } = require('../../utils/encryption');
@@ -19,10 +19,10 @@ router.post('/users/me', authorizeToken, async (req, res) => {
     const url = 'https://api.calendly.com/users/me';
     const options = { headers: getCalendlyHeaders(decryptedToken) };
     const { data: { resource } } = await axios.get(url, options);
-    return res.json({ test: resource });
     // update tutors details
 
-    // const { _id } = await Calendly.create(resource);
+    const data = await Calendly.create(resource);
+    return res.json({ data });
     // await Tutor.findByIdAndUpdate(
     //   req.tutor._id,
     //   { calendly: _id },
