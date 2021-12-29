@@ -12,7 +12,7 @@ router.post('/users/me', authorizeToken, async (req, res) => {
     decryptedToken = await getCalendlyToken(req.tutor._id, req.body.password);
   } catch (error) {
     console.error(error);
-    return res.status(500).json(error);
+    return res.status(500).json({ location: 0, message: error.message });
   }
   try {
     // make request with calendly token
@@ -45,7 +45,7 @@ router.post('/users/me', authorizeToken, async (req, res) => {
     // return res.json({ resource });
   } catch (error) {
     console.error(error);
-    return res.status(500).json(error);
+    return res.status(500).json({ location: 1, message: error.message });
   }
 });
 
