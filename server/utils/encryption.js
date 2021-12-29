@@ -6,7 +6,8 @@ const decryptToken = (value, key) => AES.decrypt(value, key).toString(enc.Utf8);
 
 const getCalendlyToken = (tutorId, tutorPw) => new Promise((resolve, reject) => {
   //  get tutor object
-  Tutor.findById(tutorId).populate('accessTokens')
+  Tutor.findById(tutorId)
+    .populate('accessTokens')
     .then((tutor) => {
       if (!tutor) return reject(new Error('tutor not found'));
       // compare request password to tutor objec password
