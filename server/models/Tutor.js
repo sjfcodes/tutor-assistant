@@ -50,6 +50,7 @@ const tutorSchema = new Schema({
   calendly: {
     type: Schema.Types.ObjectId,
     ref: 'Calendly',
+    default: null,
   },
   createdAt: {
     type: String,

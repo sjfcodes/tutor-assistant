@@ -24,13 +24,11 @@ router.post('/users/me', authorizeToken, async (req, res) => {
     // update tutors details
 
     const { _id } = await Calendly.create(resource);
-    console.log('!!!!!', _id);
-    const u = await Tutor.findByIdAndUpdate(
+    await Tutor.findByIdAndUpdate(
       req.tutor._id,
       { calendly: _id },
       { new: true },
     );
-    console.log(u);
     // send resource to client to update local state
     req.body.uri = resource.uri;
     return res.json({ resource });
