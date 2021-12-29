@@ -11,11 +11,11 @@ const meetingSchema = new Schema({
     ref: 'Student',
     required: true,
   },
-  duration: {
-    type: Number,
-    default: 1,
+  startTime: {
+    type: String,
+    required: true,
   },
-  startDate: {
+  endTime: {
     type: String,
     required: true,
   },

@@ -31,7 +31,7 @@ const MeetingsSection = () => {
         allCourses[selectedCourse]
         && Object
           .values(allCourses[selectedCourse].meetings)
-          .sort(({ startDate: a }, { startDate: b }) => {
+          .sort(({ startTime: a }, { startTime: b }) => {
             const unixA = new Date(a).getTime() / 1000;
             const unixB = new Date(b).getTime() / 1000;
             // sort newest meetings first

@@ -11,7 +11,6 @@ export const CourseProvider = ({ children }) => {
 
   useEffect(() => {
     if (!allCourses || !selectedCourse) return;
-    // eslint-disable-next-line no-console
     console.log(allCourses[selectedCourse]);
   }, [selectedCourse, allCourses]);
 

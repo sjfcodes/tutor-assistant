@@ -1,8 +1,6 @@
 import React from 'react';
 import { v4 as uuid } from 'uuid';
-import {
-  number, shape, string,
-} from 'prop-types';
+import { shape, string } from 'prop-types';
 import MeetingListItem from './MeetingListItem';
 
 const MeetingList = ({ _id, meeting }) => {
@@ -39,8 +37,8 @@ MeetingList.propTypes = {
   _id: string.isRequired,
   meeting: shape({
     _id: string.isRequired,
-    duration: number.isRequired,
-    startDate: string.isRequired,
+    endTime: string.isRequired,
+    startTime: string.isRequired,
     status: string.isRequired,
     createdAt: string.isRequired,
   }).isRequired,

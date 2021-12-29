@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   Button, Form, Icon, Columns,
 } from 'react-bulma-components';
@@ -9,7 +9,10 @@ import MeetingTime, { addMeetingFormPropTypes } from './MeetingTime';
 
 const AddMeetingForm = ({ formInputs, setFormInputs }) => {
   const { allCourses, selectedCourse } = useContext(CourseContext);
-  const { studentId, startDate, duration } = formInputs;
+  const { studentId, startTime } = formInputs;
+
+  // meeting duration in hours
+  const [duration, setDuration] = useState(1);
 
   const handleInputChange = (e) => {
     const {
@@ -18,10 +21,15 @@ const AddMeetingForm = ({ formInputs, setFormInputs }) => {
     setFormInputs({ ...formInputs, [name]: value });
   };
 
-  const updateDuration = (value) => {
-    const updatedDuration = duration + value;
-    if (updatedDuration <= 0) return;
-    setFormInputs({ ...formInputs, duration: duration + value });
+  const updateDuration = (val, startTimeISO = startTime) => {
+    const newVal = duration + val;
+
+    const hourInMilliseconds = 60 * 60 * 1000;
+    // get unix from start time, add seconds to get endTime
+    const endTimeUnix = new Date(startTimeISO).getTime() + (newVal * hourInMilliseconds);
+    const endTime = new Date(endTimeUnix).toISOString();
+    setFormInputs((curr) => ({ ...curr, endTime }));
+    setDuration(newVal);
   };
 
   return (
@@ -59,7 +67,11 @@ const AddMeetingForm = ({ formInputs, setFormInputs }) => {
         </Form.Field>
       </Columns.Column>
       <Columns.Column>
-        <MeetingTime formInputs={formInputs} setFormInputs={setFormInputs} />
+        <MeetingTime
+          formInputs={formInputs}
+          setFormInputs={setFormInputs}
+          updateDuration={updateDuration}
+        />
       </Columns.Column>
       <LevelSide>
         <Form.Field kind='addons'>
@@ -71,8 +83,8 @@ const AddMeetingForm = ({ formInputs, setFormInputs }) => {
               style={{
                 width: '50px',
                 backgroundColor: 'inherit',
-                borderColor: `${startDate && 'inherit'}`,
-                color: `${startDate && 'inherit'}`,
+                borderColor: `${startTime && 'inherit'}`,
+                color: `${startTime && 'inherit'}`,
               }}
               value={duration}
             />
@@ -81,15 +93,15 @@ const AddMeetingForm = ({ formInputs, setFormInputs }) => {
               type='button'
               className='py-0'
               onClick={() => updateDuration(1)}
-              disabled={!startDate}
+              disabled={!startTime}
             >
               +
             </Button>
             <Button
-              disabled={!startDate || duration === 1}
+              disabled={!startTime || duration === 1}
               type='button'
               className='py-0'
-              onClick={() => updateDuration(-1)}
+              onClick={() => duration >= 1 && updateDuration(-1)}
             >
               -
             </Button>

@@ -27,7 +27,7 @@ module.exports = {
     const payload = {
       email, _id, accountKey,
     };
-    console.log(payload);
+    // console.log('auth', payload);
     return jwt.sign({ data: payload }, secret, { expiresIn: expiration });
   },
 

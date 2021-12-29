@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const { Tutor } = require('../../models');
 const { signToken, authorizeToken } = require('../../utils/auth');
+const { getCalendlyEvents } = require('../../utils/calendly-helpers');
 const { encryptToken } = require('../../utils/encryption');
 const {
   updateDocumentProperties, getTutorByEmail, getTutorById,
@@ -20,15 +21,28 @@ router.post('/', async ({ body }, res) => {
 });
 
 // login tutor with email and password
-router.post('/login', async ({ body }, res) => {
+router.post('/login', async (req, res) => {
   try {
-    const { tutor } = await getTutorByEmail(body.email);
-    const correctPw = await tutor.isCorrectPassword(body.password);
+    const { body: { email, password } } = req;
+    const { tutor } = await getTutorByEmail(email);
+    if (!tutor) return res.status(401).json('unauthorized');
+
+    const correctPw = await tutor.isCorrectPassword(password);
     if (!correctPw) return res.status(401).json('unauthorized');
+
     // store encrypted password to access a users encrypted api keys
-    const accountKey = encryptToken(body.password, process.env.JWT_SECRET);
-    const token = signToken({ email: tutor.email, _id: tutor._id, accountKey });
+    const accountKey = encryptToken(password, process.env.JWT_SECRET);
+    const { _id } = tutor;
+    const token = signToken({ _id, email, accountKey });
     tutor.password = '';
+
+    if (tutor.resources.calendly) {
+      req.tutor = { _id, email, accountKey };
+      req.body.uri = tutor.resources.calendly.uri;
+      const calendlyMeetings = await getCalendlyEvents(req);
+      return res.json({ token, tutor, calendlyMeetings });
+    }
+
     return res.json({ token, tutor });
   } catch (error) {
     console.error(error);
@@ -39,9 +53,19 @@ router.post('/login', async ({ body }, res) => {
 // login tutor with token
 router.get('/login', authorizeToken, async (req, res) => {
   try {
-    const { tutor } = await getTutorById(req.tutor._id);
+    const { tutor: { _id, accountKey } } = req;
+    const { tutor } = await getTutorById(_id);
     if (!tutor) return res.status(401).json('unauthorized');
-    const token = signToken(tutor);
+
+    const { email } = tutor;
+    const token = signToken({ _id, email, accountKey });
+
+    if (tutor.resources.calendly) {
+      req.body.uri = tutor.resources.calendly.uri;
+      const calendlyMeetings = await getCalendlyEvents(req);
+      return res.json({ token, tutor, calendlyMeetings });
+    }
+
     return res.json({ token, tutor });
   } catch (error) {
     console.error(error);

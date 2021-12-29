@@ -9,9 +9,15 @@ const getCurrentHour = () => {
   const currHour = currTime - (currTime % 3600000);
   return currHour;
 };
-const getISOPastHour = (x) => new Date(getCurrentHour() - 3600000 * (x)).toISOString();
 const getISOCurrentHour = () => new Date(getCurrentHour()).toISOString();
-const getISOFutureHour = (x) => new Date(getCurrentHour() + 3600000 * (x)).toISOString();
+const getISOPastHour = (x) => {
+  if (!x) return getISOCurrentHour();
+  return new Date(getCurrentHour() - 3600000 * (x)).toISOString();
+};
+const getISOFutureHour = (x) => {
+  if (!x) return getISOCurrentHour();
+  return new Date(getCurrentHour() + 3600000 * (x)).toISOString();
+};
 
 module.exports = {
   getISOCurrentDateStamp,

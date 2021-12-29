@@ -1,23 +1,20 @@
 import { string } from 'prop-types';
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { Button, Form } from 'react-bulma-components';
-import { AppContext } from '../../../../context/AppProvider';
 import { syncCalendlyResource } from '../../../../utils/api';
 
 export const SyncCalendlyDetails = ({ password }) => {
   const [loading, setLoading] = useState(false);
   const [buttonText, setButtonText] = useState('sync');
 
-  const { tutorDetails, setTutorDetails } = useContext(AppContext);
-
   const syncWithCalendly = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const { resource } = await syncCalendlyResource({ password });
-      setTutorDetails({ ...tutorDetails, resources: { calendly: resource } });
-      setButtonText('success!');
+      await syncCalendlyResource({ password });
+      setButtonText('success! page reloading, one moment');
       setLoading(false);
+      setTimeout(() => { window.location.reload(); }, 100);
     } catch (error) {
       console.error(error);
       setButtonText('must add a token first');
