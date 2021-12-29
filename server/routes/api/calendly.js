@@ -24,7 +24,11 @@ router.post('/users/me', authorizeToken, async (req, res) => {
     // update tutors details
     console.log(resource);
     const updated = await Tutor
-      .findByIdAndUpdate(req.tutor._id, { resources: { calendly: resource } }, { new: true });
+      .findByIdAndUpdate(
+        req.tutor._id,
+        { $set: { resources: { calendly: resource } } },
+        { new: true },
+      );
     console.log(updated);
     // send resource to client to update local state
     req.body.uri = resource.uri;
