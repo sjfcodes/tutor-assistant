@@ -36,9 +36,9 @@ router.post('/login', async (req, res) => {
     const token = signToken({ _id, email, accountKey });
     tutor.password = '';
 
-    if (tutor.resources?.calendly?.uri) {
+    if (tutor.calendly?.uri) {
       req.tutor = { _id, email, accountKey };
-      req.body.uri = tutor.resources.calendly.uri;
+      req.body.uri = tutor.calendly.uri;
       const calendlyMeetings = await getCalendlyEvents(req);
       return res.json({ token, tutor, calendlyMeetings });
     }
@@ -60,8 +60,8 @@ router.get('/login', authorizeToken, async (req, res) => {
     const { email } = tutor;
     const token = signToken({ _id, email, accountKey });
 
-    if (tutor.resources?.calendly?.uri) {
-      req.body.uri = tutor.resources.calendly.uri;
+    if (tutor.calendly?.uri) {
+      req.body.uri = tutor.calendly.uri;
       const calendlyMeetings = await getCalendlyEvents(req);
       return res.json({ token, tutor, calendlyMeetings });
     }

@@ -10,9 +10,6 @@
         "password": "password",
         "courses": ["61bc110c6e2aa9094fcc3060"],
         "emailTemplates": [],
-        "accessTokens": ["61c37470648f3c29097ee670"],
-        "resources":{
-            "calendly":{}
-        }
+        "accessTokens": ["61c37470648f3c29097ee670"]
     }
 ]
