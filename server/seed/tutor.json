@@ -10,6 +10,18 @@
         "password": "password",
         "courses": ["61bc110c6e2aa9094fcc3060"],
         "emailTemplates": [],
-        "accessTokens": ["61c37470648f3c29097ee670"]
+        "accessTokens": ["61c37470648f3c29097ee670"],
+        "calendly":{
+            "avatar_url":"",
+            "created_at":"",
+            "current_organization":"",
+            "email":"",
+            "name":"",
+            "scheduling_url":"",
+            "slug":"",
+            "timezone":"",
+            "updated_at":"",
+            "uri":""
+        }
     }
 ]

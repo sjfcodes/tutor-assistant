@@ -3,16 +3,16 @@ const bcrypt = require('bcrypt');
 const { getISOCurrentDateStamp } = require('../utils/dateTime');
 
 const calendlySchema = new Schema({
-  avatar_url: { type: String },
-  created_at: { type: String },
-  current_organization: { type: String },
-  email: { type: String },
-  name: { type: String },
-  scheduling_url: { type: String },
-  slug: { type: String },
-  timezone: { type: String },
-  updated_at: { type: String },
-  uri: { type: String },
+  avatar_url: { type: String, default: '' },
+  created_at: { type: String, default: '' },
+  current_organization: { type: String, default: '' },
+  email: { type: String, default: '' },
+  name: { type: String, default: '' },
+  scheduling_url: { type: String, default: '' },
+  slug: { type: String, default: '' },
+  timezone: { type: String, default: '' },
+  updated_at: { type: String, default: '' },
+  uri: { type: String, default: '' },
 });
 
 const tutorSchema = new Schema({
