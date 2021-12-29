@@ -1,16 +1,16 @@
 const { Schema, model } = require('mongoose');
 
 const calendlySchema = new Schema({
-  avatar_url: String,
-  created_at: String,
-  current_organization: String,
-  email: String,
-  name: String,
-  scheduling_url: String,
-  slug: String,
-  timezone: String,
-  updated_at: String,
-  uri: String,
+  avatar_url: { type: String },
+  created_at: { type: String },
+  current_organization: { type: String },
+  email: { type: String },
+  name: { type: String },
+  scheduling_url: { type: String },
+  slug: { type: String },
+  timezone: { type: String },
+  updated_at: { type: String },
+  uri: { type: String },
 });
 
 const Calendly = model('Calendly', calendlySchema);

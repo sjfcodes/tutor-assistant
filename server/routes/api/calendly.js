@@ -23,12 +23,12 @@ router.post('/users/me', authorizeToken, async (req, res) => {
     if (!Object.keys(resource).length) return res.status(500).json('failed:2');
     // update tutors details
 
-    const { _id } = await Calendly.create(resource);
+    const { _id } = await Calendly.create(resource).catch((error) => res.status(500).json(error));
     await Tutor.findByIdAndUpdate(
       req.tutor._id,
       { calendly: _id },
       { new: true },
-    );
+    ).catch((error) => res.status(500).json(error));
     // send resource to client to update local state
     req.body.uri = resource.uri;
     return res.json({ resource });
