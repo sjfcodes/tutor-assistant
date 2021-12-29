@@ -49,8 +49,16 @@ const tutorSchema = new Schema({
   }],
   resources: {
     calendly: {
-      type: Object,
-      default: {},
+      avatar_url: { type: String },
+      created_at: { type: String },
+      current_organization: { type: String },
+      email: { type: String },
+      name: { type: String },
+      scheduling_url: { type: String },
+      slug: { type: String },
+      timezone: { type: String },
+      updated_at: { type: String },
+      uri: { type: String },
     },
   },
   createdAt: {
