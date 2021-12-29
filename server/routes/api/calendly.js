@@ -21,7 +21,20 @@ router.post('/users/me', authorizeToken, async (req, res) => {
     const { data: { resource } } = await axios.get(url, options);
     // update tutors details
 
-    const data = await Calendly.create(resource);
+    console.log(resource);
+
+    const data = await Calendly.create({
+      avatar_url: 'https://d3v0px0pttie1i.cloudfront.net/uploads/user/avatar/12057609/3f427929.jpeg',
+      created_at: '2021-07-01T14:20:03.720936Z',
+      current_organization: 'https://api.calendly.com/organizations/DAFBU3TDBLK7XKJJ',
+      email: 'sfox2@instructors.2u.com',
+      name: 'Samuel Fox',
+      scheduling_url: 'https://calendly.com/samueljfox-2u',
+      slug: 'samueljfox-2u',
+      timezone: 'America/Los_Angeles',
+      updated_at: '2021-12-24T05:15:30.006541Z',
+      uri: 'https://api.calendly.com/users/CAGFV4L437ZGBDQI',
+    });
     return res.json({ data });
     // await Tutor.findByIdAndUpdate(
     //   req.tutor._id,

@@ -14,7 +14,7 @@ const calendlySchema = new Schema(
     uri: { type: String },
   },
   {
-    collection: 'Calendly',
+    collection: 'calendly',
   },
 );
 
