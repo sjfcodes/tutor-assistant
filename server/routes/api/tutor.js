@@ -11,8 +11,11 @@ const {
 router.post('/', async ({ body }, res) => {
   try {
     const tutor = await Tutor.create(body);
+    const { _id, password, email } = tutor;
+    const accountKey = encryptToken(password, process.env.JWT_SECRET);
+    const token = signToken({ _id, email, accountKey });
+
     tutor.password = null;
-    const token = signToken(tutor);
     return res.json({ token, tutor });
   } catch (error) {
     console.error(error);
