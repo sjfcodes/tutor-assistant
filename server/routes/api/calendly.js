@@ -22,14 +22,12 @@ router.post('/users/me', authorizeToken, async (req, res) => {
     // if resource is object is empty
     if (!Object.keys(resource).length) return res.status(500).json('failed:2');
     // update tutors details
-    const updated = await Tutor
+    await Tutor
       .findByIdAndUpdate(
         req.tutor._id,
         { $set: { resources: { calendly: { ...resource } } } },
-        { new: true },
-      ).then(() => console.log('updated'))
-      .catch((error) => console.error(error));
-    console.log(updated);
+        { upsert: true },
+      );
     // send resource to client to update local state
     req.body.uri = resource.uri;
     return res.json({ resource });
