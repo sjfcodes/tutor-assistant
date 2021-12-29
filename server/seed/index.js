@@ -11,7 +11,7 @@ const emailTemplateSeeds = require('./emailTemplate.json');
 const courseSeeds = require('./course.json');
 const studentSeeds = require('./student');
 const meetingSeeds = require('./meeting');
-const accessTokenSeeds = require('./accesstoken.json');
+// const accessTokenSeeds = require('./accesstoken.json');
 
 db.once('open', async () => {
   try {
@@ -30,7 +30,7 @@ db.once('open', async () => {
     await Student.create(studentSeeds);
     await Meeting.create(meetingSeeds);
     await EmailTemplate.create(emailTemplateSeeds);
-    await AccessToken.create(accessTokenSeeds);
+    // await AccessToken.create(accessTokenSeeds);
 
     console.log('==> db seeds success\n');
   } catch (error) {
