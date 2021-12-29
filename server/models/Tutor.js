@@ -48,8 +48,6 @@ const tutorSchema = new Schema({
     ref: 'AccessToken',
   }],
   resources: {
-    type: Object,
-    default: {},
   },
   createdAt: {
     type: String,

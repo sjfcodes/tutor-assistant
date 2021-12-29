@@ -12,7 +12,7 @@ export const SyncCalendlyDetails = ({ password }) => {
     setLoading(true);
     try {
       await syncCalendlyResource({ password });
-      setButtonText('success! page reloading, one moment');
+      setButtonText('success! page reloading');
       setLoading(false);
       setTimeout(() => { window.location.reload(); }, 100);
     } catch (error) {
