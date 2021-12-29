@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const axios = require('axios');
-const { Tutor } = require('../../models');
+const { Tutor, Calendly } = require('../../models');
 const { authorizeToken } = require('../../utils/auth');
 const { getCalendlyEvents, getCalendlyHeaders } = require('../../utils/calendly-helpers');
 const { getCalendlyToken } = require('../../utils/encryption');
@@ -22,11 +22,15 @@ router.post('/users/me', authorizeToken, async (req, res) => {
     // if resource is object is empty
     if (!Object.keys(resource).length) return res.status(500).json('failed:2');
     // update tutors details
-    await Tutor
-      .findByIdAndUpdate(
-        req.tutor._id,
-        { $set: { calendly: resource } },
-      );
+
+    const { _id } = await Calendly.create(resource);
+    console.log('!!!!!', _id);
+    const u = await Tutor.findByIdAndUpdate(
+      req.tutor._id,
+      { calendly: _id },
+      { new: true },
+    );
+    console.log(u);
     // send resource to client to update local state
     req.body.uri = resource.uri;
     return res.json({ resource });

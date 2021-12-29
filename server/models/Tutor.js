@@ -2,19 +2,6 @@ const { Schema, model } = require('mongoose');
 const bcrypt = require('bcrypt');
 const { getISOCurrentDateStamp } = require('../utils/dateTime');
 
-const calendlySchema = new Schema({
-  avatar_url: { type: String, default: '' },
-  created_at: { type: String, default: '' },
-  current_organization: { type: String, default: '' },
-  email: { type: String, default: '' },
-  name: { type: String, default: '' },
-  scheduling_url: { type: String, default: '' },
-  slug: { type: String, default: '' },
-  timezone: { type: String, default: '' },
-  updated_at: { type: String, default: '' },
-  uri: { type: String, default: '' },
-});
-
 const tutorSchema = new Schema({
   firstName: {
     type: String,
@@ -60,7 +47,10 @@ const tutorSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'AccessToken',
   }],
-  calendly: { type: calendlySchema },
+  calendly: {
+    type: Schema.Types.ObjectId,
+    ref: 'Calendly',
+  },
   createdAt: {
     type: String,
     default: () => getISOCurrentDateStamp(),

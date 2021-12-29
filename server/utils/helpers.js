@@ -5,6 +5,7 @@ module.exports = {
 
   getTutorById: (id) => new Promise((resolve, reject) => {
     Tutor.findById(id)
+      .populate('calendly')
       .populate({
         path: 'courses',
         populate: [
@@ -28,6 +29,7 @@ module.exports = {
 
   getTutorByEmail: (email) => new Promise((resolve, reject) => {
     Tutor.findOne({ email })
+      .populate('calendly')
       .populate({
         path: 'courses',
         populate: [

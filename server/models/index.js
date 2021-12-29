@@ -4,6 +4,7 @@ const EmailTemplate = require('./EmailTemplate');
 const Meeting = require('./Meeting');
 const Student = require('./Student');
 const Tutor = require('./Tutor');
+const Calendly = require('./Calendly');
 
 module.exports = {
   AccessToken,
@@ -12,4 +13,5 @@ module.exports = {
   Meeting,
   Student,
   Tutor,
+  Calendly,
 };

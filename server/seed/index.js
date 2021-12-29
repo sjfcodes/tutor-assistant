@@ -3,6 +3,7 @@ const db = require('../config/connection');
 const {
   Tutor, EmailTemplate, Course,
   Student, Meeting, AccessToken,
+  Calendly,
 } = require('../models');
 
 const tutorSeeds = require('./tutor.json');
@@ -22,6 +23,7 @@ db.once('open', async () => {
     await Meeting.deleteMany({});
     await EmailTemplate.deleteMany({});
     await AccessToken.deleteMany({});
+    await Calendly.deleteMany({});
 
     await Tutor.create(tutorSeeds);
     await Course.create(courseSeeds);
