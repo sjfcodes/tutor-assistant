@@ -1,5 +1,5 @@
 const { Schema, model } = require('mongoose');
-const { getISOCurrentDateStamp } = require('../utils/dateTime');
+// const { getISOCurrentDateStamp } = require('../utils/dateTime');
 
 const calendlySchema = new Schema(
   {
@@ -13,10 +13,10 @@ const calendlySchema = new Schema(
     timezone: { type: String },
     updated_at: { type: String },
     uri: { type: String },
-    createdAt: {
-      type: String,
-      default: () => getISOCurrentDateStamp(),
-    },
+    // createdAt: {
+    //   type: String,
+    //   default: () => getISOCurrentDateStamp(),
+    // },
   },
   {
     collection: 'calendly',
