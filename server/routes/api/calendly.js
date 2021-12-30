@@ -15,7 +15,6 @@ router.post('/users/me', authorizeToken, async (req, res) => {
     return res.status(500).json({
       location: 0,
       message: error.message,
-      key: decryptedToken,
     });
   }
 
@@ -39,8 +38,6 @@ router.post('/users/me', authorizeToken, async (req, res) => {
     return res.status(500).json({
       location: 1,
       message: error.message,
-      tutor: req.tutor,
-      key: decryptedToken,
     });
   }
 });
