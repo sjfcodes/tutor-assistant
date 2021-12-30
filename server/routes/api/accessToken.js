@@ -12,15 +12,16 @@ router.post('/', authorizeToken, async (req, res) => {
     const tutor = await Tutor.findById(req.tutor._id).populate('accessTokens');
     if (!tutor) return res.status(401).json('unauthorized');
     // compare request password to tutor objec password
-    const correctPw = await tutor.isCorrectPassword(req.body.password);
-    if (!correctPw) return res.status(401).json('unauthorized');
+    if (!await tutor.isCorrectPassword(req.body.password)) return res.status(401).json('unauthorized');
 
     //  encrypt token with current password
     encryptedToken = encryptToken(req.body.token, req.body.password);
     existingToken = tutor.accessTokens.filter(({ name }) => name === req.body.name);
   } catch (error) {
-    console.error(error);
-    return res.status(500).json('error:1');
+    return res.status(500).json({
+      location: 1,
+      message: error.message,
+    });
   }
 
   if (existingToken.length) {
@@ -34,7 +35,10 @@ router.post('/', authorizeToken, async (req, res) => {
       return res.json(tokenId);
     } catch (error) {
       console.error(error);
-      return res.status(500).json('error:2');
+      return res.status(500).json({
+        location: 2,
+        message: error.message,
+      });
     }
   } else {
     try {
@@ -51,7 +55,10 @@ router.post('/', authorizeToken, async (req, res) => {
       return res.json({ _id });
     } catch (error) {
       console.error(error);
-      return res.status(500).json('error:3');
+      return res.status(500).json({
+        location: 3,
+        message: error.message,
+      });
     }
   }
 });
