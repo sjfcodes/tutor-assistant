@@ -13,9 +13,11 @@ router.post('/:courseId', authorizeToken, async (req, res) => {
     await addModelToCourse(req.params.courseId, 'students', _id);
     return res.json({ _id, createdAt });
   } catch (error) {
-    console.error(error);
     await Student.findByIdAndDelete(studentId);
-    return res.status(500).json('failed to add student to tutor');
+    return res.status(500).json({
+      location: 1,
+      message: error.message,
+    });
   }
 });
 
@@ -26,8 +28,10 @@ router.put('/', authorizeToken, async (req, res) => {
     if (!student) return res.status(404).json('student not found');
     return res.json('student updated');
   } catch (error) {
-    console.error(error);
-    return res.status(500).json('failed to update student');
+    return res.status(500).json({
+      location: 1,
+      message: error.message,
+    });
   }
 });
 
@@ -37,8 +41,10 @@ router.delete('/', authorizeToken, async (req, res) => {
     await deleteModelFromCourse(req.tutor._id, 'students', Student, req.body._id);
     return res.json('student deleted');
   } catch (error) {
-    console.error(error);
-    return res.status(500).json('failed to delete student');
+    return res.status(500).json({
+      location: 1,
+      message: error.message,
+    });
   }
 });
 
