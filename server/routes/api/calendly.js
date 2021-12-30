@@ -4,12 +4,16 @@ const { Calendly, Tutor } = require('../../models');
 const { authorizeToken } = require('../../utils/auth');
 const { getCalendlyEvents, getCalendlyHeaders } = require('../../utils/calendly-helpers');
 const { getCalendlyToken } = require('../../utils/encryption');
+const { getTutorByEmail } = require('../../utils/helpers');
 
-router.post('/users/me', authorizeToken, async ({ tutor: { _id: tutorId }, body }, res) => {
+router.post('/users/me', authorizeToken, async ({ tutor: { _id: tutorId, email }, body: { password } }, res) => {
   let decryptedToken;
   try {
+    const { tutor } = await getTutorByEmail(email);
+    if (!tutor) return res.status(401).json('unauthorized');
+    if (!await tutor.isCorrectPassword(password)) return res.status(401).json('unauthorized');
     // get decrypted calendly token
-    decryptedToken = await getCalendlyToken(tutorId, body.password);
+    decryptedToken = await getCalendlyToken(tutorId, password);
   } catch (error) {
     return res.status(500).json({
       location: 1,
