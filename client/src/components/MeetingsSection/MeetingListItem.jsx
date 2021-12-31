@@ -1,33 +1,20 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Level, Icon } from 'react-bulma-components';
+import { Level } from 'react-bulma-components';
 import { string, number, oneOfType } from 'prop-types';
 import { CourseContext } from '../../context';
-import { getLocalDateString, updateModel } from '../../utils';
+import { updateModel } from '../../utils';
 import { LevelSide } from '../BulmaHelpers';
+import ListItem from '../Forms/ListItem';
 
 const MeetingListItem = ({
   _id, property, value, count,
 }) => {
-  const [itemToEdit, setItemToEdit] = useState();
+  const [itemToEdit, setItemToEdit] = useState('');
   const [input, setInput] = useState(value);
-  const [val, setVal] = useState();
   const { allCourses, setAllCourses, selectedCourse } = useContext(CourseContext);
-
-  const inputHasBeenModified = () => `${value}`.trim() !== `${input}`.trim();
-  const handleInputChange = ({ target }) => {
-    let newValue = target.value;
-    if (target.name === 'endTime') newValue = newValue ? parseInt(newValue, 10) : 0;
-    setInput(newValue);
-  };
-
-  const handleCancelEdit = () => {
-    setItemToEdit();
-    setInput(value);
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       await updateModel('meeting', { _id, [property]: input });
       // target the current property being edited of the selected meeting in the selected course
@@ -48,33 +35,11 @@ const MeetingListItem = ({
           },
         },
       });
+      setItemToEdit('');
     } catch (error) {
       setInput(value);
     }
-    setItemToEdit();
   };
-
-  useEffect(() => {
-    let isMounted = true;
-
-    switch (property) {
-    case 'meetingLink':
-      return isMounted && setVal(
-        <a href={value} target='_blank' rel='noreferrer'>
-          {value}
-        </a>,
-      );
-    case 'startTime':
-      return isMounted && setVal(<span>{getLocalDateString(value)}</span>);
-
-    case 'endTime':
-      return isMounted && setVal(<span>{getLocalDateString(value)}</span>);
-
-    default:
-      if (isMounted) return setVal(<span>{`${value}`}</span>);
-    }
-    return () => { isMounted = false; };
-  }, [property, value]);
 
   useEffect(() => {
     if (!property || !itemToEdit) return;
@@ -91,45 +56,15 @@ const MeetingListItem = ({
         <LevelSide>
           {`${property}:`}
         </LevelSide>
-        <LevelSide>
-          {
-            itemToEdit === property
-              ? (
-                <>
-                  <input
-                    type='input'
-                    name={property}
-                    value={input}
-                    className='li-input mr-5 mb-2'
-                    onChange={handleInputChange}
-                  />
-                  {
-                    inputHasBeenModified()
-                      && (
-                        <Icon className='save-icon mb-1 mr-1' onClick={handleSubmit}>
-                          <i className='far fa-save hover has-text-success' />
-                        </Icon>
-                      )
-                  }
-                </>
-              )
-              : <span className='mr-5'>{val}</span>
-          }
-          {
-            itemToEdit === property
-              ? (
-                <Icon className='edit-icon mr-1' onClick={handleCancelEdit}>
-                  <i className='far fa-times-circle hover has-text-info' />
-                </Icon>
-              ) : (
-                property !== 'createdAt' && (
-                  <Icon className='edit-icon mr-1' onClick={() => setItemToEdit(property)}>
-                    <i className='fas fa-pen hover icon-small has-text-info' />
-                  </Icon>
-                )
-              )
-          }
-        </LevelSide>
+        <ListItem
+          value={value}
+          property={property}
+          input={input}
+          setInput={setInput}
+          itemToEdit={itemToEdit}
+          setItemToEdit={setItemToEdit}
+          handleSubmit={handleSubmit}
+        />
       </Level>
     </form>
   );
