@@ -14,7 +14,7 @@ const DefaultCourseLayout = ({
       {courseName}
     </LevelSide>
     <LevelSide align='right'>
-      <Button.Group className='mb-1'>
+      <Button.Group>
         <Button
           size='small'
           color='info'

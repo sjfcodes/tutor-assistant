@@ -7,7 +7,6 @@ import CouseLayouts from './CourseLayouts';
 
 // eslint-disable-next-line react/prop-types
 const CourseSettings = ({ setDisableControls }) => {
-  const [courseItems, setCourseItems] = useState();
   const [courseToDelete, setCourseToDelete] = useState('');
   const [courseToUpdate, setCourseToUpdate] = useState('');
 
@@ -62,44 +61,26 @@ const CourseSettings = ({ setDisableControls }) => {
     [allCourses, setAllCourses, selectedCourse, setSelectedCourse],
   );
 
-  const update = useCallback(() => {
-    setCourseItems(
-      Object.values(allCourses).map(({ name: courseName, _id: courseId }) => (
-        <CouseLayouts
-          key={courseId}
-          courseId={courseId}
-          courseName={courseName}
-          courseToUpdate={courseToUpdate}
-          setCourseToUpdate={setCourseToUpdate}
-          courseToDelete={courseToDelete}
-          setCourseToDelete={setCourseToDelete}
-          handleDeleteCourse={handleDeleteCourse}
-          handleUpdateCourse={handleUpdateCourse}
-        />
-      )),
-    );
-  }, [
-    allCourses,
-    courseToDelete,
-    courseToUpdate,
-    handleDeleteCourse,
-    handleUpdateCourse,
-    setCourseToDelete,
-    setCourseToUpdate,
-  ]);
-
   useEffect(() => {
-    if (!Object.keys(allCourses).length) return setCourseItems(null);
-    update();
     if (courseToUpdate || courseToDelete) setDisableControls(true);
     else setDisableControls(false);
     return '';
-  }, [allCourses, courseToDelete, courseToUpdate, update, setDisableControls]);
+  }, [allCourses, courseToDelete, courseToUpdate, setDisableControls]);
 
   return (
-    <div>
-      { courseItems }
-    </div>
+    Object.values(allCourses).map(({ name: courseName, _id: courseId }) => (
+      <CouseLayouts
+        key={courseId}
+        courseId={courseId}
+        courseName={courseName}
+        courseToUpdate={courseToUpdate}
+        setCourseToUpdate={setCourseToUpdate}
+        courseToDelete={courseToDelete}
+        setCourseToDelete={setCourseToDelete}
+        handleDeleteCourse={handleDeleteCourse}
+        handleUpdateCourse={handleUpdateCourse}
+      />
+    ))
   );
 };
 export default CourseSettings;

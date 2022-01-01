@@ -9,7 +9,7 @@ const DeleteCourseLayout = ({ courseName, courseId, handleDeleteCourse }) => (
       <Level.Item>{courseName}</Level.Item>
     </LevelSide>
     <LevelSide>
-      <Button.Group className='mb-1'>
+      <Button.Group>
         <Button
           outlined
           size='small'

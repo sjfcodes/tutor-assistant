@@ -1,4 +1,6 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, {
+  useCallback, useEffect, useMemo, useState,
+} from 'react';
 import { Level } from 'react-bulma-components';
 import { string, func } from 'prop-types';
 import DeleteCourseLayout from './DeleteCourseLayout';
@@ -6,14 +8,10 @@ import EditCourseNameLayout from './EditCourseNameLayout';
 import DefaultCourseLayout from './DefaultCourseLayout';
 
 const CouseLayouts = ({
-  courseName,
-  courseId,
-  courseToUpdate,
-  setCourseToUpdate,
-  courseToDelete,
-  setCourseToDelete,
-  handleDeleteCourse,
-  handleUpdateCourse,
+  courseName, courseId,
+  courseToUpdate, setCourseToUpdate,
+  courseToDelete, setCourseToDelete,
+  handleDeleteCourse, handleUpdateCourse,
 }) => {
   const [formInput, setFormInput] = useState('');
   const [layout, setLayout] = useState();
@@ -32,72 +30,59 @@ const CouseLayouts = ({
     setFormInput('');
   }, [courseId, formInput, handleUpdateCourse]);
 
+  const props = useMemo(() => ({
+    courseId,
+    courseName,
+    formInput,
+    setFormInput,
+    setCourseToUpdate,
+    setCourseToDelete,
+    handleUpdateClick,
+    handleEditNameClick,
+    handleDeleteCourse,
+  }), [
+    courseId, courseName, formInput, setFormInput,
+    setCourseToDelete, setCourseToUpdate,
+    handleUpdateClick, handleEditNameClick,
+    handleDeleteCourse,
+  ]);
+
   const updateLayout = useCallback(() => {
     switch (courseId) {
     case courseToUpdate:
-      setLayout(
-        <EditCourseNameLayout
-          formInput={formInput}
-          setFormInput={setFormInput}
-          setCourseToUpdate={setCourseToUpdate}
-          handleUpdateClick={handleUpdateClick}
-        />,
-      );
-      break;
+      return setLayout(<EditCourseNameLayout {...props} />);
 
     case courseToDelete:
-      setLayout(
-        <DeleteCourseLayout
-          courseId={courseId}
-          courseName={courseName}
-          setCourseToDelete={setCourseToDelete}
-          handleDeleteCourse={handleDeleteCourse}
-        />,
-      );
-      break;
+      return setLayout(<DeleteCourseLayout {...props} />);
 
     default:
-      setLayout(
-        <DefaultCourseLayout
-          courseId={courseId}
-          courseName={courseName}
-          handleEditNameClick={handleEditNameClick}
-          setCourseToDelete={setCourseToDelete}
-        />,
-      );
-      break;
+      return setLayout(<DefaultCourseLayout {...props} />);
     }
-  }, [
-    courseId,
-    formInput,
-    courseName,
-    courseToDelete,
-    courseToUpdate,
-    setCourseToUpdate,
-    handleUpdateClick,
-    setCourseToDelete,
-    handleDeleteCourse,
-    handleEditNameClick,
-  ]);
+  }, [courseId, courseToUpdate, courseToDelete, props]);
 
-  useEffect(() => {
-    updateLayout();
-  }, [updateLayout, handleDeleteCourse, handleUpdateCourse]);
+  useEffect(
+    updateLayout,
+    [updateLayout, handleDeleteCourse, handleUpdateCourse],
+  );
 
-  return <Level className='is-mobile'>{layout}</Level>;
+  return (
+    <Level
+      renderAs='div'
+      className='is-mobile '
+    >
+      {layout}
+    </Level>
+  );
 };
 export default CouseLayouts;
 
 CouseLayouts.propTypes = {
   courseName: string.isRequired,
   courseId: string.isRequired,
-
   courseToDelete: string.isRequired,
   setCourseToDelete: func.isRequired,
-
   courseToUpdate: string.isRequired,
   setCourseToUpdate: func.isRequired,
-
   handleUpdateCourse: func.isRequired,
   handleDeleteCourse: func.isRequired,
 };
