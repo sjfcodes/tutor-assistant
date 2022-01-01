@@ -1,6 +1,6 @@
 import React from 'react';
 import { string, func } from 'prop-types';
-import { Button, Form } from 'react-bulma-components';
+import { Button, Form, Level } from 'react-bulma-components';
 import { LevelSide } from '../../../../BulmaHelpers';
 
 const EditCourseNameLayout = ({
@@ -24,8 +24,8 @@ const EditCourseNameLayout = ({
           </Form.Field>
         </form>
       </LevelSide>
-      <LevelSide>
-        <Button.Group className='mb-1'>
+      <Level.Side>
+        <Button.Group>
           <Button size='small' outlined color='info' onClick={() => setCourseToUpdate('')}>
             cancel
           </Button>
@@ -34,7 +34,7 @@ const EditCourseNameLayout = ({
             save
           </Button>
         </Button.Group>
-      </LevelSide>
+      </Level.Side>
     </>
   );
 };
