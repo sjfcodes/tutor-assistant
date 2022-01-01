@@ -1,0 +1,20 @@
+.break {
+  overflow-wrap: break-all;
+  word-wrap: break-all;
+}
+
+/* .edit-icon {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.save-icon {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+} */
+
+.li-input {
+  width: 200px;
+}
