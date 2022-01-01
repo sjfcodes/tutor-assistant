@@ -4,7 +4,7 @@ const { signToken, authorizeToken } = require('../../utils/auth');
 const { getCalendlyEvents } = require('../../utils/calendly-helpers');
 const { encryptToken } = require('../../utils/encryption');
 const {
-  updateDocumentProperties, getTutorByEmail, getTutorById,
+  getTutorByEmail, getTutorById, allowPropertyUpdate,
 } = require('../../utils/helpers');
 
 // create a new tutor
@@ -80,11 +80,10 @@ router.get('/login', authorizeToken, async ({ tutor: { _id, accountKey } }, res)
 // allow a tutor to update their personal data
 router.put('/', authorizeToken, async ({ tutor: { _id }, body }, res) => {
   try {
-    const tutorDoc = await Tutor.findById(_id);
     // config for properties allowed to update
     const allowUpdate = {
       firstName: true,
-      lasName: true,
+      lastName: true,
       email: true,
       timeZoneName: true,
       githubUsername: true,
@@ -96,12 +95,13 @@ router.put('/', authorizeToken, async ({ tutor: { _id }, body }, res) => {
       meetings: false,
       createdAt: false,
     };
-    updateDocumentProperties(allowUpdate, tutorDoc, body);
-    // save the updated document using the .save() method
-    // https://mongoosejs.com/docs/documents.html#updating-using-queries
-    const updated = await tutorDoc.save();
+    const allowedToUpdate = allowPropertyUpdate(allowUpdate, body);
+    console.log(allowedToUpdate);
+    if (!allowedToUpdate) return res.status(401).json('unauthorized to update');
 
+    const updated = await Tutor.findByIdAndUpdate(_id, body);
     if (!updated) return res.status(500).json('failed to update');
+
     return res.json('tutor updated');
   } catch (error) {
     return res.status(500).json({

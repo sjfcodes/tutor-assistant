@@ -107,13 +107,14 @@ module.exports = {
       .catch((error) => reject(error));
   }),
 
-  updateDocumentProperties: (allowUpdate, currentDoc, newProps) => {
+  allowPropertyUpdate: (allowUpdate, newProps) => {
+    console.log(newProps);
     // eslint-disable-next-line no-restricted-syntax
-    for (const [key, value] of Object.entries(newProps)) {
+    for (const [key] of Object.entries(newProps)) {
       // eslint-disable-next-line no-continue
-      if (key === 'email' && currentDoc.email === newProps.email) continue;
-      // eslint-disable-next-line no-param-reassign
-      if (allowUpdate[key]) currentDoc[key] = value;
+      if (key === '_id') continue;
+      if (!allowUpdate[key]) return false;
     }
+    return true;
   },
 };
