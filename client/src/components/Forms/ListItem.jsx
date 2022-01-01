@@ -57,6 +57,18 @@ const ListItem = ({
     const formatBooleanSpan = (boolean) => <span className={`has-text-${boolean ? 'success' : 'danger'}`}>{`${boolean}`}</span>;
     let isMounted = true;
     switch (property) {
+    case 'calendlyLink':
+      return isMounted && setElement(
+        <a
+          href={value}
+          className='break'
+          target='_blank'
+          rel='noreferrer'
+        >
+          {value}
+        </a>,
+      );
+
     case 'createdAt':
       return isMounted && setElement(<span>{getLocalDateString(value)}</span>);
 
@@ -83,7 +95,12 @@ const ListItem = ({
 
     case 'meetingLink':
       return isMounted && setElement(
-        <a href={value} className='break' target='_blank' rel='noreferrer'>
+        <a
+          href={value}
+          className='break'
+          target='_blank'
+          rel='noreferrer'
+        >
           {value}
         </a>,
       );
@@ -102,6 +119,7 @@ const ListItem = ({
     }
     return () => { isMounted = false; };
   }, [property, value]);
+
   return (
     <LevelSide>
       {itemToEdit === property
