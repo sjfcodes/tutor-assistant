@@ -15,7 +15,7 @@ export const SyncCalendlyDetails = ({ password }) => {
       console.log(updated);
       setButtonText('success! page reloading');
       setLoading(false);
-      setTimeout(() => { window.location.reload(); }, 100);
+      // setTimeout(() => { window.location.reload(); }, 100);
     } catch (error) {
       console.warn(error);
       setButtonText('must add a token first');
