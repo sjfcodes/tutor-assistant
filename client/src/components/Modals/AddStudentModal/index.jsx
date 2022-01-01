@@ -7,9 +7,10 @@ import {
   missingFormInputs,
   convertDatePickerToISO8601,
   getCurrentDatePicker,
+  handleError,
+  getClientTimeZone,
 } from '../../../utils';
-import { handleError } from '../../../utils/helpers';
-import { getClientTimeZone } from '../../../utils/helpers/dateTime';
+
 import AddStudentForm from './AddStudentForm';
 
 const clientTimeZone = getClientTimeZone();

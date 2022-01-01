@@ -10,8 +10,9 @@ import {
   inputIsSelected,
   missingFormInputs,
   passwordIsValid,
+  getClientTimeZone,
 } from '../../utils';
-import { getClientTimeZone } from '../../utils/helpers/dateTime';
+import InputPassword from './InputPassword';
 import TimeZoneSelector from './TimeZoneSelector';
 
 const {
@@ -193,11 +194,13 @@ const SignupForm = () => {
         <Column>
           <Label>Password</Label>
           <Control>
-            <Input
+            <InputPassword
               type='password'
               name='password'
               value={password}
               onChange={handleInputChange}
+              validation={() => passwordIsValid(password)}
+
             />
             <Icon align='left'>
               <i className='fas fa-lock' />
@@ -213,11 +216,12 @@ const SignupForm = () => {
         <Column>
           <Label>Confirm Password</Label>
           <Control>
-            <Input
+            <InputPassword
               type='password'
               name='confirmPassword'
               value={confirmPassword}
               onChange={handleInputChange}
+              validation={() => (password === confirmPassword)}
             />
             <Icon align='left'>
               <i className='fas fa-lock' />

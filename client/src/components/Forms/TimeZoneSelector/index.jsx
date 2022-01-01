@@ -3,7 +3,7 @@ import React from 'react';
 import { Form } from 'react-bulma-components';
 import { v4 as uuidv4 } from 'uuid';
 import './style.css';
-import { getSortedTimeZones } from '../../../utils/helpers';
+import { getSortedTimeZones } from '../../../utils';
 
 const TimeZoneSelector = ({
   className, name, value, onChange,

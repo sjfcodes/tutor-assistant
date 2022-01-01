@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import {
-  Box, Content, Form, Heading,
+  Box, Content, Form, Heading, Icon,
 } from 'react-bulma-components';
+import { passwordIsValid } from '../../../../utils';
 import InputPassword from '../../../Forms/InputPassword';
 
 import AccessToken from './AccessToken';
@@ -11,7 +12,7 @@ const CalendlySettings = () => {
   const [password, setPassword] = useState('');
 
   return (
-    <Box className='p-3'>
+    <Box className='p-3 border'>
       <Heading
         size={4}
       >
@@ -23,12 +24,18 @@ const CalendlySettings = () => {
             enter tutorly password
             <form onSubmit={(e) => e.preventDefault()}>
               <Form.Field>
-                <InputPassword
-                  fullwidth
-                  name='password'
-                  value={password}
-                  handleFormUpdate={(e) => setPassword(e.target.value)}
-                />
+                <Form.Control fullwidth>
+                  <InputPassword
+                    fullwidth
+                    name='password'
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    validation={() => passwordIsValid(password)}
+                  />
+                  <Icon align='left' size='small'>
+                    <i className='fas fa-user-shield' />
+                  </Icon>
+                </Form.Control>
               </Form.Field>
             </form>
           </li>

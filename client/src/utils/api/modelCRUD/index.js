@@ -1,9 +1,11 @@
 import createModel from './create';
-import updateModel from './update';
 import deleteModel from './delete';
+import readModel from './read';
+import updateModel from './update';
 
 export {
   createModel,
-  updateModel,
   deleteModel,
+  readModel,
+  updateModel,
 };
