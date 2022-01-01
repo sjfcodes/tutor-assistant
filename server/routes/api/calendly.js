@@ -26,6 +26,7 @@ router.post('/users/me', authorizeToken, async ({ tutor: { _id: tutorId, email }
     const options = { headers: getCalendlyHeaders(decryptedToken) };
     // make request with calendly token
     const { data: { resource } } = await axios.get(url, options);
+
     // update tutors details
     const { _id: calendly } = await Calendly.create(resource);
 
@@ -33,7 +34,7 @@ router.post('/users/me', authorizeToken, async ({ tutor: { _id: tutorId, email }
       tutorId,
       { calendly },
       { new: true },
-    ).catch((error) => res.status(500).json(error));
+    );
     // send resource to client to update local state
     return res.json({ tutor });
   } catch (error) {
