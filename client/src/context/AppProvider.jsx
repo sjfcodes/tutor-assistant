@@ -2,12 +2,10 @@ import React, {
   createContext, useContext, useEffect, useMemo, useState,
 } from 'react';
 import { node } from 'prop-types';
-import { loginWithToken } from '../utils';
 import {
-  formatCourses,
-  formatMeetings,
-  formatStudents,
-} from '../utils/helpers';
+  loginWithToken, formatCourses,
+  formatMeetings, formatStudents,
+} from '../utils';
 import { CourseContext } from './CourseProvider';
 import { tokenKey } from '../config';
 

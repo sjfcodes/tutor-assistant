@@ -1,45 +1,52 @@
-import { bool, func, string } from 'prop-types';
+import { func, string } from 'prop-types';
 import React, { useEffect, useState } from 'react';
-import { Form, Icon } from 'react-bulma-components';
+import { Form } from 'react-bulma-components';
 
 const InputPassword = ({
-  fullwidth, placeholder, value, name, handleFormUpdate,
+  placeholder, value, name, onChange, validation,
 }) => {
   const [color, setColor] = useState('');
+  const [helpText, setHelpText] = useState('');
 
   useEffect(() => {
     if (!value) return setColor('');
-    if (value.length < 8) return setColor('danger');
+    if (!validation()) return setColor('danger');
     return setColor('success');
-  }, [value, setColor]);
+  }, [value, setColor, validation]);
+
+  const checkCapsLock = (e) => {
+    if (e.getModifierState('CapsLock')) setHelpText('capslock is on');
+    else if (helpText) setHelpText('');
+  };
 
   return (
-    <Form.Control fullwidth={fullwidth}>
+    <>
       <Form.Input
         type='password'
         name={name}
         value={value}
         color={color}
         placeholder={placeholder}
-        onChange={handleFormUpdate}
+        onKeyUp={checkCapsLock}
+        onChange={onChange}
       />
-      <Icon align='left' size='small'>
-        <i className='fas fa-user-shield' />
-      </Icon>
-    </Form.Control>
+
+      <Form.Help size={7} color='danger'>
+        {helpText}
+      </Form.Help>
+    </>
   );
 };
 export default InputPassword;
 
 InputPassword.propTypes = {
-  fullwidth: bool,
   placeholder: string,
   value: string.isRequired,
   name: string.isRequired,
-  handleFormUpdate: func.isRequired,
+  onChange: func.isRequired,
+  validation: func.isRequired,
 };
 
 InputPassword.defaultProps = {
-  fullwidth: false,
   placeholder: '',
 };

@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {
   Box, Button, Columns,
 } from 'react-bulma-components';
-import readModel from '../../utils/api/modelCRUD/read';
-import formatEmailTemplates from '../../utils/helpers/emailTemplates';
+import { readModel, formatEmailTemplates } from '../../utils';
 import './style.css';
 import {
   HowItWorks, EmailTemplateSelector,

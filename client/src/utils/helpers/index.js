@@ -3,6 +3,7 @@ import logoutTutor from './logout';
 import formatMeetings from './meeting';
 import formatStudents from './student';
 import formatCourses from './course';
+import formatEmailTemplates from './emailTemplates';
 
 export {
   handleError,
@@ -10,6 +11,7 @@ export {
   formatMeetings,
   formatStudents,
   formatCourses,
+  formatEmailTemplates,
 };
 
 export {
@@ -17,6 +19,7 @@ export {
   getISO8601TimeStamp,
   getUnixFromFormInputs,
   convertAddMeetingFormToISO8601,
+  getClientTimeZone,
   getLocalDateString,
   getTimeZoneAbbreviation,
   getSortedTimeZones,
@@ -30,4 +33,5 @@ export {
   passwordIsValid,
   missingFormInputs,
   inputIsSelected,
+  convertStrToBool,
 } from './forms';

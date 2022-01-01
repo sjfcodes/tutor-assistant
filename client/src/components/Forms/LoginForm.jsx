@@ -1,8 +1,11 @@
 import React, { useContext, useState } from 'react';
 import { Form, Icon, Button } from 'react-bulma-components';
 import { AppContext, CourseContext } from '../../context';
-import { loginWithPassword } from '../../utils';
-import { formatCourses, formatStudents } from '../../utils/helpers';
+import {
+  loginWithPassword, passwordIsValid,
+  formatCourses, formatStudents,
+} from '../../utils';
+import InputPassword from './InputPassword';
 
 const {
   Field, Label, Control, Input,
@@ -66,12 +69,13 @@ const LoginForm = () => {
       <Field>
         <Label>Password</Label>
         <Control>
-          <Input
+          <InputPassword
             placeholder='Password'
             name='password'
             type='password'
             value={inputs.password}
             onChange={handleInputChange}
+            validation={() => passwordIsValid(inputs.password)}
           />
           <Icon align='left'>
             <i className='fas fa-fingerprint' />

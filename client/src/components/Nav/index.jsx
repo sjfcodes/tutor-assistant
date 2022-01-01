@@ -4,10 +4,9 @@ import React, {
 } from 'react';
 import { Button, Navbar } from 'react-bulma-components';
 
-import { AppContext, ModalContext } from '../../context';
-import { logoutTutor } from '../../utils';
-import { getClientTimeZone } from '../../utils/helpers/dateTime';
 import { MeetingDate, TimeZoneAbbreviation } from '../DateTime';
+import { AppContext, ModalContext } from '../../context';
+import { logoutTutor, getClientTimeZone } from '../../utils';
 // import SettingsMenu from './SettingsMenu';
 import './style.css';
 

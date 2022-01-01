@@ -4,8 +4,7 @@ import {
 import React, { useEffect, useState } from 'react';
 import { Icon } from 'react-bulma-components';
 import { TimeZoneSelector } from '.';
-import { getLocalDateString } from '../../utils';
-import { convertStrToBool } from '../../utils/helpers/forms';
+import { getLocalDateString, convertStrToBool } from '../../utils';
 import { LevelSide } from '../BulmaHelpers';
 import { GraduationDate } from '../DateTime';
 import './style.css';
