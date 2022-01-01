@@ -28,7 +28,7 @@ router.post('/users/me', authorizeToken, async ({ tutor: { _id: tutorId, email }
     const { data: { resource } } = await axios.get(url, options);
 
     // update tutors details
-    const { _id: calendly } = await Calendly.create(resource);
+    const { _id: calendly } = await Calendly.create({ ...resource });
 
     const tutor = await Tutor.findByIdAndUpdate(
       tutorId,
