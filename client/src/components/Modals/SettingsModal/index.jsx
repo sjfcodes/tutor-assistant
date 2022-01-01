@@ -6,10 +6,11 @@ import { Button, Modal, Tabs } from 'react-bulma-components';
 import { AppContext, ModalContext } from '../../../context';
 import CalendlySettings from './CalendlySettings';
 import CourseSettings from './CourseSettings';
+import ProfileSettings from './ProfileSettings';
 
 const SettingsModal = () => {
   const [disableControls, setDisableControls] = useState(false);
-  const [activeTab, setActiveTab] = useState('courses');
+  const [activeTab, setActiveTab] = useState('profile');
   const [component, setComponent] = useState('');
 
   const { tutorDetails: { firstName } } = useContext(AppContext);
@@ -44,7 +45,7 @@ const SettingsModal = () => {
     switch (activeTab) {
     case 'profile':
       if (isMounted) return setComponent(
-        <h1>Profile</h1>,
+        <ProfileSettings />,
       );
       break;
     case 'courses':
@@ -130,7 +131,7 @@ const SettingsModal = () => {
                 Calendly
               </strong>
             </Tabs.Tab>
-            <Tabs.Tab
+            {/* <Tabs.Tab
               className='rounded'
               active={activeTab === 'students'}
               onClick={(e) => handleUpdate(e, 'students')}
@@ -140,8 +141,8 @@ const SettingsModal = () => {
               >
                 Students
               </strong>
-            </Tabs.Tab>
-            <Tabs.Tab
+            </Tabs.Tab> */}
+            {/* <Tabs.Tab
               className='rounded'
               active={activeTab === 'meetings'}
               onClick={(e) => handleUpdate(e, 'meetings')}
@@ -151,7 +152,7 @@ const SettingsModal = () => {
               >
                 Meetings
               </strong>
-            </Tabs.Tab>
+            </Tabs.Tab> */}
           </Tabs>
           {component}
         </Modal.Card.Body>
