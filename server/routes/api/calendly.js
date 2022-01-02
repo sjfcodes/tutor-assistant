@@ -10,7 +10,6 @@ router.post('/users/me', authorizeToken, async ({ tutor: { _id: tutorId }, body:
     const url = 'https://api.calendly.com/users/me';
     const options = { headers: getCalendlyHeaders(await getCalendlyToken(tutorId, password)) };
     // make request with calendly token
-    console.log(options);
     const { data: { resource } } = await axios.get(url, options);
 
     // update tutors details

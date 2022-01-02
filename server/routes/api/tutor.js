@@ -18,6 +18,7 @@ router.post('/', async ({ body }, res) => {
     tutor.password = null;
     return res.json({ token, tutor });
   } catch (error) {
+    console.error(error.message);
     return res.status(500).json({
       location: 1,
       message: error.message,
@@ -46,6 +47,7 @@ router.post('/login', async ({ body: { email, password } }, res) => {
 
     return res.json({ token, tutor });
   } catch (error) {
+    console.error(error.message);
     return res.status(401).json({
       location: 1,
       message: error.message,
@@ -70,6 +72,7 @@ router.get('/login', authorizeToken, async ({ tutor: { _id, accountKey } }, res)
 
     return res.json({ token, tutor });
   } catch (error) {
+    console.error(error.message);
     return res.status(401).json({
       location: 1,
       message: error.message,
@@ -96,7 +99,6 @@ router.put('/', authorizeToken, async ({ tutor: { _id }, body }, res) => {
       createdAt: false,
     };
     const allowedToUpdate = allowPropertyUpdate(allowUpdate, body);
-    console.log(allowedToUpdate);
     if (!allowedToUpdate) return res.status(401).json('unauthorized to update');
 
     const updated = await Tutor.findByIdAndUpdate(_id, body);
@@ -104,6 +106,7 @@ router.put('/', authorizeToken, async ({ tutor: { _id }, body }, res) => {
 
     return res.json('tutor updated');
   } catch (error) {
+    console.error(error.message);
     return res.status(500).json({
       location: 1,
       message: error.message,
@@ -123,6 +126,7 @@ router.put('/password', authorizeToken, async ({ tutor: { _id }, body }, res) =>
     if (!updated) return res.status(500).json('failed to update');
     return res.json('password updated');
   } catch (error) {
+    console.error(error.message);
     return res.status(500).json({
       location: 1,
       message: error.message,
@@ -138,7 +142,7 @@ router.delete('/', authorizeToken, async ({ tutor: { _id }, body }, res) => {
     await Tutor.findByIdAndDelete(_id);
     return res.json('tutor deleted');
   } catch (error) {
-    console.error(error);
+    console.error(error.message);
     return res.status(500).json({
       location: 1,
       message: error.message,

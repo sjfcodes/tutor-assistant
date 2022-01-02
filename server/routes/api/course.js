@@ -12,6 +12,7 @@ router.post('/', authorizeToken, async (req, res) => {
     await addModelToTutor(req.tutor._id, 'courses', course._id);
     return res.json(course);
   } catch (error) {
+    console.error(error.message);
     return res.status(500).json({
       location: 1,
       message: error.message,
@@ -27,6 +28,7 @@ router.put('/', authorizeToken, async (req, res) => {
 
     return res.json('course updated');
   } catch (error) {
+    console.error(error.message);
     return res.status(500).json({
       location: 1,
       message: error.message,
@@ -40,6 +42,7 @@ router.delete('/:id', authorizeToken, async (req, res) => {
     await deleteModelFromTutor(req.tutor._id, 'courses', Course, req.params.id);
     return res.json('course deleted');
   } catch (error) {
+    console.error(error.message);
     return res.status(500).json({
       location: 1,
       message: error.message,

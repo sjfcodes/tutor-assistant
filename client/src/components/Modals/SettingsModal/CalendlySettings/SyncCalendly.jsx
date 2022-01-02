@@ -11,8 +11,7 @@ export const SyncCalendlyDetails = ({ password }) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const updated = await syncCalendlyResource({ password });
-      console.log(updated);
+      await syncCalendlyResource({ password });
       setButtonText('success! page will reload');
       setLoading(false);
       setTimeout(() => { window.location.reload(); }, 300);

@@ -18,6 +18,7 @@ router.post('/', authorizeToken, async (req, res) => {
     encryptedToken = encryptToken(req.body.token, req.body.password);
     existingToken = tutor.accessTokens.filter(({ name }) => name === req.body.name);
   } catch (error) {
+    console.error(error.message);
     return res.status(500).json({
       location: 1,
       message: error.message,
@@ -34,6 +35,7 @@ router.post('/', authorizeToken, async (req, res) => {
       );
       return res.json(tokenId);
     } catch (error) {
+      console.error(error.message);
       console.error(error);
       return res.status(500).json({
         location: 2,
@@ -54,6 +56,7 @@ router.post('/', authorizeToken, async (req, res) => {
       // send new token id back to client to update local state
       return res.json({ _id });
     } catch (error) {
+      console.error(error.message);
       console.error(error);
       return res.status(500).json({
         location: 3,
