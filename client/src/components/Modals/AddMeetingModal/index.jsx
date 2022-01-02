@@ -25,9 +25,11 @@ const AddMeetingModal = () => {
 
     try {
       const { _id: newMeetingId, createdAt } = await createModel(
-        'meeting',
-        formInputs,
-        selectedCourse,
+        {
+          model: 'meeting',
+          body: formInputs,
+          _id: selectedCourse,
+        },
       );
       if (!newMeetingId) return console.warn('failed');
 

@@ -49,7 +49,7 @@ const HowItWorks = ({ viewHelp, setViewHelp }) => (
               <p className='mb-0'>Available tutor keywords are:</p>
               <p className='ml-4 mb-0'>[tutor-firstName]</p>
               <p className='ml-4 mb-0'>[tutor-lastName]</p>
-              <p className='ml-4 mb-0'>[tutor-calendlyLink]</p>
+              <p className='ml-4 mb-0'>[tutor-scheduleLink]</p>
               <p className='ml-4 mb-0'>[tutor-githubUsername]</p>
               <p className='ml-4 mb-2'>[tutor-email]</p>
             </Columns.Column>

@@ -27,7 +27,7 @@ const tutorSchema = new Schema(
     githubUsername: {
       type: String,
     },
-    calendlyLink: {
+    scheduleLink: {
       type: String,
       required: true,
     },
@@ -44,18 +44,6 @@ const tutorSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'EmailTemplate',
     }],
-    accessTokens: {
-      calendly: {
-        type: Schema.Types.ObjectId,
-        ref: 'AccessToken',
-        default: null,
-      },
-    },
-    calendly: {
-      type: Schema.Types.ObjectId,
-      ref: 'Calendly',
-      default: null,
-    },
     createdAt: {
       type: String,
       default: () => getISOCurrentDateStamp(),

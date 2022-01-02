@@ -61,14 +61,8 @@ router.get('/login', authorizeToken, async ({ tutor: { _id, accountKey } }, res)
     const { tutor } = await getTutorById(_id);
     if (!tutor) return res.status(401).json('unauthorized');
 
-    const { email, calendly } = tutor;
+    const { email } = tutor;
     const token = signToken({ _id, email, accountKey });
-
-    if (calendly?.uri) {
-      const { uri } = calendly;
-      const calendlyMeetings = await getCalendlyEvents({ _id, accountKey, uri });
-      return res.json({ token, tutor, calendlyMeetings });
-    }
 
     return res.json({ token, tutor });
   } catch (error) {
@@ -90,7 +84,7 @@ router.put('/', authorizeToken, async ({ tutor: { _id }, body }, res) => {
       email: true,
       timeZoneName: true,
       githubUsername: true,
-      calendlyLink: true,
+      scheduleLink: true,
       meetingCount: true,
       password: false,
       courses: false,

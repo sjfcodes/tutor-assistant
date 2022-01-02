@@ -56,7 +56,7 @@ const ListItem = ({
     const formatBooleanSpan = (boolean) => <span className={`has-text-${boolean ? 'success' : 'danger'}`}>{`${boolean}`}</span>;
     let isMounted = true;
     switch (property) {
-    case 'calendlyLink':
+    case 'scheduleLink':
       return isMounted && setElement(
         <a
           href={value}

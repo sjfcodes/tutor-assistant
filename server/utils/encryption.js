@@ -1,29 +1,20 @@
 const { AES, enc } = require('crypto-js');
-const { Tutor } = require('../models');
+const { Course } = require('../models');
 
 const encryptToken = (value, key) => AES.encrypt(value, key).toString();
 const decryptToken = (value, key) => AES.decrypt(value, key).toString(enc.Utf8);
 
-const getCalendlyToken = async (tutorId, tutorPw) => {
-  //  get tutor object
-  const tutor = await Tutor.findById(tutorId)
+const getCalendlyToken = async ({ password, courseId }) => {
+  // get encrypted calendly token from course
+  const { calendly: { accessToken: { token } } } = await Course.findById(courseId)
     .populate({
-      path: 'accessTokens',
-      populate: [{ path: 'calendly', model: 'AccessToken' }],
+      path: 'calendly',
+      populate: { path: 'accessToken', model: 'AccessToken' },
     });
 
-  if (!tutor) return null;
-
-  // compare hashed passwords
-  const correctPw = tutor.isCorrectPassword(tutorPw);
-  if (!correctPw) return new Error('unauthorized');
-
-  // get encrypted calendly token
-  const { token } = tutor.accessTokens.calendly;
   // decypt token
-  const decryptedToken = decryptToken(token, tutorPw);
+  const decryptedToken = decryptToken(token, password);
   if (!decryptedToken) return null;
-
   return decryptedToken;
 };
 

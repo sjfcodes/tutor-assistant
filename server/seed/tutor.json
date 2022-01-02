@@ -4,9 +4,8 @@
     "email": "demo@email.com",
     "timeZoneName": "America/Los_Angeles",
     "githubUsername": "tutor",
-    "calendlyLink": "https://calendly.com",
+    "scheduleLink": "https://calendly.com",
     "password": "password",
     "courses": [],
-    "emailTemplates": [],
-    "accessTokens": []
+    "emailTemplates": []
 }

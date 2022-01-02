@@ -5,13 +5,14 @@ import React, {
 } from 'react';
 import { Button, Navbar } from 'react-bulma-components';
 
-import { AppContext, ModalContext } from '../../context';
+import { AppContext, CourseContext, ModalContext } from '../../context';
 import { logoutTutor } from '../../utils';
 // import SettingsMenu from './SettingsMenu';
 import './style.css';
 
 const Nav = () => {
   const { tutorDetails } = useContext(AppContext);
+  const { allCourses } = useContext(CourseContext);
   const { loggedIn, firstName, lastName } = tutorDetails;
   const { openModal, setOpenModal } = useContext(ModalContext);
   const [displayNavMenu, setDisplayNavMenu] = useState(false);
@@ -22,6 +23,12 @@ const Nav = () => {
     return setDisplayNavMenu((curr) => !curr);
   }, [loggedIn]);
 
+  const displayState = () => {
+    console.log(tutorDetails);
+    console.log('~ ~ ~');
+    console.log(allCourses);
+  };
+
   useEffect(() => {
     if (openModal) toggleNavBurger(null, true);
   }, [openModal, toggleNavBurger]);
@@ -31,7 +38,7 @@ const Nav = () => {
       <Navbar.Brand>
         <Navbar.Item
           className='pl-3 p-0 pr-0'
-          onClick={() => console.log(tutorDetails)}
+          onClick={displayState}
         >
           <h1 className='brand'>tutorly</h1>
         </Navbar.Item>
