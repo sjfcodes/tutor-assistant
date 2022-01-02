@@ -1,3 +1,8 @@
+:root {
+  --blue: #09b2f5;
+  --border: rgba(0, 0, 0, 0.6);
+}
+
 /* ~ ~ ~ ~ ~ MAIN LAYOUT ~ ~ ~ ~ ~ ~ */
 html,
 body {
@@ -47,13 +52,19 @@ footer {
 
 /* ~ ~ ~ ~ ~ ~ ~ BORDER ~ ~ ~ ~ ~ ~ ~ */
 .border {
-  border: solid 1px rgba(0, 0, 0, 0.658);
+  border: solid 1px var(--border);
 }
 .border-top {
-  border-top: solid 1px rgb(0, 0, 0);
+  border-top: solid 1px var(--border);
+}
+.border-right {
+  border-right: solid 1px var(--border);
 }
 .border-bottom {
-  border-bottom: solid 1px rgb(0, 0, 0);
+  border-bottom: solid 1px var(--border);
+}
+.border-left {
+  border-left: solid 1px var(--border);
 }
 .border-bold {
   border: solid 2px rgb(0, 0, 0);
