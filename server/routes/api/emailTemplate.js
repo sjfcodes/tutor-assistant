@@ -15,6 +15,7 @@ router.get('/', authorizeToken, async (req, res) => {
 
     return res.json(templates);
   } catch (error) {
+    console.error(error.message);
     return res.status(500).json({
       location: 1,
       message: error.message,
@@ -29,6 +30,7 @@ router.post('/', authorizeToken, async (req, res) => {
     await addModelToTutor(req._id, 'emailTemplates', template._id);
     return res.json({ _id: template._id });
   } catch (error) {
+    console.error(error.message);
     return res.status(500).json({
       location: 1,
       message: error.message,
@@ -44,6 +46,7 @@ router.put('/', authorizeToken, async (req, res) => {
 
     return res.json('template updated');
   } catch (error) {
+    console.error(error.message);
     return res.status(500).json({
       location: 1,
       message: error.message,
