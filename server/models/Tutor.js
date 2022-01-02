@@ -44,10 +44,13 @@ const tutorSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'EmailTemplate',
     }],
-    accessTokens: [{
-      type: Schema.Types.ObjectId,
-      ref: 'AccessToken',
-    }],
+    accessTokens: {
+      calendly: {
+        type: Schema.Types.ObjectId,
+        ref: 'AccessToken',
+        default: null,
+      },
+    },
     calendly: {
       type: Schema.Types.ObjectId,
       ref: 'Calendly',

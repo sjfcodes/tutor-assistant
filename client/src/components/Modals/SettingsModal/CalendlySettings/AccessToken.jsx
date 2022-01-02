@@ -8,7 +8,7 @@ import { createModel } from '../../../../utils';
 
 const AccessToken = ({ password }) => {
   const { tutorDetails, setTutorDetails } = useContext(AppContext);
-  const [formInputs, setFormInputs] = useState({ name: 'calendly', token: '' });
+  const [formInputs, setFormInputs] = useState({ token: '' });
   const [loading, setLoading] = useState(false);
   const [buttonText, setButtonText] = useState('add/update token');
   const [helpText, setHelpText] = useState('');
