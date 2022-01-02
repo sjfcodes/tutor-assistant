@@ -4,7 +4,7 @@ import React, {
 } from 'react';
 import { Button, Modal, Tabs } from 'react-bulma-components';
 import { AppContext, ModalContext } from '../../../context';
-import CalendlySettings from './CalendlySettings';
+import CalendlyAccess from './CalendlyAccess';
 import CourseSettings from './CourseSettings';
 import ProfileSettings from './ProfileSettings';
 
@@ -68,7 +68,7 @@ const SettingsModal = () => {
 
     case 'calendly':
       if (isMounted) return setComponent(
-        <CalendlySettings />,
+        <CalendlyAccess />,
       );
       break;
 

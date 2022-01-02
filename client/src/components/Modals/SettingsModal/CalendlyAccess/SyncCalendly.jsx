@@ -14,7 +14,7 @@ export const SyncCalendlyDetails = ({ password }) => {
       await syncCalendlyResource({ password });
       setButtonText('success! page will reload');
       setLoading(false);
-      setTimeout(() => { window.location.reload(); }, 300);
+      window.location.reload();
     } catch (error) {
       console.warn(error);
       setButtonText('must add a token first');

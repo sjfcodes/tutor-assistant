@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { authorizeToken } = require('../../utils/auth');
-const { AccessToken, Tutor } = require('../../models');
+const { AccessToken, Tutor, Calendly } = require('../../models');
 const { encryptToken } = require('../../utils/encryption');
 
 router.post('/', authorizeToken, async (req, res) => {
@@ -48,6 +48,23 @@ router.post('/', authorizeToken, async (req, res) => {
   } catch (error) {
     console.error(error.message);
     return res.status(500).json({ location: 1, message: error.message });
+  }
+});
+
+router.delete('/', authorizeToken, async ({ tutor, body: { tokenId } }, res) => {
+  try {
+    const { calendly } = await Tutor.findByIdAndUpdate(
+      tutor._id,
+      { calendly: null, accessTokens: { calendly: null } },
+    );
+
+    await Calendly.findByIdAndDelete(calendly);
+    await AccessToken.findByIdAndDelete(tokenId);
+
+    return res.json('token deleted');
+  } catch ({ message }) {
+    console.error(message);
+    return res.status(500).json(message);
   }
 });
 
