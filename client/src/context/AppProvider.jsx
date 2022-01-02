@@ -33,7 +33,6 @@ export const AppProvider = ({ children }) => {
         const data = await loginWithToken(prevToken);
         const { tutor, token } = data;
         if (!tutor || !token) return;
-        // console.log(data.calendlyMeetings);
 
         const formattedCourses = tutor.courses.map((course) => ({
           ...course,

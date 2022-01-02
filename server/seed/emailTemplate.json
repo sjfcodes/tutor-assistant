@@ -1,5 +1,5 @@
 {
     "authorId": "",
     "name": "new-student",
-    "template": "Hi [student-firstName],\nMy name is [tutor-firstName], I am looking forward to working with you!\n\nSchedule a meeting here:\n[tutor-calendlyLink]\n\nThanks!\nSamuel fox\nFull-Stack Web Developer\nsamueljfox.com"
+    "template": "Hi [student-firstName],\nMy name is [tutor-firstName], I am looking forward to working with you!\n\nSchedule a meeting here:\n[tutor-scheduleLink]\n\nThanks!\nSamuel fox\nFull-Stack Web Developer\nsamueljfox.com"
 }

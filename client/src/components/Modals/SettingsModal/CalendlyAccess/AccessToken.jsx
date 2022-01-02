@@ -3,17 +3,17 @@ import React, { useContext, useEffect, useState } from 'react';
 import {
   Button, Form, Icon,
 } from 'react-bulma-components';
-import { AppContext, CourseContext } from '../../../../context';
+import { CourseContext } from '../../../../context';
 import { createModel } from '../../../../utils';
+import { syncCalendlyResource } from '../../../../utils/api';
 
 const AccessToken = ({ password }) => {
-  const { tutorDetails, setTutorDetails } = useContext(AppContext);
   // eslint-disable-next-line no-unused-vars
-  const { allCourses, selectedCourse } = useContext(CourseContext);
+  const { allCourses, setAllCourses, selectedCourse } = useContext(CourseContext);
 
   const [formInputs, setFormInputs] = useState({ token: '' });
   const [loading, setLoading] = useState(false);
-  const [buttonText, setButtonText] = useState('add/update token');
+  const [buttonText, setButtonText] = useState('add/update access');
   const [helpText, setHelpText] = useState('');
   const [color, setColor] = useState('');
   const { token } = formInputs;
@@ -32,27 +32,42 @@ const AccessToken = ({ password }) => {
     e.preventDefault();
     setLoading(true);
 
+    let accessToken;
+    let data;
+
     try {
-      const response = await createModel(
+      const { _id } = await createModel(
         {
           model: 'access-token',
           body: { ...formInputs, password },
           _id: selectedCourse,
         },
       );
-      if (response._id) setTutorDetails({
-        ...tutorDetails,
-        accessTokens: [
-          ...tutorDetails.accessTokens,
-          response._id,
-        ],
-      });
-      setButtonText('success!');
+      accessToken = _id;
     } catch (error) {
-      console.warn(error);
-      setHelpText('try again');
+      console.error(error);
+      // expected case: bad password
+      setHelpText('unauthorized');
     }
 
+    if (accessToken) try {
+      data = await syncCalendlyResource({ body: { password, courseId: selectedCourse } });
+    } catch (error) {
+      console.error(error);
+      // expected case: bad accessToken
+      setHelpText('invalid token, try again');
+    }
+
+    if (accessToken && data) {
+      setAllCourses({
+        ...allCourses,
+        [selectedCourse]: {
+          ...allCourses[selectedCourse],
+          calendly: { accessToken, data },
+        },
+      });
+      setButtonText('success!');
+    }
     setLoading(false);
   };
 
@@ -82,7 +97,7 @@ const AccessToken = ({ password }) => {
           >
             {buttonText}
           </Button>
-          <Form.Help>{helpText}</Form.Help>
+          <Form.Help color='danger'>{helpText}</Form.Help>
         </Form.Control>
       </Form.Field>
     </form>

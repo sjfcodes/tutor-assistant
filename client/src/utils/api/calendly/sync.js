@@ -9,7 +9,7 @@ import { handleError } from '../../helpers';
  * @param {String} id id of parent model to add new model to
  * @returns
  */
-const syncCalendlyResource = (body) => {
+const syncCalendlyResource = ({ body }) => {
   const url = getApiEndpoint({ model: 'calendly', action: 'users/me' });
   const options = {
     method: 'POST',

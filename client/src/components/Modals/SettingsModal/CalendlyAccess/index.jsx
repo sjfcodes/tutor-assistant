@@ -2,18 +2,18 @@ import React, { useContext, useState } from 'react';
 import {
   Box, Content, Form, Heading, Icon,
 } from 'react-bulma-components';
-import { AppContext } from '../../../../context/AppProvider';
+import { CourseContext } from '../../../../context';
 import { passwordIsValid } from '../../../../utils';
 import InputPassword from '../../../Forms/InputPassword';
 
 import AccessToken from './AccessToken';
 import DeleteAccessToken from './DeleteAccessToken';
-import SyncCalendly from './SyncCalendly';
+// import SyncCalendly from './SyncCalendly';
 
 const CalendlyAccess = () => {
   const [password, setPassword] = useState('');
-  const { tutorDetails: { accessTokens: { calendly } } } = useContext(AppContext);
-
+  const { allCourses, selectedCourse } = useContext(CourseContext);
+  const { calendly: { accessToken } } = allCourses[selectedCourse];
   return (
     <>
       <Box className='p-3 border'>
@@ -43,7 +43,7 @@ const CalendlyAccess = () => {
                 </Form.Field>
               </form>
             </li>
-            <li>
+            <li className='my-5'>
               <a href='https://calendly.com/integrations/api_webhooks' target='_blank' rel='noreferrer'>create a calendly access token</a>
             </li>
             <li>
@@ -53,14 +53,14 @@ const CalendlyAccess = () => {
                 setPassword={setPassword}
               />
             </li>
-            <li>
+            {/* <li>
               sync with calendly
               <SyncCalendly password={password} />
-            </li>
+            </li> */}
           </ol>
         </Content>
       </Box>
-      {calendly && <DeleteAccessToken />}
+      {accessToken && <DeleteAccessToken />}
     </>
   );
 };

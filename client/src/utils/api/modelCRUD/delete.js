@@ -8,14 +8,12 @@ import { handleError } from '../../helpers';
  * @param {String} id id of model to be deleted
  * @returns
  */
-const deleteModel = ({ model, _id }) => {
+const deleteModel = ({ model, _id, body }) => {
   const options = {
     method: 'DELETE',
     headers: getRequestHeaders(),
-    _id: JSON.stringify({ _id }),
+    body: JSON.stringify(body),
   };
-  console.log(_id);
-  console.log(getApiEndpoint({ model, _id }));
   return new Promise((resolve, reject) => {
     try {
       fetch(getApiEndpoint({ model, _id }), options)

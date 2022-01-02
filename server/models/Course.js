@@ -6,6 +6,17 @@ const courseSchema = new Schema({
     type: String,
     required: true,
   },
+  calendly: {
+    accessToken: {
+      type: Schema.Types.ObjectId,
+      default: null,
+    },
+    data: {
+      type: Schema.Types.ObjectId,
+      ref: 'Calendly',
+      default: null,
+    },
+  },
   students: [{
     type: Schema.Types.ObjectId,
     ref: 'Student',
