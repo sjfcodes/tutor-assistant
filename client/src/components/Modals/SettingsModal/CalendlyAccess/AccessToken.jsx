@@ -3,11 +3,14 @@ import React, { useContext, useEffect, useState } from 'react';
 import {
   Button, Form, Icon,
 } from 'react-bulma-components';
-import { AppContext } from '../../../../context/AppProvider';
+import { AppContext, CourseContext } from '../../../../context';
 import { createModel } from '../../../../utils';
 
 const AccessToken = ({ password }) => {
   const { tutorDetails, setTutorDetails } = useContext(AppContext);
+  // eslint-disable-next-line no-unused-vars
+  const { allCourses, selectedCourse } = useContext(CourseContext);
+
   const [formInputs, setFormInputs] = useState({ token: '' });
   const [loading, setLoading] = useState(false);
   const [buttonText, setButtonText] = useState('add/update token');
@@ -30,7 +33,13 @@ const AccessToken = ({ password }) => {
     setLoading(true);
 
     try {
-      const response = await createModel('access-token', { ...formInputs, password });
+      const response = await createModel(
+        {
+          model: 'access-token',
+          body: { ...formInputs, password },
+          _id: selectedCourse,
+        },
+      );
       if (response._id) setTutorDetails({
         ...tutorDetails,
         accessTokens: [

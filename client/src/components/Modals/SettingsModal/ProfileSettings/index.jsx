@@ -8,7 +8,7 @@ const ProfileSettings = () => {
   const { tutorDetails } = useContext(AppContext);
 
   const renderDetails = [
-    'firstName', 'lastName', 'calendlyLink', 'email',
+    'firstName', 'lastName', 'scheduleLink', 'email',
     'githubUsername', 'timeZoneName',
   ];
   let count = 0;

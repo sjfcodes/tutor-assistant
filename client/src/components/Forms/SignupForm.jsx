@@ -29,7 +29,7 @@ const SignupForm = () => {
     email: '',
     timeZoneName: clientTimeZone || '',
     githubUsername: '',
-    calendlyLink: '',
+    scheduleLink: '',
     password: '',
     confirmPassword: '',
   });
@@ -40,7 +40,7 @@ const SignupForm = () => {
     email,
     timeZoneName,
     githubUsername,
-    calendlyLink,
+    scheduleLink,
     password,
     confirmPassword,
   } = formInputs;
@@ -53,7 +53,7 @@ const SignupForm = () => {
   const handleSignup = async (e) => {
     e.preventDefault();
     try {
-      const { tutor, token } = await createModel('tutor', formInputs);
+      const { tutor, token } = await createModel({ model: 'tutor', body: formInputs });
       if (!tutor) return;
       localStorage.setItem(tokenKey, token);
       setTutorDetails({ ...tutor, loggedIn: true });
@@ -174,14 +174,14 @@ const SignupForm = () => {
           <Control>
             <Input
               type='text'
-              name='calendlyLink'
-              value={calendlyLink}
+              name='scheduleLink'
+              value={scheduleLink}
               onChange={handleInputChange}
             />
             <Icon align='left'>
               <i className='fas fa-link' />
             </Icon>
-            {calendlyLink && (
+            {scheduleLink && (
               <Icon align='right'>
                 <i className='fas fa-check' />
               </Icon>
