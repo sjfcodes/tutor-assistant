@@ -10,7 +10,6 @@ import { handleError } from '../../helpers';
  * @returns
  */
 const syncCalendlyResource = (body) => {
-  // const url = 'http://localhost:3001/api/calendly/users/me';
   const url = getApiEndpoint({ model: 'calendly', action: 'users/me' });
   const options = {
     method: 'POST',
