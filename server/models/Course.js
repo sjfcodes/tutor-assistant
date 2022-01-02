@@ -6,11 +6,6 @@ const courseSchema = new Schema({
     type: String,
     required: true,
   },
-  tutorId: {
-    type: Schema.Types.ObjectId,
-    ref: 'Tutor',
-    required: true,
-  },
   students: [{
     type: Schema.Types.ObjectId,
     ref: 'Student',

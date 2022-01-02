@@ -1,19 +1,5 @@
-[
-    {
-        "_id": "61bc110c6e2aa9094fcc3060",
-        "name": "Full Stack Flex",
-        "tutorId": "61bc0c0dc3a0a4429a77522d",
-        "students": [
-            "61bc17044b5faaa82f1e5691",
-            "61bc1de5afe0e50f52099a85",
-            "61bc1de5afe0e50f52099a84"
-        ],
-        "meetings": [
-            "61bc17bd9d98682321c8d477",
-            "61bc17bd9d98682321c8d478",
-            "61bc17bd9d98682321c8d479",
-            "61bc17bd9d98682321c8d480",
-            "61bc17bd9d98682321c8d481"
-        ]
-    }
-]
+{
+    "name": "Full Stack Flex",
+    "students": [],
+    "meetings": []
+}
