@@ -13,7 +13,7 @@ const MeetingDate = ({ iso8601, className }) => {
   //    time = ["08","00","pm"]
 
   return (
-    <p className={className}>
+    <span className={className}>
       <DateItem str={d[0]} size={7} />
       {' '}
       <DateItem str={d[1]} size={7} />
@@ -25,7 +25,7 @@ const MeetingDate = ({ iso8601, className }) => {
       <DateItem str={t[1]} />
       {' '}
       <DateItem str={t[2]} size={7} />
-    </p>
+    </span>
   );
 };
 export default MeetingDate;

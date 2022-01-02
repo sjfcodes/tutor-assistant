@@ -1,7 +1,3 @@
-:root {
-  --blue: #09b2f5
-}
-
 .rounded-tr {
   border-top-right-radius: 6px;
 }
@@ -20,7 +16,7 @@
   padding-top: 4px !important;
 }
 .tabs ul li a strong:hover {
-  color: #09b2f5 !important;
+  color: var(--blue) !important;
 }
 
 .tabs ul li:hover {
