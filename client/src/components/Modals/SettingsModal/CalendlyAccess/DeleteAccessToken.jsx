@@ -11,7 +11,7 @@ const DeleteAccessToken = () => {
 
   const handleDeleteAccessToken = async () => {
     try {
-      await deleteModel('access-token', { tokenId: calendly });
+      await deleteModel({ model: 'access-token', _id: calendly });
       window.location.reload();
     } catch (error) {
       console.error(error);

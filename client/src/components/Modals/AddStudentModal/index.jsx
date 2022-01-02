@@ -43,7 +43,7 @@ const AddStudentModal = () => {
     inputs.graduationDate = convertDatePickerToISO8601(formInputs.graduationDate);
 
     try {
-      const { _id: newStudentId, createdAt } = await createModel('student', inputs, selectedCourse);
+      const { _id: newStudentId, createdAt } = await createModel({ model: 'student', body: inputs, _id: selectedCourse });
       if (!newStudentId) return handleError('createModel [student] did not return _id');
 
       const currentStudents = allCourses[selectedCourse].students;

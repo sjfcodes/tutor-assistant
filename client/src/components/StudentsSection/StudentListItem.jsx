@@ -18,7 +18,7 @@ const StudentListItem = ({
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await updateModel('student', { _id, [property]: input });
+      await updateModel({ model: 'student', body: { _id, [property]: input } });
 
       // target the current property being edited of the selected student in the selected course
       const thisCourse = { ...allCourses[selectedCourse] };

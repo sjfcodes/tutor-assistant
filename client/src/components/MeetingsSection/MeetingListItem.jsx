@@ -16,7 +16,7 @@ const MeetingListItem = ({
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await updateModel('meeting', { _id, [property]: input });
+      await updateModel({ model: 'meeting', body: { _id, [property]: input } });
       // target the current property being edited of the selected meeting in the selected course
       const thisCourse = { ...allCourses[selectedCourse] };
       const allMeetings = { ...thisCourse.meetings };
