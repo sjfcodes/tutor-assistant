@@ -30,6 +30,7 @@ const AccessToken = ({ password }) => {
     setLoading(true);
 
     try {
+      console.log({ ...formInputs, password });
       const response = await createModel('access-token', { ...formInputs, password });
       if (response._id) setTutorDetails({
         ...tutorDetails,
