@@ -2,7 +2,6 @@ const { getISOFutureHour, getISOPastHour } = require('../utils/dateTime');
 
 module.exports = [
   {
-    _id: '61bc17044b5faaa82f1e5691',
     firstName: 'Moe',
     lastName: 'B',
     email: 'moJito@email.com',
@@ -19,7 +18,6 @@ module.exports = [
     createdAt: getISOPastHour(24),
   },
   {
-    _id: '61bc1de5afe0e50f52099a85',
     firstName: 'Miley',
     lastName: 'K',
     email: 'mlee@email.com',
@@ -36,7 +34,6 @@ module.exports = [
     createdAt: getISOPastHour(48),
   },
   {
-    _id: '61bc1de5afe0e50f52099a84',
     firstName: 'Rocky',
     lastName: 'Fox',
     email: 'kel@email.com',
