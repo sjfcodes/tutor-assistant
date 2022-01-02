@@ -24,7 +24,7 @@ const CourseSettings = ({ setDisableControls }) => {
 
       try {
         const body = { _id, name };
-        await updateModel('course', body);
+        await updateModel({ model: 'course', body });
 
         const updatedCourses = { ...allCourses };
         updatedCourses[_id].name = name;
@@ -43,7 +43,8 @@ const CourseSettings = ({ setDisableControls }) => {
       if (!_id) return;
 
       try {
-        await deleteModel('course', _id);
+        console.log(_id);
+        await deleteModel({ model: 'course', _id });
 
         const updatedCourses = { ...allCourses };
         delete updatedCourses[_id];

@@ -6,7 +6,7 @@ import { APIBase, tokenKey } from '../../config';
  * @param {*} id target a specific model
  * @returns complete url to access a model
  */
-export const getApiEndpoint = ({ model, action, id }) => {
+export const getApiEndpoint = ({ model, action, _id }) => {
   // https://myserver.com
   // let url = APIBase;
   let url = APIBase;
@@ -15,7 +15,7 @@ export const getApiEndpoint = ({ model, action, id }) => {
   // https://myserver.com/modelName/action
   if (action) url += `/${action}`;
   // https://myserver.com/modelName[/action?]/:id
-  if (id) url += `/${id}`;
+  if (_id) url += `/${_id}`;
 
   return url;
 };

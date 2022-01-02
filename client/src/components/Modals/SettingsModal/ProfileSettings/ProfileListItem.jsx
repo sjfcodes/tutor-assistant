@@ -18,7 +18,7 @@ const ProfileListItem = ({
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await updateModel('tutor', { _id, [property]: input });
+      await updateModel({ model: 'tutor', body: { _id, [property]: input } });
       setTutorDetails({ ...tutorDetails, [property]: input });
       setItemToEdit('');
     } catch (error) {

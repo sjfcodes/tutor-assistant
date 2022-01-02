@@ -9,7 +9,7 @@ import { handleError } from '../../helpers';
  * @param {String} id id of parent model to add new model to
  * @returns
  */
-const readModel = (model, id = '') => {
+const readModel = (model, _id = '') => {
   const options = {
     method: 'GET',
     headers: getRequestHeaders(),
@@ -17,7 +17,7 @@ const readModel = (model, id = '') => {
 
   return new Promise((resolve, reject) => {
     try {
-      fetch(getApiEndpoint({ model, id }), options)
+      fetch(getApiEndpoint({ model, _id }), options)
         .then((res) => (res.status === 200 ? res.json() : null))
         .then((data) => {
           if (!data) return reject(handleError('missing model data'));
