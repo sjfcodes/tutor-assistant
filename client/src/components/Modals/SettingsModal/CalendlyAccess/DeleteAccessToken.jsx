@@ -24,6 +24,7 @@ const DeleteAccessToken = () => {
     <Button
       fullwidth
       color='danger'
+      className='tag'
       onClick={handleDeleteAccessToken}
     >
       delete calendly access
