@@ -1,17 +1,19 @@
 import React, {
   useCallback, useEffect, useMemo, useState,
 } from 'react';
-import { Level } from 'react-bulma-components';
+import { Box, Level } from 'react-bulma-components';
 import { string, func } from 'prop-types';
 import DeleteCourseLayout from './DeleteCourseLayout';
 import EditCourseNameLayout from './EditCourseNameLayout';
 import DefaultCourseLayout from './DefaultCourseLayout';
+import CalendlyAccess from '../../CalendlyAccess';
 
 const CouseLayouts = ({
   courseName, courseId,
   courseToUpdate, setCourseToUpdate,
   courseToDelete, setCourseToDelete,
   handleDeleteCourse, handleUpdateCourse,
+  selectedCalendlyAccess, setSelectedCalendlyAccess,
 }) => {
   const [formInput, setFormInput] = useState('');
   const [layout, setLayout] = useState();
@@ -66,12 +68,19 @@ const CouseLayouts = ({
   );
 
   return (
-    <Level
-      renderAs='div'
-      className='is-mobile '
-    >
-      {layout}
-    </Level>
+    <Box className='border'>
+      <Level
+        renderAs='div'
+        className='is-mobile '
+      >
+        {layout}
+      </Level>
+      <CalendlyAccess
+        courseId={courseId}
+        selectedCalendlyAccess={selectedCalendlyAccess}
+        setSelectedCalendlyAccess={setSelectedCalendlyAccess}
+      />
+    </Box>
   );
 };
 export default CouseLayouts;
@@ -85,4 +94,6 @@ CouseLayouts.propTypes = {
   setCourseToUpdate: func.isRequired,
   handleUpdateCourse: func.isRequired,
   handleDeleteCourse: func.isRequired,
+  selectedCalendlyAccess: func.isRequired,
+  setSelectedCalendlyAccess: func.isRequired,
 };

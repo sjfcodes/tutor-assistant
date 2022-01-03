@@ -66,12 +66,6 @@ const SettingsModal = () => {
       );
       break;
 
-    case 'calendly':
-      if (isMounted) return setComponent(
-        <CalendlyAccess />,
-      );
-      break;
-
     default:
       if (isMounted) return console.warn('no component selected');
       break;
@@ -118,17 +112,6 @@ const SettingsModal = () => {
                 className={activeTab !== 'courses' ? 'has-text-grey-lighter' : ''}
               >
                 Courses
-              </strong>
-            </Tabs.Tab>
-            <Tabs.Tab
-              className='rounded'
-              active={activeTab === 'calendly'}
-              onClick={(e) => handleUpdate(e, 'calendly')}
-            >
-              <strong
-                className={activeTab !== 'calendly' ? 'has-text-grey-lighter' : ''}
-              >
-                Calendly
               </strong>
             </Tabs.Tab>
             {/* <Tabs.Tab
