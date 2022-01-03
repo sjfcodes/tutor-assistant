@@ -97,6 +97,6 @@ export default CalendlyAccess;
 
 CalendlyAccess.propTypes = {
   courseId: string.isRequired,
-  selectedCalendlyAccess: func.isRequired,
+  selectedCalendlyAccess: string.isRequired,
   setSelectedCalendlyAccess: func.isRequired,
 };

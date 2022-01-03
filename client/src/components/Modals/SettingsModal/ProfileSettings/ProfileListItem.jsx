@@ -1,7 +1,7 @@
 import React, {
   useEffect, useState, useContext,
 } from 'react';
-import { Level } from 'react-bulma-components';
+import { Icon, Level } from 'react-bulma-components';
 import { string, number, oneOfType } from 'prop-types';
 import { updateModel } from '../../../../utils';
 import { LevelSide } from '../../../BulmaHelpers';
@@ -42,6 +42,14 @@ const ProfileListItem = ({
       >
         <LevelSide>
           {`${property}:`}
+          {
+            property !== 'endTime' && (
+              <Icon className='edit-icon mr-1' onClick={() => setItemToEdit(itemToEdit !== property ? property : '')}>
+                <i className='fas fa-pen hover icon-small has-text-info' />
+              </Icon>
+            )
+          }
+
         </LevelSide>
         <ListItem
           value={value}

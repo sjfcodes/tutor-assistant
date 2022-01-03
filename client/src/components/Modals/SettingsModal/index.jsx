@@ -83,10 +83,7 @@ const SettingsModal = () => {
       onClose={() => setOpenModal('')}
     >
       <Modal.Card>
-        <Modal.Card.Header showClose={false}>
-          <Modal.Card.Title>{`${firstName}'s Settings`}</Modal.Card.Title>
-        </Modal.Card.Header>
-        <Modal.Card.Body>
+        <Modal.Card.Header className='pb-0' showClose={false}>
           <Tabs
             align='left'
             type='boxed'
@@ -137,6 +134,8 @@ const SettingsModal = () => {
               </strong>
             </Tabs.Tab> */}
           </Tabs>
+        </Modal.Card.Header>
+        <Modal.Card.Body>
           {component}
         </Modal.Card.Body>
         <Modal.Card.Footer renderAs={Button.Group} align='right'>
