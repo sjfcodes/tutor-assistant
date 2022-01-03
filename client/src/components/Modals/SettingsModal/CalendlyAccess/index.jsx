@@ -46,46 +46,35 @@ const CalendlyAccess = ({ courseId, selectedCalendlyAccess, setSelectedCalendlyA
         selectedCalendlyAccess === courseId
         && (
           <>
-            <Box>
-              <Content>
-                <ol>
-                  <li>
-                    enter tutorly password
-                    <form onSubmit={(e) => e.preventDefault()}>
-                      <Form.Field>
-                        <Form.Control fullwidth>
-                          <InputPassword
-                            fullwidth
-                            name='password'
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            validation={() => passwordIsValid(password)}
-                          />
-                          <Icon align='left' size='small'>
-                            <i className='fas fa-user-shield' />
-                          </Icon>
-                        </Form.Control>
-                      </Form.Field>
-                    </form>
-                  </li>
-                  <li className='my-5'>
-                    <a href='https://calendly.com/integrations/api_webhooks' target='_blank' rel='noreferrer'>create a calendly access token</a>
-                  </li>
-                  <li>
-                    add/update access token
-                    <AccessToken
-                      courseId={courseId}
-                      password={password}
-                      setPassword={setPassword}
+            <Content className='border-bottom pb-3 mb-4'>
+              enter tutorly password
+              <form onSubmit={(e) => e.preventDefault()}>
+                <Form.Field>
+                  <Form.Control fullwidth>
+                    <InputPassword
+                      fullwidth
+                      name='password'
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      validation={() => passwordIsValid(password)}
                     />
-                  </li>
-                  {/* <li>
-              sync with calendly
-              <SyncCalendly password={password} />
-            </li> */}
-                </ol>
-              </Content>
-            </Box>
+                    <Icon align='left' size='small'>
+                      <i className='fas fa-user-shield' />
+                    </Icon>
+                  </Form.Control>
+                </Form.Field>
+              </form>
+              <a className='my-5' href='https://calendly.com/integrations/api_webhooks' target='_blank' rel='noreferrer'>create a calendly access token</a>
+              <p>add/update access token</p>
+              <AccessToken
+                courseId={courseId}
+                password={password}
+                setPassword={setPassword}
+              />
+              {/*
+                <p>sync with calendly</p>
+                <SyncCalendly password={password} /> */}
+            </Content>
             {accessToken && <DeleteAccessToken />}
           </>
         )
