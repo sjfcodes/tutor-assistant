@@ -58,11 +58,10 @@ const Nav = () => {
         <Navbar.Burger onClick={toggleNavBurger} />
       </Navbar.Brand>
 
-      <Navbar.Menu id='navMenu' className={`border-top is-flex is-justify-content-end is-align-items-center ${displayNavMenu ? 'is-active' : ''}`}>
+      <Navbar.Menu id='navMenu' className={`border-top ${displayNavMenu ? 'is-active' : ''}`}>
 
         {
           loggedIn && (
-            // <div className='navbar-end is-flex is-justify-content-space-evenly'>
             <div className='navbar-end has-text-right'>
               {/* <img src='https://bulma.io/images/bulma-logo.png' width='112' height='28' alt='bulma logo' /> */}
               <Navbar.Item
