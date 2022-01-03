@@ -1,16 +1,18 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Level } from 'react-bulma-components';
-import { string, number, oneOfType } from 'prop-types';
+import {
+  string, number, oneOfType, bool, array,
+} from 'prop-types';
 import { CourseContext } from '../../context';
 import { updateModel } from '../../utils';
 import { LevelSide } from '../BulmaHelpers';
 import ListItem from '../Forms/ListItem';
 
 const MeetingListItem = ({
-  _id, property, value, count,
+  _id, property, value, type, count,
 }) => {
   const [itemToEdit, setItemToEdit] = useState('');
-  const [input, setInput] = useState(value);
+  const [input, setInput] = useState(`${value}`);
   const { allCourses, setAllCourses, selectedCourse } = useContext(CourseContext);
 
   const handleSubmit = async (e) => {
@@ -59,6 +61,7 @@ const MeetingListItem = ({
         <ListItem
           value={value}
           property={property}
+          type={type}
           input={input}
           setInput={setInput}
           itemToEdit={itemToEdit}
@@ -74,6 +77,7 @@ export default MeetingListItem;
 MeetingListItem.propTypes = {
   _id: string.isRequired,
   property: string.isRequired,
-  value: oneOfType([number, string]).isRequired,
+  type: string.isRequired,
+  value: oneOfType([number, string, bool, array]).isRequired,
   count: number.isRequired,
 };

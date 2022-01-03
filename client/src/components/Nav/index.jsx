@@ -12,7 +12,7 @@ import './style.css';
 
 const Nav = () => {
   const { tutorDetails } = useContext(AppContext);
-  const { allCourses, selectedCourse } = useContext(CourseContext);
+  const { allCourses, selectedCourse, calendlyMeetings } = useContext(CourseContext);
   const { loggedIn, firstName, lastName } = tutorDetails;
   const { openModal, setOpenModal } = useContext(ModalContext);
   const [displayNavMenu, setDisplayNavMenu] = useState(false);
@@ -25,12 +25,14 @@ const Nav = () => {
 
   const displayState = () => {
     console.group('context');
-    console.log('~ tutor ~');
+    console.log('~ tutorDetails ~');
     console.log(tutorDetails);
-    console.log('~ all courses ~');
+    console.log('~ allCourses ~');
     console.log(allCourses);
-    console.log('~ selected course ~');
+    console.log('~ selectedCourse ~');
     console.log(allCourses[selectedCourse]);
+    console.log('~ calendlyMeetings ~');
+    console.log(calendlyMeetings);
     console.groupEnd('context');
   };
 
@@ -56,11 +58,12 @@ const Nav = () => {
         <Navbar.Burger onClick={toggleNavBurger} />
       </Navbar.Brand>
 
-      <Navbar.Menu id='navMenu' className={`border-top ${displayNavMenu ? 'is-active' : ''}`}>
+      <Navbar.Menu id='navMenu' className={`border-top is-flex is-justify-content-end is-align-items-center ${displayNavMenu ? 'is-active' : ''}`}>
 
         {
           loggedIn && (
-            <div className='navbar-end is-flex is-justify-content-space-evenly'>
+            // <div className='navbar-end is-flex is-justify-content-space-evenly'>
+            <div className='navbar-end has-text-right'>
               {/* <img src='https://bulma.io/images/bulma-logo.png' width='112' height='28' alt='bulma logo' /> */}
               <Navbar.Item
                 renderAs='div'
@@ -68,7 +71,7 @@ const Nav = () => {
               >
                 <Button
                   color='primary'
-                  className='tag is-rounded'
+                  className=''
                   onClick={() => setOpenModal('settings')}
                 >
                   Settings
@@ -79,7 +82,8 @@ const Nav = () => {
               >
                 <Button
                   color='danger'
-                  className='tag is-rounded'
+                  outlined
+                  className='tag'
                   onClick={logoutTutor}
                 >
                   Logout

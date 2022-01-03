@@ -66,6 +66,7 @@ const AccessToken = ({ courseId, password }) => {
           calendly: { accessToken, data },
         },
       });
+      setHelpText('');
       setButtonText('success!');
     }
     setLoading(false);
