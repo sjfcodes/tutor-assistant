@@ -1,17 +1,16 @@
 import React, { useContext, useState } from 'react';
 import { Form, Icon } from 'react-bulma-components';
 import {
-  string, func, shape,
+  string, func, shape, number,
 } from 'prop-types';
 import { convertAddMeetingFormToISO8601 } from '../../../../utils';
 import { AppContext } from '../../../../context';
 
 export const addMeetingFormPropTypes = {
   formInputs: shape({
-    tutorId: string.isRequired,
-    studentId: string.isRequired,
-    endTime: string.isRequired,
+    duration: number.isRequired,
     startTime: string.isRequired,
+    studentId: string.isRequired,
     status: string.isRequired,
   }).isRequired,
   setFormInputs: func.isRequired,
@@ -38,7 +37,7 @@ const MeetingTime = ({ formInputs, setFormInputs, updateDuration }) => {
       // if we have all the data, get the timestamp representation
       updateDuration(0, utcIso8601);
       setFormInputs((curr) => ({ ...curr, startTime: utcIso8601 }));
-    } else if (startTime) setFormInputs({ ...formInputs, startTime: '', endTime: '' });
+    } else if (startTime) setFormInputs({ ...formInputs, startTime: '' });
 
     setDate({ ...date, [name]: value === '-' ? '' : value });
   };

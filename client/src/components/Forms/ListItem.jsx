@@ -6,12 +6,12 @@ import { Icon } from 'react-bulma-components';
 import { TimeZoneSelector } from '.';
 import { getLocalDateString, convertStrToBool } from '../../utils';
 import { LevelSide } from '../BulmaHelpers';
-import { GraduationDate } from '../DateTime';
+import { GraduationDate, MeetingDateFull } from '../DateTime';
 import './style.css';
 
 const ListItem = ({
   property, value, type, input, setInput,
-  itemToEdit, setItemToEdit, handleSubmit,
+  itemToEdit, handleSubmit,
 }) => {
   const [element, setElement] = useState('');
 
@@ -23,10 +23,6 @@ const ListItem = ({
 
   const inputHasBeenModified = () => `${value}`.trim() !== `${input}`.trim();
 
-  const handleCancelEdit = () => {
-    setItemToEdit('');
-    setInput(value);
-  };
   const getFormInputType = (propertyName) => {
     switch (propertyName) {
     case 'timeZoneName':
@@ -72,7 +68,7 @@ const ListItem = ({
       return isMounted && setElement(<span>{getLocalDateString(value)}</span>);
 
     case 'endTime':
-      return isMounted && setElement(<span>{getLocalDateString(value)}</span>);
+      return isMounted && setElement(<MeetingDateFull iso8601={value} />);
 
     case 'fullTimeCourse':
       return isMounted && setElement(formatBooleanSpan(value));
@@ -111,7 +107,7 @@ const ListItem = ({
       return isMounted && setElement(formatBooleanSpan(value));
 
     case 'startTime':
-      return isMounted && setElement(<span>{getLocalDateString(value)}</span>);
+      return isMounted && setElement(<MeetingDateFull iso8601={value} />);
 
     default:
       if (isMounted) return setElement(<span>{`${value}`}</span>);
@@ -133,23 +129,9 @@ const ListItem = ({
                     <i className='far fa-save hover has-text-success' />
                   </Icon>
                 )}
-              <Icon className='edit-icon mr-1' onClick={handleCancelEdit}>
-                <i className='far fa-times-circle hover has-text-info' />
-              </Icon>
             </>
           )
-          : (
-            <>
-              <span className='mr-5'>{element}</span>
-              {
-                type !== 'calendly' && (
-                  <Icon className='edit-icon mr-1' onClick={() => setItemToEdit(property)}>
-                    <i className='fas fa-pen hover icon-small has-text-info' />
-                  </Icon>
-                )
-              }
-            </>
-          )
+          : <span>{element}</span>
       }
     </LevelSide>
 
@@ -161,9 +143,12 @@ ListItem.propTypes = {
   input: string.isRequired,
   setInput: func.isRequired,
   property: string.isRequired,
-  type: string.isRequired,
+  type: string,
   value: oneOfType([string, number, bool]).isRequired,
   itemToEdit: string.isRequired,
-  setItemToEdit: func.isRequired,
   handleSubmit: func.isRequired,
+};
+
+ListItem.defaultProps = {
+  type: '',
 };

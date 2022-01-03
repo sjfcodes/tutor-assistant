@@ -37,7 +37,7 @@ const Student = ({
           <Level.Item className='ml-3 mr-1'>{`${firstName} ${lastName}`}</Level.Item>
           <Level.Item>
             <p>
-              <TimeZoneAbbreviation timeZone={timeZoneName} className='is-size-7 has-text-grey' />
+              <TimeZoneAbbreviation timeZone={timeZoneName} className='is-size-7 has-text-weight-bold has-text-info' />
             </p>
           </Level.Item>
         </Level.Side>
