@@ -10,7 +10,7 @@ import { GraduationDate } from '../DateTime';
 import './style.css';
 
 const ListItem = ({
-  property, value, input, setInput,
+  property, value, type, input, setInput,
   itemToEdit, setItemToEdit, handleSubmit,
 }) => {
   const [element, setElement] = useState('');
@@ -121,29 +121,36 @@ const ListItem = ({
 
   return (
     <LevelSide>
-      {itemToEdit === property
-        ? (
-          <>
-            {getFormInputType(property)}
-            {inputHasBeenModified()
+      {
+        itemToEdit === property
+        && type !== 'calenly'
+          ? (
+            <>
+              {getFormInputType(property)}
+              {inputHasBeenModified()
                 && (
                   <Icon className='save-icon mr-1' onClick={handleSubmit}>
                     <i className='far fa-save hover has-text-success' />
                   </Icon>
                 )}
-            <Icon className='edit-icon mr-1' onClick={handleCancelEdit}>
-              <i className='far fa-times-circle hover has-text-info' />
-            </Icon>
-          </>
-        )
-        : (
-          <>
-            <span className='mr-5'>{element}</span>
-            <Icon className='edit-icon mr-1' onClick={() => setItemToEdit(property)}>
-              <i className='fas fa-pen hover icon-small has-text-info' />
-            </Icon>
-          </>
-        )}
+              <Icon className='edit-icon mr-1' onClick={handleCancelEdit}>
+                <i className='far fa-times-circle hover has-text-info' />
+              </Icon>
+            </>
+          )
+          : (
+            <>
+              <span className='mr-5'>{element}</span>
+              {
+                type !== 'calendly' && (
+                  <Icon className='edit-icon mr-1' onClick={() => setItemToEdit(property)}>
+                    <i className='fas fa-pen hover icon-small has-text-info' />
+                  </Icon>
+                )
+              }
+            </>
+          )
+      }
     </LevelSide>
 
   );
@@ -154,6 +161,7 @@ ListItem.propTypes = {
   input: string.isRequired,
   setInput: func.isRequired,
   property: string.isRequired,
+  type: string.isRequired,
   value: oneOfType([string, number, bool]).isRequired,
   itemToEdit: string.isRequired,
   setItemToEdit: func.isRequired,
