@@ -3,12 +3,14 @@ import { Box, Icon, Level } from 'react-bulma-components';
 import { func, shape, string } from 'prop-types';
 import { CourseContext } from '../../context';
 import MeetingList from './MeetingList';
-import { MeetingDate } from '../DateTime';
+import { MeetingDateShort, MeetingTime } from '../DateTime';
 import { LevelSide } from '../BulmaHelpers';
 
 const Meeting = ({ meeting, setSelectedMeetingId, selectedMeetingId }) => {
   const { allCourses, selectedCourse } = useContext(CourseContext);
-  const { _id, studentId, startTime } = meeting;
+  const {
+    _id, studentId, startTime, endTime,
+  } = meeting;
   const student = allCourses[selectedCourse].students[studentId];
 
   const getDisplayName = () => {
@@ -37,12 +39,17 @@ const Meeting = ({ meeting, setSelectedMeetingId, selectedMeetingId }) => {
       >
         <LevelSide>
           <Level.Item>
-            <div className='has-text-left'>
-              <MeetingDate
-                className='ml-3'
-                iso8601={startTime}
-              />
-              <p className='ml-3'>{getDisplayName()}</p>
+            <div className='ml-3 has-text-left'>
+              <p>{getDisplayName()}</p>
+              <p>
+                <span className=''>[</span>
+                <MeetingDateShort iso8601={startTime} />
+                <span className=''>]</span>
+                <span className=''>{' '}</span>
+                <MeetingTime iso8601={startTime} />
+                <span className='is-size-7'>{' - '}</span>
+                <MeetingTime iso8601={endTime} />
+              </p>
             </div>
           </Level.Item>
         </LevelSide>

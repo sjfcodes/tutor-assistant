@@ -9,8 +9,7 @@ const MeetingList = ({ _id, meeting }) => {
   return (
     <ul className='student-list'>
       {
-        Object
-          .entries(meeting)
+        Object.entries(meeting)
           .map(([property, value]) => {
             if (doNotDisplay.indexOf(property) !== -1) return null;
             count += 1;

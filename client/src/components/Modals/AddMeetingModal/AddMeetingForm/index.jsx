@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import {
   Button, Form, Icon, Columns,
 } from 'react-bulma-components';
@@ -9,10 +9,7 @@ import MeetingTime, { addMeetingFormPropTypes } from './MeetingTime';
 
 const AddMeetingForm = ({ formInputs, setFormInputs }) => {
   const { allCourses, selectedCourse } = useContext(CourseContext);
-  const { studentId, startTime } = formInputs;
-
-  // meeting duration in hours
-  const [duration, setDuration] = useState(1);
+  const { studentId, startTime, duration } = formInputs;
 
   const handleInputChange = (e) => {
     const {
@@ -21,15 +18,11 @@ const AddMeetingForm = ({ formInputs, setFormInputs }) => {
     setFormInputs({ ...formInputs, [name]: value });
   };
 
+  // eslint-disable-next-line no-unused-vars
   const updateDuration = (val, startTimeISO = startTime) => {
-    const newVal = duration + val;
-
-    const hourInMilliseconds = 60 * 60 * 1000;
-    // get unix from start time, add seconds to get endTime
-    const endTimeUnix = new Date(startTimeISO).getTime() + (newVal * hourInMilliseconds);
-    const endTime = new Date(endTimeUnix).toISOString();
-    setFormInputs((curr) => ({ ...curr, endTime }));
-    setDuration(newVal);
+    const newDuration = duration + val;
+    // chek if meetings conflict?
+    setFormInputs({ ...formInputs, duration: newDuration });
   };
 
   return (

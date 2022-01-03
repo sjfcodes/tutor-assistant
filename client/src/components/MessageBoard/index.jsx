@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Box } from 'react-bulma-components';
 import { AppContext } from '../../context';
 import { getClientTimeZone, getISO8601TimeStamp } from '../../utils';
-import { MeetingDate, TimeZoneAbbreviation } from '../DateTime';
+import { MeetingDateFull, TimeZoneAbbreviation } from '../DateTime';
 
 const getPartOfDay = (iso8601) => {
   if (!iso8601) return '~';
@@ -34,7 +34,7 @@ const MessageBoard = () => {
     <Box className='background-dark-blurred p-3'>
       <Box className='p-3'>
         <p className='pb-2 border-bottom has-text-centered'>
-          <MeetingDate iso8601={date} />
+          <MeetingDateFull iso8601={date} />
           {' '}
           <TimeZoneAbbreviation
             timeZone={timeZoneName || getClientTimeZone()}

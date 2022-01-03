@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Level } from 'react-bulma-components';
+import { Icon, Level } from 'react-bulma-components';
 import {
   string, number, oneOfType, bool, array,
 } from 'prop-types';
@@ -17,12 +17,26 @@ const MeetingListItem = ({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    let model = 'meeting';
+    let body = { _id, [property]: input };
+
+    //  if modification is time related, adjust for time route
+    const timeProperties = ['startTime', 'duration'];
+    if (timeProperties.includes(property)) {
+      const { startTime, duration } = allCourses[selectedCourse].meetings[_id];
+      model = `meeting/time/${_id}`;
+      body = {
+        startTime: property === 'startTime' ? input : startTime,
+        duration: property === 'duration' ? input : duration,
+      };
+    }
+
     try {
-      await updateModel({ model: 'meeting', body: { _id, [property]: input } });
+      const response = await updateModel({ model, body });
+      console.log(response);
       // target the current property being edited of the selected meeting in the selected course
       const thisCourse = { ...allCourses[selectedCourse] };
       const allMeetings = { ...thisCourse.meetings };
-      const thisMeeting = { ...allMeetings[_id] };
 
       setAllCourses({
         ...allCourses,
@@ -30,10 +44,7 @@ const MeetingListItem = ({
           ...thisCourse,
           meetings: {
             ...allMeetings,
-            [_id]: {
-              ...thisMeeting,
-              [property]: input,
-            },
+            [_id]: { ...response, type },
           },
         },
       });
@@ -57,6 +68,14 @@ const MeetingListItem = ({
       >
         <LevelSide>
           {`${property}:`}
+          {
+            (type !== 'calendly' && property !== 'endTime') && (
+              <Icon className='edit-icon mr-1' onClick={() => setItemToEdit(itemToEdit !== property ? property : '')}>
+                <i className='fas fa-pen hover icon-small has-text-info' />
+              </Icon>
+            )
+          }
+
         </LevelSide>
         <ListItem
           value={value}
@@ -65,7 +84,6 @@ const MeetingListItem = ({
           input={input}
           setInput={setInput}
           itemToEdit={itemToEdit}
-          setItemToEdit={setItemToEdit}
           handleSubmit={handleSubmit}
         />
       </Level>

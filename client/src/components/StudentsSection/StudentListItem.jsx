@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Level } from 'react-bulma-components';
+import { Icon, Level } from 'react-bulma-components';
 import {
   string, number, oneOfType, bool,
 } from 'prop-types';
@@ -59,6 +59,9 @@ const StudentListItem = ({
       >
         <LevelSide>
           {`${property}:`}
+          <Icon className='edit-icon mr-1' onClick={() => setItemToEdit(itemToEdit !== property ? property : '')}>
+            <i className='fas fa-pen hover icon-small has-text-info' />
+          </Icon>
         </LevelSide>
         <ListItem
           input={input}
@@ -66,7 +69,6 @@ const StudentListItem = ({
           property={property}
           value={value}
           itemToEdit={itemToEdit}
-          setItemToEdit={setItemToEdit}
           handleSubmit={handleSubmit}
         />
       </Level>
