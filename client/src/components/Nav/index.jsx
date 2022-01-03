@@ -12,7 +12,7 @@ import './style.css';
 
 const Nav = () => {
   const { tutorDetails } = useContext(AppContext);
-  const { allCourses } = useContext(CourseContext);
+  const { allCourses, selectedCourse } = useContext(CourseContext);
   const { loggedIn, firstName, lastName } = tutorDetails;
   const { openModal, setOpenModal } = useContext(ModalContext);
   const [displayNavMenu, setDisplayNavMenu] = useState(false);
@@ -24,9 +24,14 @@ const Nav = () => {
   }, [loggedIn]);
 
   const displayState = () => {
+    console.group('context');
+    console.log('~ tutor ~');
     console.log(tutorDetails);
-    console.log('~ ~ ~');
+    console.log('~ all courses ~');
     console.log(allCourses);
+    console.log('~ selected course ~');
+    console.log(allCourses[selectedCourse]);
+    console.groupEnd('context');
   };
 
   useEffect(() => {
