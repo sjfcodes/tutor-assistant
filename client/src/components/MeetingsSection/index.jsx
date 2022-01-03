@@ -1,21 +1,21 @@
 import React, { useContext, useState } from 'react';
 import {
-  Box, Heading, Icon, Level,
+  Box, Columns, Form, Heading, Icon, Level,
 } from 'react-bulma-components';
 import { CourseContext, ModalContext } from '../../context';
 import { LevelSide } from '../BulmaHelpers';
-import Meeting from './Meeting';
+import AllMeetings from './AllMeetings';
 
 const MeetingsSection = () => {
-  const { allCourses, selectedCourse } = useContext(CourseContext);
+  const { calendlyMeetings } = useContext(CourseContext);
   const { setOpenModal } = useContext(ModalContext);
-  const [selectedMeetingId, setSelectedMeetingId] = useState('');
+  const [filterBy, setFilterBy] = useState('all');
 
   return (
     <Box className='has-background-white py-1 px-3 mb-3'>
-      <Level renderAs='div' className='is-mobile mt-2 mb-3'>
+      <Level renderAs='div' className='is-mobile mt-2'>
         <LevelSide>
-          <Heading size={4}>Meetings</Heading>
+          <Heading size={4} className='mr-5'>Meetings</Heading>
         </LevelSide>
         <LevelSide>
           <Icon
@@ -27,27 +27,30 @@ const MeetingsSection = () => {
           </Icon>
         </LevelSide>
       </Level>
-      {
-        allCourses[selectedCourse]
-        && Object
-          .values(allCourses[selectedCourse].meetings)
-          .sort(({ startTime: a }, { startTime: b }) => {
-            const unixA = new Date(a).getTime() / 1000;
-            const unixB = new Date(b).getTime() / 1000;
-            // sort newest meetings first
-            if (unixA === unixB) return 0;
-            if (unixA < unixB) return -1;
-            return 1;
-          })
-          .map((meeting) => (
-            <Meeting
-              key={meeting._id}
-              meeting={meeting}
-              selectedMeetingId={selectedMeetingId}
-              setSelectedMeetingId={setSelectedMeetingId}
-            />
-          ))
-      }
+
+      <Columns className='is-mobile ml-5 '>
+        <p className='mr-3'>view</p>
+        <Form.Field>
+          <select
+            className='py-0 has-text-centered'
+            value={filterBy}
+            onChange={({ target: { value } }) => setFilterBy(value)}
+          >
+            <option value='all'>all</option>
+            {
+              Object.keys(calendlyMeetings).length
+              && (
+                <>
+                  <option value='tutorly'>tutorly</option>
+                  <option value='calendly'>calendly</option>
+                </>
+              )
+            }
+          </select>
+        </Form.Field>
+        <p className='ml-3'>meetings</p>
+      </Columns>
+      <AllMeetings filterBy={filterBy} />
     </Box>
   );
 };

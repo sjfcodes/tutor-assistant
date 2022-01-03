@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, {
   useCallback,
@@ -7,7 +8,6 @@ import { Button, Navbar } from 'react-bulma-components';
 
 import { AppContext, CourseContext, ModalContext } from '../../context';
 import { logoutTutor } from '../../utils';
-// import SettingsMenu from './SettingsMenu';
 import './style.css';
 
 const Nav = () => {
@@ -62,7 +62,6 @@ const Nav = () => {
           loggedIn && (
             <div className='navbar-end is-flex is-justify-content-space-evenly'>
               {/* <img src='https://bulma.io/images/bulma-logo.png' width='112' height='28' alt='bulma logo' /> */}
-              {/* <SettingsMenu toggleNavBurger={toggleNavBurger} /> */}
               <Navbar.Item
                 renderAs='div'
                 className=''
