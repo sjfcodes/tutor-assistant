@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Button, Modal } from 'react-bulma-components';
 import { AppContext, CourseContext, ModalContext } from '../../../context';
 import { createModel, missingFormInputs } from '../../../utils';
@@ -15,10 +15,6 @@ const AddMeetingModal = () => {
     startTime: '',
     status: 'scheduled',
   });
-
-  useEffect(() => {
-    console.log(formInputs);
-  }, [formInputs]);
 
   const handleAddMeeting = async (e) => {
     e.preventDefault();

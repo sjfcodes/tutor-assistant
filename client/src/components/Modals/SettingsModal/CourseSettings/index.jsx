@@ -44,7 +44,6 @@ const CourseSettings = ({ setDisableControls }) => {
       if (!_id) return;
 
       try {
-        console.log(_id);
         await deleteModel({ model: 'course', _id });
 
         const updatedCourses = { ...allCourses };
