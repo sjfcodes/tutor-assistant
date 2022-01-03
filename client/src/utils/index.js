@@ -13,6 +13,7 @@ export {
   convertISO8601ToDatePicker,
   convertStrToBool,
   emailIsValid,
+  formatCalendlyMeetings,
   formatCourses,
   formatEmailTemplates,
   formatMeetings,
