@@ -94,6 +94,6 @@ CouseLayouts.propTypes = {
   setCourseToUpdate: func.isRequired,
   handleUpdateCourse: func.isRequired,
   handleDeleteCourse: func.isRequired,
-  selectedCalendlyAccess: func.isRequired,
+  selectedCalendlyAccess: string.isRequired,
   setSelectedCalendlyAccess: func.isRequired,
 };
