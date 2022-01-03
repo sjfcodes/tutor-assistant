@@ -1,5 +1,5 @@
 import React, {
-  createContext, useEffect, useMemo, useState, useCallback,
+  createContext, useEffect, useMemo, useState,
 } from 'react';
 import { oneOfType, arrayOf, node } from 'prop-types';
 
@@ -8,59 +8,34 @@ import { readModel, formatCalendlyMeetings } from '../utils';
 export const CourseContext = createContext();
 
 export const CourseProvider = ({ children }) => {
-  const [allCourses, setAllCourses] = useState();
-  const [selectedCourse, setSelectedCourse] = useState();
-  const [courseHasLoaded, setCourseHasLoaded] = useState(true);
-
-  const readyToGetCalenlyMeetings = useCallback(() => (
-    allCourses[selectedCourse].calendly.data && !courseHasLoaded
-  ), [allCourses, selectedCourse, courseHasLoaded]);
+  const [allCourses, setAllCourses] = useState({});
+  const [selectedCourse, setSelectedCourse] = useState('');
+  const [calendlyMeetings, setCalendlyMeetings] = useState({});
 
   useEffect(() => {
     let isMounted = true;
     if (!selectedCourse || !allCourses) return '';
     const getCalendlyMeetings = async () => {
       try {
-        const { calendlyMeetings } = await readModel({ model: 'calendly/meetings', _id: selectedCourse });
-        const { meetings } = allCourses[selectedCourse];
-        const formattedCalendlyMeetings = formatCalendlyMeetings(calendlyMeetings);
+        const { calendlyMeetings: calMeetings } = await readModel({ model: 'calendly/meetings', _id: selectedCourse });
         if (!isMounted) return;
-        setCourseHasLoaded(true);
-        setAllCourses(
-          {
-            ...allCourses,
-            [selectedCourse]: {
-              ...allCourses[selectedCourse],
-              meetings: {
-                ...meetings,
-                ...formattedCalendlyMeetings,
-              },
-            },
-          },
-        );
+        setCalendlyMeetings({ ...formatCalendlyMeetings(calMeetings) });
       } catch (error) {
         console.warn(error);
       }
     };
-    if (readyToGetCalenlyMeetings()) getCalendlyMeetings();
+    if (allCourses[selectedCourse].calendly.data) getCalendlyMeetings();
 
     return () => { isMounted = false; };
-  }, [selectedCourse, allCourses, courseHasLoaded, readyToGetCalenlyMeetings]);
-
-  useEffect(
-    () => {
-      if (!selectedCourse) return;
-      setCourseHasLoaded(false);
-    },
-    [selectedCourse],
-  );
+  }, [selectedCourse, allCourses]);
 
   const memo = useMemo(() => ({
     allCourses,
     setAllCourses,
     selectedCourse,
     setSelectedCourse,
-  }), [allCourses, selectedCourse]);
+    calendlyMeetings,
+  }), [allCourses, selectedCourse, calendlyMeetings]);
 
   return (
     <CourseContext.Provider value={memo}>{children}</CourseContext.Provider>

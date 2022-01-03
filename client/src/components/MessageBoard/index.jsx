@@ -10,7 +10,7 @@ const getPartOfDay = (iso8601) => {
   if (h >= 5 && h < 12) return 'morning';
   if (h >= 12 && h < 17) return 'afternoon';
   if (h >= 17 && h < 22) return 'evening';
-  if (h >= 22 || h < 5) return 'gosh its late';
+  if (h >= 22 || h < 5) return 'job today. Get some rest';
   return 'day';
 };
 
@@ -41,7 +41,7 @@ const MessageBoard = () => {
             className='is-size-7 has-text-grey'
           />
         </p>
-        <p className='pt-3 has-text-centered'>{`Good ${partOfDay}, ${firstName}`}</p>
+        <p className='pt-3 has-text-centered'>{`Good ${partOfDay}, ${firstName}.`}</p>
       </Box>
     </Box>
 
