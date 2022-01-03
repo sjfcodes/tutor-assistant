@@ -17,9 +17,11 @@ const Meeting = ({ meeting, setSelectedMeetingId, selectedMeetingId }) => {
     return 'work in progress';
   };
 
-  const toggleViewMeeting = () => (selectedMeetingId === _id
-    ? setSelectedMeetingId('')
-    : setSelectedMeetingId(_id));
+  const toggleViewMeeting = () => (
+    selectedMeetingId === _id
+      ? setSelectedMeetingId('')
+      : setSelectedMeetingId(_id)
+  );
 
   return (
     <Box

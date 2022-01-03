@@ -7,9 +7,9 @@ import { CourseContext } from '../../../../context';
 import { createModel } from '../../../../utils';
 import { syncCalendlyResource } from '../../../../utils/api';
 
-const AccessToken = ({ password }) => {
+const AccessToken = ({ courseId, password }) => {
   // eslint-disable-next-line no-unused-vars
-  const { allCourses, setAllCourses, selectedCourse } = useContext(CourseContext);
+  const { allCourses, setAllCourses } = useContext(CourseContext);
 
   const [formInputs, setFormInputs] = useState({ token: '' });
   const [loading, setLoading] = useState(false);
@@ -40,7 +40,7 @@ const AccessToken = ({ password }) => {
         {
           model: 'access-token',
           body: { ...formInputs, password },
-          _id: selectedCourse,
+          _id: courseId,
         },
       );
       accessToken = _id;
@@ -51,7 +51,7 @@ const AccessToken = ({ password }) => {
     }
 
     if (accessToken) try {
-      data = await syncCalendlyResource({ body: { password, courseId: selectedCourse } });
+      data = await syncCalendlyResource({ body: { password, courseId } });
     } catch (error) {
       console.error(error);
       // expected case: bad accessToken
@@ -61,8 +61,8 @@ const AccessToken = ({ password }) => {
     if (accessToken && data) {
       setAllCourses({
         ...allCourses,
-        [selectedCourse]: {
-          ...allCourses[selectedCourse],
+        [courseId]: {
+          ...allCourses[courseId],
           calendly: { accessToken, data },
         },
       });
@@ -107,5 +107,6 @@ const AccessToken = ({ password }) => {
 export default AccessToken;
 
 AccessToken.propTypes = {
+  courseId: string.isRequired,
   password: string.isRequired,
 };

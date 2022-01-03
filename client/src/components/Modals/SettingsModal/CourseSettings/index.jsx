@@ -9,6 +9,7 @@ import CouseLayouts from './CourseLayouts';
 const CourseSettings = ({ setDisableControls }) => {
   const [courseToDelete, setCourseToDelete] = useState('');
   const [courseToUpdate, setCourseToUpdate] = useState('');
+  const [selectedCalendlyAccess, setSelectedCalendlyAccess] = useState('');
 
   const {
     allCourses,
@@ -80,6 +81,8 @@ const CourseSettings = ({ setDisableControls }) => {
         setCourseToDelete={setCourseToDelete}
         handleDeleteCourse={handleDeleteCourse}
         handleUpdateCourse={handleUpdateCourse}
+        selectedCalendlyAccess={selectedCalendlyAccess}
+        setSelectedCalendlyAccess={setSelectedCalendlyAccess}
       />
     ))
   );
