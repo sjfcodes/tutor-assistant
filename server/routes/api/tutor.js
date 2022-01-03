@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const { Tutor } = require('../../models');
 const { signToken, authorizeToken } = require('../../utils/auth');
-const { getCalendlyEvents } = require('../../utils/calendly-helpers');
+const { getCalendlyMeetings } = require('../../utils/calendly-helpers');
 const { encryptToken } = require('../../utils/encryption');
 const {
   getTutorByEmail, getTutorById, allowPropertyUpdate,
@@ -41,7 +41,7 @@ router.post('/login', async ({ body: { email, password } }, res) => {
 
     if (calendly?.uri) {
       const { uri } = calendly;
-      const calendlyMeetings = await getCalendlyEvents({ _id, accountKey, uri });
+      const calendlyMeetings = await getCalendlyMeetings({ _id, accountKey, uri });
       return res.json({ token, tutor, calendlyMeetings });
     }
 

@@ -9,7 +9,7 @@ import { handleError } from '../../helpers';
  * @param {String} id id of parent model to add new model to
  * @returns
  */
-const readModel = (model, _id = '') => {
+const readModel = ({ model, _id }) => {
   const options = {
     method: 'GET',
     headers: getRequestHeaders(),

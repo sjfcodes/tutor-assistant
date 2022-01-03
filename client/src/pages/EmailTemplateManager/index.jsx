@@ -34,7 +34,7 @@ const EmailTemplateManager = () => {
     let isMounted = true;
     const getTutorsEmailTemplates = async () => {
       try {
-        const templateArr = await readModel('email-template');
+        const templateArr = await readModel({ model: 'email-template' });
         if (!isMounted) return;
         setAllTemplates(formatEmailTemplates(templateArr));
       } catch (error) {

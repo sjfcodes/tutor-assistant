@@ -37,11 +37,7 @@ export const AppProvider = ({ children }) => {
         const formattedCourses = tutor.courses.map((course) => ({
           ...course,
           students: formatStudents(course.students),
-          meetings: formatMeetings(
-            data.calendlyMeetings
-              ? [...course.meetings, ...data.calendlyMeetings]
-              : course.meetings,
-          ),
+          meetings: formatMeetings(course.meetings),
         }));
 
         setAllCourses(formatCourses(formattedCourses));

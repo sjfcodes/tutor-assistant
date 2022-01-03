@@ -1,11 +1,41 @@
+/* eslint-disable no-unused-vars */
 const router = require('express').Router();
 const axios = require('axios');
 const { Calendly, Course, Tutor } = require('../../models');
 const { authorizeToken } = require('../../utils/auth');
-const { getCalendlyEvents, getCalendlyHeaders } = require('../../utils/calendly-helpers');
+const { getCalendlyMeetings, getCalendlyHeaders } = require('../../utils/calendly-helpers');
 const { getCalendlyToken } = require('../../utils/encryption');
 
-router.post('/users/me', authorizeToken, async ({ tutor: { _id: tutorId }, body: { password, courseId } }, res) => {
+const getCalendlyUriFromCourse = async (courseId) => {
+  const { calendly: { data } } = await Course.findById(courseId)
+    .populate({ path: 'calendly', populate: { path: 'data', model: 'Calendly' } });
+  return data.uri;
+};
+
+router.get('/meetings/:courseId', authorizeToken, async ({
+  tutor: { accountKey },
+  params: { courseId },
+}, res) => {
+  try {
+    const uri = await getCalendlyUriFromCourse(courseId);
+    if (uri) {
+      const calendlyMeetings = await getCalendlyMeetings({ courseId, accountKey, uri });
+      return res.json({ calendlyMeetings });
+    }
+    return res.status(404).json({ message: 'data unavailable' });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      location: 1,
+      message: error.message,
+    });
+  }
+});
+
+router.post('/users/me', authorizeToken, async ({
+  tutor: { _id: tutorId },
+  body: { password, courseId },
+}, res) => {
   try {
     // get tutor
     const tutor = await Tutor.findById(tutorId);
@@ -42,22 +72,6 @@ router.post('/users/me', authorizeToken, async ({ tutor: { _id: tutorId }, body:
     console.error(error.message);
     return res.status(500).json({
       location: 2,
-      message: error.message,
-    });
-  }
-});
-
-router.post('/scheduled_events', authorizeToken, async ({
-  tutor: { _id, accountKey },
-  body: { uri },
-}, res) => {
-  try {
-    const data = await getCalendlyEvents({ _id, accountKey, uri });
-    return res.json(data);
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({
-      location: 1,
       message: error.message,
     });
   }

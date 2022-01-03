@@ -7,34 +7,44 @@ const {
 const { encryptToken } = require('../../utils/encryption');
 const { getTutorById } = require('../../utils/helpers');
 
-router.post('/:courseId', authorizeToken, async (req, res) => {
+const createTokenAndAddToCourse = async ({ encryptedToken, courseId }) => {
+  // create db entry
+  const { _id } = await AccessToken.create({ token: encryptedToken });
+  if (!_id) return null;
+  // add new document id to tutor
+  const updated = await Course.findByIdAndUpdate(
+    courseId,
+    { calendly: { accessToken: _id, data: null } },
+  );
+  if (!updated) return null;
+  return _id;
+};
+
+router.post('/:courseId', authorizeToken, async (
+  {
+    tutor: { _id: tutorId },
+    body: { password, token },
+    params: { courseId },
+  },
+  res,
+) => {
   try {
     //  get tutor document
-    const { tutor } = await getTutorById(req.tutor._id);
+    const { tutor } = await getTutorById(tutorId);
     if (!tutor) return res.status(401).json('unauthorized');
     // compare request password to tutor saved password
-    if (!await tutor.isCorrectPassword(req.body.password)) return res.status(401).json('unauthorized');
+    if (!await tutor.isCorrectPassword(password)) return res.status(401).json('unauthorized');
 
     //  encrypt token with current password
-    const encryptedToken = encryptToken(req.body.token, req.body.password);
-    const { calendly: { accessToken } } = await Course.findById(req.params.courseId);
+    const encryptedToken = encryptToken(token, password);
+    const { calendly: { accessToken: existingTokenId } } = await Course.findById(courseId);
 
     // if no token exists
-    if (!accessToken) {
+    if (!existingTokenId) {
       try {
-      // create db entry
-        const { _id } = await AccessToken.create({ token: encryptedToken });
-        if (!_id) return res.status(500).json('failed to create token');
-
-        // add new document id to tutor
-        const updated = await Course.findByIdAndUpdate(
-          req.params.courseId,
-          { calendly: { accessToken: _id, data: null } },
-        );
-        if (!updated) return res.status(500).json('failed to update user');
-
-        // send new token id back to client to update local state
-        return res.json({ _id });
+        const newTokenId = await createTokenAndAddToCourse({ encryptedToken, courseId });
+        if (!newTokenId) res.status(400).json({ message: 'failed to add token' });
+        return res.json({ _id: newTokenId });
       } catch (error) {
         console.error(error.message);
         return res.status(500).json({ location: 2, message: error.message });
@@ -44,8 +54,8 @@ router.post('/:courseId', authorizeToken, async (req, res) => {
     // if a token already exists
     try {
       // update existing document with new token
-      await AccessToken.findByIdAndUpdate(accessToken, { token: encryptedToken });
-      return res.json({ _id: accessToken });
+      await AccessToken.findByIdAndUpdate(existingTokenId, { token: encryptedToken });
+      return res.json({ _id: existingTokenId });
     } catch (error) {
       console.error(error.message);
       return res.status(500).json({ location: 3, message: error.message });

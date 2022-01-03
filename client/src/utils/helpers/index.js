@@ -2,6 +2,7 @@ import handleError from './error';
 import logoutTutor from './logout';
 import formatMeetings from './meeting';
 import formatStudents from './student';
+import formatCalendlyMeetings from './calendlyMeetings';
 import formatCourses from './course';
 import formatEmailTemplates from './emailTemplates';
 
@@ -10,6 +11,7 @@ export {
   logoutTutor,
   formatMeetings,
   formatStudents,
+  formatCalendlyMeetings,
   formatCourses,
   formatEmailTemplates,
 };
