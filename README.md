@@ -1,2 +1,2 @@
 # tutor-assistant
-manage student data and provide email templates for all processes
+Manage students, track meetings, build custom email templates.
