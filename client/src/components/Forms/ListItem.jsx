@@ -21,11 +21,11 @@ const ListItem = ({
   };
 
   const handleInputChange = ({ target }) => {
-    let newValue = target.value;
-    if (property === 'duration') newValue = validateDuration(newValue);
+    let val = target.value;
+    if (property === 'duration') val = validateDuration(val);
 
-    if (newValue === 'true' || newValue === 'false') newValue = convertStrToBool(newValue);
-    return setInput(newValue);
+    if (val === 'true' || val === 'false') val = convertStrToBool(val);
+    return setInput(val);
   };
 
   const inputHasBeenModified = () => `${value}`.trim() !== `${input}`.trim();
@@ -41,6 +41,7 @@ const ListItem = ({
           onChange={handleInputChange}
         />
       );
+
     case 'duration':
       return (
         <Form.Input
@@ -51,6 +52,18 @@ const ListItem = ({
           onChange={handleInputChange}
         />
       );
+
+    case 'email':
+      return (
+        <Form.Input
+          type='email'
+          name={property}
+          value={input.toLowerCase()}
+          className='li-input mr-2 my-2'
+          onChange={handleInputChange}
+        />
+      );
+
     case 'notes':
       return (
         <Form.Textarea

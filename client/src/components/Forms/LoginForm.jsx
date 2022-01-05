@@ -16,6 +16,7 @@ const LoginForm = () => {
     email: 'demo@email.com',
     password: 'password',
   });
+  const { email, password } = inputs;
 
   const [helpText, setHelpText] = useState('');
 
@@ -58,7 +59,7 @@ const LoginForm = () => {
             placeholder='Username'
             type='text'
             name='email'
-            value={inputs.email}
+            value={email.toLocaleLowerCase()}
             onChange={handleInputChange}
           />
           <Icon align='left'>
@@ -73,16 +74,16 @@ const LoginForm = () => {
             placeholder='Password'
             name='password'
             type='password'
-            value={inputs.password}
+            value={password}
             onChange={handleInputChange}
-            validation={() => passwordIsValid(inputs.password)}
+            validation={() => passwordIsValid(password)}
           />
           <Icon align='left'>
             <i className='fas fa-fingerprint' />
           </Icon>
         </Control>
       </Field>
-      {helpText && <h6 className='help-error rounded'>{helpText}</h6>}
+      <Form.Help>{helpText}</Form.Help>
       <Button.Group>
         <Button
           className='mt-5'

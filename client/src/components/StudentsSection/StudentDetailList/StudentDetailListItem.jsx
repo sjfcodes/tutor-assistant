@@ -1,16 +1,14 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable max-len */
 import React, { useContext, useEffect, useState } from 'react';
-import { Form, Columns, Icon } from 'react-bulma-components';
+import { Form, Icon } from 'react-bulma-components';
 import {
-  string, number, oneOfType, bool, array,
+  string, number, oneOfType, bool,
 } from 'prop-types';
 import { CourseContext } from '../../../context';
-import { updateModel } from '../../../utils';
+import { emailIsValid, updateModel } from '../../../utils';
 import ListItem from '../../Forms/ListItem';
 
-const MeetingListItemDetail = ({
-  _id, property, value, type,
+const StudentListItemDetail = ({
+  _id, property, value,
 }) => {
   const [allowedToEdit, setAllowedToEdit] = useState(true);
   const [itemToEdit, setItemToEdit] = useState('');
@@ -18,42 +16,36 @@ const MeetingListItemDetail = ({
   const [displayedEditIcon, setDisplayedEditIcon] = useState('');
   const [displayPropertyName, setDisplayProperyName] = useState(property);
   const { allCourses, setAllCourses, selectedCourse } = useContext(CourseContext);
+  const [helpText, setHelpText] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let model = 'meeting';
-    let body = { _id, [property]: input };
+    const model = 'student';
+    const body = { _id, [property]: input };
 
-    //  if modification is time related, adjust for time route
-    const timeProperties = ['startTime', 'duration'];
-    if (timeProperties.includes(property)) {
-      const { startTime, duration } = allCourses[selectedCourse].meetings[_id];
-      model = `meeting/time/${_id}`;
-      body = {
-        startTime: property === 'startTime' ? input : startTime,
-        duration: property === 'duration' ? input : duration,
-      };
-    }
+    if (property === 'email' && !emailIsValid(input)) return setHelpText('invalid email');
 
     try {
       const response = await updateModel({ model, body });
-      // target the current property being edited of the selected meeting in the selected course
+      // target the current property being edited of the selected student in the selected course
       const thisCourse = { ...allCourses[selectedCourse] };
-      const allMeetings = { ...thisCourse.meetings };
+      const allStudents = { ...thisCourse.students };
 
       setAllCourses({
         ...allCourses,
         [selectedCourse]: {
           ...thisCourse,
-          meetings: {
-            ...allMeetings,
-            [_id]: { ...response, type },
+          students: {
+            ...allStudents,
+            [_id]: { ...response },
           },
         },
       });
-      setItemToEdit('');
+
+      setHelpText('');
+      return setItemToEdit('');
     } catch (error) {
-      setInput(value);
+      return setHelpText(error.message);
     }
   };
 
@@ -69,11 +61,9 @@ const MeetingListItemDetail = ({
   }, [itemToEdit, property]);
 
   useEffect(() => {
-    const doNotEditType = ['calendly'];
-    const doNotEditProperty = ['endTime'];
-    if (doNotEditType.includes(type)) setAllowedToEdit(false);
+    const doNotEditProperty = [''];
     if (doNotEditProperty.includes(property)) setAllowedToEdit(false);
-  }, [type, property]);
+  }, [property]);
 
   useEffect(() => {
     const toggleEdit = () => setItemToEdit(itemToEdit !== property ? property : '');
@@ -96,7 +86,7 @@ const MeetingListItemDetail = ({
 
   return (
     <li className='pl-3'>
-      <form name='MeetingItemForm' onSubmit={handleSubmit}>
+      <form name='StudentItemForm' onSubmit={handleSubmit}>
         <Form.Field kind='addons' className=''>
           <Form.Control fullwidth className='border-bottom-light'>
             <Form.Label
@@ -106,6 +96,7 @@ const MeetingListItemDetail = ({
               {displayPropertyName}
             </Form.Label>
 
+            <Form.Help textAlign='right' className='ml-5' color='danger'>{helpText}</Form.Help>
             <ListItem
               value={value}
               property={property}
@@ -126,11 +117,10 @@ const MeetingListItemDetail = ({
     </li>
   );
 };
-export default MeetingListItemDetail;
+export default StudentListItemDetail;
 
-MeetingListItemDetail.propTypes = {
+StudentListItemDetail.propTypes = {
   _id: string.isRequired,
   property: string.isRequired,
-  type: string.isRequired,
-  value: oneOfType([number, string, bool, array]).isRequired,
+  value: oneOfType([number, string, bool]).isRequired,
 };

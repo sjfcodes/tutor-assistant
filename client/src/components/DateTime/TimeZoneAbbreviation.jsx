@@ -2,18 +2,18 @@ import { string } from 'prop-types';
 import React from 'react';
 import { getTimeZoneAbbreviation } from '../../utils';
 
-const TimeZoneAbbreviation = ({ timeZone, className }) => (
-  <span className={className}>{`(${getTimeZoneAbbreviation(timeZone)})`}</span>
+const TimeZoneAbbreviation = ({ timeZoneName, className }) => (
+  <span className={className}>{`(${getTimeZoneAbbreviation(timeZoneName)})`}</span>
 );
 
 export default TimeZoneAbbreviation;
 TimeZoneAbbreviation.propTypes = {
-  timeZone: string,
+  timeZoneName: string,
   className: string,
 };
 
 TimeZoneAbbreviation.defaultProps = {
-  timeZone: 'loading…',
+  timeZoneName: 'loading…',
   className: '',
 
 };

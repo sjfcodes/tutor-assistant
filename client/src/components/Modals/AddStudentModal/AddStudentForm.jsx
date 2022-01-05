@@ -140,7 +140,7 @@ const AddStudentForm = ({ formInputs, setFormInputs }) => {
             label='Email'
             type='email'
             name='email'
-            value={email}
+            value={email.toLowerCase()}
             icon='far fa-envelope'
             onChange={handleInputChange}
             validate={emailIsValid}

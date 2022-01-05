@@ -14,7 +14,7 @@ const MeetingsListItemLayout = (
     return 'work in progress';
   };
   return (
-    <div className='ml-3 has-text-left'>
+    <div className='ml-3'>
       <p>{getDisplayName()}</p>
       <p>
         <span className=''>[</span>
