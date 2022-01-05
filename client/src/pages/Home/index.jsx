@@ -10,7 +10,7 @@ const Home = () => {
   return (
     <>
       <MessageBoard />
-      <Box className='background-dark-blurred py-1 px-3'>
+      <Box className='background-blurred-dark py-1 px-3'>
         <CourseTabs className='mb-0 pt-3 pl-2' />
         {selectedCourse && (
           <>

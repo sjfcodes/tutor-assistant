@@ -21,7 +21,7 @@ const MeetingListItem = ({ meeting, setSelectedMeetingId, selectedMeetingId }) =
   );
 
   const student = useMemo(
-    () => allCourses[selectedCourse].students[studentId],
+    () => allCourses[selectedCourse].students[studentId] || {},
     [allCourses, selectedCourse, studentId],
   );
 

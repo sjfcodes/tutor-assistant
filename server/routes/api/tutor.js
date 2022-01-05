@@ -34,7 +34,6 @@ router.post('/login', async ({ body: { email, password } }, res) => {
     const accountKey = encryptToken(password, process.env.JWT_SECRET);
     const { _id, calendly } = tutor;
     const token = signToken({ _id, email, accountKey });
-    tutor.password = null;
 
     if (calendly?.uri) {
       const { uri } = calendly;
@@ -42,6 +41,7 @@ router.post('/login', async ({ body: { email, password } }, res) => {
       return res.json({ token, tutor, calendlyMeetings });
     }
 
+    tutor.password = null;
     return res.json({ token, tutor });
   } catch ({ message }) {
     console.error(message);
@@ -58,13 +58,11 @@ router.get('/login', authorizeToken, async ({ tutor: { _id, accountKey } }, res)
     const { email } = tutor;
     const token = signToken({ _id, email, accountKey });
 
+    tutor.password = null;
     return res.json({ token, tutor });
   } catch ({ message }) {
     console.error(message);
-    return res.status(401).json({
-      location: 1,
-      message,
-    });
+    return res.status(401).json({ location: 1, message: message || 'unauthorized' });
   }
 });
 
@@ -92,6 +90,7 @@ router.put('/', authorizeToken, async ({ tutor: { _id }, body }, res) => {
     const updated = await Tutor.findByIdAndUpdate(_id, body, { new: true });
     if (!updated) return res.status(500).json('update failed');
 
+    updated.password = null;
     return res.json(updated);
   } catch ({ message }) {
     console.error(message);

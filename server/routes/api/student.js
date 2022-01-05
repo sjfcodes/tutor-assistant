@@ -12,13 +12,10 @@ router.post('/:courseId', authorizeToken, async (req, res) => {
     studentId = _id;
     await addModelToCourse(req.params.courseId, 'students', _id);
     return res.json({ _id, createdAt });
-  } catch (error) {
-    console.error(error.message);
+  } catch ({ message }) {
+    console.error(message);
     await Student.findByIdAndDelete(studentId);
-    return res.status(500).json({
-      location: 1,
-      message: error.message,
-    });
+    return res.status(500).json({ location: 1, message });
   }
 });
 
@@ -28,12 +25,9 @@ router.put('/', authorizeToken, async (req, res) => {
     const student = await Student.findByIdAndUpdate(req.body._id, req.body, { new: true });
     if (!student) return res.status(404).json('student not found');
     return res.json(student);
-  } catch (error) {
-    console.error(error.message);
-    return res.status(500).json({
-      location: 1,
-      message: error.message,
-    });
+  } catch ({ message }) {
+    console.error(message);
+    return res.status(500).json({ location: 1, message });
   }
 });
 
@@ -42,12 +36,9 @@ router.delete('/', authorizeToken, async (req, res) => {
   try {
     await deleteModelFromCourse(req.tutor._id, 'students', Student, req.body._id);
     return res.json('student deleted');
-  } catch (error) {
-    console.error(error.message);
-    return res.status(500).json({
-      location: 1,
-      message: error.message,
-    });
+  } catch ({ message }) {
+    console.error(message);
+    return res.status(500).json({ location: 1, message });
   }
 });
 

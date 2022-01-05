@@ -10,7 +10,7 @@ import CalendlyAccess from '../../CalendlyAccess';
 
 const CouseLayouts = ({
   courseName, courseId,
-  courseToUpdate, setCourseToUpdate,
+  courseToEdit, setCourseToEdit,
   courseToDelete, setCourseToDelete,
   handleDeleteCourse, handleUpdateCourse,
   selectedCalendlyAccess, setSelectedCalendlyAccess,
@@ -21,9 +21,9 @@ const CouseLayouts = ({
   const handleEditNameClick = useCallback(
     (name, id) => {
       setFormInput(name);
-      setCourseToUpdate(id);
+      setCourseToEdit(id);
     },
-    [setCourseToUpdate],
+    [setCourseToEdit],
   );
 
   const handleUpdateClick = useCallback((e) => {
@@ -37,21 +37,21 @@ const CouseLayouts = ({
     courseName,
     formInput,
     setFormInput,
-    setCourseToUpdate,
+    setCourseToEdit,
     setCourseToDelete,
     handleUpdateClick,
     handleEditNameClick,
     handleDeleteCourse,
+    courseToEdit,
   }), [
     courseId, courseName, formInput, setFormInput,
-    setCourseToDelete, setCourseToUpdate,
-    handleUpdateClick, handleEditNameClick,
-    handleDeleteCourse,
+    courseToEdit, setCourseToDelete, setCourseToEdit,
+    handleUpdateClick, handleEditNameClick, handleDeleteCourse,
   ]);
 
   const updateLayout = useCallback(() => {
     switch (courseId) {
-    case courseToUpdate:
+    case courseToEdit:
       return setLayout(<EditCourseNameLayout {...props} />);
 
     case courseToDelete:
@@ -60,7 +60,7 @@ const CouseLayouts = ({
     default:
       return setLayout(<DefaultCourseLayout {...props} />);
     }
-  }, [courseId, courseToUpdate, courseToDelete, props]);
+  }, [courseId, courseToEdit, courseToDelete, props]);
 
   useEffect(
     updateLayout,
@@ -90,8 +90,8 @@ CouseLayouts.propTypes = {
   courseId: string.isRequired,
   courseToDelete: string.isRequired,
   setCourseToDelete: func.isRequired,
-  courseToUpdate: string.isRequired,
-  setCourseToUpdate: func.isRequired,
+  courseToEdit: string.isRequired,
+  setCourseToEdit: func.isRequired,
   handleUpdateCourse: func.isRequired,
   handleDeleteCourse: func.isRequired,
   selectedCalendlyAccess: string.isRequired,

@@ -9,7 +9,7 @@ const Landing = () => {
 
   return (
 
-    <Box className='background-dark-blurred pt-1'>
+    <Box className='background-blurred-dark pt-1'>
       <Tabs type='boxed' align='left' className=' mb-0 pt-3 pl-2'>
         <Tab
           className={form !== 'login' ? 'has-text-white' : ''}

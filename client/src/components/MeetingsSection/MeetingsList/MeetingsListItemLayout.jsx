@@ -13,6 +13,7 @@ const MeetingsListItemLayout = (
     if (studentName) return `${studentName}`;
     return 'work in progress';
   };
+
   return (
     <div className='ml-3'>
       <p>{getDisplayName()}</p>

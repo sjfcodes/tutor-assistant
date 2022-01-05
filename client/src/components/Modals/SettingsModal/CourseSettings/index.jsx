@@ -8,7 +8,7 @@ import CouseLayouts from './CourseLayouts';
 // eslint-disable-next-line react/prop-types
 const CourseSettings = ({ setDisableControls }) => {
   const [courseToDelete, setCourseToDelete] = useState('');
-  const [courseToUpdate, setCourseToUpdate] = useState('');
+  const [courseToEdit, setCourseToEdit] = useState('');
   const [selectedCalendlyAccess, setSelectedCalendlyAccess] = useState('');
 
   const {
@@ -20,7 +20,7 @@ const CourseSettings = ({ setDisableControls }) => {
 
   const handleUpdateCourse = useCallback(
     async (_id, name) => {
-      setCourseToUpdate('');
+      setCourseToEdit('');
       if (!_id || !name) return;
 
       const body = { _id, name };
@@ -52,10 +52,10 @@ const CourseSettings = ({ setDisableControls }) => {
   }, [allCourses, setAllCourses, selectedCourse, setSelectedCourse]);
 
   useEffect(() => {
-    if (courseToUpdate || courseToDelete) setDisableControls(true);
+    if (courseToEdit || courseToDelete) setDisableControls(true);
     else setDisableControls(false);
     return '';
-  }, [allCourses, courseToDelete, courseToUpdate, setDisableControls]);
+  }, [allCourses, courseToDelete, courseToEdit, setDisableControls]);
 
   return (
     Object.values(allCourses).map(({ name: courseName, _id: courseId }) => (
@@ -63,8 +63,8 @@ const CourseSettings = ({ setDisableControls }) => {
         key={courseId}
         courseId={courseId}
         courseName={courseName}
-        courseToUpdate={courseToUpdate}
-        setCourseToUpdate={setCourseToUpdate}
+        courseToEdit={courseToEdit}
+        setCourseToEdit={setCourseToEdit}
         courseToDelete={courseToDelete}
         setCourseToDelete={setCourseToDelete}
         handleDeleteCourse={handleDeleteCourse}
