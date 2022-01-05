@@ -56,6 +56,7 @@ const StudentListItemDetail = ({
     if (!property || !itemToEdit) return;
     const element = document.querySelector(`input[name=${property}]`)
       || document.querySelector(`textarea[name=${property}]`);
+    if (!element) return;
 
     element.focus();
   }, [itemToEdit, property]);

@@ -53,6 +53,17 @@ const ListItem = ({
         />
       );
 
+    case 'meetingsPerWeek':
+      return (
+        <Form.Input
+          type='number'
+          name={property}
+          value={input}
+          className='li-input mr-2 my-2'
+          onChange={handleInputChange}
+        />
+      );
+
     case 'email':
       return (
         <Form.Input
