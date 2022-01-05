@@ -39,7 +39,7 @@ const StudentList = ({ _id, student }) => {
           </Link>
         </LevelSide>
       </Level>
-      <ul className='student-list'>
+      <ul className=''>
         {Object.entries(student).map(([property, value]) => {
           const doNotDisplay = ['_id', 'createdAt', '__v'];
           if (doNotDisplay.indexOf(property) !== -1) return null;

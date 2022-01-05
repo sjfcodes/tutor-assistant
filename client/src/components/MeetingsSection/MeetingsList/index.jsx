@@ -1,12 +1,14 @@
 import { string } from 'prop-types';
 import React, { useContext, useEffect, useState } from 'react';
-import { CourseContext } from '../../context';
-import Meeting from './Meeting';
+import { Box } from 'react-bulma-components';
+import { CourseContext } from '../../../context';
+import MeetingsListItem from './MeetingsListItem';
 
-const AllMeetings = ({ filterBy }) => {
+const MeetingsList = ({ filterBy }) => {
   const { allCourses, selectedCourse, calendlyMeetings } = useContext(CourseContext);
   const [selectedMeetingId, setSelectedMeetingId] = useState('');
   const [displayedMeetings, setDisplayedMeetings] = useState([]);
+  const [meetingsListItems, setMeetingsListItems] = useState('');
 
   const filterMeetingsByStartTime = (arr) => (
     arr.length
@@ -30,40 +32,46 @@ const AllMeetings = ({ filterBy }) => {
       if (arr.length) selectedMeetings.push(...arr);
       return '';
     };
-    const addManualEntries = () => {
+    const addTutorlyMeetings = () => {
       const arr = Object.values(allCourses[selectedCourse].meetings);
       if (arr.length) selectedMeetings.push(...arr);
     };
 
     switch (filterBy) {
     case 'all':
-      addManualEntries();
+      addTutorlyMeetings();
       addCalendlyMeetings();
       break;
     case 'calendly':
       addCalendlyMeetings();
       break;
     default:
-      addManualEntries();
+      addTutorlyMeetings();
       break;
     }
 
     setDisplayedMeetings(filterMeetingsByStartTime(selectedMeetings));
   }, [selectedCourse, allCourses, calendlyMeetings, filterBy]);
 
-  return displayedMeetings.length
-    ? displayedMeetings.map((meeting) => (
-      <Meeting
+  useEffect(() => {
+    if (!displayedMeetings.length) return setMeetingsListItems(<p>no scheduled meetings</p>);
+    console.log(displayedMeetings);
+    return setMeetingsListItems(displayedMeetings.map((meeting) => (
+      <MeetingsListItem
         key={meeting._id}
         meeting={meeting}
         selectedMeetingId={selectedMeetingId}
         setSelectedMeetingId={setSelectedMeetingId}
       />
-    ))
-    : <p>no scheduled meetings</p>;
-};
-export default AllMeetings;
+    )));
+  }, [selectedCourse, allCourses, calendlyMeetings, displayedMeetings, selectedMeetingId]);
 
-AllMeetings.propTypes = {
+  return (
+    <Box className=' list-container p-2'>{meetingsListItems}</Box>
+  );
+};
+export default MeetingsList;
+
+MeetingsList.propTypes = {
   filterBy: string.isRequired,
 };

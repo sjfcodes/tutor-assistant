@@ -2,23 +2,30 @@ import {
   bool, func, number, oneOfType, string,
 } from 'prop-types';
 import React, { useEffect, useState } from 'react';
-import { Icon } from 'react-bulma-components';
+import { Form, Icon } from 'react-bulma-components';
 import { TimeZoneSelector } from '.';
 import { getLocalDateString, convertStrToBool } from '../../utils';
-import { LevelSide } from '../BulmaHelpers';
 import { GraduationDate, MeetingDateFull } from '../DateTime';
 import './style.css';
 
 const ListItem = ({
-  property, value, type, input, setInput,
-  itemToEdit, handleSubmit,
+  property, value, input, setInput,
+  handleSubmit, itemToEdit, allowedToEdit,
 }) => {
   const [element, setElement] = useState('');
 
+  const validateDuration = (dur) => {
+    const num = parseInt(dur, 10);
+    if (Number.isNaN(num)) return '';
+    return `${num}`;
+  };
+
   const handleInputChange = ({ target }) => {
     let newValue = target.value;
+    if (property === 'duration') newValue = validateDuration(newValue);
+
     if (newValue === 'true' || newValue === 'false') newValue = convertStrToBool(newValue);
-    setInput(newValue);
+    return setInput(newValue);
   };
 
   const inputHasBeenModified = () => `${value}`.trim() !== `${input}`.trim();
@@ -34,10 +41,29 @@ const ListItem = ({
           onChange={handleInputChange}
         />
       );
+    case 'duration':
+      return (
+        <Form.Input
+          type='number'
+          name={property}
+          value={input}
+          className='li-input mr-2 my-2'
+          onChange={handleInputChange}
+        />
+      );
+    case 'notes':
+      return (
+        <Form.Textarea
+          name={property}
+          value={input}
+          className='li-input mr-2 my-2'
+          onChange={handleInputChange}
+        />
+      );
 
     default:
       return (
-        <input
+        <Form.Input
           type='input'
           name={property}
           value={input}
@@ -68,7 +94,9 @@ const ListItem = ({
       return isMounted && setElement(<span>{getLocalDateString(value)}</span>);
 
     case 'endTime':
-      return isMounted && setElement(<MeetingDateFull iso8601={value} />);
+      return isMounted && setElement(
+        <p className='mb-3'><MeetingDateFull iso8601={value} /></p>,
+      );
 
     case 'fullTimeCourse':
       return isMounted && setElement(formatBooleanSpan(value));
@@ -107,34 +135,39 @@ const ListItem = ({
       return isMounted && setElement(formatBooleanSpan(value));
 
     case 'startTime':
-      return isMounted && setElement(<MeetingDateFull iso8601={value} />);
+      return isMounted && setElement(
+        <p className='mb-3'><MeetingDateFull iso8601={value} /></p>,
+      );
 
     default:
-      if (isMounted) return setElement(<span>{`${value}`}</span>);
+      if (isMounted) return setElement(
+        <Form.Input
+          disabled
+          className='rounded'
+          value={`${value}`}
+          onChange={() => null}
+        />,
+      );
     }
     return () => { isMounted = false; };
   }, [property, value]);
 
   return (
-    <LevelSide>
-      {
-        itemToEdit === property
-        && type !== 'calenly'
-          ? (
-            <>
-              {getFormInputType(property)}
-              {inputHasBeenModified()
-                && (
-                  <Icon className='save-icon mr-1' onClick={handleSubmit}>
-                    <i className='far fa-save hover has-text-success' />
-                  </Icon>
-                )}
-            </>
-          )
-          : <span>{element}</span>
-      }
-    </LevelSide>
-
+    <Form.Control className='pl-3'>
+      {property === itemToEdit
+      && allowedToEdit
+        ? (
+          <>
+            { getFormInputType(property) }
+            {inputHasBeenModified() && (
+              <Icon align='right' className='mt-2' onClick={handleSubmit}>
+                <i className='far fa-save hover has-text-success' />
+              </Icon>
+            )}
+          </>
+        )
+        : element}
+    </Form.Control>
   );
 };
 export default ListItem;
@@ -143,12 +176,8 @@ ListItem.propTypes = {
   input: string.isRequired,
   setInput: func.isRequired,
   property: string.isRequired,
-  type: string,
-  value: oneOfType([string, number, bool]).isRequired,
   itemToEdit: string.isRequired,
+  value: oneOfType([string, number, bool]).isRequired,
+  allowedToEdit: bool.isRequired,
   handleSubmit: func.isRequired,
-};
-
-ListItem.defaultProps = {
-  type: '',
 };

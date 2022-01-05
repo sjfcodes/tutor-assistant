@@ -1,8 +1,3 @@
-.student-list {
-  overflow-x:  hidden;
-}
-.student-li {
-  position: relative;
-  display: flex;
-  flex-wrap: wrap;
-}
+.list-container {
+    overflow-x:  hidden;
+  }
