@@ -1,6 +1,7 @@
 :root {
   --blue: #09b2f5;
   --border: rgba(0, 0, 0, 0.6);
+  --border-light: rgba(0, 0, 0, 0.3);
 }
 
 /* ~ ~ ~ ~ ~ MAIN LAYOUT ~ ~ ~ ~ ~ ~ */
@@ -54,6 +55,9 @@ footer {
 .border {
   border: solid 1px var(--border);
 }
+.border-light {
+  border: solid 1px var(--border-light);
+}
 .border-top {
   border-top: solid 1px var(--border);
 }
@@ -62,6 +66,9 @@ footer {
 }
 .border-bottom {
   border-bottom: solid 1px var(--border);
+}
+.border-bottom-light {
+  border-bottom: solid 1px var(--border-light);
 }
 .border-left {
   border-left: solid 1px var(--border);

@@ -15,7 +15,7 @@ const ProfileSettings = () => {
 
   return (
     <Box className='border p-0'>
-      <ul className='student-list rounded'>
+      <ul className='rounded'>
         {Object.entries(tutorDetails).map(([property, value]) => {
           if (renderDetails.indexOf(property) === -1) return '';
           count += 1;

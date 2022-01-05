@@ -59,7 +59,7 @@ const StudentListItem = ({
       >
         <LevelSide>
           {`${property}:`}
-          <Icon className='edit-icon mr-1' onClick={() => setItemToEdit(itemToEdit !== property ? property : '')}>
+          <Icon className='mr-1' onClick={() => setItemToEdit(itemToEdit !== property ? property : '')}>
             <i className='fas fa-pen hover icon-small has-text-info' />
           </Icon>
         </LevelSide>
