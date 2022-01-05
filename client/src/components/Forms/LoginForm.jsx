@@ -46,8 +46,8 @@ const LoginForm = () => {
       setAllCourses(formatCourses(formattedCourses));
 
       setTutorDetails({ ...tutor, loggedIn: true });
-    } catch (error) {
-      setHelpText('** invalid login');
+    } catch ({ message }) {
+      setHelpText(message);
     }
   };
   return (
@@ -83,7 +83,7 @@ const LoginForm = () => {
           </Icon>
         </Control>
       </Field>
-      <Form.Help>{helpText}</Form.Help>
+      <Form.Help color='danger'>{helpText}</Form.Help>
       <Button.Group>
         <Button
           className='mt-5'

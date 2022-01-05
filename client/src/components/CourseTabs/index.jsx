@@ -1,3 +1,4 @@
+import { string } from 'prop-types';
 import React, {
   useCallback, useContext, useEffect, useState,
 } from 'react';
@@ -7,11 +8,9 @@ import './style.css';
 
 const { Tab } = Tabs;
 
-// eslint-disable-next-line react/prop-types
 const CourseTabs = ({ className }) => {
   const [courseTabs, setCourseTabs] = useState(null);
   const { allCourses, selectedCourse, setSelectedCourse } = useContext(CourseContext);
-  // eslint-disable-next-line no-unused-vars
   const { setOpenModal } = useContext(ModalContext);
 
   const handleUpdate = useCallback(
@@ -69,7 +68,6 @@ const CourseTabs = ({ className }) => {
       align='left'
       type='boxed'
       id='course-tabs'
-      // className='background-clear'
       className={className}
     >
       {courseTabs}
@@ -80,3 +78,11 @@ const CourseTabs = ({ className }) => {
   );
 };
 export default CourseTabs;
+
+CourseTabs.propTypes = {
+  className: string,
+};
+
+CourseTabs.defaultProps = {
+  className: '',
+};

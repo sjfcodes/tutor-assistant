@@ -14,12 +14,9 @@ router.get('/', authorizeToken, async (req, res) => {
     }
 
     return res.json(templates);
-  } catch (error) {
-    console.error(error.message);
-    return res.status(500).json({
-      location: 1,
-      message: error.message,
-    });
+  } catch ({ message }) {
+    console.error(message);
+    return res.status(500).json({ location: 1, message });
   }
 });
 
@@ -29,12 +26,9 @@ router.post('/', authorizeToken, async (req, res) => {
     if (!template) return res.statusMessage(500).json('failed to create template');
     await addModelToTutor(req._id, 'emailTemplates', template._id);
     return res.json({ _id: template._id });
-  } catch (error) {
-    console.error(error.message);
-    return res.status(500).json({
-      location: 1,
-      message: error.message,
-    });
+  } catch ({ message }) {
+    console.error(message);
+    return res.status(500).json({ location: 1, message });
   }
 });
 
@@ -45,12 +39,9 @@ router.put('/', authorizeToken, async (req, res) => {
     if (!template) return res.status(404).json('template not found');
 
     return res.json('template updated');
-  } catch (error) {
-    console.error(error.message);
-    return res.status(500).json({
-      location: 1,
-      message: error.message,
-    });
+  } catch ({ message }) {
+    console.error(message);
+    return res.status(500).json({ location: 1, message });
   }
 });
 
@@ -62,13 +53,11 @@ router.put('/', authorizeToken, async (req, res) => {
 //     console.log(deleted);
 //     if (!deleted) return res.status(404).json('template not deleted');
 //     return res.json('template deleted');
-//   } catch (error) {
-//     console.error(error);
+//   } catch ({message}) {
+//     console.error(;
 //     return res.status(500).json({
 //   location: 4,
-//   message: error.message,
 // });
 //   }
-// });
 
 module.exports = router;

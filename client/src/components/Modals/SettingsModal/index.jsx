@@ -1,19 +1,18 @@
-/* eslint-disable no-unused-vars */
 import React, {
   useState, useContext, useEffect, useCallback,
 } from 'react';
-import { Button, Modal, Tabs } from 'react-bulma-components';
-import { AppContext, ModalContext } from '../../../context';
-import CalendlyAccess from './CalendlyAccess';
+import {
+  Button, Heading, Modal, Tabs,
+} from 'react-bulma-components';
+import { ModalContext } from '../../../context';
 import CourseSettings from './CourseSettings';
-import ProfileSettings from './ProfileSettings';
+import ProfileDetailList from './ProfileDetailList';
 
 const SettingsModal = () => {
   const [disableControls, setDisableControls] = useState(false);
   const [activeTab, setActiveTab] = useState('profile');
   const [component, setComponent] = useState('');
 
-  const { tutorDetails: { firstName } } = useContext(AppContext);
   const { openModal, setOpenModal } = useContext(ModalContext);
 
   const handleUpdate = useCallback(
@@ -45,7 +44,7 @@ const SettingsModal = () => {
     switch (activeTab) {
     case 'profile':
       if (isMounted) return setComponent(
-        <ProfileSettings />,
+        <ProfileDetailList />,
       );
       break;
     case 'courses':
@@ -78,12 +77,24 @@ const SettingsModal = () => {
 
   return (
     <Modal
+      className='background-blurred-light'
       showClose={false}
       show={openModal === 'settings'}
       onClose={() => setOpenModal('')}
     >
       <Modal.Card>
-        <Modal.Card.Header className='pb-0' showClose={false}>
+        <Modal.Card.Header
+          flexDirection='column'
+          alignItems='start'
+          className='background-clear pb-0'
+          showClose={false}
+        >
+          <Heading
+            className='has-text-grey-lighter'
+          >
+            Settings
+          </Heading>
+
           <Tabs
             align='left'
             type='boxed'
@@ -138,14 +149,14 @@ const SettingsModal = () => {
         <Modal.Card.Body>
           {component}
         </Modal.Card.Body>
-        <Modal.Card.Footer renderAs={Button.Group} align='right'>
-          <Button
-            disabled={disableControls}
-            onClick={() => setOpenModal('')}
-          >
-            Done
-          </Button>
-        </Modal.Card.Footer>
+        <Button
+          fullwidth
+          color='primary'
+          disabled={disableControls}
+          onClick={() => setOpenModal('')}
+        >
+          Done
+        </Button>
       </Modal.Card>
     </Modal>
   );

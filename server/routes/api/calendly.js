@@ -23,12 +23,9 @@ router.get('/meetings/:courseId', authorizeToken, async ({
       return res.json({ calendlyMeetings });
     }
     return res.status(404).json({ message: 'data unavailable' });
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({
-      location: 1,
-      message: error.message,
-    });
+  } catch ({ message }) {
+    console.error(message);
+    return res.status(500).json({ location: 1, message });
   }
 });
 
@@ -67,13 +64,10 @@ router.post('/users/me', authorizeToken, async ({
     }
     const updated = await Calendly.findByIdAndUpdate(existingData, resource);
     return res.json(updated);
-  } catch (error) {
+  } catch ({ message }) {
     await Course.findByIdAndUpdate(courseId, { 'calendly.data': null });
-    console.error(error.message);
-    return res.status(500).json({
-      location: 2,
-      message: error.message,
-    });
+    console.error(message);
+    return res.status(500).json({ location: 2, message });
   }
 });
 

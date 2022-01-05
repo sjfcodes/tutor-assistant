@@ -47,7 +47,7 @@ const EmailTemplateManager = () => {
   }, [selected]);
 
   return (
-    <Box className='background-dark-blurred p-3 '>
+    <Box className='background-blurred-dark p-3 '>
       <Columns>
         <Columns.Column className='pb-0' size={12}>
           <EmailTemplateSelector

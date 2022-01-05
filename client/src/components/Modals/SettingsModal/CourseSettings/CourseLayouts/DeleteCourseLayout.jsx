@@ -14,17 +14,18 @@ const DeleteCourseLayout = ({ courseName, courseId, handleDeleteCourse }) => (
           outlined
           size='small'
           color='danger'
-          onClick={() => handleDeleteCourse(null)}
+          className='tag'
+          onClick={() => handleDeleteCourse(courseId)}
         >
-          cancel
+          confirm
         </Button>
 
         <Button
           size='small'
           color='danger'
-          onClick={() => handleDeleteCourse(courseId)}
+          onClick={() => handleDeleteCourse(null)}
         >
-          confirm
+          cancel
         </Button>
       </Button.Group>
     </LevelSide>

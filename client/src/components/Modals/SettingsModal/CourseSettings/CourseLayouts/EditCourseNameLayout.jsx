@@ -6,7 +6,7 @@ import { LevelSide } from '../../../../BulmaHelpers';
 const EditCourseNameLayout = ({
   formInput,
   setFormInput,
-  setCourseToUpdate,
+  setCourseToEdit,
   handleUpdateClick,
 }) => {
   const handleInputChange = ({ target: { value } }) => {
@@ -26,7 +26,7 @@ const EditCourseNameLayout = ({
       </LevelSide>
       <Level.Side>
         <Button.Group>
-          <Button size='small' outlined color='info' onClick={() => setCourseToUpdate('')}>
+          <Button size='small' outlined color='info' onClick={() => setCourseToEdit('')}>
             cancel
           </Button>
 
@@ -43,6 +43,6 @@ export default EditCourseNameLayout;
 EditCourseNameLayout.propTypes = {
   formInput: string.isRequired,
   setFormInput: func.isRequired,
-  setCourseToUpdate: func.isRequired,
+  setCourseToEdit: func.isRequired,
   handleUpdateClick: func.isRequired,
 };
