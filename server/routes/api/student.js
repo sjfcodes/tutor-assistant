@@ -25,9 +25,9 @@ router.post('/:courseId', authorizeToken, async (req, res) => {
 // update a students information
 router.put('/', authorizeToken, async (req, res) => {
   try {
-    const student = await Student.findByIdAndUpdate(req.body._id, req.body);
+    const student = await Student.findByIdAndUpdate(req.body._id, req.body, { new: true });
     if (!student) return res.status(404).json('student not found');
-    return res.json('student updated');
+    return res.json(student);
   } catch (error) {
     console.error(error.message);
     return res.status(500).json({

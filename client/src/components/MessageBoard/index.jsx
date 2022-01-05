@@ -37,7 +37,7 @@ const MessageBoard = () => {
           <MeetingDateFull iso8601={date} />
           {' '}
           <TimeZoneAbbreviation
-            timeZone={timeZoneName || getClientTimeZone()}
+            timeZoneName={timeZoneName || getClientTimeZone()}
             className='is-size-7 has-text-grey'
           />
         </p>

@@ -153,7 +153,7 @@ const SignupForm = () => {
             <Input
               type='text'
               name='email'
-              value={email}
+              value={email.toLowerCase()}
               onChange={handleInputChange}
             />
             <Icon align='left'>
