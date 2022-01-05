@@ -3,7 +3,7 @@ import { Form, Icon, Button } from 'react-bulma-components';
 import { AppContext, CourseContext } from '../../context';
 import {
   loginWithPassword, passwordIsValid,
-  formatCourses, formatStudents,
+  formatCourses, formatStudents, formatMeetings,
 } from '../../utils';
 import InputPassword from './InputPassword';
 
@@ -39,10 +39,10 @@ const LoginForm = () => {
         .map((course) => ({
           ...course,
           students: formatStudents(course.students),
+          meetings: formatMeetings(course.meetings),
         }));
 
-      const courses = formatCourses(formattedCourses);
-      setAllCourses(courses);
+      setAllCourses(formatCourses(formattedCourses));
 
       setTutorDetails({ ...tutor, loggedIn: true });
     } catch (error) {

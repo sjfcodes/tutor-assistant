@@ -7,11 +7,11 @@ const { deleteModelFromTutor, addModelToCourse } = require('../../utils/helpers'
 // create a meeting
 router.post('/:tutorId', authorizeToken, async (req, res) => {
   try {
-    const { _id, createdAt } = await Meeting.create(req.body);
-    if (!_id) return res.statusMessage(500).json('failed to create meeting');
+    const meeting = await Meeting.create(req.body);
+    if (!meeting._id) return res.statusMessage(500).json('failed to create meeting');
 
-    await addModelToCourse(req.params.tutorId, 'meetings', _id);
-    return res.json({ _id, createdAt });
+    await addModelToCourse(req.params.tutorId, 'meetings', meeting._id);
+    return res.json(meeting);
   } catch ({ message }) {
     console.error(message);
     return res.status(500).json({ location: 1, message });
@@ -21,7 +21,7 @@ router.post('/:tutorId', authorizeToken, async (req, res) => {
 // update meeting information
 router.put('/', authorizeToken, async (req, res) => {
   try {
-    const meeting = await Meeting.findByIdAndUpdate(req.body._id, req.body);
+    const meeting = await Meeting.findByIdAndUpdate(req.body._id, req.body, { new: true });
     if (!meeting) return res.status(404).json('meeting not found');
     return res.json(meeting);
   } catch ({ message }) {

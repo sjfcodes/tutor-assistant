@@ -55,7 +55,7 @@ const MeetingsList = ({ filterBy }) => {
 
   useEffect(() => {
     if (!displayedMeetings.length) return setMeetingsListItems(<p>no scheduled meetings</p>);
-
+    console.log(displayedMeetings);
     return setMeetingsListItems(displayedMeetings.map((meeting) => (
       <MeetingsListItem
         key={meeting._id}
@@ -67,7 +67,7 @@ const MeetingsList = ({ filterBy }) => {
   }, [selectedCourse, allCourses, calendlyMeetings, displayedMeetings, selectedMeetingId]);
 
   return (
-    <Box className=' list-container p-1'>{meetingsListItems}</Box>
+    <Box className=' list-container p-2'>{meetingsListItems}</Box>
   );
 };
 export default MeetingsList;

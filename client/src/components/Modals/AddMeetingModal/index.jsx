@@ -18,27 +18,21 @@ const AddMeetingModal = () => {
     e.preventDefault();
 
     try {
-      const { _id: newMeetingId, createdAt } = await createModel(
+      const newMeeting = await createModel(
         {
           model: 'meeting',
           body: formInputs,
           _id: selectedCourse,
         },
       );
-      if (!newMeetingId) return console.warn('failed');
 
       const currentMeetings = allCourses[selectedCourse].meetings;
-      const updatedMeetings = {
-        ...currentMeetings,
-        [newMeetingId]: {
-          _id: newMeetingId,
-          ...formInputs,
-          createdAt,
-        },
-      };
       const updatedCourse = {
         ...allCourses[selectedCourse],
-        meetings: updatedMeetings,
+        meetings: {
+          ...currentMeetings,
+          [newMeeting._id]: { ...newMeeting, type: 'tutorly' },
+        },
       };
       setAllCourses({
         ...allCourses,
