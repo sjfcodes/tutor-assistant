@@ -78,7 +78,7 @@ const SettingsModal = () => {
   return (
     <Modal
       className='background-blurred-light'
-      showClose={false}
+      showClose={!disableControls}
       show={openModal === 'settings'}
       onClose={() => setOpenModal('')}
     >
@@ -86,7 +86,7 @@ const SettingsModal = () => {
         <Modal.Card.Header
           flexDirection='column'
           alignItems='start'
-          className='background-clear pb-0'
+          className='background-clear mx-2 pb-0'
           showClose={false}
         >
           <Heading
@@ -101,7 +101,7 @@ const SettingsModal = () => {
             id='settings-tabs'
           >
             <Tabs.Tab
-              className='rounded'
+              className='rounded-top'
               active={activeTab === 'profile'}
               onClick={(e) => handleUpdate(e, 'profile')}
             >
@@ -112,7 +112,7 @@ const SettingsModal = () => {
               </strong>
             </Tabs.Tab>
             <Tabs.Tab
-              className='rounded'
+              className='rounded-top'
               active={activeTab === 'courses'}
               onClick={(e) => handleUpdate(e, 'courses')}
             >
@@ -123,7 +123,7 @@ const SettingsModal = () => {
               </strong>
             </Tabs.Tab>
             {/* <Tabs.Tab
-              className='rounded'
+              className='rounded-top'
               active={activeTab === 'students'}
               onClick={(e) => handleUpdate(e, 'students')}
             >
@@ -134,7 +134,7 @@ const SettingsModal = () => {
               </strong>
             </Tabs.Tab> */}
             {/* <Tabs.Tab
-              className='rounded'
+              className='rounded-top'
               active={activeTab === 'meetings'}
               onClick={(e) => handleUpdate(e, 'meetings')}
             >
@@ -146,10 +146,11 @@ const SettingsModal = () => {
             </Tabs.Tab> */}
           </Tabs>
         </Modal.Card.Header>
-        <Modal.Card.Body>
+        <Modal.Card.Body className='rounded-top'>
           {component}
         </Modal.Card.Body>
         <Button
+          className='square-top'
           fullwidth
           color='primary'
           disabled={disableControls}
