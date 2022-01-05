@@ -38,22 +38,19 @@ const AddCourseModal = () => {
       setHelpMessage('Please enter a name');
       return;
     }
-    try {
-      const body = { tutorId: _id, name: courseName };
-      const newCourse = await createModel({ model: 'course', body });
-      // initialize meetings and students to empty objects
-      newCourse.meetings = {};
-      newCourse.students = {};
 
-      setAllCourses((currentState) => ({ ...currentState, [newCourse._id]: newCourse }));
+    const body = { tutorId: _id, name: courseName };
+    const newCourse = await createModel({ model: 'course', body });
+    // initialize meetings and students to empty objects
+    newCourse.meetings = {};
+    newCourse.students = {};
 
-      resetForm();
-      setHelpMessage('');
-      setSelectedCourse(newCourse._id);
-      setOpenModal('');
-    } catch (error) {
-      console.warn(error);
-    }
+    setAllCourses((currentState) => ({ ...currentState, [newCourse._id]: newCourse }));
+
+    resetForm();
+    setHelpMessage('');
+    setSelectedCourse(newCourse._id);
+    setOpenModal('');
   };
 
   const handleCloseModal = () => {

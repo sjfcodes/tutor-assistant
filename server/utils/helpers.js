@@ -18,7 +18,7 @@ module.exports = {
         ],
       })
       .then((tutor) => {
-        if (!tutor) return reject(new Error('tutor not found'));
+        if (!tutor) return reject(new Error('model not found'));
         return resolve({ tutor });
       })
       .catch((error) => reject(error));
@@ -40,7 +40,7 @@ module.exports = {
         ],
       })
       .then((tutor) => {
-        if (!tutor) return reject(new Error('tutor not found'));
+        if (!tutor) return reject(new Error('model not found'));
         return resolve({ tutor });
       })
       .catch((error) => reject(error));
@@ -53,7 +53,7 @@ module.exports = {
       // { new: true }
     )
       .then((updatedTutor) => {
-        if (!updatedTutor) return reject(new Error('failed to update tutor'));
+        if (!updatedTutor) return reject(new Error('update failed'));
         return resolve(updatedTutor);
       })
       .catch((error) => reject(error));
@@ -65,7 +65,7 @@ module.exports = {
       { $pullAll: { [property]: [modelId] } },
       // { new: true }
     ).then((updatedTutor) => {
-      if (!updatedTutor) return reject(new Error('failed to update tutor'));
+      if (!updatedTutor) return reject(new Error('update failed'));
       Model.findByIdAndDelete(modelId)
         .then(() => resolve(updatedTutor))
         .catch((error) => reject(error));
@@ -81,7 +81,7 @@ module.exports = {
       // { new: true }
     )
       .then((updatedCourse) => {
-        if (!updatedCourse) return reject(new Error('failed to update Course'));
+        if (!updatedCourse) return reject(new Error('update failed'));
         return resolve(updatedCourse);
       })
       .catch((error) => reject(error));
@@ -94,7 +94,7 @@ module.exports = {
       // { new: true }
     )
       .then((updatedCourse) => {
-        if (!updatedCourse) return reject(new Error('failed to update Course'));
+        if (!updatedCourse) return reject(new Error('update failed'));
         Model.findByIdAndDelete(modelId)
           .then(() => resolve(updatedCourse))
           .catch((error) => reject(error));
@@ -104,7 +104,6 @@ module.exports = {
   }),
 
   allowPropertyUpdate: (allowUpdate, newProps) => {
-    console.log(newProps);
     // eslint-disable-next-line no-restricted-syntax
     for (const [key] of Object.entries(newProps)) {
       // eslint-disable-next-line no-continue

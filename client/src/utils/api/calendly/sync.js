@@ -22,7 +22,7 @@ const syncCalendlyResource = ({ body }) => {
       fetch(url, options)
         .then((res) => (res.status === 200 ? res.json() : null))
         .then((data) => {
-          if (!data) return reject(handleError('syncCalendlyResource failed:0'));
+          if (!data) return reject(handleError('sync calendly failed'));
           return resolve(data);
         });
     } catch (error) {

@@ -23,44 +23,33 @@ const CourseSettings = ({ setDisableControls }) => {
       setCourseToUpdate('');
       if (!_id || !name) return;
 
-      try {
-        const body = { _id, name };
-        await updateModel({ model: 'course', body });
+      const body = { _id, name };
+      await updateModel({ model: 'course', body });
 
-        const updatedCourses = { ...allCourses };
-        updatedCourses[_id].name = name;
-        setAllCourses({ ...updatedCourses });
-      } catch (error) {
-        console.warn(error);
-      }
+      const updatedCourses = { ...allCourses };
+      updatedCourses[_id].name = name;
+      setAllCourses({ ...updatedCourses });
     },
     [allCourses, setAllCourses],
   );
 
-  const handleDeleteCourse = useCallback(
-    async (_id) => {
-      const idToDelete = _id;
-      setCourseToDelete('');
-      if (!_id) return;
+  const handleDeleteCourse = useCallback(async (_id) => {
+    const idToDelete = _id;
+    setCourseToDelete('');
+    if (!_id) return;
 
-      try {
-        await deleteModel({ model: 'course', _id });
+    await deleteModel({ model: 'course', _id });
 
-        const updatedCourses = { ...allCourses };
-        delete updatedCourses[_id];
+    const updatedCourses = { ...allCourses };
+    delete updatedCourses[_id];
 
-        if (idToDelete === selectedCourse) {
-          const keys = Object.keys(updatedCourses);
-          setSelectedCourse(keys.length ? keys[0] : null);
-        }
+    if (idToDelete === selectedCourse) {
+      const keys = Object.keys(updatedCourses);
+      setSelectedCourse(keys.length ? keys[0] : null);
+    }
 
-        setAllCourses({ ...updatedCourses });
-      } catch (error) {
-        console.warn(error);
-      }
-    },
-    [allCourses, setAllCourses, selectedCourse, setSelectedCourse],
-  );
+    setAllCourses({ ...updatedCourses });
+  }, [allCourses, setAllCourses, selectedCourse, setSelectedCourse]);
 
   useEffect(() => {
     if (courseToUpdate || courseToDelete) setDisableControls(true);

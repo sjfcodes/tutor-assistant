@@ -37,24 +37,20 @@ const EmailTemplateEditor = ({
   };
 
   const handleSaveTemplate = async () => {
-    try {
-      if (selected._id) {
-        await updateModel({ model: 'email-template', body: selected });
-        setAllTemplates({ ...allTemplates, [selected._id]: selected });
-        setHelpMessage(`updated ${selected.name}`);
-      } else {
-        const { name, template } = selected;
-        const newTemplate = { name, template, authorId: tutorDetails._id };
-        const { _id } = await createModel({ model: 'email-template', body: newTemplate });
-        setAllTemplates({ ...allTemplates, [_id]: { ...newTemplate, _id } });
-        setHelpMessage(`created ${newTemplate.name}`);
-      }
-      setViewHelp(false);
-      setDisplayEditor(false);
-      setSelected({});
-    } catch (error) {
-      console.warn(error);
+    if (selected._id) {
+      await updateModel({ model: 'email-template', body: selected });
+      setAllTemplates({ ...allTemplates, [selected._id]: selected });
+      setHelpMessage(`updated ${selected.name}`);
+    } else {
+      const { name, template } = selected;
+      const newTemplate = { name, template, authorId: tutorDetails._id };
+      const { _id } = await createModel({ model: 'email-template', body: newTemplate });
+      setAllTemplates({ ...allTemplates, [_id]: { ...newTemplate, _id } });
+      setHelpMessage(`created ${newTemplate.name}`);
     }
+    setViewHelp(false);
+    setDisplayEditor(false);
+    setSelected({});
   };
 
   useEffect(() => {

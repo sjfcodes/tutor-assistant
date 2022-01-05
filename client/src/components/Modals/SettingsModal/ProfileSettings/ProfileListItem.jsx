@@ -22,7 +22,6 @@ const ProfileListItem = ({
       setTutorDetails({ ...tutorDetails, [property]: input });
       setItemToEdit('');
     } catch (error) {
-      console.warn(error);
       setInput(value);
     }
   };

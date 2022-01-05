@@ -23,5 +23,5 @@ app.get('*', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`API server running on port ${PORT}!`);
+  console.log(`running on port ${PORT}!`);
 });

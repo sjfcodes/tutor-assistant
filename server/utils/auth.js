@@ -9,25 +9,20 @@ module.exports = {
   authorizeToken: (req, res, next) => {
     let token = req.headers.authorization;
     if (req.headers.authorization) token = token.split(' ').pop().trim();
-    if (!token) return res.status(401).json('unauthorized:12');
+    if (!token) return res.status(401).json({ location: 1, message: 'unauthorized' });
 
     try {
       const { data } = jwt.verify(token, secret, { maxAge: expiration });
       req.tutor = data;
     } catch (error) {
       console.error(error);
-      return res.status(401).json('unauthorized:19');
+      return res.status(401).json({ location: 2, message: 'unauthorized' });
     }
 
     return next();
   },
-  signToken: ({
-    email, _id, accountKey,
-  }) => {
-    const payload = {
-      email, _id, accountKey,
-    };
-    // console.log('auth', payload);
+  signToken: ({ email, _id, accountKey }) => {
+    const payload = { email, _id, accountKey };
     return jwt.sign({ data: payload }, secret, { expiresIn: expiration });
   },
 

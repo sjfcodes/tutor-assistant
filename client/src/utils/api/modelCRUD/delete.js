@@ -22,9 +22,8 @@ const deleteModel = ({ model, _id, body }) => {
           if (!data) return reject(handleError('missing response data'));
           return resolve(data);
         });
-    } catch (err) {
-      console.warn(err);
-      reject(handleError(err));
+    } catch (error) {
+      reject(handleError(error));
     }
   });
 };

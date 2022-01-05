@@ -42,25 +42,22 @@ const AddStudentModal = () => {
     const inputs = { ...formInputs };
     inputs.graduationDate = convertDatePickerToISO8601(formInputs.graduationDate);
 
-    try {
-      const { _id: newStudentId, createdAt } = await createModel({ model: 'student', body: inputs, _id: selectedCourse });
-      if (!newStudentId) return handleError('createModel [student] did not return _id');
+    const { _id: newStudentId, createdAt } = await createModel({ model: 'student', body: inputs, _id: selectedCourse });
+    if (!newStudentId) return handleError('createModel [student] did not return _id');
 
-      const currentStudents = allCourses[selectedCourse].students;
-      const updatedStudents = {
-        ...currentStudents,
-        [newStudentId]: {
-          _id: newStudentId,
-          ...inputs,
-          createdAt,
-        },
-      };
-      const updatedCourse = { ...allCourses[selectedCourse], students: updatedStudents };
-      setAllCourses({ ...allCourses, [selectedCourse]: updatedCourse });
-      setOpenModal('');
-    } catch (error) {
-      console.warn(error);
-    }
+    const currentStudents = allCourses[selectedCourse].students;
+    const updatedStudents = {
+      ...currentStudents,
+      [newStudentId]: {
+        _id: newStudentId,
+        ...inputs,
+        createdAt,
+      },
+    };
+    const updatedCourse = { ...allCourses[selectedCourse], students: updatedStudents };
+    setAllCourses({ ...allCourses, [selectedCourse]: updatedCourse });
+    setOpenModal('');
+
     return '';
   };
 

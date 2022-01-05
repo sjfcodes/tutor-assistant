@@ -17,12 +17,9 @@ router.post('/', async ({ body }, res) => {
 
     tutor.password = null;
     return res.json({ token, tutor });
-  } catch (error) {
-    console.error(error.message);
-    return res.status(500).json({
-      location: 1,
-      message: error.message,
-    });
+  } catch ({ message }) {
+    console.error(message);
+    return res.status(500).json({ location: 1, message });
   }
 });
 
@@ -46,12 +43,9 @@ router.post('/login', async ({ body: { email, password } }, res) => {
     }
 
     return res.json({ token, tutor });
-  } catch (error) {
-    console.error(error.message);
-    return res.status(401).json({
-      location: 1,
-      message: error.message,
-    });
+  } catch ({ message }) {
+    console.error(message);
+    return res.status(401).json({ location: 1, message });
   }
 });
 
@@ -65,11 +59,11 @@ router.get('/login', authorizeToken, async ({ tutor: { _id, accountKey } }, res)
     const token = signToken({ _id, email, accountKey });
 
     return res.json({ token, tutor });
-  } catch (error) {
-    console.error(error.message);
+  } catch ({ message }) {
+    console.error(message);
     return res.status(401).json({
       location: 1,
-      message: error.message,
+      message,
     });
   }
 });
@@ -93,18 +87,15 @@ router.put('/', authorizeToken, async ({ tutor: { _id }, body }, res) => {
       createdAt: false,
     };
     const allowedToUpdate = allowPropertyUpdate(allowUpdate, body);
-    if (!allowedToUpdate) return res.status(401).json('unauthorized to update');
+    if (!allowedToUpdate) return res.status(401).json('unauthorized');
 
-    const updated = await Tutor.findByIdAndUpdate(_id, body);
-    if (!updated) return res.status(500).json('failed to update');
+    const updated = await Tutor.findByIdAndUpdate(_id, body, { new: true });
+    if (!updated) return res.status(500).json('update failed');
 
-    return res.json('tutor updated');
-  } catch (error) {
-    console.error(error.message);
-    return res.status(500).json({
-      location: 1,
-      message: error.message,
-    });
+    return res.json(updated);
+  } catch ({ message }) {
+    console.error(message);
+    return res.status(500).json({ location: 1, message });
   }
 });
 
@@ -117,14 +108,11 @@ router.put('/password', authorizeToken, async ({ tutor: { _id }, body }, res) =>
     // update password to overwrite
     tutorDoc.password = body.newPassword;
     const updated = await tutorDoc.save();
-    if (!updated) return res.status(500).json('failed to update');
+    if (!updated) return res.status(500).json('update failed');
     return res.json('password updated');
-  } catch (error) {
-    console.error(error.message);
-    return res.status(500).json({
-      location: 1,
-      message: error.message,
-    });
+  } catch ({ message }) {
+    console.error(message);
+    return res.status(500).json({ location: 1, message });
   }
 });
 
@@ -135,12 +123,9 @@ router.delete('/', authorizeToken, async ({ tutor: { _id }, body }, res) => {
     if (!await tutorDoc.isCorrectPassword(body.password)) return res.status(401).json('unauthorized');
     await Tutor.findByIdAndDelete(_id);
     return res.json('tutor deleted');
-  } catch (error) {
-    console.error(error.message);
-    return res.status(500).json({
-      location: 1,
-      message: error.message,
-    });
+  } catch ({ message }) {
+    console.error(message);
+    return res.status(500).json({ location: 1, message });
   }
 });
 

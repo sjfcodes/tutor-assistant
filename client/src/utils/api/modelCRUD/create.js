@@ -25,7 +25,7 @@ const createModel = ({ model, body, _id = '' }) => {
           return resolve(data);
         });
     } catch (error) {
-      reject(handleError('request failed'));
+      reject(handleError(error));
     }
   });
 };

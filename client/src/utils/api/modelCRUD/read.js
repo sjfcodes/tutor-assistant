@@ -24,7 +24,7 @@ const readModel = ({ model, _id }) => {
           return resolve(data);
         });
     } catch (error) {
-      reject(handleError('request failed'));
+      reject(handleError(error));
     }
   });
 };
