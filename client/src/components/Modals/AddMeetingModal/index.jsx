@@ -17,32 +17,28 @@ const AddMeetingModal = () => {
   const handleAddMeeting = async (e) => {
     e.preventDefault();
 
-    try {
-      const newMeeting = await createModel(
-        {
-          model: 'meeting',
-          body: formInputs,
-          _id: selectedCourse,
-        },
-      );
+    const newMeeting = await createModel(
+      {
+        model: 'meeting',
+        body: formInputs,
+        _id: selectedCourse,
+      },
+    );
 
-      const currentMeetings = allCourses[selectedCourse].meetings;
-      const updatedCourse = {
-        ...allCourses[selectedCourse],
-        meetings: {
-          ...currentMeetings,
-          [newMeeting._id]: { ...newMeeting, type: 'tutorly' },
-        },
-      };
-      setAllCourses({
-        ...allCourses,
-        [selectedCourse]: updatedCourse,
-      });
-      setOpenModal('');
-    } catch (error) {
-      // handleAddMeeting failed
-      console.warn('handleAddMeeting failed');
-    }
+    const currentMeetings = allCourses[selectedCourse].meetings;
+    const updatedCourse = {
+      ...allCourses[selectedCourse],
+      meetings: {
+        ...currentMeetings,
+        [newMeeting._id]: { ...newMeeting, type: 'tutorly' },
+      },
+    };
+    setAllCourses({
+      ...allCourses,
+      [selectedCourse]: updatedCourse,
+    });
+    setOpenModal('');
+
     return '';
   };
 

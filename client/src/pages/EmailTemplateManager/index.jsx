@@ -33,13 +33,9 @@ const EmailTemplateManager = () => {
   useEffect(() => {
     let isMounted = true;
     const getTutorsEmailTemplates = async () => {
-      try {
-        const templateArr = await readModel({ model: 'email-template' });
-        if (!isMounted) return;
-        setAllTemplates(formatEmailTemplates(templateArr));
-      } catch (error) {
-        console.warn(error);
-      }
+      const templateArr = await readModel({ model: 'email-template' });
+      if (!isMounted) return;
+      setAllTemplates(formatEmailTemplates(templateArr));
     };
     getTutorsEmailTemplates();
 

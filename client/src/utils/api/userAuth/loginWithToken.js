@@ -12,13 +12,13 @@ const loginWithToken = () => {
       fetch(getApiEndpoint({ model: 'tutor', action: 'login' }), options)
         .then((res) => res.json())
         .then((data) => {
-          if (!data.token || !data.tutor) return reject(handleError('missing tutor data'));
+          if (!data.token || !data.tutor) return reject(handleError('unauthorized'));
           localStorage.setItem(tokenKey, data.token);
           return resolve(data);
         });
     } catch (error) {
       localStorage.removeItem(tokenKey);
-      reject(handleError('failed to login tutor by token'));
+      reject(handleError(error));
     }
   });
 };

@@ -16,13 +16,9 @@ export const CourseProvider = ({ children }) => {
     let isMounted = true;
     if (!selectedCourse || !allCourses) return '';
     const getCalendlyMeetings = async () => {
-      try {
-        const { calendlyMeetings: calMeetings } = await readModel({ model: 'calendly/meetings', _id: selectedCourse });
-        if (!isMounted) return;
-        setCalendlyMeetings({ ...formatCalendlyMeetings(calMeetings) });
-      } catch (error) {
-        console.warn(error);
-      }
+      const { calendlyMeetings: calMeetings } = await readModel({ model: 'calendly/meetings', _id: selectedCourse });
+      if (!isMounted) return;
+      setCalendlyMeetings({ ...formatCalendlyMeetings(calMeetings) });
     };
     if (allCourses[selectedCourse].calendly.data) getCalendlyMeetings();
 

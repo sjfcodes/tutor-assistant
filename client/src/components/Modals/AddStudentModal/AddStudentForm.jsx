@@ -59,7 +59,6 @@ const AddStudentForm = ({ formInputs, setFormInputs }) => {
     default:
       if (helpText[name]) updateHelpText(name, '');
     }
-
     return setFormInputs({ ...formInputs, [name]: value });
   };
 

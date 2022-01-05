@@ -45,7 +45,6 @@ const AccessToken = ({ courseId, password }) => {
       );
       accessToken = _id;
     } catch (error) {
-      console.warn(error);
       // expected case: bad password
       setHelpText('unauthorized');
     }
@@ -53,7 +52,6 @@ const AccessToken = ({ courseId, password }) => {
     if (accessToken) try {
       data = await syncCalendlyResource({ body: { password, courseId } });
     } catch (error) {
-      console.warn(error);
       // expected case: bad accessToken
       setHelpText('invalid token, try again');
     }

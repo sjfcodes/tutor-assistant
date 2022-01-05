@@ -16,7 +16,6 @@ export const SyncCalendlyDetails = ({ password }) => {
       setLoading(false);
       window.location.reload();
     } catch (error) {
-      console.warn(error);
       setButtonText('must add a token first');
       setLoading(false);
     }

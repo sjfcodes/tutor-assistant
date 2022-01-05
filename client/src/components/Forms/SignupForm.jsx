@@ -52,15 +52,10 @@ const SignupForm = () => {
 
   const handleSignup = async (e) => {
     e.preventDefault();
-    try {
-      const { tutor, token } = await createModel({ model: 'tutor', body: formInputs });
-      if (!tutor) return;
-      localStorage.setItem(tokenKey, token);
-      setTutorDetails({ ...tutor, loggedIn: true });
-    } catch (error) {
-      // login failed
-      console.warn('login failed');
-    }
+    const { tutor, token } = await createModel({ model: 'tutor', body: formInputs });
+    if (!tutor) return;
+    localStorage.setItem(tokenKey, token);
+    setTutorDetails({ ...tutor, loggedIn: true });
   };
 
   return (

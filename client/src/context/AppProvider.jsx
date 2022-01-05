@@ -43,7 +43,6 @@ export const AppProvider = ({ children }) => {
         setAllCourses(formatCourses(formattedCourses));
         setTutorDetails({ ...tutor, loggedIn: true });
       } catch (error) {
-        console.warn(error);
         localStorage.removeItem(tokenKey);
       }
     };
