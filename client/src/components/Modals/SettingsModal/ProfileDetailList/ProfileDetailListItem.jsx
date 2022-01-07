@@ -70,7 +70,7 @@ const ProfileListItemDetail = ({ _id, property, value }) => {
   }, [allowedToEdit, itemToEdit, property]);
 
   return (
-    <li className='pl-3'>
+    <li className='pl-3 overflow-auto'>
       <form name='ProfileItemForm' onSubmit={handleSubmit}>
         <Form.Field kind='addons' className=''>
           <Form.Control fullwidth className='border-bottom-light'>

@@ -1,12 +1,48 @@
 import {
   bool, func, number, oneOfType, string,
 } from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import React, {
+  useCallback, useEffect, useMemo, useState,
+} from 'react';
 import { Form, Icon } from 'react-bulma-components';
 import { TimeZoneSelector } from '.';
 import { getLocalDateString, convertStrToBool } from '../../utils';
+import { LitsItemInput } from '../BulmaHelpers';
 import { GraduationDate, MeetingDateFull } from '../DateTime';
 import './style.css';
+
+const getBooleanSpan = (boolean) => <span className={`has-text-${boolean ? 'success' : 'danger'}`}>{`${boolean}`}</span>;
+const getElementFor = ({ property, value }) => {
+  const elementFor = {
+    createdAt: () => <span>{getLocalDateString(value)}</span>,
+    default: () => (
+      <Form.Input
+        disabled
+        className='rounded has-text-black input-slim'
+        value={`${value}`}
+        onChange={() => null}
+      />
+    ),
+    endTime: () => <p className='mb-3'><MeetingDateFull iso8601={value} /></p>,
+    fullTimeCourse: () => getBooleanSpan(value),
+    githubUsername: () => (
+      <a
+        href={`https://github.com/${value}`}
+        target='_blank'
+        rel='noreferrer'
+      >
+        {`https://github.com/${value}`}
+      </a>
+    ),
+    graduationDate: () => <GraduationDate iso8601={value} />,
+    meetingLink: () => <a href={value} target='_blank' rel='noreferrer'>{value}</a>,
+    reassignment: () => getBooleanSpan(value),
+    recurringMeeting: () => getBooleanSpan(value),
+    scheduleLink: () => <a href={value} target='_blank' rel='noreferrer'>{value}</a>,
+    startTime: () => <p className='mb-3'><MeetingDateFull iso8601={value} /></p>,
+  };
+  return elementFor[property] || elementFor.default;
+};
 
 const ListItem = ({
   property, value, input, setInput,
@@ -20,160 +56,33 @@ const ListItem = ({
     return `${num}`;
   };
 
-  const handleInputChange = ({ target }) => {
+  const handleInputChange = useCallback(({ target }) => {
     let val = target.value;
     if (property === 'duration') val = validateDuration(val);
-
     if (val === 'true' || val === 'false') val = convertStrToBool(val);
     return setInput(val);
-  };
+  }, [property, setInput]);
 
   const inputHasBeenModified = () => `${value}`.trim() !== `${input}`.trim();
 
-  const getFormInputType = (propertyName) => {
-    switch (propertyName) {
-    case 'timeZoneName':
-      return (
-        <TimeZoneSelector
-          name={property}
-          value={input}
-          className='li-input mr-2 my-2'
-          onChange={handleInputChange}
-        />
-      );
+  const args = useMemo(() => ({
+    value: input,
+    name: property,
+    className: 'mr-2 my-2 input-slim',
+    onChange: (e) => handleInputChange(e),
+  }), [handleInputChange, input, property]);
 
-    case 'duration':
-      return (
-        <Form.Input
-          type='number'
-          name={property}
-          value={input}
-          className='li-input mr-2 my-2'
-          onChange={handleInputChange}
-        />
-      );
-
-    case 'meetingsPerWeek':
-      return (
-        <Form.Input
-          type='number'
-          name={property}
-          value={input}
-          className='li-input mr-2 my-2'
-          onChange={handleInputChange}
-        />
-      );
-
-    case 'email':
-      return (
-        <Form.Input
-          type='email'
-          name={property}
-          value={input.toLowerCase()}
-          className='li-input mr-2 my-2'
-          onChange={handleInputChange}
-        />
-      );
-
-    case 'notes':
-      return (
-        <Form.Textarea
-          name={property}
-          value={input}
-          className='li-input mr-2 my-2'
-          onChange={handleInputChange}
-        />
-      );
-
-    default:
-      return (
-        <Form.Input
-          type='input'
-          name={property}
-          value={input}
-          className='li-input mr-2 my-2'
-          onChange={handleInputChange}
-        />
-      );
-    }
+  const formInputFor = {
+    default: <LitsItemInput type='input' {...args} />,
+    duration: <LitsItemInput type='number' {...args} />,
+    email: <LitsItemInput type='email' {...args} />,
+    meetingsPerWeek: <LitsItemInput type='number' {...args} />,
+    notes: <Form.Textarea {...args} />,
+    timeZoneName: <TimeZoneSelector {...args} />,
   };
 
   useEffect(() => {
-    const formatBooleanSpan = (boolean) => <span className={`has-text-${boolean ? 'success' : 'danger'}`}>{`${boolean}`}</span>;
-    let isMounted = true;
-    switch (property) {
-    case 'scheduleLink':
-      return isMounted && setElement(
-        <a
-          href={value}
-          className='break'
-          target='_blank'
-          rel='noreferrer'
-        >
-          {value}
-        </a>,
-      );
-
-    case 'createdAt':
-      return isMounted && setElement(<span>{getLocalDateString(value)}</span>);
-
-    case 'endTime':
-      return isMounted && setElement(
-        <p className='mb-3'><MeetingDateFull iso8601={value} /></p>,
-      );
-
-    case 'fullTimeCourse':
-      return isMounted && setElement(formatBooleanSpan(value));
-
-    case 'githubUsername':
-      return isMounted && setElement(
-        <a
-          href={`https://github.com/${value}`}
-          className='break'
-          target='_blank'
-          rel='noreferrer'
-        >
-          {`https://github.com/${value}`}
-        </a>,
-      );
-
-    case 'graduationDate':
-      return isMounted && setElement(<GraduationDate iso8601={value} />);
-
-    case 'meetingLink':
-      return isMounted && setElement(
-        <a
-          href={value}
-          className='break'
-          target='_blank'
-          rel='noreferrer'
-        >
-          {value}
-        </a>,
-      );
-
-    case 'reassignment':
-      return isMounted && setElement(formatBooleanSpan(value));
-
-    case 'recurringMeeting':
-      return isMounted && setElement(formatBooleanSpan(value));
-
-    case 'startTime':
-      return isMounted && setElement(
-        <p className='mb-3'><MeetingDateFull iso8601={value} /></p>,
-      );
-
-    default:
-      if (isMounted) return setElement(
-        <Form.Input
-          disabled
-          className='rounded'
-          value={`${value}`}
-          onChange={() => null}
-        />,
-      );
-    }
-    return () => { isMounted = false; };
+    setElement(getElementFor({ property, value }));
   }, [property, value]);
 
   return (
@@ -182,7 +91,7 @@ const ListItem = ({
       && allowedToEdit
         ? (
           <>
-            { getFormInputType(property) }
+            { formInputFor[property] || formInputFor.default }
             {inputHasBeenModified() && (
               <Icon align='right' className='mt-2' onClick={handleSubmit}>
                 <i className='far fa-save hover has-text-success' />

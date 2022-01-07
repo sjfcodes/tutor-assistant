@@ -112,6 +112,14 @@ footer {
 form {
   display: contents;
 }
+.input-slim {
+  height: 1em;
+  padding-top: .5em;
+  padding-bottom: .5em;
+}
+.overflow-auto {
+  overflow: auto;
+ }
 
 /* ~ ~ ~ ~ ~ ~ ~ HELP-TEXT ~ ~ ~ ~ ~ ~ ~ */
 .help-error {
