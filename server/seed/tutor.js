@@ -19,7 +19,7 @@ const me = {
   timeZoneName: 'America/Los_Angeles',
   githubUsername: 'samuelfox1',
   scheduleLink: 'https://calendly.com',
-  password: process.env.MYPW,
+  password: process.env.MY_PW,
   courses: [],
   emailTemplates: [],
 };
