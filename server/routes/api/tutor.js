@@ -10,7 +10,10 @@ const {
 // create a new tutor
 router.post('/', async ({ body }, res) => {
   try {
-    const tutor = await Tutor.create(body);
+    const tutor = await Tutor.create({
+      ...body,
+      email: body.email.toLowerCase(),
+    });
     const { _id, password, email } = tutor;
     const accountKey = encryptToken(password, process.env.JWT_SECRET);
     const token = signToken({ _id, email, accountKey });
