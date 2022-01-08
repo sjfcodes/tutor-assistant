@@ -17,9 +17,9 @@ const deleteModel = ({ model, _id, body }) => {
   return new Promise((resolve, reject) => {
     try {
       fetch(getApiEndpoint({ model, _id }), options)
-        .then((res) => (res.status === 200 ? res.json() : null))
+        .then((res) => res.json())
         .then((data) => {
-          if (!data) return reject(handleError('missing response data'));
+          if (data.message) return reject(handleError(data.message));
           return resolve(data);
         });
     } catch (error) {

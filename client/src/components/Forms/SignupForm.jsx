@@ -21,8 +21,8 @@ const {
 const { Column } = Columns;
 
 const SignupForm = () => {
+  const { setTutorDetails } = useContext(AppContext);
   const clientTimeZone = getClientTimeZone();
-
   const [formInputs, setFormInputs] = useState({
     firstName: '',
     lastName: '',
@@ -33,6 +33,8 @@ const SignupForm = () => {
     password: '',
     confirmPassword: '',
   });
+  const [helpText, setHelpText] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const {
     firstName,
@@ -44,7 +46,6 @@ const SignupForm = () => {
     password,
     confirmPassword,
   } = formInputs;
-  const { setTutorDetails } = useContext(AppContext);
 
   const handleInputChange = ({ target: { name, value } }) => {
     setFormInputs({ ...formInputs, [name]: value });
@@ -52,10 +53,18 @@ const SignupForm = () => {
 
   const handleSignup = async (e) => {
     e.preventDefault();
-    const { tutor, token } = await createModel({ model: 'tutor', body: formInputs });
-    if (!tutor) return;
-    localStorage.setItem(tokenKey, token);
-    setTutorDetails({ ...tutor, loggedIn: true });
+    setLoading(true);
+    try {
+      const { tutor, token } = await createModel({ model: 'tutor', body: formInputs });
+      localStorage.setItem(tokenKey, token);
+      setTutorDetails({ ...tutor, loggedIn: true });
+      setHelpText('');
+      return;
+    } catch ({ message }) {
+      if (message.includes('E11000 duplicate key error')) setHelpText('email already in use');
+      else setHelpText(message);
+    }
+    setLoading(false);
   };
 
   return (
@@ -229,11 +238,11 @@ const SignupForm = () => {
           </Control>
         </Column>
       </Columns>
-
+      <Form.Help align='right' color='danger'>{helpText}</Form.Help>
       <Button
         fullwidth
         color='primary'
-        className='mt-5'
+        loading={loading}
         disabled={missingFormInputs(formInputs)}
         onClick={handleSignup}
       >

@@ -29,7 +29,8 @@ const ProfileListItemDetail = ({ _id, property, value }) => {
       setHelpText('');
       return setItemToEdit('');
     } catch ({ message }) {
-      return setHelpText(message || 'request error');
+      if (message.includes('E11000 duplicate key error')) return setHelpText('value is aready taken');
+      return setHelpText(message);
     }
   };
 
@@ -51,7 +52,14 @@ const ProfileListItemDetail = ({ _id, property, value }) => {
   }, [property]);
 
   useEffect(() => {
-    const toggleEdit = () => setItemToEdit(itemToEdit !== property ? property : '');
+    const toggleEdit = () => {
+      if (itemToEdit !== property) {
+        setItemToEdit(property);
+        return;
+      }
+      setHelpText('');
+      setItemToEdit('');
+    };
 
     if (!allowedToEdit) return setDisplayedEditIcon(
       <Icon className='mx-1 mt-5'>
