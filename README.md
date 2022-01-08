@@ -1,5 +1,5 @@
 # tutor-assistant
-A progressive web application yo connect tutors and student.
+A progressive web application to connect tutors and student.
 A tutor can
 - create and manage courses
 - add students and create meetings
