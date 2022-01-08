@@ -1,6 +1,5 @@
 import { string } from 'prop-types';
 import React, { useContext, useEffect, useState } from 'react';
-import { Box } from 'react-bulma-components';
 import { CourseContext } from '../../../context';
 import StudentsListItem from './StudentsListItem';
 
@@ -57,9 +56,7 @@ const StudentsList = ({ filterBy }) => {
     )));
   }, [selectedCourse, allCourses, displayedStudents, selectedStudentId]);
 
-  return (
-    <Box className=' list-container p-2'>{studentsListItems}</Box>
-  );
+  return (studentsListItems);
 };
 export default StudentsList;
 

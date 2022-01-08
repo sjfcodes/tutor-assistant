@@ -31,18 +31,16 @@ const MessageBoard = () => {
     return () => { isMounted = false; };
   }, [date]);
   return (
-    <Box className='background-blurred-dark p-3'>
-      <Box className='p-3'>
-        <p className='pb-2 border-bottom has-text-centered'>
-          <MeetingDateFull iso8601={date} />
-          {' '}
-          <TimeZoneAbbreviation
-            timeZoneName={timeZoneName || getClientTimeZone()}
-            className='is-size-7 has-text-grey'
-          />
-        </p>
-        <p className='pt-3 has-text-centered'>{`Good ${partOfDay}, ${firstName}.`}</p>
-      </Box>
+    <Box className='p-3 mb-3'>
+      <p className='pb-2 border-bottom has-text-centered'>
+        <MeetingDateFull iso8601={date} />
+        {' '}
+        <TimeZoneAbbreviation
+          timeZoneName={timeZoneName || getClientTimeZone()}
+          className='is-size-7 has-text-grey'
+        />
+      </p>
+      <p className='pt-3 has-text-centered'>{`Good ${partOfDay}, ${firstName}.`}</p>
     </Box>
 
   );
