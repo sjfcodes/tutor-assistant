@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Button, Modal } from 'react-bulma-components';
+import { Button, Heading, Modal } from 'react-bulma-components';
 import { CourseContext, ModalContext } from '../../../context';
 import { createModel, missingFormInputs } from '../../../utils';
 import AddMeetingForm from './AddMeetingForm';
@@ -44,13 +44,18 @@ const AddMeetingModal = () => {
 
   return (
     <Modal
-      showClose={false}
+      className='background-blurred-light'
       show={openModal === 'addMeeting'}
       onClose={() => setOpenModal('')}
     >
       <Modal.Card>
-        <Modal.Card.Header showClose>
-          <Modal.Card.Title>Add Meeting</Modal.Card.Title>
+        <Modal.Card.Header
+          className='background-clear mx-2 pb-0'
+          showClose={false}
+        >
+          <Heading className='has-text-grey-lighter mb-5'>
+            Add Meeting
+          </Heading>
         </Modal.Card.Header>
 
         <form onSubmit={handleAddMeeting}>
