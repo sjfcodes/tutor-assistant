@@ -7,12 +7,12 @@ const {
   Calendly,
 } = require('../models');
 
-const tutorSeed = require('./tutor.json');
+const { demo, me } = require('./tutor');
 const emailTemplateSeed = require('./emailTemplate.json');
 const courseSeed = require('./course.json');
 const studentSeeds = require('./student');
 const meetingSeeds = require('./meeting');
-// const accessTokenSeeds = require('./accesstoken.json');
+const tokenSeed = require('./accesstoken.json');
 
 const eraseDB = async () => {
   await AccessToken.deleteMany({});
@@ -65,11 +65,18 @@ db.once('open', async () => {
   console.log('==> start db seeds');
 
   await eraseDB();
-  const tutorId = await createTutor(tutorSeed);
+  const tutorId = await createTutor(demo);
   const courseId = await createCourse({ seed: courseSeed, tutorId });
   const studentIds = await createStudents({ seed: studentSeeds, courseId });
   await createMeetings({ seed: meetingSeeds, courseId, studentIds });
   await createEmailTemplates({ seed: emailTemplateSeed, authorId: tutorId });
+
+  const myId = await createTutor(me);
+  const myCourseId = await createCourse({ seed: courseSeed, tutorId: myId });
+  await createMeetings({ seed: meetingSeeds, courseId, studentIds });
+  const { _id: tokenId } = await AccessToken.create(tokenSeed);
+  console.log(tokenId);
+  await Course.findByIdAndUpdate(myCourseId, { 'calendly.accessToken': tokenId });
 
   console.log('==> db seeds success\n');
   process.exit(0);

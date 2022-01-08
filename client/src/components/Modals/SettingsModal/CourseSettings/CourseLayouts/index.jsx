@@ -1,7 +1,7 @@
 import React, {
   useCallback, useEffect, useMemo, useState,
 } from 'react';
-import { Box, Level } from 'react-bulma-components';
+import { Level } from 'react-bulma-components';
 import { string, func } from 'prop-types';
 import DeleteCourseLayout from './DeleteCourseLayout';
 import EditCourseNameLayout from './EditCourseNameLayout';
@@ -68,10 +68,10 @@ const CouseLayouts = ({
   );
 
   return (
-    <Box className='border'>
+    <div className='border-bottom-light pb-3'>
       <Level
         renderAs='div'
-        className='is-mobile '
+        className='is-mobile'
       >
         {layout}
       </Level>
@@ -80,7 +80,7 @@ const CouseLayouts = ({
         selectedCalendlyAccess={selectedCalendlyAccess}
         setSelectedCalendlyAccess={setSelectedCalendlyAccess}
       />
-    </Box>
+    </div>
   );
 };
 export default CouseLayouts;

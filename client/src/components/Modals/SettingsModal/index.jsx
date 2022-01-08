@@ -40,39 +40,13 @@ const SettingsModal = () => {
   );
 
   useEffect(() => {
-    let isMounted = true;
-    switch (activeTab) {
-    case 'profile':
-      if (isMounted) return setComponent(
-        <ProfileDetailList />,
-      );
-      break;
-    case 'courses':
-      if (isMounted) return setComponent(
-        <CourseSettings setDisableControls={setDisableControls} />,
-      );
-      break;
-
-    case 'students':
-      if (isMounted) return setComponent(
-        <h1>Students</h1>,
-      );
-      break;
-
-    case 'meetings':
-      if (isMounted) return setComponent(
-        <h1>Meetings</h1>,
-      );
-      break;
-
-    default:
-      if (isMounted) return console.warn('no component selected');
-      break;
-    }
-
-    return () => {
-      isMounted = false;
+    const tabFor = {
+      profile: <ProfileDetailList />,
+      courses: <CourseSettings setDisableControls={setDisableControls} />,
+      students: <h1>Students</h1>,
+      meetings: <h1>Meetings</h1>,
     };
+    setComponent(tabFor[activeTab]);
   }, [activeTab]);
 
   return (
@@ -122,28 +96,6 @@ const SettingsModal = () => {
                 Courses
               </strong>
             </Tabs.Tab>
-            {/* <Tabs.Tab
-              className='rounded-top'
-              active={activeTab === 'students'}
-              onClick={(e) => handleUpdate(e, 'students')}
-            >
-              <strong
-                className={activeTab !== 'students' ? 'has-text-grey-lighter' : ''}
-              >
-                Students
-              </strong>
-            </Tabs.Tab> */}
-            {/* <Tabs.Tab
-              className='rounded-top'
-              active={activeTab === 'meetings'}
-              onClick={(e) => handleUpdate(e, 'meetings')}
-            >
-              <strong
-                className={activeTab !== 'meetings' ? 'has-text-grey-lighter' : ''}
-              >
-                Meetings
-              </strong>
-            </Tabs.Tab> */}
           </Tabs>
         </Modal.Card.Header>
         <Modal.Card.Body className='rounded-top'>

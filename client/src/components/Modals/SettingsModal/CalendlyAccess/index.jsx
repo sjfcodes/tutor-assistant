@@ -1,20 +1,24 @@
+/* eslint-disable no-unused-vars */
 import { func, string } from 'prop-types';
 import React, { useContext, useState } from 'react';
 import {
-  Box, Content, Form, Heading, Icon, Level,
+  Box, Button, Content, Form, Heading, Icon, Level,
 } from 'react-bulma-components';
 import { CourseContext } from '../../../../context';
 import { passwordIsValid } from '../../../../utils';
 import InputPassword from '../../../Forms/InputPassword';
 
-import AccessToken from './AccessToken';
+import AddAccessToken from './AddAccessToken';
 import DeleteAccessToken from './DeleteAccessToken';
+import SyncCalendlyDetails from './SyncCalendlyDetails';
 // import SyncCalendly from './SyncCalendly';
 
 const CalendlyAccess = ({ courseId, selectedCalendlyAccess, setSelectedCalendlyAccess }) => {
-  const [password, setPassword] = useState('');
   const { allCourses } = useContext(CourseContext);
   const { calendly: { accessToken } } = allCourses[courseId];
+
+  const [password, setPassword] = useState('');
+  const [display, setDisplay] = useState(!accessToken ? 'addNew' : 'makeDecision');
 
   const toggleViewAccess = () => (
     selectedCalendlyAccess === courseId
@@ -22,12 +26,55 @@ const CalendlyAccess = ({ courseId, selectedCalendlyAccess, setSelectedCalendlyA
       : setSelectedCalendlyAccess(courseId)
   );
 
-  return (
+  const getDeleteButton = () => {
+    if (!accessToken) return '';
+    return <DeleteAccessToken />;
+  };
+
+  const getFieldToDisplay = () => {
+    const layoutTo = {
+      addNew: (
+        <AddAccessToken
+          courseId={courseId}
+          password={password}
+          setPassword={setPassword}
+          setSelectedCalendlyAccess={setSelectedCalendlyAccess}
+        />
+      ),
+      makeDecision: (
+        <>
+          <Button
+            fullwidth
+            className='mb-3'
+            color='success'
+            onClick={() => setDisplay('addNew')}
+          >
+            create new connection
+          </Button>
+          <Button
+            fullwidth
+            color='primary'
+            onClick={() => setDisplay('syncExisting')}
+          >
+            re-sync current connection
+          </Button>
+        </>
+      ),
+      syncExisting: (
+        <SyncCalendlyDetails
+          password={password}
+          courseId={courseId}
+        />
+      ),
+    };
+    return layoutTo[display] || '';
+  };
+
+  if (selectedCalendlyAccess !== courseId) return (
     <Box className='p-3 border'>
       <Level
         className='is-mobile'
         onClick={toggleViewAccess}
-
       >
         <Level.Side>
           <Heading
@@ -42,43 +89,53 @@ const CalendlyAccess = ({ courseId, selectedCalendlyAccess, setSelectedCalendlyA
           </Icon>
         </Level.Side>
       </Level>
-      {
-        selectedCalendlyAccess === courseId
-        && (
-          <>
-            <Content className='border-bottom pb-3 mb-4'>
-              enter tutorly password
-              <form onSubmit={(e) => e.preventDefault()}>
-                <Form.Field>
-                  <Form.Control fullwidth>
-                    <InputPassword
-                      fullwidth
-                      name='password'
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      validation={() => passwordIsValid(password)}
-                    />
-                    <Icon align='left' size='small'>
-                      <i className='fas fa-user-shield' />
-                    </Icon>
-                  </Form.Control>
-                </Form.Field>
-              </form>
-              <a className='my-5' href='https://calendly.com/integrations/api_webhooks' target='_blank' rel='noreferrer'>create a calendly access token</a>
-              <p>add/update access token</p>
-              <AccessToken
-                courseId={courseId}
-                password={password}
-                setPassword={setPassword}
-              />
-              {/*
-                <p>sync with calendly</p>
-                <SyncCalendly password={password} /> */}
-            </Content>
-            {accessToken && <DeleteAccessToken />}
-          </>
-        )
-      }
+    </Box>
+  );
+
+  return (
+    <Box className='p-3 border'>
+      <Level
+        className='is-mobile'
+        onClick={toggleViewAccess}
+      >
+        <Level.Side>
+          <Heading
+            size={5}
+          >
+            Calendly Access
+          </Heading>
+        </Level.Side>
+        <Level.Side>
+          <Icon className='mr-2'>
+            <i className={`fas fa-chevron-${selectedCalendlyAccess === courseId ? 'up' : 'down'}`} />
+          </Icon>
+        </Level.Side>
+      </Level>
+      <Content className='border-bottom pb-3 mb-4'>
+        <Form.Field>
+          {display === 'makeDecision'
+            ? ''
+            : (
+              <>
+                <Form.Label size='small'>enter tutorly password</Form.Label>
+                <Form.Control fullwidth>
+                  <InputPassword
+                    fullwidth
+                    name='password'
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    validation={() => passwordIsValid(password)}
+                  />
+                  <Icon align='left' size='small'>
+                    <i className='fas fa-user-shield' />
+                  </Icon>
+                </Form.Control>
+              </>
+            )}
+          {getFieldToDisplay()}
+        </Form.Field>
+      </Content>
+      {getDeleteButton()}
     </Box>
   );
 };
