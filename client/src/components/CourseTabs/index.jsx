@@ -49,9 +49,7 @@ const CourseTabs = ({ className }) => {
           active={(!selectedCourse || selectedCourse === _id)}
           onClick={() => setSelectedCourse(_id)}
         >
-          <strong
-            className={`py-2 ${selectedCourse !== _id ? 'has-text-grey-lighter' : ''}`}
-          >
+          <strong className={selectedCourse !== _id ? 'has-text-grey-lighter' : ''}>
             {name}
           </strong>
         </Tab>,
@@ -72,7 +70,7 @@ const CourseTabs = ({ className }) => {
     >
       {courseTabs}
       <Tab onClick={() => setOpenModal('addCourse')}>
-        <strong className='py-2 has-text-grey-lighter'>Add Course</strong>
+        <strong className='has-text-grey-lighter'>Add Course</strong>
       </Tab>
     </Tabs>
   );

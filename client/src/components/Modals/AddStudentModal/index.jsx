@@ -1,6 +1,8 @@
 /* eslint-disable no-unused-vars */
 import React, { useContext, useEffect, useState } from 'react';
-import { Button, Heading, Modal } from 'react-bulma-components';
+import {
+  Button, Form, Heading, Modal,
+} from 'react-bulma-components';
 import { CourseContext, ModalContext } from '../../../context';
 import {
   createModel,
@@ -33,30 +35,35 @@ const formDefaults = {
 
 const AddStudentModal = () => {
   const { openModal, setOpenModal } = useContext(ModalContext);
-
   const { allCourses, setAllCourses, selectedCourse } = useContext(CourseContext);
   const [formInputs, setFormInputs] = useState(formDefaults);
+  const [helpText, setHelpText] = useState('');
 
   const handleAddStudent = async (e) => {
     e.preventDefault();
-    const inputs = { ...formInputs };
-    inputs.graduationDate = convertDatePickerToISO8601(formInputs.graduationDate);
+    try {
+      const inputs = { ...formInputs };
+      inputs.graduationDate = convertDatePickerToISO8601(formInputs.graduationDate);
 
-    const { _id: newStudentId, createdAt } = await createModel({ model: 'student', body: inputs, _id: selectedCourse });
-    if (!newStudentId) return handleError('createModel [student] did not return _id');
+      const { _id: newStudentId, createdAt } = await createModel({ model: 'student', body: inputs, _id: selectedCourse });
+      if (!newStudentId) return handleError('createModel [student] did not return _id');
 
-    const currentStudents = allCourses[selectedCourse].students;
-    const updatedStudents = {
-      ...currentStudents,
-      [newStudentId]: {
-        _id: newStudentId,
-        ...inputs,
-        createdAt,
-      },
-    };
-    const updatedCourse = { ...allCourses[selectedCourse], students: updatedStudents };
-    setAllCourses({ ...allCourses, [selectedCourse]: updatedCourse });
-    setOpenModal('');
+      const currentStudents = allCourses[selectedCourse].students;
+      const updatedStudents = {
+        ...currentStudents,
+        [newStudentId]: {
+          _id: newStudentId,
+          ...inputs,
+          createdAt,
+        },
+      };
+      const updatedCourse = { ...allCourses[selectedCourse], students: updatedStudents };
+      setAllCourses({ ...allCourses, [selectedCourse]: updatedCourse });
+      setOpenModal('');
+    } catch ({ message }) {
+      if (message.includes('E11000 duplicate key error')) setHelpText('email already in use');
+      else setHelpText(message);
+    }
 
     return '';
   };
@@ -86,6 +93,7 @@ const AddStudentModal = () => {
           </Modal.Card.Body>
 
           <Modal.Card.Footer renderAs={Button.Group} align='right' hasAddons>
+            <Form.Help size='small' color='danger'>{helpText}</Form.Help>
             <Button type='button' onClick={() => setOpenModal('')}>
               cancel
             </Button>

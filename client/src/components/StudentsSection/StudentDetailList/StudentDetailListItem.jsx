@@ -44,8 +44,9 @@ const StudentListItemDetail = ({
 
       setHelpText('');
       return setItemToEdit('');
-    } catch (error) {
-      return setHelpText(error.message);
+    } catch ({ message }) {
+      if (message.includes('E11000 duplicate key error')) return setHelpText('value is aready taken');
+      return setHelpText(message);
     }
   };
 

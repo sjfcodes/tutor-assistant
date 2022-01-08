@@ -8,18 +8,16 @@ const Home = () => {
   const { selectedCourse } = useContext(CourseContext);
 
   return (
-    <>
+    <Box className='background-blurred-dark py-1 px-3'>
+      <CourseTabs className='mb-0 pt-3 pl-2' />
       <MessageBoard />
-      <Box className='background-blurred-dark py-1 px-3'>
-        <CourseTabs className='mb-0 pt-3 pl-2' />
-        {selectedCourse && (
-          <>
-            <StudentsSection />
-            <MeetingsSection />
-          </>
-        )}
-      </Box>
-    </>
+      {selectedCourse && (
+        <>
+          <StudentsSection />
+          <MeetingsSection />
+        </>
+      )}
+    </Box>
   );
 };
 

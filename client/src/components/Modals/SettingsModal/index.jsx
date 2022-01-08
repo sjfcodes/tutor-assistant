@@ -79,9 +79,7 @@ const SettingsModal = () => {
               active={activeTab === 'profile'}
               onClick={(e) => handleUpdate(e, 'profile')}
             >
-              <strong
-                className={activeTab !== 'profile' ? 'has-text-grey-lighter' : ''}
-              >
+              <strong className={activeTab !== 'profile' ? 'has-text-grey-lighter' : ''}>
                 Profile
               </strong>
             </Tabs.Tab>
