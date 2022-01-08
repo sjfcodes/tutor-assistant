@@ -1,7 +1,9 @@
 /* eslint-disable no-unused-vars */
 const router = require('express').Router();
 const axios = require('axios');
-const { Calendly, Course, Tutor } = require('../../models');
+const {
+  Calendly, Course, Tutor, AccessToken,
+} = require('../../models');
 const { authorizeToken } = require('../../utils/auth');
 const { getCalendlyMeetings, getCalendlyHeaders } = require('../../utils/calendly-helpers');
 const { getCalendlyToken } = require('../../utils/encryption');
@@ -29,7 +31,7 @@ router.get('/meetings/:courseId', authorizeToken, async ({
   }
 });
 
-router.post('/users/me', authorizeToken, async ({
+router.post('/sync', authorizeToken, async ({
   tutor: { _id: tutorId },
   body: { password, courseId },
 }, res) => {
@@ -53,6 +55,7 @@ router.post('/users/me', authorizeToken, async ({
     const { calendly: { data: existingData } } = await Course.findById(courseId);
 
     if (!resource) return res.status(400).json('bad accessToken');
+
     if (!existingData) {
       // save calendly resource
       const data = await Calendly.create(resource);

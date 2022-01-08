@@ -1,15 +1,13 @@
-import { string } from 'prop-types';
-import React, { useContext, useEffect, useState } from 'react';
-import {
-  Button, Form, Icon,
-} from 'react-bulma-components';
-import { CourseContext } from '../../../../context';
+import { func, string } from 'prop-types';
+import React, { useContext, useState } from 'react';
+import { Button, Form, Icon } from 'react-bulma-components';
+import { AppContext, CourseContext } from '../../../../context';
 import { createModel } from '../../../../utils';
 import { syncCalendlyResource } from '../../../../utils/api';
 
-const AccessToken = ({ courseId, password }) => {
-  // eslint-disable-next-line no-unused-vars
+const AddAccessToken = ({ courseId, password, setSelectedCalendlyAccess }) => {
   const { allCourses, setAllCourses } = useContext(CourseContext);
+  const { tutorDetails, setTutorDetails } = useContext(AppContext);
 
   const [formInputs, setFormInputs] = useState({ token: '' });
   const [loading, setLoading] = useState(false);
@@ -17,11 +15,6 @@ const AccessToken = ({ courseId, password }) => {
   const [helpText, setHelpText] = useState('');
   const [color, setColor] = useState('');
   const { token } = formInputs;
-
-  useEffect(() => {
-    if (!token) return setColor('');
-    return setColor('success');
-  }, [token, setColor]);
 
   const handleFormUpdate = ({ target: { name, value } }) => {
     if (helpText) setHelpText('');
@@ -46,6 +39,13 @@ const AccessToken = ({ courseId, password }) => {
       accessToken = _id;
     } catch (error) {
       // expected case: bad password
+      setTutorDetails({
+        ...tutorDetails,
+        calendly: {
+          accessToken: null,
+          data: null,
+        },
+      });
       setHelpText('unauthorized');
     }
 
@@ -54,6 +54,7 @@ const AccessToken = ({ courseId, password }) => {
     } catch (error) {
       // expected case: bad accessToken
       setHelpText('invalid token, try again');
+      setColor('danger');
     }
 
     if (accessToken && data) {
@@ -65,7 +66,9 @@ const AccessToken = ({ courseId, password }) => {
         },
       });
       setHelpText('');
+      setColor('');
       setButtonText('success!');
+      setSelectedCalendlyAccess('');
     }
     setLoading(false);
   };
@@ -73,6 +76,13 @@ const AccessToken = ({ courseId, password }) => {
   return (
     <form onSubmit={handleFormSubmit}>
       <Form.Field>
+        <Form.Label size='small'>
+          create an access token
+          {' '}
+          <a className='my-5' href='https://calendly.com/integrations/api_webhooks' target='_blank' rel='noreferrer'>here</a>
+          {' '}
+          and paste it below
+        </Form.Label>
         <Form.Control fullwidth className>
           <Form.Input
             name='token'
@@ -100,12 +110,12 @@ const AccessToken = ({ courseId, password }) => {
         </Form.Control>
       </Form.Field>
     </form>
-
   );
 };
-export default AccessToken;
+export default AddAccessToken;
 
-AccessToken.propTypes = {
+AddAccessToken.propTypes = {
   courseId: string.isRequired,
   password: string.isRequired,
+  setSelectedCalendlyAccess: func.isRequired,
 };

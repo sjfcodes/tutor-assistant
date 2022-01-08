@@ -3,7 +3,6 @@ import React, {
 } from 'react';
 import { v4 as uuid } from 'uuid';
 
-import { Box } from 'react-bulma-components';
 import ProfileDetailListItem from './ProfileDetailListItem';
 import { AppContext } from '../../../../context';
 
@@ -43,11 +42,9 @@ const ProfileDetailList = () => {
   }, [tutorDetails, doNotDisplay]);
 
   return (
-    <Box className='border p-0'>
-      <ul className='rounded'>
-        {listItems}
-      </ul>
-    </Box>
+    <ul className='rounded'>
+      {listItems}
+    </ul>
   );
 };
 
