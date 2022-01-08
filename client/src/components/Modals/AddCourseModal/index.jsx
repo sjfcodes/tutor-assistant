@@ -1,5 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Button, Form, Modal } from 'react-bulma-components';
+import {
+  Button, Form, Heading, Modal,
+} from 'react-bulma-components';
 import { AppContext, CourseContext, ModalContext } from '../../../context';
 import { createModel, missingFormInputs } from '../../../utils';
 
@@ -60,14 +62,20 @@ const AddCourseModal = () => {
 
   return (
     <Modal
-      showClose={false}
+      className='background-blurred-light'
       show={openModal === 'addCourse'}
       onClose={handleCloseModal}
     >
       <Modal.Card>
-        <Modal.Card.Header>
-          <Modal.Card.Title>Add Course</Modal.Card.Title>
+        <Modal.Card.Header
+          className='background-clear mx-2 pb-0'
+          showClose={false}
+        >
+          <Heading className='has-text-grey-lighter mb-5'>
+            Add Course
+          </Heading>
         </Modal.Card.Header>
+
         <form onSubmit={handleAddCourse}>
           <Modal.Card.Body>
             <Form.Field>

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Form, Icon } from 'react-bulma-components';
+import { Form } from 'react-bulma-components';
 import {
   string, func, shape, number,
 } from 'prop-types';
@@ -43,64 +43,56 @@ const MeetingTime = ({ formInputs, setFormInputs, updateDuration }) => {
   };
 
   return (
-    <>
-      <Form.Field kind='addons'>
-        <Form.Control>
-          <Form.Label>Day</Form.Label>
-          <Form.Input
-            type='date'
-            name='day'
-            value={day}
-            onChange={handleInputChange}
-            disabled={!studentId}
-          />
-        </Form.Control>
-      </Form.Field>
-      <Form.Field kind='addons'>
-        <Form.Control>
-          <Form.Label>Hour</Form.Label>
-          <Form.Select
-            name='hour'
-            value={hour}
-            onChange={handleInputChange}
-            disabled={!day}
-          >
-            <option>-</option>
-            <option value={1}>1</option>
-            <option value={2}>2</option>
-            <option value={3}>3</option>
-            <option value={4}>4</option>
-            <option value={5}>5</option>
-            <option value={6}>6</option>
-            <option value={7}>7</option>
-            <option value={8}>8</option>
-            <option value={9}>9</option>
-            <option value={10}>10</option>
-            <option value={11}>11</option>
-            <option value={12}>12</option>
-          </Form.Select>
-        </Form.Control>
-        <Form.Control>
-          <Form.Label>AM/PM</Form.Label>
-          <Form.Select
-            name='amPm'
-            value={amPm}
-            onChange={handleInputChange}
-            disabled={!hour}
-          >
-            <option>-</option>
-            <option value='AM'>AM</option>
-            <option value='PM'>PM</option>
-          </Form.Select>
-          <Icon className='ml-2 mt-2'>
-            <i
-              className={`fas fa-check ${!validatestartTime(date) && 'has-text-white'
-              }`}
-            />
-          </Icon>
-        </Form.Control>
-      </Form.Field>
-    </>
+    <Form.Field kind='addons' justifyContent='center'>
+      <Form.Control className='mb-3'>
+        <Form.Label>day</Form.Label>
+        <Form.Input
+          type='date'
+          name='day'
+          value={day}
+          onChange={handleInputChange}
+          disabled={!studentId}
+        />
+      </Form.Control>
+
+      <Form.Control>
+        <Form.Label>hour</Form.Label>
+        <Form.Select
+          name='hour'
+          value={hour}
+          onChange={handleInputChange}
+          disabled={!day}
+        >
+          <option>-</option>
+          <option value={1}>1</option>
+          <option value={2}>2</option>
+          <option value={3}>3</option>
+          <option value={4}>4</option>
+          <option value={5}>5</option>
+          <option value={6}>6</option>
+          <option value={7}>7</option>
+          <option value={8}>8</option>
+          <option value={9}>9</option>
+          <option value={10}>10</option>
+          <option value={11}>11</option>
+          <option value={12}>12</option>
+        </Form.Select>
+      </Form.Control>
+
+      <Form.Control>
+        <Form.Label>am/pm</Form.Label>
+        <Form.Select
+          name='amPm'
+          value={amPm}
+          onChange={handleInputChange}
+          disabled={!hour}
+        >
+          <option>-</option>
+          <option value='am'>am</option>
+          <option value='pm'>pm</option>
+        </Form.Select>
+      </Form.Control>
+    </Form.Field>
   );
 };
 export default MeetingTime;

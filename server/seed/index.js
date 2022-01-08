@@ -75,7 +75,6 @@ db.once('open', async () => {
   const myCourseId = await createCourse({ seed: courseSeed, tutorId: myId });
   await createMeetings({ seed: meetingSeeds, courseId, studentIds });
   const { _id: tokenId } = await AccessToken.create(tokenSeed);
-  console.log(tokenId);
   await Course.findByIdAndUpdate(myCourseId, { 'calendly.accessToken': tokenId });
 
   console.log('==> db seeds success\n');

@@ -1,9 +1,8 @@
 import React, { useContext } from 'react';
 import {
-  Button, Form, Icon, Columns,
+  Button, Form, Columns,
 } from 'react-bulma-components';
 import { LevelSide } from '../../../BulmaHelpers';
-import { inputIsSelected } from '../../../../utils';
 import { CourseContext } from '../../../../context';
 import MeetingTime, { addMeetingFormPropTypes } from './MeetingTime';
 
@@ -28,9 +27,9 @@ const AddMeetingForm = ({ formInputs, setFormInputs }) => {
   return (
     <Columns>
       <Columns.Column>
-        <Form.Field kind='addons'>
+        <Form.Field kind='addons' justifyContent='center'>
           <Form.Control>
-            <Form.Label>Student</Form.Label>
+            <Form.Label>student</Form.Label>
             <Form.Select
               name='studentId'
               value={studentId}
@@ -50,15 +49,10 @@ const AddMeetingForm = ({ formInputs, setFormInputs }) => {
                 ),
               )}
             </Form.Select>
-            <Icon className='ml-2 mt-2'>
-              <i
-                className={`fas fa-check ${!inputIsSelected(studentId) && 'has-text-white'
-                }`}
-              />
-            </Icon>
           </Form.Control>
         </Form.Field>
       </Columns.Column>
+
       <Columns.Column>
         <MeetingTime
           formInputs={formInputs}
@@ -66,41 +60,43 @@ const AddMeetingForm = ({ formInputs, setFormInputs }) => {
           updateDuration={updateDuration}
         />
       </Columns.Column>
-      <LevelSide>
-        <Form.Field kind='addons'>
-          <Form.Control>
-            <Form.Label>Duration (hours)</Form.Label>
+      <Columns.Column>
+        <LevelSide>
+          <Form.Field kind='addons'>
+            <Form.Control>
+              <Form.Label>duration (hours)</Form.Label>
 
-            <Form.Input
-              disabled
-              style={{
-                width: '50px',
-                backgroundColor: 'inherit',
-                borderColor: `${startTime && 'inherit'}`,
-                color: `${startTime && 'inherit'}`,
-              }}
-              value={duration}
-            />
+              <Form.Input
+                disabled
+                style={{
+                  width: '50px',
+                  backgroundColor: 'inherit',
+                  borderColor: `${startTime && 'inherit'}`,
+                  color: `${startTime && 'inherit'}`,
+                }}
+                value={duration}
+              />
 
-            <Button
-              type='button'
-              className='py-0'
-              onClick={() => updateDuration(1)}
-              disabled={!startTime}
-            >
-              +
-            </Button>
-            <Button
-              disabled={!startTime || duration === 1}
-              type='button'
-              className='py-0'
-              onClick={() => duration >= 1 && updateDuration(-1)}
-            >
-              -
-            </Button>
-          </Form.Control>
-        </Form.Field>
-      </LevelSide>
+              <Button
+                type='button'
+                className='py-0'
+                onClick={() => updateDuration(1)}
+                disabled={!startTime}
+              >
+                +
+              </Button>
+              <Button
+                disabled={!startTime || duration === 1}
+                type='button'
+                className='py-0'
+                onClick={() => duration >= 1 && updateDuration(-1)}
+              >
+                -
+              </Button>
+            </Form.Control>
+          </Form.Field>
+        </LevelSide>
+      </Columns.Column>
     </Columns>
   );
 };
