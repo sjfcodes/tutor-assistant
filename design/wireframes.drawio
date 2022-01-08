@@ -1,15 +1,9 @@
-<mxfile host="app.diagrams.net" modified="2022-01-08T20:03:04.562Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36" etag="LFkTQjn05lVWW8JVty-W" version="16.2.4" type="github" pages="2">
+<mxfile host="app.diagrams.net" modified="2022-01-08T20:18:50.664Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36" etag="gT8-4hXYAz5aBh2DEB6O" version="16.2.4" type="github" pages="2">
   <diagram id="h9dFl7BtjYhouRQpgsoD" name="Home-Nav">
-    <mxGraphModel dx="877" dy="773" grid="1" gridSize="10" guides="1" tooltips="1" connect="0" arrows="0" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" background="none" math="0" shadow="0">
+    <mxGraphModel dx="1160" dy="773" grid="1" gridSize="10" guides="1" tooltips="1" connect="0" arrows="0" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" background="none" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="pkqxkNg5PtHQlLqN9tTv-4" value="myCourse" style="rounded=1;whiteSpace=wrap;html=1;sketch=1;fillStyle=solid;fontFamily=Comic Sans MS;fillColor=default;" vertex="1" parent="1">
-          <mxGeometry x="1035.5" y="290" width="70" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="pkqxkNg5PtHQlLqN9tTv-5" value="add course" style="rounded=1;whiteSpace=wrap;html=1;sketch=1;fillStyle=solid;fillColor=default;fontFamily=Comic Sans MS;" vertex="1" parent="1">
-          <mxGeometry x="1106.5" y="290" width="81" height="30" as="geometry" />
-        </mxCell>
         <mxCell id="VJyBcLO_9741J4DAKMgz-3" value="" style="rounded=1;whiteSpace=wrap;html=1;sketch=1;fontFamily=Comic Sans MS;" parent="1" vertex="1">
           <mxGeometry x="392.13" y="200" width="355" height="650" as="geometry" />
         </mxCell>
@@ -70,86 +64,119 @@
             <mxPoint x="1278.3899999999999" y="222.24" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="VJyBcLO_9741J4DAKMgz-4" value="myCourse" style="rounded=1;whiteSpace=wrap;html=1;sketch=1;fillStyle=solid;fontFamily=Comic Sans MS;" parent="1" vertex="1">
-          <mxGeometry x="454.13" y="280" width="70" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="VJyBcLO_9741J4DAKMgz-5" value="add course" style="rounded=1;whiteSpace=wrap;html=1;sketch=1;fillStyle=solid;fillColor=#B3B3B3;fontFamily=Comic Sans MS;" parent="1" vertex="1">
-          <mxGeometry x="525.13" y="280" width="81" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="VJyBcLO_9741J4DAKMgz-6" value="" style="rounded=1;whiteSpace=wrap;html=1;sketch=1;fillStyle=auto;fontFamily=Comic Sans MS;" parent="1" vertex="1">
-          <mxGeometry x="414.63" y="310" width="310" height="330" as="geometry" />
-        </mxCell>
-        <mxCell id="VJyBcLO_9741J4DAKMgz-9" value="&lt;span class=&quot;&quot; style=&quot;box-sizing: inherit ; color: rgb(74 , 74 , 74) ; font-family: &amp;quot;system-ui&amp;quot; , , &amp;quot;segoe ui&amp;quot; , &amp;quot;roboto&amp;quot; , &amp;quot;oxygen&amp;quot; , &amp;quot;ubuntu&amp;quot; , &amp;quot;cantarell&amp;quot; , &amp;quot;fira sans&amp;quot; , &amp;quot;droid sans&amp;quot; , &amp;quot;helvetica neue&amp;quot; , &amp;quot;helvetica&amp;quot; , &amp;quot;arial&amp;quot; , sans-serif ; font-size: 16px ; background-color: rgb(255 , 255 , 255)&quot;&gt;[&lt;span class=&quot;is-size-7 &quot; style=&quot;box-sizing: inherit ; font-style: inherit ; font-weight: inherit ; font-size: 0.75rem&quot;&gt;Sat&lt;/span&gt;&amp;nbsp;&lt;span class=&quot;is-size-7 &quot; style=&quot;box-sizing: inherit ; font-style: inherit ; font-weight: inherit ; font-size: 0.75rem&quot;&gt;Jan&lt;/span&gt;&amp;nbsp;&lt;span class=&quot;is-size-6 has-text-weight-bold&quot; style=&quot;box-sizing: inherit ; font-style: inherit ; font-weight: 700 ; font-size: 1rem&quot;&gt;08&lt;/span&gt;]&amp;nbsp;&lt;span class=&quot;is-size-6 has-text-weight-bold&quot; style=&quot;box-sizing: inherit ; font-style: inherit ; font-weight: 700 ; font-size: 1rem&quot;&gt;11&lt;/span&gt;:&lt;span class=&quot;is-size-6 has-text-weight-bold&quot; style=&quot;box-sizing: inherit ; font-style: inherit ; font-weight: 700 ; font-size: 1rem&quot;&gt;01&lt;/span&gt;&amp;nbsp;&lt;span class=&quot;is-size-7 &quot; style=&quot;box-sizing: inherit ; font-style: inherit ; font-weight: inherit ; font-size: 0.75rem&quot;&gt;am&lt;/span&gt;&lt;/span&gt;&lt;span style=&quot;color: rgb(74 , 74 , 74) ; font-family: &amp;quot;system-ui&amp;quot; , , &amp;quot;segoe ui&amp;quot; , &amp;quot;roboto&amp;quot; , &amp;quot;oxygen&amp;quot; , &amp;quot;ubuntu&amp;quot; , &amp;quot;cantarell&amp;quot; , &amp;quot;fira sans&amp;quot; , &amp;quot;droid sans&amp;quot; , &amp;quot;helvetica neue&amp;quot; , &amp;quot;helvetica&amp;quot; , &amp;quot;arial&amp;quot; , sans-serif ; font-size: 16px ; background-color: rgb(255 , 255 , 255)&quot;&gt;&amp;nbsp;&lt;/span&gt;&lt;span class=&quot;is-size-7 has-text-grey&quot; style=&quot;box-sizing: inherit ; font-family: &amp;quot;system-ui&amp;quot; , , &amp;quot;segoe ui&amp;quot; , &amp;quot;roboto&amp;quot; , &amp;quot;oxygen&amp;quot; , &amp;quot;ubuntu&amp;quot; , &amp;quot;cantarell&amp;quot; , &amp;quot;fira sans&amp;quot; , &amp;quot;droid sans&amp;quot; , &amp;quot;helvetica neue&amp;quot; , &amp;quot;helvetica&amp;quot; , &amp;quot;arial&amp;quot; , sans-serif ; background-color: rgb(255 , 255 , 255) ; color: rgb(122 , 122 , 122) ; font-size: 0.75rem&quot;&gt;(PST)&lt;br&gt;&lt;br&gt;&lt;span style=&quot;color: rgb(74 , 74 , 74) ; font-size: 16px&quot;&gt;Good morning, Tutor-demo.&lt;/span&gt;&lt;br&gt;&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;shadow=0;sketch=1;fillStyle=auto;fontFamily=Comic Sans MS;fillColor=#FFFFFF;" parent="1" vertex="1">
-          <mxGeometry x="434.63" y="333" width="270" height="70" as="geometry" />
-        </mxCell>
-        <mxCell id="VJyBcLO_9741J4DAKMgz-10" value="" style="rounded=1;whiteSpace=wrap;html=1;shadow=0;sketch=1;fillStyle=auto;fontFamily=Comic Sans MS;fillColor=#FFFFFF;" parent="1" vertex="1">
-          <mxGeometry x="434.13" y="430" width="270" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="XO_DNMzDLUDRU4fpuJas-11" value="" style="endArrow=none;html=1;rounded=0;fontSize=20;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;fontFamily=Comic Sans MS;" parent="1" source="VJyBcLO_9741J4DAKMgz-9" target="VJyBcLO_9741J4DAKMgz-9" edge="1">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="414.13" y="523" as="sourcePoint" />
-            <mxPoint x="464.13" y="473" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="XO_DNMzDLUDRU4fpuJas-13" value="Students" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillStyle=cross-hatch;fontSize=20;fontFamily=Comic Sans MS;" parent="1" vertex="1">
-          <mxGeometry x="444.13" y="445" width="100" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="XO_DNMzDLUDRU4fpuJas-14" value="v" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillStyle=cross-hatch;fontSize=20;fontFamily=Comic Sans MS;" parent="1" vertex="1">
-          <mxGeometry x="654.13" y="445" width="38.25" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="XO_DNMzDLUDRU4fpuJas-15" value="" style="rounded=1;whiteSpace=wrap;html=1;shadow=0;sketch=1;fillStyle=auto;fontFamily=Comic Sans MS;fillColor=#FFFFFF;" parent="1" vertex="1">
-          <mxGeometry x="434.63" y="524" width="270" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="XO_DNMzDLUDRU4fpuJas-16" value="Meetings" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillStyle=cross-hatch;fontSize=20;fontFamily=Comic Sans MS;" parent="1" vertex="1">
-          <mxGeometry x="444.63" y="539" width="100" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="XO_DNMzDLUDRU4fpuJas-17" value="v" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillStyle=cross-hatch;fontSize=20;fontFamily=Comic Sans MS;" parent="1" vertex="1">
-          <mxGeometry x="654.63" y="539" width="38.25" height="30" as="geometry" />
-        </mxCell>
         <mxCell id="pkqxkNg5PtHQlLqN9tTv-2" value="" style="rounded=0;whiteSpace=wrap;html=1;fillStyle=solid;fontFamily=Comic Sans MS;fontSize=24;fontColor=#FFFFFF;fillColor=#4D4D4D;" vertex="1" parent="1">
           <mxGeometry x="976.3199999999999" y="260" width="353.87" height="530" as="geometry" />
         </mxCell>
-        <mxCell id="pkqxkNg5PtHQlLqN9tTv-6" value="" style="rounded=1;whiteSpace=wrap;html=1;sketch=1;fillStyle=auto;fontFamily=Comic Sans MS;" vertex="1" parent="1">
-          <mxGeometry x="996" y="320" width="310" height="330" as="geometry" />
+        <mxCell id="pkqxkNg5PtHQlLqN9tTv-17" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="414.63" y="280" width="310" height="360" as="geometry" />
         </mxCell>
-        <mxCell id="pkqxkNg5PtHQlLqN9tTv-7" value="&lt;span class=&quot;&quot; style=&quot;box-sizing: inherit ; color: rgb(74 , 74 , 74) ; font-family: &amp;quot;system-ui&amp;quot; , , &amp;quot;segoe ui&amp;quot; , &amp;quot;roboto&amp;quot; , &amp;quot;oxygen&amp;quot; , &amp;quot;ubuntu&amp;quot; , &amp;quot;cantarell&amp;quot; , &amp;quot;fira sans&amp;quot; , &amp;quot;droid sans&amp;quot; , &amp;quot;helvetica neue&amp;quot; , &amp;quot;helvetica&amp;quot; , &amp;quot;arial&amp;quot; , sans-serif ; font-size: 16px ; background-color: rgb(255 , 255 , 255)&quot;&gt;[&lt;span class=&quot;is-size-7 &quot; style=&quot;box-sizing: inherit ; font-style: inherit ; font-weight: inherit ; font-size: 0.75rem&quot;&gt;Sat&lt;/span&gt;&amp;nbsp;&lt;span class=&quot;is-size-7 &quot; style=&quot;box-sizing: inherit ; font-style: inherit ; font-weight: inherit ; font-size: 0.75rem&quot;&gt;Jan&lt;/span&gt;&amp;nbsp;&lt;span class=&quot;is-size-6 has-text-weight-bold&quot; style=&quot;box-sizing: inherit ; font-style: inherit ; font-weight: 700 ; font-size: 1rem&quot;&gt;08&lt;/span&gt;]&amp;nbsp;&lt;span class=&quot;is-size-6 has-text-weight-bold&quot; style=&quot;box-sizing: inherit ; font-style: inherit ; font-weight: 700 ; font-size: 1rem&quot;&gt;11&lt;/span&gt;:&lt;span class=&quot;is-size-6 has-text-weight-bold&quot; style=&quot;box-sizing: inherit ; font-style: inherit ; font-weight: 700 ; font-size: 1rem&quot;&gt;01&lt;/span&gt;&amp;nbsp;&lt;span class=&quot;is-size-7 &quot; style=&quot;box-sizing: inherit ; font-style: inherit ; font-weight: inherit ; font-size: 0.75rem&quot;&gt;am&lt;/span&gt;&lt;/span&gt;&lt;span style=&quot;color: rgb(74 , 74 , 74) ; font-family: &amp;quot;system-ui&amp;quot; , , &amp;quot;segoe ui&amp;quot; , &amp;quot;roboto&amp;quot; , &amp;quot;oxygen&amp;quot; , &amp;quot;ubuntu&amp;quot; , &amp;quot;cantarell&amp;quot; , &amp;quot;fira sans&amp;quot; , &amp;quot;droid sans&amp;quot; , &amp;quot;helvetica neue&amp;quot; , &amp;quot;helvetica&amp;quot; , &amp;quot;arial&amp;quot; , sans-serif ; font-size: 16px ; background-color: rgb(255 , 255 , 255)&quot;&gt;&amp;nbsp;&lt;/span&gt;&lt;span class=&quot;is-size-7 has-text-grey&quot; style=&quot;box-sizing: inherit ; font-family: &amp;quot;system-ui&amp;quot; , , &amp;quot;segoe ui&amp;quot; , &amp;quot;roboto&amp;quot; , &amp;quot;oxygen&amp;quot; , &amp;quot;ubuntu&amp;quot; , &amp;quot;cantarell&amp;quot; , &amp;quot;fira sans&amp;quot; , &amp;quot;droid sans&amp;quot; , &amp;quot;helvetica neue&amp;quot; , &amp;quot;helvetica&amp;quot; , &amp;quot;arial&amp;quot; , sans-serif ; background-color: rgb(255 , 255 , 255) ; color: rgb(122 , 122 , 122) ; font-size: 0.75rem&quot;&gt;(PST)&lt;br&gt;&lt;br&gt;&lt;span style=&quot;color: rgb(74 , 74 , 74) ; font-size: 16px&quot;&gt;Good morning, Tutor-demo.&lt;/span&gt;&lt;br&gt;&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;shadow=0;sketch=1;fillStyle=auto;fontFamily=Comic Sans MS;fillColor=#FFFFFF;" vertex="1" parent="1">
-          <mxGeometry x="1016" y="343" width="270" height="70" as="geometry" />
+        <mxCell id="VJyBcLO_9741J4DAKMgz-4" value="myCourse" style="rounded=1;whiteSpace=wrap;html=1;sketch=1;fillStyle=solid;fontFamily=Comic Sans MS;" parent="pkqxkNg5PtHQlLqN9tTv-17" vertex="1">
+          <mxGeometry x="39.5" width="70" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="pkqxkNg5PtHQlLqN9tTv-8" value="" style="rounded=1;whiteSpace=wrap;html=1;shadow=0;sketch=1;fillStyle=auto;fontFamily=Comic Sans MS;fillColor=#FFFFFF;" vertex="1" parent="1">
-          <mxGeometry x="1015.5" y="440" width="270" height="60" as="geometry" />
+        <mxCell id="VJyBcLO_9741J4DAKMgz-5" value="add course" style="rounded=1;whiteSpace=wrap;html=1;sketch=1;fillStyle=solid;fillColor=#B3B3B3;fontFamily=Comic Sans MS;" parent="pkqxkNg5PtHQlLqN9tTv-17" vertex="1">
+          <mxGeometry x="110.5" width="81" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="pkqxkNg5PtHQlLqN9tTv-9" value="" style="endArrow=none;html=1;rounded=0;fontSize=20;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;fontFamily=Comic Sans MS;" edge="1" source="pkqxkNg5PtHQlLqN9tTv-7" target="pkqxkNg5PtHQlLqN9tTv-7" parent="1">
+        <mxCell id="VJyBcLO_9741J4DAKMgz-6" value="" style="rounded=1;whiteSpace=wrap;html=1;sketch=1;fillStyle=auto;fontFamily=Comic Sans MS;" parent="pkqxkNg5PtHQlLqN9tTv-17" vertex="1">
+          <mxGeometry y="30" width="310" height="330" as="geometry" />
+        </mxCell>
+        <mxCell id="VJyBcLO_9741J4DAKMgz-9" value="&lt;span class=&quot;&quot; style=&quot;box-sizing: inherit ; color: rgb(74 , 74 , 74) ; font-family: &amp;quot;system-ui&amp;quot; , , &amp;quot;segoe ui&amp;quot; , &amp;quot;roboto&amp;quot; , &amp;quot;oxygen&amp;quot; , &amp;quot;ubuntu&amp;quot; , &amp;quot;cantarell&amp;quot; , &amp;quot;fira sans&amp;quot; , &amp;quot;droid sans&amp;quot; , &amp;quot;helvetica neue&amp;quot; , &amp;quot;helvetica&amp;quot; , &amp;quot;arial&amp;quot; , sans-serif ; font-size: 16px ; background-color: rgb(255 , 255 , 255)&quot;&gt;[&lt;span class=&quot;is-size-7 &quot; style=&quot;box-sizing: inherit ; font-style: inherit ; font-weight: inherit ; font-size: 0.75rem&quot;&gt;Sat&lt;/span&gt;&amp;nbsp;&lt;span class=&quot;is-size-7 &quot; style=&quot;box-sizing: inherit ; font-style: inherit ; font-weight: inherit ; font-size: 0.75rem&quot;&gt;Jan&lt;/span&gt;&amp;nbsp;&lt;span class=&quot;is-size-6 has-text-weight-bold&quot; style=&quot;box-sizing: inherit ; font-style: inherit ; font-weight: 700 ; font-size: 1rem&quot;&gt;08&lt;/span&gt;]&amp;nbsp;&lt;span class=&quot;is-size-6 has-text-weight-bold&quot; style=&quot;box-sizing: inherit ; font-style: inherit ; font-weight: 700 ; font-size: 1rem&quot;&gt;11&lt;/span&gt;:&lt;span class=&quot;is-size-6 has-text-weight-bold&quot; style=&quot;box-sizing: inherit ; font-style: inherit ; font-weight: 700 ; font-size: 1rem&quot;&gt;01&lt;/span&gt;&amp;nbsp;&lt;span class=&quot;is-size-7 &quot; style=&quot;box-sizing: inherit ; font-style: inherit ; font-weight: inherit ; font-size: 0.75rem&quot;&gt;am&lt;/span&gt;&lt;/span&gt;&lt;span style=&quot;color: rgb(74 , 74 , 74) ; font-family: &amp;quot;system-ui&amp;quot; , , &amp;quot;segoe ui&amp;quot; , &amp;quot;roboto&amp;quot; , &amp;quot;oxygen&amp;quot; , &amp;quot;ubuntu&amp;quot; , &amp;quot;cantarell&amp;quot; , &amp;quot;fira sans&amp;quot; , &amp;quot;droid sans&amp;quot; , &amp;quot;helvetica neue&amp;quot; , &amp;quot;helvetica&amp;quot; , &amp;quot;arial&amp;quot; , sans-serif ; font-size: 16px ; background-color: rgb(255 , 255 , 255)&quot;&gt;&amp;nbsp;&lt;/span&gt;&lt;span class=&quot;is-size-7 has-text-grey&quot; style=&quot;box-sizing: inherit ; font-family: &amp;quot;system-ui&amp;quot; , , &amp;quot;segoe ui&amp;quot; , &amp;quot;roboto&amp;quot; , &amp;quot;oxygen&amp;quot; , &amp;quot;ubuntu&amp;quot; , &amp;quot;cantarell&amp;quot; , &amp;quot;fira sans&amp;quot; , &amp;quot;droid sans&amp;quot; , &amp;quot;helvetica neue&amp;quot; , &amp;quot;helvetica&amp;quot; , &amp;quot;arial&amp;quot; , sans-serif ; background-color: rgb(255 , 255 , 255) ; color: rgb(122 , 122 , 122) ; font-size: 0.75rem&quot;&gt;(PST)&lt;br&gt;&lt;br&gt;&lt;span style=&quot;color: rgb(74 , 74 , 74) ; font-size: 16px&quot;&gt;Good morning, Tutor-demo.&lt;/span&gt;&lt;br&gt;&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;shadow=0;sketch=1;fillStyle=auto;fontFamily=Comic Sans MS;fillColor=#FFFFFF;" parent="pkqxkNg5PtHQlLqN9tTv-17" vertex="1">
+          <mxGeometry x="20" y="53" width="270" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="VJyBcLO_9741J4DAKMgz-10" value="" style="rounded=1;whiteSpace=wrap;html=1;shadow=0;sketch=1;fillStyle=auto;fontFamily=Comic Sans MS;fillColor=#FFFFFF;" parent="pkqxkNg5PtHQlLqN9tTv-17" vertex="1">
+          <mxGeometry x="19.5" y="150" width="270" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="XO_DNMzDLUDRU4fpuJas-11" value="" style="endArrow=none;html=1;rounded=0;fontSize=20;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;fontFamily=Comic Sans MS;" parent="pkqxkNg5PtHQlLqN9tTv-17" source="VJyBcLO_9741J4DAKMgz-9" target="VJyBcLO_9741J4DAKMgz-9" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="995.5" y="533" as="sourcePoint" />
-            <mxPoint x="1045.5" y="483" as="targetPoint" />
+            <mxPoint x="-0.5" y="243" as="sourcePoint" />
+            <mxPoint x="49.5" y="193" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="pkqxkNg5PtHQlLqN9tTv-10" value="Students" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillStyle=cross-hatch;fontSize=20;fontFamily=Comic Sans MS;" vertex="1" parent="1">
-          <mxGeometry x="1025.5" y="455" width="100" height="30" as="geometry" />
+        <mxCell id="XO_DNMzDLUDRU4fpuJas-13" value="Students" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillStyle=cross-hatch;fontSize=20;fontFamily=Comic Sans MS;" parent="pkqxkNg5PtHQlLqN9tTv-17" vertex="1">
+          <mxGeometry x="29.5" y="165" width="100" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="pkqxkNg5PtHQlLqN9tTv-12" value="" style="rounded=1;whiteSpace=wrap;html=1;shadow=0;sketch=1;fillStyle=auto;fontFamily=Comic Sans MS;fillColor=#FFFFFF;" vertex="1" parent="1">
-          <mxGeometry x="1016" y="534" width="270" height="60" as="geometry" />
+        <mxCell id="XO_DNMzDLUDRU4fpuJas-14" value="v" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillStyle=cross-hatch;fontSize=20;fontFamily=Comic Sans MS;" parent="pkqxkNg5PtHQlLqN9tTv-17" vertex="1">
+          <mxGeometry x="239.5" y="165" width="38.25" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="pkqxkNg5PtHQlLqN9tTv-13" value="Meetings" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillStyle=cross-hatch;fontSize=20;fontFamily=Comic Sans MS;" vertex="1" parent="1">
-          <mxGeometry x="1026" y="549" width="100" height="30" as="geometry" />
+        <mxCell id="XO_DNMzDLUDRU4fpuJas-15" value="" style="rounded=1;whiteSpace=wrap;html=1;shadow=0;sketch=1;fillStyle=auto;fontFamily=Comic Sans MS;fillColor=#FFFFFF;" parent="pkqxkNg5PtHQlLqN9tTv-17" vertex="1">
+          <mxGeometry x="20" y="244" width="270" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="pkqxkNg5PtHQlLqN9tTv-14" value="v" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillStyle=cross-hatch;fontSize=20;fontFamily=Comic Sans MS;" vertex="1" parent="1">
-          <mxGeometry x="1236" y="549" width="38.25" height="30" as="geometry" />
+        <mxCell id="XO_DNMzDLUDRU4fpuJas-16" value="Meetings" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillStyle=cross-hatch;fontSize=20;fontFamily=Comic Sans MS;" parent="pkqxkNg5PtHQlLqN9tTv-17" vertex="1">
+          <mxGeometry x="30" y="259" width="100" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="pkqxkNg5PtHQlLqN9tTv-11" value="v" style="text;html=1;strokeColor=none;fillColor=default;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillStyle=cross-hatch;fontSize=20;fontFamily=Comic Sans MS;" vertex="1" parent="1">
-          <mxGeometry x="1235.5" y="455" width="38.25" height="30" as="geometry" />
+        <mxCell id="XO_DNMzDLUDRU4fpuJas-17" value="v" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillStyle=cross-hatch;fontSize=20;fontFamily=Comic Sans MS;" parent="pkqxkNg5PtHQlLqN9tTv-17" vertex="1">
+          <mxGeometry x="240" y="259" width="38.25" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="pkqxkNg5PtHQlLqN9tTv-3" value="" style="rounded=0;whiteSpace=wrap;html=1;fillStyle=solid;fontFamily=Comic Sans MS;fontSize=24;fillColor=#B3B3B3;gradientColor=none;gradientDirection=radial;sketch=1;strokeColor=default;" vertex="1" parent="1">
-          <mxGeometry x="976" y="260" width="354.87" height="210" as="geometry" />
+        <mxCell id="pkqxkNg5PtHQlLqN9tTv-31" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="1000" y="310" width="310" height="477" as="geometry" />
         </mxCell>
-        <mxCell id="XO_DNMzDLUDRU4fpuJas-46" value="logout" style="rounded=1;whiteSpace=wrap;html=1;fillStyle=cross-hatch;fontSize=14;fillColor=#f8cecc;strokeColor=#b85450;fontFamily=Comic Sans MS;" parent="1" vertex="1">
-          <mxGeometry x="1008.76" y="417" width="290" height="20" as="geometry" />
+        <mxCell id="pkqxkNg5PtHQlLqN9tTv-19" value="myCourse" style="rounded=1;whiteSpace=wrap;html=1;sketch=1;fillStyle=solid;fontFamily=Comic Sans MS;" vertex="1" parent="pkqxkNg5PtHQlLqN9tTv-31">
+          <mxGeometry x="39.5" width="70" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="XO_DNMzDLUDRU4fpuJas-54" value="settings" style="rounded=1;whiteSpace=wrap;html=1;fillStyle=cross-hatch;fontSize=14;fillColor=#dae8fc;strokeColor=#6c8ebf;fontFamily=Comic Sans MS;" parent="1" vertex="1">
-          <mxGeometry x="1007.76" y="338" width="290" height="43" as="geometry" />
+        <mxCell id="pkqxkNg5PtHQlLqN9tTv-20" value="add course" style="rounded=1;whiteSpace=wrap;html=1;sketch=1;fillStyle=solid;fillColor=#B3B3B3;fontFamily=Comic Sans MS;" vertex="1" parent="pkqxkNg5PtHQlLqN9tTv-31">
+          <mxGeometry x="110.5" width="81" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="XO_DNMzDLUDRU4fpuJas-55" value="email templates" style="rounded=1;whiteSpace=wrap;html=1;fillStyle=cross-hatch;fontSize=14;fillColor=#dae8fc;strokeColor=#6c8ebf;fontFamily=Comic Sans MS;" parent="1" vertex="1">
-          <mxGeometry x="1007.76" y="277" width="290" height="43" as="geometry" />
+        <mxCell id="pkqxkNg5PtHQlLqN9tTv-21" value="" style="rounded=1;whiteSpace=wrap;html=1;sketch=1;fillStyle=auto;fontFamily=Comic Sans MS;" vertex="1" parent="pkqxkNg5PtHQlLqN9tTv-31">
+          <mxGeometry y="30" width="310" height="330" as="geometry" />
+        </mxCell>
+        <mxCell id="pkqxkNg5PtHQlLqN9tTv-22" value="&lt;span class=&quot;&quot; style=&quot;box-sizing: inherit ; color: rgb(74 , 74 , 74) ; font-family: &amp;quot;system-ui&amp;quot; , , &amp;quot;segoe ui&amp;quot; , &amp;quot;roboto&amp;quot; , &amp;quot;oxygen&amp;quot; , &amp;quot;ubuntu&amp;quot; , &amp;quot;cantarell&amp;quot; , &amp;quot;fira sans&amp;quot; , &amp;quot;droid sans&amp;quot; , &amp;quot;helvetica neue&amp;quot; , &amp;quot;helvetica&amp;quot; , &amp;quot;arial&amp;quot; , sans-serif ; font-size: 16px ; background-color: rgb(255 , 255 , 255)&quot;&gt;[&lt;span class=&quot;is-size-7 &quot; style=&quot;box-sizing: inherit ; font-style: inherit ; font-weight: inherit ; font-size: 0.75rem&quot;&gt;Sat&lt;/span&gt;&amp;nbsp;&lt;span class=&quot;is-size-7 &quot; style=&quot;box-sizing: inherit ; font-style: inherit ; font-weight: inherit ; font-size: 0.75rem&quot;&gt;Jan&lt;/span&gt;&amp;nbsp;&lt;span class=&quot;is-size-6 has-text-weight-bold&quot; style=&quot;box-sizing: inherit ; font-style: inherit ; font-weight: 700 ; font-size: 1rem&quot;&gt;08&lt;/span&gt;]&amp;nbsp;&lt;span class=&quot;is-size-6 has-text-weight-bold&quot; style=&quot;box-sizing: inherit ; font-style: inherit ; font-weight: 700 ; font-size: 1rem&quot;&gt;11&lt;/span&gt;:&lt;span class=&quot;is-size-6 has-text-weight-bold&quot; style=&quot;box-sizing: inherit ; font-style: inherit ; font-weight: 700 ; font-size: 1rem&quot;&gt;01&lt;/span&gt;&amp;nbsp;&lt;span class=&quot;is-size-7 &quot; style=&quot;box-sizing: inherit ; font-style: inherit ; font-weight: inherit ; font-size: 0.75rem&quot;&gt;am&lt;/span&gt;&lt;/span&gt;&lt;span style=&quot;color: rgb(74 , 74 , 74) ; font-family: &amp;quot;system-ui&amp;quot; , , &amp;quot;segoe ui&amp;quot; , &amp;quot;roboto&amp;quot; , &amp;quot;oxygen&amp;quot; , &amp;quot;ubuntu&amp;quot; , &amp;quot;cantarell&amp;quot; , &amp;quot;fira sans&amp;quot; , &amp;quot;droid sans&amp;quot; , &amp;quot;helvetica neue&amp;quot; , &amp;quot;helvetica&amp;quot; , &amp;quot;arial&amp;quot; , sans-serif ; font-size: 16px ; background-color: rgb(255 , 255 , 255)&quot;&gt;&amp;nbsp;&lt;/span&gt;&lt;span class=&quot;is-size-7 has-text-grey&quot; style=&quot;box-sizing: inherit ; font-family: &amp;quot;system-ui&amp;quot; , , &amp;quot;segoe ui&amp;quot; , &amp;quot;roboto&amp;quot; , &amp;quot;oxygen&amp;quot; , &amp;quot;ubuntu&amp;quot; , &amp;quot;cantarell&amp;quot; , &amp;quot;fira sans&amp;quot; , &amp;quot;droid sans&amp;quot; , &amp;quot;helvetica neue&amp;quot; , &amp;quot;helvetica&amp;quot; , &amp;quot;arial&amp;quot; , sans-serif ; background-color: rgb(255 , 255 , 255) ; color: rgb(122 , 122 , 122) ; font-size: 0.75rem&quot;&gt;(PST)&lt;br&gt;&lt;br&gt;&lt;span style=&quot;color: rgb(74 , 74 , 74) ; font-size: 16px&quot;&gt;Good morning, Tutor-demo.&lt;/span&gt;&lt;br&gt;&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;shadow=0;sketch=1;fillStyle=auto;fontFamily=Comic Sans MS;fillColor=#FFFFFF;" vertex="1" parent="pkqxkNg5PtHQlLqN9tTv-31">
+          <mxGeometry x="20" y="53" width="270" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="pkqxkNg5PtHQlLqN9tTv-23" value="" style="rounded=1;whiteSpace=wrap;html=1;shadow=0;sketch=1;fillStyle=auto;fontFamily=Comic Sans MS;fillColor=#FFFFFF;" vertex="1" parent="pkqxkNg5PtHQlLqN9tTv-31">
+          <mxGeometry x="19.5" y="150" width="270" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="pkqxkNg5PtHQlLqN9tTv-24" value="" style="endArrow=none;html=1;rounded=0;fontSize=20;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;fontFamily=Comic Sans MS;" edge="1" parent="pkqxkNg5PtHQlLqN9tTv-31" source="pkqxkNg5PtHQlLqN9tTv-22" target="pkqxkNg5PtHQlLqN9tTv-22">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-0.5" y="243" as="sourcePoint" />
+            <mxPoint x="49.5" y="193" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pkqxkNg5PtHQlLqN9tTv-25" value="Students" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillStyle=cross-hatch;fontSize=20;fontFamily=Comic Sans MS;" vertex="1" parent="pkqxkNg5PtHQlLqN9tTv-31">
+          <mxGeometry x="29.5" y="165" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="pkqxkNg5PtHQlLqN9tTv-26" value="v" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillStyle=cross-hatch;fontSize=20;fontFamily=Comic Sans MS;" vertex="1" parent="pkqxkNg5PtHQlLqN9tTv-31">
+          <mxGeometry x="239.5" y="165" width="38.25" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="pkqxkNg5PtHQlLqN9tTv-27" value="" style="rounded=1;whiteSpace=wrap;html=1;shadow=0;sketch=1;fillStyle=auto;fontFamily=Comic Sans MS;fillColor=#FFFFFF;" vertex="1" parent="pkqxkNg5PtHQlLqN9tTv-31">
+          <mxGeometry x="20" y="244" width="270" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="pkqxkNg5PtHQlLqN9tTv-28" value="Meetings" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillStyle=cross-hatch;fontSize=20;fontFamily=Comic Sans MS;" vertex="1" parent="pkqxkNg5PtHQlLqN9tTv-31">
+          <mxGeometry x="30" y="259" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="pkqxkNg5PtHQlLqN9tTv-29" value="v" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillStyle=cross-hatch;fontSize=20;fontFamily=Comic Sans MS;" vertex="1" parent="pkqxkNg5PtHQlLqN9tTv-31">
+          <mxGeometry x="240" y="259" width="38.25" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="pkqxkNg5PtHQlLqN9tTv-30" value="" style="group" vertex="1" connectable="0" parent="pkqxkNg5PtHQlLqN9tTv-31">
+          <mxGeometry x="-23.870000000000005" y="-48" width="354.87" height="210" as="geometry" />
+        </mxCell>
+        <mxCell id="pkqxkNg5PtHQlLqN9tTv-4" value="myCourse" style="rounded=1;whiteSpace=wrap;html=1;sketch=1;fillStyle=solid;fontFamily=Comic Sans MS;fillColor=default;" vertex="1" parent="pkqxkNg5PtHQlLqN9tTv-30">
+          <mxGeometry x="59.5" y="30" width="70" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="pkqxkNg5PtHQlLqN9tTv-5" value="add course" style="rounded=1;whiteSpace=wrap;html=1;sketch=1;fillStyle=solid;fillColor=default;fontFamily=Comic Sans MS;" vertex="1" parent="pkqxkNg5PtHQlLqN9tTv-30">
+          <mxGeometry x="130.5" y="30" width="81" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="pkqxkNg5PtHQlLqN9tTv-7" value="&lt;span class=&quot;&quot; style=&quot;box-sizing: inherit ; color: rgb(74 , 74 , 74) ; font-family: &amp;quot;system-ui&amp;quot; , , &amp;quot;segoe ui&amp;quot; , &amp;quot;roboto&amp;quot; , &amp;quot;oxygen&amp;quot; , &amp;quot;ubuntu&amp;quot; , &amp;quot;cantarell&amp;quot; , &amp;quot;fira sans&amp;quot; , &amp;quot;droid sans&amp;quot; , &amp;quot;helvetica neue&amp;quot; , &amp;quot;helvetica&amp;quot; , &amp;quot;arial&amp;quot; , sans-serif ; font-size: 16px ; background-color: rgb(255 , 255 , 255)&quot;&gt;[&lt;span class=&quot;is-size-7 &quot; style=&quot;box-sizing: inherit ; font-style: inherit ; font-weight: inherit ; font-size: 0.75rem&quot;&gt;Sat&lt;/span&gt;&amp;nbsp;&lt;span class=&quot;is-size-7 &quot; style=&quot;box-sizing: inherit ; font-style: inherit ; font-weight: inherit ; font-size: 0.75rem&quot;&gt;Jan&lt;/span&gt;&amp;nbsp;&lt;span class=&quot;is-size-6 has-text-weight-bold&quot; style=&quot;box-sizing: inherit ; font-style: inherit ; font-weight: 700 ; font-size: 1rem&quot;&gt;08&lt;/span&gt;]&amp;nbsp;&lt;span class=&quot;is-size-6 has-text-weight-bold&quot; style=&quot;box-sizing: inherit ; font-style: inherit ; font-weight: 700 ; font-size: 1rem&quot;&gt;11&lt;/span&gt;:&lt;span class=&quot;is-size-6 has-text-weight-bold&quot; style=&quot;box-sizing: inherit ; font-style: inherit ; font-weight: 700 ; font-size: 1rem&quot;&gt;01&lt;/span&gt;&amp;nbsp;&lt;span class=&quot;is-size-7 &quot; style=&quot;box-sizing: inherit ; font-style: inherit ; font-weight: inherit ; font-size: 0.75rem&quot;&gt;am&lt;/span&gt;&lt;/span&gt;&lt;span style=&quot;color: rgb(74 , 74 , 74) ; font-family: &amp;quot;system-ui&amp;quot; , , &amp;quot;segoe ui&amp;quot; , &amp;quot;roboto&amp;quot; , &amp;quot;oxygen&amp;quot; , &amp;quot;ubuntu&amp;quot; , &amp;quot;cantarell&amp;quot; , &amp;quot;fira sans&amp;quot; , &amp;quot;droid sans&amp;quot; , &amp;quot;helvetica neue&amp;quot; , &amp;quot;helvetica&amp;quot; , &amp;quot;arial&amp;quot; , sans-serif ; font-size: 16px ; background-color: rgb(255 , 255 , 255)&quot;&gt;&amp;nbsp;&lt;/span&gt;&lt;span class=&quot;is-size-7 has-text-grey&quot; style=&quot;box-sizing: inherit ; font-family: &amp;quot;system-ui&amp;quot; , , &amp;quot;segoe ui&amp;quot; , &amp;quot;roboto&amp;quot; , &amp;quot;oxygen&amp;quot; , &amp;quot;ubuntu&amp;quot; , &amp;quot;cantarell&amp;quot; , &amp;quot;fira sans&amp;quot; , &amp;quot;droid sans&amp;quot; , &amp;quot;helvetica neue&amp;quot; , &amp;quot;helvetica&amp;quot; , &amp;quot;arial&amp;quot; , sans-serif ; background-color: rgb(255 , 255 , 255) ; color: rgb(122 , 122 , 122) ; font-size: 0.75rem&quot;&gt;(PST)&lt;br&gt;&lt;br&gt;&lt;span style=&quot;color: rgb(74 , 74 , 74) ; font-size: 16px&quot;&gt;Good morning, Tutor-demo.&lt;/span&gt;&lt;br&gt;&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;shadow=0;sketch=1;fillStyle=auto;fontFamily=Comic Sans MS;fillColor=#FFFFFF;" vertex="1" parent="pkqxkNg5PtHQlLqN9tTv-30">
+          <mxGeometry x="40" y="83" width="270" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="pkqxkNg5PtHQlLqN9tTv-9" value="" style="endArrow=none;html=1;rounded=0;fontSize=20;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;fontFamily=Comic Sans MS;" edge="1" source="pkqxkNg5PtHQlLqN9tTv-7" target="pkqxkNg5PtHQlLqN9tTv-7" parent="pkqxkNg5PtHQlLqN9tTv-30">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="19.5" y="273" as="sourcePoint" />
+            <mxPoint x="69.5" y="223" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pkqxkNg5PtHQlLqN9tTv-3" value="" style="rounded=0;whiteSpace=wrap;html=1;fillStyle=solid;fontFamily=Comic Sans MS;fontSize=24;fillColor=#333333;gradientColor=none;gradientDirection=radial;sketch=1;strokeColor=default;" vertex="1" parent="pkqxkNg5PtHQlLqN9tTv-30">
+          <mxGeometry width="354.87" height="210" as="geometry" />
+        </mxCell>
+        <mxCell id="XO_DNMzDLUDRU4fpuJas-46" value="logout" style="rounded=1;whiteSpace=wrap;html=1;fillStyle=cross-hatch;fontSize=14;fillColor=#f8cecc;strokeColor=#b85450;fontFamily=Comic Sans MS;" parent="pkqxkNg5PtHQlLqN9tTv-30" vertex="1">
+          <mxGeometry x="32.75999999999999" y="157" width="290" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="XO_DNMzDLUDRU4fpuJas-54" value="settings" style="rounded=1;whiteSpace=wrap;html=1;fillStyle=cross-hatch;fontSize=14;fillColor=#dae8fc;strokeColor=#6c8ebf;fontFamily=Comic Sans MS;" parent="pkqxkNg5PtHQlLqN9tTv-30" vertex="1">
+          <mxGeometry x="31.75999999999999" y="78" width="290" height="43" as="geometry" />
+        </mxCell>
+        <mxCell id="XO_DNMzDLUDRU4fpuJas-55" value="email templates" style="rounded=1;whiteSpace=wrap;html=1;fillStyle=cross-hatch;fontSize=14;fillColor=#dae8fc;strokeColor=#6c8ebf;fontFamily=Comic Sans MS;" parent="pkqxkNg5PtHQlLqN9tTv-30" vertex="1">
+          <mxGeometry x="31.75999999999999" y="17" width="290" height="43" as="geometry" />
+        </mxCell>
+        <mxCell id="pkqxkNg5PtHQlLqN9tTv-15" value="" style="rounded=0;whiteSpace=wrap;html=1;fillStyle=solid;fontFamily=Comic Sans MS;fontSize=24;fillColor=#333333;gradientColor=none;gradientDirection=radial;sketch=1;strokeColor=default;opacity=80;" vertex="1" parent="pkqxkNg5PtHQlLqN9tTv-31">
+          <mxGeometry x="-23.870000000000005" y="162" width="354.87" height="315" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
