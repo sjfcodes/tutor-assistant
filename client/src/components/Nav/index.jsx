@@ -1,27 +1,20 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, {
-  useCallback,
   useContext, useEffect, useState,
 } from 'react';
 import { Button, Navbar } from 'react-bulma-components';
 
 import { AppContext, CourseContext, ModalContext } from '../../context';
-import { logoutTutor } from '../../utils';
+import { logoutTutor, preventBodyScroll } from '../../utils';
 import './style.css';
 
 const Nav = () => {
   const { tutorDetails } = useContext(AppContext);
   const { allCourses, selectedCourse, calendlyMeetings } = useContext(CourseContext);
   const { loggedIn, firstName, lastName } = tutorDetails;
-  const { openModal, setOpenModal } = useContext(ModalContext);
-  const [displayNavMenu, setDisplayNavMenu] = useState(false);
-
-  const toggleNavBurger = useCallback((e, forceClose = false) => {
-    if (!loggedIn) return '';
-    if (forceClose) return setDisplayNavMenu(false);
-    return setDisplayNavMenu((curr) => !curr);
-  }, [loggedIn]);
+  const { setOpenModal } = useContext(ModalContext);
 
   const displayState = () => {
     console.group('context');
@@ -37,60 +30,96 @@ const Nav = () => {
   };
 
   useEffect(() => {
-    if (openModal) toggleNavBurger(null, true);
-  }, [openModal, toggleNavBurger]);
+    // Get all "navbar-burger" elements
+    const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+    // Check if there are any navbar burgers
+    // Add a click event on each of them
+    if ($navbarBurgers.length > 0) $navbarBurgers.forEach((el) => {
+      el.addEventListener('click', () => {
+        // Get the target from the "data-target" attribute
+        const { target } = el.dataset;
+        const $target = document.getElementById(target);
+
+        // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+        el.classList.toggle('is-active');
+        $target.classList.toggle('is-active');
+        preventBodyScroll(el.classList.contains('is-active'));
+      });
+    });
+  }, []);
 
   return (
-    <Navbar className='my-0 border-bottom'>
+    <Navbar className='background-blurred is-transparent'>
       <Navbar.Brand>
         <Navbar.Item
-          className='pl-3 p-0 pr-0'
+          renderAs='h1'
+          className='brand py-0'
+          textColor='primary'
           onClick={displayState}
         >
-          <h1 className='brand'>tutorly</h1>
+          tutorly
         </Navbar.Item>
         <Navbar.Item
-          renderAs='div'
-          className='pl-2'
+          renderAs='p'
+          className='border-left has-text-white'
         >
-          <p className='pl-2 py-1 border-left'>{loggedIn ? `${firstName} ${lastName}` : 'Welcome'}</p>
+          {loggedIn ? `${firstName} ${lastName}` : 'Welcome'}
         </Navbar.Item>
-        <Navbar.Burger onClick={toggleNavBurger} />
+        <Navbar.Burger
+          className='has-text-white'
+          data-target='navbar-toggle'
+        />
       </Navbar.Brand>
 
-      <Navbar.Menu id='navMenu' className={`border-top ${displayNavMenu ? 'is-active' : ''}`}>
+      <Navbar.Menu id='navbar-toggle' className='py-0'>
+        {/* <Navbar.Container align='left' /> */}
 
-        {
-          loggedIn && (
-            <div className='navbar-end has-text-right'>
-              {/* <img src='https://bulma.io/images/bulma-logo.png' width='112' height='28' alt='bulma logo' /> */}
-              <Navbar.Item
-                renderAs='div'
-                className=''
-              >
-                <Button
-                  color='primary'
-                  className=''
-                  onClick={() => setOpenModal('settings')}
-                >
-                  Settings
-                </Button>
+        <Navbar.Container
+          align='right'
+          className='background-clear'
+        >
+          <Navbar.Item
+            renderAs='div'
+            className='has-dropdown is-hoverable'
+            textAlign='right'
+          >
+            <Navbar.Item className='navbar-link has-text-primary' />
+            <Navbar.Dropdown
+              right
+              boxed
+              renderAs='div'
+            >
+              <Navbar.Item renderAs='div'>
+                <Button.Group>
+                  <Button
+                    fullwidth
+                    color='primary'
+                    onClick={() => setOpenModal('settings')}
+                  >
+                    Settings
+                  </Button>
+                  <Button
+                    fullwidth
+                    color='primary'
+                    onClick={() => setOpenModal('email-template')}
+                  >
+                    Email Templates
+                  </Button>
+                </Button.Group>
               </Navbar.Item>
+              <Navbar.Divider />
               <Navbar.Item
-                renderAs='div'
+                renderAs='a'
+                textColor='danger'
+                textAlign='right'
+                className='logout'
+                onClick={logoutTutor}
               >
-                <Button
-                  color='danger'
-                  outlined
-                  className='tag'
-                  onClick={logoutTutor}
-                >
-                  Logout
-                </Button>
+                Logout
               </Navbar.Item>
-            </div>
-          )
-        }
+            </Navbar.Dropdown>
+          </Navbar.Item>
+        </Navbar.Container>
       </Navbar.Menu>
     </Navbar>
   );

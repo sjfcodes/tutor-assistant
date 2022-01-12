@@ -2,6 +2,11 @@
   --blue: #09b2f5;
   --border: rgba(0, 0, 0, 0.6);
   --border-light: rgba(0, 0, 0, 0.3);
+  --clear:rgba(255, 255, 255, 0);
+
+  --success: hsl(171, 100%, 41%);
+  --danger: hsl(348, 100%, 61%);
+
 }
 
 /* ~ ~ ~ ~ ~ MAIN LAYOUT ~ ~ ~ ~ ~ ~ */
@@ -21,41 +26,49 @@ body {
   position: fixed !important;
 }
 
-#root header {
-  margin-top: 0;
-  margin-bottom: 0;
-
-  min-height: 8vh;
-  max-height: 8vh;
+section header {
+  min-height: 6.5vh;
+  max-height: 6.5vh;
+  z-index: 10;
 }
 
 main {
-  margin-top: 0;
-  margin-bottom: 0;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
 
   min-height: 85vh;
+  z-index: 0;
 }
 footer {
-  margin-top: 0;
-  margin-bottom: 0;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
 
-  min-height: 7vh ;
-  max-height: 7vh  ;
+  min-height: 8.5vh ;
+  max-height: 8.5vh  ;
+  z-index: 0;
 }
 .z-1 {
   z-index: -1;
 }
 
 /* ~ ~ ~ ~ ~ ~ ~ BACKGROUND ~ ~ ~ ~ ~ ~ ~ */
+.background-blurred {
+  background-color: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(2px);
+}
 .background-blurred-dark {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(2px);
 }
 .background-blurred-light {
+  background-color: rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(10px);
 }
+.background-dark {
+  background-color: rgba(0, 0, 0, 0.7);
+}
 .background-clear {
-  background-color: rgba(255, 255, 255, 0);
+  background-color: var(--clear);
 }
 
 /* ~ ~ ~ ~ ~ ~ ~ BORDER ~ ~ ~ ~ ~ ~ ~ */
@@ -83,11 +96,11 @@ footer {
 .border-bold {
   border: solid 2px rgb(0, 0, 0);
 }
-.border-red {
-  border: solid 3px red;
+.border-danger {
+  border: solid 3px var(--danger);
 }
-.border-green {
-  border: solid 3px green;
+.border-success {
+  border: solid 3px var(--success);
 }
 .border-orange {
   border: solid 3px orange;
@@ -162,17 +175,20 @@ a.hover-large-item:hover {
 }
 
 /* ~ ~ ~ ~ ~ ~ ~ MODAL ~ ~ ~ ~ ~ ~ ~ */
-.modal-card {
-  overflow: scroll;
-  width: 95%;
-  border-radius: 1em;
-  margin-top: 2vh;
-  max-height: 96vh !important;
-  min-height: 80vh !important;
-}
 
 .modal {
   justify-content: flex-start;
   max-height: 100vh;
   overflow-y: hidden;
+}
+.modal-card {
+  overflow: scroll;
+  width: 95%;
+  border-radius: 1em;
+  margin-top: 2vh;
+  max-height: 96vh;
+  min-height: 80vh;
+}
+.modal-card-head {
+  border-bottom: none;
 }

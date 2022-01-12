@@ -9,7 +9,7 @@ const Landing = () => {
 
   return (
 
-    <Box className='background-blurred-dark pt-1'>
+    <>
       <Tabs type='boxed' align='left' className=' mb-0 pt-3 pl-2'>
         <Tab
           className={form !== 'login' ? 'has-text-white' : ''}
@@ -30,7 +30,7 @@ const Landing = () => {
         {form === 'login' && <LoginForm />}
         {form === 'signup' && <SignupForm />}
       </Box>
-    </Box>
+    </>
   );
 };
 export default Landing;
