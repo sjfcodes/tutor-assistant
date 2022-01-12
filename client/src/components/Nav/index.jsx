@@ -46,7 +46,7 @@ const Nav = () => {
         preventBodyScroll(el.classList.contains('is-active'));
       });
     });
-  }, []);
+  }, [loggedIn]);
 
   return (
     <Navbar className='background-blurred is-transparent'>
@@ -65,61 +65,68 @@ const Nav = () => {
         >
           {loggedIn ? `${firstName} ${lastName}` : 'Welcome'}
         </Navbar.Item>
-        <Navbar.Burger
-          className='has-text-white'
-          data-target='navbar-toggle'
-        />
+        {loggedIn
+          ? (
+            <Navbar.Burger
+              className='has-text-white'
+              data-target='navbar-toggle'
+            />
+          )
+          : ''}
       </Navbar.Brand>
 
       <Navbar.Menu id='navbar-toggle' className='py-0'>
         {/* <Navbar.Container align='left' /> */}
-
-        <Navbar.Container
-          align='right'
-          className='background-clear'
-        >
-          <Navbar.Item
-            renderAs='div'
-            className='has-dropdown is-hoverable'
-            textAlign='right'
-          >
-            <Navbar.Item className='navbar-link has-text-primary' />
-            <Navbar.Dropdown
-              right
-              boxed
-              renderAs='div'
+        {loggedIn
+          ? (
+            <Navbar.Container
+              align='right'
+              className='background-clear'
             >
-              <Navbar.Item renderAs='div'>
-                <Button.Group>
-                  <Button
-                    fullwidth
-                    color='primary'
-                    onClick={() => setOpenModal('settings')}
-                  >
-                    Settings
-                  </Button>
-                  <Button
-                    fullwidth
-                    color='primary'
-                    onClick={() => setOpenModal('email-template')}
-                  >
-                    Email Templates
-                  </Button>
-                </Button.Group>
-              </Navbar.Item>
-              <Navbar.Divider />
               <Navbar.Item
-                renderAs='a'
-                textColor='danger'
+                renderAs='div'
+                className='has-dropdown is-hoverable'
                 textAlign='right'
-                className='logout'
-                onClick={logoutTutor}
               >
-                Logout
+                <Navbar.Item className='navbar-link has-text-primary' />
+                <Navbar.Dropdown
+                  right
+                  boxed
+                  renderAs='div'
+                >
+                  <Navbar.Item renderAs='div'>
+                    <Button.Group>
+                      <Button
+                        fullwidth
+                        color='primary'
+                        onClick={() => setOpenModal('settings')}
+                      >
+                        Settings
+                      </Button>
+                      <Button
+                        fullwidth
+                        color='primary'
+                        onClick={() => setOpenModal('email-template')}
+                      >
+                        Email Templates
+                      </Button>
+                    </Button.Group>
+                  </Navbar.Item>
+                  <Navbar.Divider />
+                  <Navbar.Item
+                    renderAs='a'
+                    textColor='danger'
+                    textAlign='right'
+                    className='logout'
+                    onClick={logoutTutor}
+                  >
+                    Logout
+                  </Navbar.Item>
+                </Navbar.Dropdown>
               </Navbar.Item>
-            </Navbar.Dropdown>
-          </Navbar.Item>
-        </Navbar.Container>
+            </Navbar.Container>
+          )
+          : '' }
       </Navbar.Menu>
     </Navbar>
   );
