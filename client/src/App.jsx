@@ -24,7 +24,10 @@ const App = () => {
 
   return (
     <>
-      <Section renderAs='header' className='p-0 m-0'>
+      <Section
+        renderAs='header'
+        className='background-dark border-bottom-light p-0'
+      >
         <Nav />
       </Section>
 
@@ -32,7 +35,7 @@ const App = () => {
 
       {loggedIn && <AllModals />}
 
-      <Section renderAs='main' className='p-0 m-0'>
+      <Section renderAs='main' className='background-blurred-dark p-0'>
         <Container className='is-max-desktop'>
           <Columns centered className='m-0'>
             <Columns.Column
@@ -48,8 +51,8 @@ const App = () => {
           </Columns>
         </Container>
       </Section>
+      <Footer className='background-dark border-top py-0' />
 
-      <Footer className='pt-3 pb-0 m-0 border-top' />
     </>
   );
 };

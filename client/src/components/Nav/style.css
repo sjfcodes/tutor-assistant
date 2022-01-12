@@ -19,3 +19,12 @@
 .avatar img {
   border-radius: 50%;
 }
+
+.navbar-menu,
+.navbar-menu a:hover {
+  background-color: var(--clear) !important;
+}
+
+/* .logout:hover {
+  border: solid 2px var(--danger);
+} */

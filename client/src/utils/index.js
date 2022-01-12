@@ -31,4 +31,5 @@ export {
   logoutTutor,
   missingFormInputs,
   passwordIsValid,
+  preventBodyScroll,
 } from './helpers';

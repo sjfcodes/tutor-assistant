@@ -4,30 +4,43 @@ import { Columns, Footer as BulmaFooter } from 'react-bulma-components';
 import './style.css';
 
 const Footer = ({ className }) => (
-  <BulmaFooter className={className}>
+  <BulmaFooter
+    className={className}
+  >
     <Columns
-      className='is-mobile'
+      vCentered
+      className='is-mobile mt-1'
     >
-      <Columns.Column
-        textAlign='center'
-      >
-        <a className='is-size-7 hover-large-item contact' href='mailto:samueljasonfox@gmail.com?&subject=tutor.me' target='_blank' rel='noreferrer'>
+      <Columns.Column size={5} textAlign='center'>
+        <a
+          target='_blank'
+          rel='noreferrer'
+          className='contact rounded hover-large-item p-2 is-size-7'
+          href='mailto:samueljasonfox@gmail.com?&subject=tutor.me'
+        >
           <i className='far fa-envelope' />
           {' '}
           Contact
         </a>
+
       </Columns.Column>
-      <Columns.Column
-        textAlign='center'
-      >
-        <a className='hover-large-item contact' href='https://github.com/samuelfox1/tutor-assistant' target='_blank' rel='noreferrer'>
-          <i className='fas fa-code-branch is-size-7 has-text-black border py-1 px-2 rounded hover-large-item' />
+      <Columns.Column size={2} textAlign='center'>
+        <a
+          target='_blank'
+          rel='noreferrer'
+          className='repo rounded hover-large-item p-2 px-4 is-size-4'
+          href='https://github.com/samuelfox1/tutor-assistant'
+        >
+          <i className='fas fa-code-branch' />
         </a>
       </Columns.Column>
-      <Columns.Column
-        textAlign='center'
-      >
-        <a className=' is-size-7 issue' href='https://github.com/samuelfox1/tutor-assistant/issues' target='_blank' rel='noreferrer'>
+      <Columns.Column size={5} textAlign='center'>
+        <a
+          target='_blank'
+          rel='noreferrer'
+          className='issue rounded hover-large-item p-2 is-size-7'
+          href='https://github.com/samuelfox1/tutor-assistant/issues'
+        >
           <span>
             Rep
             <i className='fab fa-github is-size-custom' />

@@ -44,6 +44,7 @@ const HowItWorks = ({ viewHelp, setViewHelp }) => (
               <p className='ml-4 mb-0'>[student-lastName]</p>
               <p className='ml-4 mb-0'>[student-meetingLink]</p>
               <p className='ml-4 mb-2'>[student-githubUsername]</p>
+              <p className='ml-4 mb-2'>[student-email]</p>
             </Columns.Column>
             <Columns.Column narrow>
               <p className='mb-0'>Available tutor keywords are:</p>
