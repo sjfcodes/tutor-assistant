@@ -18,7 +18,7 @@ const StudentsSection = () => {
       filterBy={filterBy}
       setFilterBy={setFilterBy}
       filterOptions={filterOptions}
-      addListItemClick={() => setOpenModal('addStudent')}
+      addListItemClick={() => setOpenModal('AddStudent')}
     >
 
       <Columns className='is-mobile ml-5'>

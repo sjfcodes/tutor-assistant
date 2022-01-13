@@ -17,7 +17,7 @@ const MeetingsSection = () => {
       filterBy={filterBy}
       setFilterBy={setFilterBy}
       filterOptions={filterOptions}
-      addListItemClick={() => setOpenModal('addMeeting')}
+      addListItemClick={() => setOpenModal('AddMeeting')}
     >
 
       <Columns className='is-mobile ml-5'>

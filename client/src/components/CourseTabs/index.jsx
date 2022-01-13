@@ -69,7 +69,7 @@ const CourseTabs = ({ className }) => {
       className={className}
     >
       {courseTabs}
-      <Tab onClick={() => setOpenModal('addCourse')}>
+      <Tab onClick={() => setOpenModal('AddCourse')}>
         <strong className='has-text-grey-lighter'>Add Course</strong>
       </Tab>
     </Tabs>
