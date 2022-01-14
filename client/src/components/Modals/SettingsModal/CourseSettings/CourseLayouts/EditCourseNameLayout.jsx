@@ -26,7 +26,7 @@ const EditCourseNameLayout = ({
       </LevelSide>
       <Level.Side>
         <Button.Group>
-          <Button size='small' outlined color='info' onClick={() => setCourseToEdit('')}>
+          <Button size='small' outlined color='primary' onClick={() => setCourseToEdit('')}>
             cancel
           </Button>
 
