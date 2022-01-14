@@ -106,7 +106,7 @@ const Nav = () => {
                       <Button
                         fullwidth
                         color='primary'
-                        onClick={() => setOpenModal('EmailTemplate')}
+                        onClick={() => setOpenModal('EmailTemplates')}
                       >
                         Email Templates
                       </Button>
