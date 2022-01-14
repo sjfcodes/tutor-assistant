@@ -53,7 +53,7 @@ const SettingsModal = () => {
     <Modal
       className='background-blurred-light'
       showClose={!disableControls}
-      show={openModal === 'settings'}
+      show={openModal === 'Settings'}
       onClose={() => setOpenModal('')}
     >
       <Modal.Card>

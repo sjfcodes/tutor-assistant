@@ -45,7 +45,7 @@ const AddMeetingModal = () => {
   return (
     <Modal
       className='background-blurred-light'
-      show={openModal === 'addMeeting'}
+      show={openModal === 'AddMeeting'}
       onClose={() => setOpenModal('')}
     >
       <Modal.Card>

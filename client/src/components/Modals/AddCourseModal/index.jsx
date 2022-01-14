@@ -63,7 +63,7 @@ const AddCourseModal = () => {
   return (
     <Modal
       className='background-blurred-light'
-      show={openModal === 'addCourse'}
+      show={openModal === 'AddCourse'}
       onClose={handleCloseModal}
     >
       <Modal.Card>
