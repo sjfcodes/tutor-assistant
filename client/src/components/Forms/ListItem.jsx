@@ -18,7 +18,7 @@ const getElementFor = ({ property, value }) => {
     default: () => (
       <Form.Input
         disabled
-        className='rounded has-text-black input-slim'
+        className='rounded input-slim'
         value={`${value}`}
         onChange={() => null}
       />
