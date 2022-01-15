@@ -68,12 +68,12 @@ const ListItem = ({
   const args = useMemo(() => ({
     value: input,
     name: property,
-    className: 'mr-2 my-2 input-slim',
+    className: 'mr-2 my-2 input-slim.',
     onChange: (e) => handleInputChange(e),
   }), [handleInputChange, input, property]);
 
   const formInputFor = {
-    default: <LitsItemInput type='input' {...args} />,
+    default: <LitsItemInput type='text' {...args} />,
     duration: <LitsItemInput type='number' {...args} />,
     email: <LitsItemInput type='email' {...args} />,
     meetingsPerWeek: <LitsItemInput type='number' {...args} />,
@@ -87,19 +87,20 @@ const ListItem = ({
 
   return (
     <Form.Control className='pl-3'>
-      {property === itemToEdit
-      && allowedToEdit
-        ? (
-          <>
-            { formInputFor[property] || formInputFor.default }
-            {inputHasBeenModified() && (
-              <Icon align='right' className='mt-2' onClick={handleSubmit}>
-                <i className='far fa-save hover has-text-success' />
-              </Icon>
-            )}
-          </>
-        )
-        : element}
+      {
+        property === itemToEdit && allowedToEdit
+          ? (
+            <>
+              { formInputFor[property] || formInputFor.default }
+              {inputHasBeenModified() && (
+                <Icon align='right' className='mt-2' onClick={handleSubmit}>
+                  <i className='far fa-save hover has-text-success' />
+                </Icon>
+              )}
+            </>
+          )
+          : element
+      }
     </Form.Control>
   );
 };
