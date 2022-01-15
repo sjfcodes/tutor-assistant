@@ -68,7 +68,7 @@ const ProfileListItemDetail = ({ _id, property, value }) => {
     );
     return setDisplayedEditIcon(
       <Icon className='mx-1 mt-5' onClick={toggleEdit}>
-        <i className={`icon-small has-text-info
+        <i className={`icon-small has-text-primary
             ${itemToEdit === property
     ? 'far fa-times-circle'
     : 'fas fa-pen'}`}
@@ -83,7 +83,7 @@ const ProfileListItemDetail = ({ _id, property, value }) => {
         <Form.Field kind='addons' className=''>
           <Form.Control fullwidth className='border-bottom-light'>
             <Form.Label
-              className='mb-0 mt-3 has-text-info'
+              className='mb-0 mt-3 has-text-primary'
               size='small'
             >
               {displayPropertyName}

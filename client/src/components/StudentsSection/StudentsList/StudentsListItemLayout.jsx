@@ -13,7 +13,7 @@ const StudentsListItemLayout = ({ firstName, lastName, timeZoneName }) => (
     <Level.Item>
       <p>
         <TimeZoneAbbreviation
-          className='is-size-7 has-text-weight-bold has-text-info'
+          className='is-size-7 has-text-weight-bold has-text-primary'
           timeZoneName={timeZoneName}
         />
       </p>

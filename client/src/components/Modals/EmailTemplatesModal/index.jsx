@@ -1,8 +1,11 @@
 import React, { useState, useContext } from 'react';
-import { Modal } from 'react-bulma-components';
+import { Heading, Modal } from 'react-bulma-components';
 import { ModalContext } from '../../../context';
-import EmailHelpProvider from './EmailHelpProvider';
-import EmailTemplatesCard from './EmailTemplatesCard';
+import EmailTemplatesProvider from './EmailTemplatesProvider';
+import ToggleHelpButton from './EmailTemplatesHelp/ToggleHelpButton';
+import EmailTemplatesHelp from './EmailTemplatesHelp';
+import EmailTemplatesButtons from './EmailTemplatesButtons';
+import EmailTemplatesEditor from './EmailTemplatesEditor';
 
 const EmailTemplatesModal = () => {
   const { openModal, setOpenModal } = useContext(ModalContext);
@@ -16,9 +19,31 @@ const EmailTemplatesModal = () => {
       show={openModal === 'EmailTemplates'}
       onClose={() => setOpenModal('')}
     >
-      <EmailHelpProvider>
-        <EmailTemplatesCard />
-      </EmailHelpProvider>
+
+      <EmailTemplatesProvider>
+
+        <Modal.Card>
+          <Modal.Card.Header
+            flexDirection='column'
+            alignItems='start'
+            className='background-clear px-4 pb-0'
+            showClose={false}
+          >
+            <Heading textColor='grey-lighter'>
+              Email Templates
+            </Heading>
+            <ToggleHelpButton />
+          </Modal.Card.Header>
+
+          <Modal.Card.Body className='rounded-top p-1 mt-5'>
+            <EmailTemplatesHelp />
+            <EmailTemplatesButtons />
+            <EmailTemplatesEditor />
+          </Modal.Card.Body>
+
+        </Modal.Card>
+
+      </EmailTemplatesProvider>
     </Modal>
   );
 };

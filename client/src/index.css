@@ -6,6 +6,8 @@
 
   --success: hsl(171, 100%, 41%);
   --danger: hsl(348, 100%, 61%);
+  --warning: hsl(48, 100%, 67%);
+  --info: #9f7dfd;
 
 }
 
@@ -102,8 +104,11 @@ footer {
 .border-success {
   border: solid 3px var(--success);
 }
-.border-orange {
-  border: solid 3px orange;
+.border-warning {
+  border: solid 3px var(--warning);
+}
+.border-info {
+  border: solid 3px var(--info);
 }
 .rounded {
   border-radius: 4px;

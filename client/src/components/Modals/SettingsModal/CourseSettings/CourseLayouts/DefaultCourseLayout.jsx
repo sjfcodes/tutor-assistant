@@ -19,7 +19,7 @@ const DefaultCourseLayout = ({
       <Button.Group>
         <Button
           size='small'
-          color='info'
+          color='primary'
           onClick={() => handleEditNameClick(courseName, courseId)}
         >
           edit name
@@ -28,7 +28,7 @@ const DefaultCourseLayout = ({
           className='mx-1 mr-5'
           onClick={() => handleEditNameClick(courseName, courseId)}
         >
-          <i className={`icon-small has-text-info
+          <i className={`icon-small has-text-primary
             ${courseToEdit === courseId
     ? 'far fa-times-circle'
     : 'fas fa-pen'}`}

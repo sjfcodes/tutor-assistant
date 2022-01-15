@@ -11,7 +11,11 @@ const templateSchema = new Schema({
     ref: 'Tutor',
     required: true,
   },
-  template: {
+  subject: {
+    type: String,
+    requied: true,
+  },
+  body: {
     type: String,
     required: true,
   },

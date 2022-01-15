@@ -96,7 +96,7 @@ const AddCourseModal = () => {
           <Modal.Card.Footer renderAs={Button.Group} align='right'>
             <Button
               disabled={helpMessage || missingFormInputs(formInputs)}
-              color='info'
+              color='primary'
             >
               Add Course
             </Button>
