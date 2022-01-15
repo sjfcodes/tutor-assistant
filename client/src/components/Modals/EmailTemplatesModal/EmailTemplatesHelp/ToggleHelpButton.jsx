@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Button } from 'react-bulma-components';
-import { EmailHelpContext } from '../EmailHelpProvider';
+import { EmailTemplatesContext } from '../EmailTemplatesProvider';
 
 const getHelpButtonText = (status) => (status ? 'hide help' : 'show help');
 
 const ToggleHelpButton = () => {
-  const { viewHelp, setViewHelp } = useContext(EmailHelpContext);
+  const { viewHelp, setViewHelp } = useContext(EmailTemplatesContext);
   const [helpButtonText, sethelpButtonText] = useState(getHelpButtonText(viewHelp));
 
   const toggleViewHelp = () => setViewHelp((currentVal) => !currentVal);
