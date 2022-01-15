@@ -135,7 +135,7 @@ form {
   display: contents;
 }
 .input-slim {
-  height: 1em;
+  height: 2em;
   padding-top: .5em;
   padding-bottom: .5em;
 }

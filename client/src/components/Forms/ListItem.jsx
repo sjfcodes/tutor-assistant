@@ -68,7 +68,7 @@ const ListItem = ({
   const args = useMemo(() => ({
     value: input,
     name: property,
-    className: 'mr-2 my-2 input-slim.',
+    className: 'mr-2 my-2 input-slim',
     onChange: (e) => handleInputChange(e),
   }), [handleInputChange, input, property]);
 
