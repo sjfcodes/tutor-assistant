@@ -16,12 +16,7 @@ const getElementFor = ({ property, value }) => {
   const elementFor = {
     createdAt: () => <span>{getLocalDateString(value)}</span>,
     default: () => (
-      <Form.Input
-        disabled
-        className='rounded input-slim'
-        value={`${value}`}
-        onChange={() => null}
-      />
+      <p className='rounded'>{`${value}`}</p>
     ),
     endTime: () => <p className='mb-3'><MeetingDateFull iso8601={value} /></p>,
     fullTimeCourse: () => getBooleanSpan(value),

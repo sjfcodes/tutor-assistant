@@ -2,7 +2,7 @@ import React, {
   useState, useContext, useEffect, useCallback,
 } from 'react';
 import {
-  Button, Heading, Modal, Tabs,
+  Heading, Modal, Tabs,
 } from 'react-bulma-components';
 import { ModalContext } from '../../../context';
 import CourseSettings from './CourseSettings';
@@ -99,7 +99,7 @@ const SettingsModal = () => {
         <Modal.Card.Body className='rounded-top'>
           {component}
         </Modal.Card.Body>
-        <Button
+        {/* <Button
           className='square-top'
           fullwidth
           color='primary'
@@ -107,7 +107,7 @@ const SettingsModal = () => {
           onClick={() => setOpenModal('')}
         >
           Done
-        </Button>
+        </Button> */}
       </Modal.Card>
     </Modal>
   );

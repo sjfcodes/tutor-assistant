@@ -144,10 +144,7 @@ form {
 .overflow-auto {
   overflow: auto;
  }
-[disabled].input {
-  background-color: rgba(247, 243, 243, 0.671);
-  color: black;
-}
+
 /* ~ ~ ~ ~ ~ ~ ~ HELP-TEXT ~ ~ ~ ~ ~ ~ ~ */
 .help-error {
   color: rgba(175, 41, 41, 0.69);
