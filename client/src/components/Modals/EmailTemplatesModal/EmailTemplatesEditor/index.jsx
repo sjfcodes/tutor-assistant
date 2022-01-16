@@ -11,6 +11,11 @@ const EmailTemplatesEditor = () => {
 
   if (displayComponent !== 'EmailTemplatesEditor') return '';
 
+  const handleBackButtonClick = () => {
+    setDisplayComponent('default');
+    setViewPreview(false);
+  };
+
   return (
     <div className='px-3'>
       <Columns
@@ -21,7 +26,7 @@ const EmailTemplatesEditor = () => {
           <Button
             color='warning'
             className='tag'
-            onClick={() => setDisplayComponent('default')}
+            onClick={handleBackButtonClick}
           >
             <i className='fas fa-chevron-left' />
           </Button>
@@ -32,7 +37,7 @@ const EmailTemplatesEditor = () => {
           renderAs='h1'
           className='is-size-5 has-text-weight-bold pb-0'
         >
-          Editor
+          {viewPreview ? 'Preview' : 'Editor'}
         </Columns.Column>
         <Columns.Column
           className='pb-2 pr-0'
@@ -44,7 +49,7 @@ const EmailTemplatesEditor = () => {
             className='tag'
             onClick={() => setViewPreview((current) => !current)}
           >
-            preview
+            {!viewPreview ? 'Preview' : 'Editor'}
           </Button>
         </Columns.Column>
       </Columns>

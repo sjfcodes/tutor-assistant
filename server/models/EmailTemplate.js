@@ -2,22 +2,22 @@ const { Schema, model } = require('mongoose');
 const { getISOCurrentDateStamp } = require('../utils/dateTime');
 
 const templateSchema = new Schema({
-  name: {
-    type: String,
-    required: true,
-  },
   authorId: {
     type: Schema.Types.ObjectId,
     ref: 'Tutor',
     required: true,
   },
-  subject: {
-    type: String,
-    requied: true,
-  },
   body: {
     type: String,
     required: true,
+  },
+  name: {
+    type: String,
+    required: true,
+  },
+  subject: {
+    type: String,
+    requied: true,
   },
   createdAt: {
     type: String,

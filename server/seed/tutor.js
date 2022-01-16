@@ -9,7 +9,6 @@ const demo = {
   scheduleLink: 'https://calendly.com',
   password: 'password',
   courses: [],
-  emailTemplates: [],
 };
 
 const me = {
@@ -21,7 +20,6 @@ const me = {
   scheduleLink: 'https://calendly.com',
   password: process.env.MY_PW,
   courses: [],
-  emailTemplates: [],
 };
 
 module.exports = { demo, me };

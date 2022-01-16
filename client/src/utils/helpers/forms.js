@@ -21,3 +21,9 @@ export const missingFormInputs = (formInputs) => {
 
   return missingValue;
 };
+
+export const getTextareaRows = (text = '') => {
+  const numOfNewLines = text?.match(/\n/g);
+  if (numOfNewLines) return numOfNewLines.length + 2;
+  return 3;
+};

@@ -2,15 +2,14 @@ const router = require('express').Router();
 const { EmailTemplate } = require('../../models');
 const { authorizeToken } = require('../../utils/auth');
 const { addModelToTutor } = require('../../utils/helpers');
+const demoEmailTemplate = require('../../seed/emailTemplate.json');
 
 router.get('/', authorizeToken, async (req, res) => {
   try {
     const templates = await EmailTemplate.find({ authorId: req.tutor._id });
     if (!templates.length) {
-      // seeded demo template id is "61bc0f049a7e2491c818fc0a"
-      const demoTemplate = await EmailTemplate.findById('61bc0f049a7e2491c818fc0a');
-      // send demo template with
-      return res.json({ ...demoTemplate, authorId: req._id });
+      // send demo template
+      return res.json({ ...demoEmailTemplate, authorId: req._id });
     }
 
     return res.json(templates);
@@ -22,10 +21,10 @@ router.get('/', authorizeToken, async (req, res) => {
 
 router.post('/', authorizeToken, async (req, res) => {
   try {
-    const template = await EmailTemplate.create(req.body);
-    if (!template) return res.statusMessage(500).json('failed to create template');
-    await addModelToTutor(req._id, 'emailTemplates', template._id);
-    return res.json({ _id: template._id });
+    const { _id } = await EmailTemplate.create(req.body);
+    if (!_id) return res.statusMessage(500).json('failed to create template');
+    await addModelToTutor(req.tutor._id, 'emailTemplates', _id);
+    return res.json({ _id });
   } catch ({ message }) {
     console.error(message);
     return res.status(500).json({ location: 1, message });
@@ -45,19 +44,16 @@ router.put('/', authorizeToken, async (req, res) => {
   }
 });
 
-// // delete a template and remove the reference from the tutor
-// router.delete('/', authorizeToken, async (req, res) => {
-//   try {
-//     await EmailTemplate.findByIdAndDelete(req.body._id);
-//     const deleted = deleteModelFromTutor(req.tutor._id, 'emailTemplates', req.body._id);
-//     console.log(deleted);
-//     if (!deleted) return res.status(404).json('template not deleted');
-//     return res.json('template deleted');
-//   } catch ({message}) {
-//     console.error(;
-//     return res.status(500).json({
-//   location: 4,
-// });
-//   }
+// delete a template and remove the reference from the tutor
+router.delete('/:_id', authorizeToken, async (req, res) => {
+  try {
+    const deleted = await EmailTemplate.findByIdAndDelete(req.params._id);
+    if (!deleted) return res.status(404).json('template not found');
+    return res.json('success');
+  } catch ({ message }) {
+    console.error(message);
+    return res.status(500).json({ location: 1, message });
+  }
+});
 
 module.exports = router;
