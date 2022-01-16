@@ -101,16 +101,16 @@ footer {
   border: solid 2px rgb(0, 0, 0);
 }
 .border-danger {
-  border: solid 3px var(--danger);
+  border: solid 1px var(--danger);
 }
 .border-success {
-  border: solid 3px var(--success);
+  border: solid 1px var(--success);
 }
 .border-warning {
-  border: solid 3px var(--warning);
+  border: solid 1px var(--warning);
 }
 .border-info {
-  border: solid 3px var(--info);
+  border: solid 1px var(--info);
 }
 .rounded {
   border-radius: 4px;

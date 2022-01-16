@@ -5,7 +5,7 @@ import {
 } from 'react-router-dom';
 import { Columns, Container, Section } from 'react-bulma-components';
 import { Nav, Footer, BackgroundImage } from './components';
-import { Home, Landing, EmailTemplateManager } from './pages';
+import { Home, Landing } from './pages';
 import { AppContext } from './context';
 import './App.sass';
 import AllModals from './components/Modals';
@@ -43,7 +43,6 @@ const App = () => {
               tablet={{ size: 8 }}
             >
               <Routes>
-                <Route exact path='/email' element={<EmailTemplateManager />} />
                 <Route path='/:tutor' element={<Home />} />
                 <Route path='/' element={<Landing />} />
               </Routes>
