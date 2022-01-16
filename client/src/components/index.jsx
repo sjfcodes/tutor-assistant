@@ -15,8 +15,3 @@ export {
 };
 
 export { SignupForm, LoginForm } from './Forms';
-export {
-  EmailTemplateSelector,
-  EmailTemplateEditor,
-  HowItWorks,
-} from './EmailTemplateManager';
