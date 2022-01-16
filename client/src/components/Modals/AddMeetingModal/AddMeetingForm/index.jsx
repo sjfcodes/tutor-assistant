@@ -1,13 +1,12 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import {
   Button, Form, Columns,
 } from 'react-bulma-components';
 import { LevelSide } from '../../../BulmaHelpers';
-import { CourseContext } from '../../../../context';
 import MeetingTime, { addMeetingFormPropTypes } from './MeetingTime';
+import { StudentSelector } from '../../../Forms';
 
 const AddMeetingForm = ({ formInputs, setFormInputs }) => {
-  const { allCourses, selectedCourse } = useContext(CourseContext);
   const { studentId, startTime, duration } = formInputs;
 
   const handleInputChange = (e) => {
@@ -28,28 +27,10 @@ const AddMeetingForm = ({ formInputs, setFormInputs }) => {
     <Columns>
       <Columns.Column>
         <Form.Field kind='addons' justifyContent='center'>
-          <Form.Control>
-            <Form.Label>student</Form.Label>
-            <Form.Select
-              name='studentId'
-              value={studentId}
-              placeholder='student'
-              onInput={handleInputChange}
-            >
-              <option value=''>-</option>
-              {Object.entries(allCourses[selectedCourse].students).map(
-                ([key, { firstName, lastName }]) => (
-                  <option
-                    key={key}
-                    value={key}
-                  >
-                    {`${firstName} ${lastName}`}
-
-                  </option>
-                ),
-              )}
-            </Form.Select>
-          </Form.Control>
+          <StudentSelector
+            studentId={studentId}
+            onChange={handleInputChange}
+          />
         </Form.Field>
       </Columns.Column>
 
