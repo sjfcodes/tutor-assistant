@@ -15,6 +15,7 @@ const Nav = () => {
   const { allCourses, selectedCourse, calendlyMeetings } = useContext(CourseContext);
   const { loggedIn, firstName, lastName } = tutorDetails;
   const { setOpenModal } = useContext(ModalContext);
+  const [showNav, setShowNav] = useState(false);
 
   const displayState = () => {
     console.group('context');
