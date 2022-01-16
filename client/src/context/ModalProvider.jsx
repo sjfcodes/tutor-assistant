@@ -11,8 +11,14 @@ export const ModalProvider = ({ children }) => {
 
   const modalMemo = useMemo(() => ({ openModal, setOpenModal }), [openModal, setOpenModal]);
 
+  const collapseNavbar = () => {
+    document.querySelector('.navbar-burger').classList.remove('is-active');
+    document.querySelector('.navbar-menu').classList.remove('is-active');
+  };
+
   useEffect(() => {
     preventBodyScroll(!!openModal);
+    if (openModal) collapseNavbar();
   }, [openModal]);
 
   return (
