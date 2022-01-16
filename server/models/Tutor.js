@@ -40,10 +40,6 @@ const tutorSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'Course',
     }],
-    emailTemplates: [{
-      type: Schema.Types.ObjectId,
-      ref: 'EmailTemplate',
-    }],
     createdAt: {
       type: String,
       default: () => getISOCurrentDateStamp(),

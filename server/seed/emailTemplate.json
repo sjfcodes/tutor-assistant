@@ -1,6 +1,5 @@
 {
-    "authorId": "",
-    "name": "new-student",
+    "name": "demo template",
     "subject": "Welcome, [student-firstName]!",
     "body": "Hi [student-firstName],\nMy name is [tutor-firstName], I am looking forward to working with you!\n\nSchedule a meeting here:\n[tutor-scheduleLink]\n\nThanks!\nSamuel fox\nFull-Stack Web Developer\nsamueljfox.com"
 }

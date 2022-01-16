@@ -25,6 +25,7 @@ export {
   getLocalDateString,
   getSortedTimeZones,
   getTimeZoneAbbreviation,
+  getTextareaRows,
   getUnixFromFormInputs,
   handleError,
   inputIsSelected,

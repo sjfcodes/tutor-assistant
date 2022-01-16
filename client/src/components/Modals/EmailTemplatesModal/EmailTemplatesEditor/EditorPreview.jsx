@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Box, Form } from 'react-bulma-components';
 import { AppContext } from '../../../../context';
+import { getTextareaRows } from '../../../../utils';
 import { EmailTemplatesContext } from '../EmailTemplatesProvider';
 
 const buildTemplatePreview = ({
@@ -38,6 +39,8 @@ const EditorPreview = () => {
       tutor: tutorDetails,
     }),
   );
+  const [rows, setRows] = useState(getTextareaRows(preview.body));
+
   useEffect(() => {
     if (!selectedTemplate) return;
     const data = {
@@ -46,9 +49,12 @@ const EditorPreview = () => {
       student: demoStudent,
       tutor: tutorDetails,
     };
-    console.log('data', data);
     setPreview(buildTemplatePreview(data));
   }, [selectedTemplate, tutorDetails]);
+
+  useEffect(() => {
+    setRows(getTextareaRows(preview.body));
+  }, [preview.body]);
 
   return (
     <Box className='px-3 py-1'>
@@ -67,6 +73,7 @@ const EditorPreview = () => {
             color='info'
             className='template-preview rounded p-2'
             value={preview.body}
+            rows={rows}
             onChange={() => null}
           />
         </Form.Control>

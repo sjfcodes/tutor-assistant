@@ -33,9 +33,10 @@ export {
 } from './dateTime';
 
 export {
-  emailIsValid,
-  passwordIsValid,
-  missingFormInputs,
-  inputIsSelected,
   convertStrToBool,
+  emailIsValid,
+  getTextareaRows,
+  inputIsSelected,
+  missingFormInputs,
+  passwordIsValid,
 } from './forms';
