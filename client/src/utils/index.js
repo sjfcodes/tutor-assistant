@@ -8,6 +8,7 @@ export {
 } from './api';
 
 export {
+  buildTemplatePreview,
   convertAddMeetingFormToISO8601,
   convertDatePickerToISO8601,
   convertISO8601ToDatePicker,
