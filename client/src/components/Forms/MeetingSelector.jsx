@@ -2,27 +2,28 @@ import { func, string } from 'prop-types';
 import React, { useContext } from 'react';
 import { Form } from 'react-bulma-components';
 import { CourseContext } from '../../context';
+import { getLocalDateString } from '../../utils';
 
-const StudentSelector = ({ className, studentId, onChange }) => {
+const MeetingSelector = ({ className, meetingId, onChange }) => {
   const { allCourses, selectedCourse } = useContext(CourseContext);
 
   return (
     <Form.Control className={className}>
-      <Form.Label className='mb-0'>select a student</Form.Label>
+      <Form.Label className='mb-0'>select a meeting</Form.Label>
       <Form.Select
         color='info'
-        name='studentId'
-        value={studentId}
-        placeholder='student'
+        name='meetingId'
+        value={meetingId}
+        placeholder='meeting'
         onChange={onChange}
       >
         <option value=''>-</option>
         {
           Object
-            .entries(allCourses[selectedCourse].students)
-            .map(([key, { firstName, lastName }]) => (
+            .entries(allCourses[selectedCourse].meetings)
+            .map(([key, { startTime }]) => (
               <option key={key} value={key}>
-                {`${firstName} ${lastName}`}
+                {`${getLocalDateString(startTime)}`}
               </option>
             ))
         }
@@ -31,14 +32,14 @@ const StudentSelector = ({ className, studentId, onChange }) => {
   );
 };
 
-export default StudentSelector;
+export default MeetingSelector;
 
-StudentSelector.propTypes = {
-  studentId: string.isRequired,
+MeetingSelector.propTypes = {
+  meetingId: string.isRequired,
   onChange: func.isRequired,
   className: string,
 };
 
-StudentSelector.defaultProps = {
+MeetingSelector.defaultProps = {
   className: '',
 };

@@ -64,7 +64,7 @@ const getZeroBasedHour = (hr, ampm) => {
     return `${hr + 12}`; // If 1-9pm return hour plus 12 to get 13-23
   }
   default:
-    throw new Error('missing am/pm while attempting to get zero based number');
+    throw new Error('missing am/pm while attempting to get zero based hour');
   }
 };
 

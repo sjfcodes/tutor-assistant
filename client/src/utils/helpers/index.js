@@ -2,7 +2,6 @@ import formatMeetings from './meeting';
 import formatStudents from './student';
 import formatCalendlyMeetings from './calendlyMeetings';
 import formatCourses from './course';
-import formatEmailTemplates from './emailTemplates';
 import handleError from './error';
 import logoutTutor from './logout';
 import preventBodyScroll from './html';
@@ -12,11 +11,15 @@ export {
   formatStudents,
   formatCalendlyMeetings,
   formatCourses,
-  formatEmailTemplates,
   handleError,
   logoutTutor,
   preventBodyScroll,
 };
+
+export {
+  formatEmailTemplates,
+  buildTemplatePreview,
+} from './emailTemplates';
 
 export {
   getCurrentUnix,
