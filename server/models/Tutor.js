@@ -20,6 +20,12 @@ const tutorSchema = new Schema(
       unique: true,
       match: [/.+@.+\..+/, 'Must match an email address!'],
     },
+    sendGrid: {
+      accessToken: {
+        type: Schema.Types.ObjectId,
+        default: null,
+      },
+    },
     timeZoneName: {
       type: String,
       required: true,
