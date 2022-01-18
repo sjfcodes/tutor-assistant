@@ -22,7 +22,7 @@ router.get('/', authorizeToken, async (req, res) => {
 router.post('/', authorizeToken, async (req, res) => {
   try {
     const { _id } = await EmailTemplate.create(req.body);
-    if (!_id) return res.statusMessage(500).json('failed to create template');
+    if (!_id) return res.statusMessage(500).json({ message: 'failed to create template' });
     await addModelToTutor(req.tutor._id, 'emailTemplates', _id);
     return res.json({ _id });
   } catch ({ message }) {
@@ -35,7 +35,7 @@ router.post('/', authorizeToken, async (req, res) => {
 router.put('/', authorizeToken, async (req, res) => {
   try {
     const template = await EmailTemplate.findByIdAndUpdate(req.body._id, req.body);
-    if (!template) return res.status(404).json('template not found');
+    if (!template) return res.status(404).json({ message: 'template not found' });
 
     return res.json('template updated');
   } catch ({ message }) {
@@ -48,7 +48,7 @@ router.put('/', authorizeToken, async (req, res) => {
 router.delete('/:_id', authorizeToken, async (req, res) => {
   try {
     const deleted = await EmailTemplate.findByIdAndDelete(req.params._id);
-    if (!deleted) return res.status(404).json('template not found');
+    if (!deleted) return res.status(404).json({ message: 'template not found' });
     return res.json('success');
   } catch ({ message }) {
     console.error(message);

@@ -30,8 +30,8 @@ router.post('/', async ({ body }, res) => {
 router.post('/login', async ({ body: { email, password } }, res) => {
   try {
     const { tutor } = await getTutorByEmail(email);
-    if (!tutor) return res.status(401).json('unauthorized');
-    if (!await tutor.isCorrectPassword(password)) return res.status(401).json('unauthorized');
+    if (!tutor) return res.status(401).json({ message: 'unauthorized' });
+    if (!await tutor.isCorrectPassword(password)) return res.status(401).json({ message: 'unauthorized' });
 
     // store encrypted password to access a users encrypted api keys
     const accountKey = encryptToken(password, process.env.JWT_SECRET);
@@ -56,7 +56,7 @@ router.post('/login', async ({ body: { email, password } }, res) => {
 router.get('/login', authorizeToken, async ({ tutor: { _id, accountKey } }, res) => {
   try {
     const { tutor } = await getTutorById(_id);
-    if (!tutor) return res.status(401).json('unauthorized');
+    if (!tutor) return res.status(401).json({ message: 'unauthorized' });
 
     const { email } = tutor;
     const token = signToken({ _id, email, accountKey });
@@ -88,10 +88,10 @@ router.put('/', authorizeToken, async ({ tutor: { _id }, body }, res) => {
       createdAt: false,
     };
     const allowedToUpdate = allowPropertyUpdate(allowUpdate, body);
-    if (!allowedToUpdate) return res.status(401).json('unauthorized');
+    if (!allowedToUpdate) return res.status(401).json({ message: 'unauthorized' });
 
     const updated = await Tutor.findByIdAndUpdate(_id, body, { new: true });
-    if (!updated) return res.status(500).json('update failed');
+    if (!updated) return res.status(500).json({ message: 'update failed' });
 
     updated.password = null;
     return res.json(updated);
@@ -105,7 +105,7 @@ router.put('/', authorizeToken, async ({ tutor: { _id }, body }, res) => {
 router.put('/password', authorizeToken, async ({ tutor: { _id }, body }, res) => {
   try {
     const tutorDoc = await getTutorById(_id);
-    if (!await tutorDoc.isCorrectPassword(body.password)) return res.status(401).json('unauthorized');
+    if (!await tutorDoc.isCorrectPassword(body.password)) return res.status(401).json({ message: 'unauthorized' });
 
     // update password to overwrite
     tutorDoc.password = body.newPassword;
@@ -122,7 +122,7 @@ router.put('/password', authorizeToken, async ({ tutor: { _id }, body }, res) =>
 router.delete('/', authorizeToken, async ({ tutor: { _id }, body }, res) => {
   try {
     const tutorDoc = await getTutorById(_id);
-    if (!await tutorDoc.isCorrectPassword(body.password)) return res.status(401).json('unauthorized');
+    if (!await tutorDoc.isCorrectPassword(body.password)) return res.status(401).json({ message: 'unauthorized' });
     await Tutor.findByIdAndDelete(_id);
     return res.json('tutor deleted');
   } catch ({ message }) {

@@ -39,9 +39,9 @@ router.post('/token/:courseId', authorizeToken, async (
   try {
     //  get tutor document
     const { tutor } = await getTutorById(tutorId);
-    if (!tutor) return res.status(401).json('unauthorized');
+    if (!tutor) return res.status(401).json({ message: 'unauthorized' });
     // compare request password to tutor saved password
-    if (!await tutor.isCorrectPassword(password)) return res.status(401).json('unauthorized');
+    if (!await tutor.isCorrectPassword(password)) return res.status(401).json({ message: 'unauthorized' });
 
     //  encrypt token with current password
     const encryptedToken = encryptToken(token, password);
@@ -98,10 +98,10 @@ router.post('/sync', authorizeToken, async ({
   try {
     // get tutor
     const tutor = await Tutor.findById(tutorId);
-    if (!tutor) return res.status(404).json('tutor not found');
+    if (!tutor) return res.status(404).json({ message: 'tutor not found' });
     // compare hashed passwords
     const correctPw = tutor.isCorrectPassword(password);
-    if (!correctPw) return res.status(401).json('unauthorized');
+    if (!correctPw) return res.status(401).json({ message: 'unauthorized' });
 
     // setup calendly api call
     const url = 'https://api.calendly.com/users/me';
@@ -114,7 +114,7 @@ router.post('/sync', authorizeToken, async ({
     const { data: { resource } } = await axios.get(url, options);
     const { calendly: { data: existingData } } = await Course.findById(courseId);
 
-    if (!resource) return res.status(400).json('bad accessToken');
+    if (!resource) return res.status(400).json({ message: 'bad access token' });
 
     if (!existingData) {
       // save calendly resource
@@ -133,6 +133,7 @@ router.post('/sync', authorizeToken, async ({
     return res.status(500).json({ location: 2, message });
   }
 });
+
 router.delete('/token/:tokenId', authorizeToken, async ({
   params: { tokenId },
   body: { courseId },

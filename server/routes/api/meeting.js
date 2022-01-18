@@ -8,7 +8,7 @@ const { deleteModelFromTutor, addModelToCourse } = require('../../utils/helpers'
 router.post('/:tutorId', authorizeToken, async (req, res) => {
   try {
     const meeting = await Meeting.create(req.body);
-    if (!meeting._id) return res.statusMessage(500).json('failed to create meeting');
+    if (!meeting._id) return res.statusMessage(500).json({ message: 'failed to create meeting' });
 
     await addModelToCourse(req.params.tutorId, 'meetings', meeting._id);
     return res.json(meeting);
@@ -22,7 +22,7 @@ router.post('/:tutorId', authorizeToken, async (req, res) => {
 router.put('/', authorizeToken, async (req, res) => {
   try {
     const meeting = await Meeting.findByIdAndUpdate(req.body._id, req.body, { new: true });
-    if (!meeting) return res.status(404).json('meeting not found');
+    if (!meeting) return res.status(404).json({ message: 'meeting not found' });
     return res.json(meeting);
   } catch ({ message }) {
     console.error(message);

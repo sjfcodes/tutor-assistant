@@ -13,11 +13,12 @@ const ProfileDetailList = () => {
   const doNotDisplay = useMemo(() => [
     '_id',
     '__v',
-    'createdAt',
-    'loggedIn',
-    'emailTemplates',
     'courses',
+    'createdAt',
+    'emailTemplates',
+    'loggedIn',
     'password',
+    'sendGrid',
   ], []);
 
   useEffect(() => {

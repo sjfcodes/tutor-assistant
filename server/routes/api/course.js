@@ -6,7 +6,7 @@ const { addModelToTutor, deleteModelFromTutor } = require('../../utils/helpers')
 // create a course
 router.post('/', authorizeToken, async (req, res) => {
   const course = await Course.create(req.body);
-  if (!course) return res.statusMessage(500).json('failed to create course');
+  if (!course) return res.statusMessage(500).json({ message: 'failed to create course' });
 
   try {
     await addModelToTutor(req.tutor._id, 'courses', course._id);
@@ -21,7 +21,7 @@ router.post('/', authorizeToken, async (req, res) => {
 router.put('/', authorizeToken, async (req, res) => {
   try {
     const course = await Course.findByIdAndUpdate(req.body._id, { name: req.body.name });
-    if (!course) return res.status(404).json('course not found');
+    if (!course) return res.status(404).json({ message: 'course not found' });
 
     return res.json('course updated');
   } catch ({ message }) {
