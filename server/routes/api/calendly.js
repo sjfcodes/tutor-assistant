@@ -53,9 +53,9 @@ router.post('/token/:courseId', authorizeToken, async (
         const newTokenId = await createTokenAndAddToCourse({ encryptedToken, courseId });
         if (!newTokenId) res.status(400).json({ message: 'failed to add token' });
         return res.json({ _id: newTokenId });
-      } catch (error) {
-        console.error(error.message);
-        return res.status(500).json({ location: 2, message: error.message });
+      } catch ({ message }) {
+        console.error(message);
+        return res.status(500).json({ location: 1, message });
       }
     }
 
@@ -64,13 +64,13 @@ router.post('/token/:courseId', authorizeToken, async (
       // update existing document with new token
       await AccessToken.findByIdAndUpdate(existingTokenId, { token: encryptedToken });
       return res.json({ _id: existingTokenId });
-    } catch (error) {
-      console.error(error.message);
-      return res.status(500).json({ location: 3, message: error.message });
+    } catch ({ message }) {
+      console.error(message);
+      return res.status(500).json({ location: 2, message });
     }
-  } catch (error) {
-    console.error(error.message);
-    return res.status(500).json({ location: 1, message: error.message });
+  } catch ({ message }) {
+    console.error(message);
+    return res.status(500).json({ location: 3, message });
   }
 });
 
