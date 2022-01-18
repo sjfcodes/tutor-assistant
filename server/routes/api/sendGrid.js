@@ -42,9 +42,9 @@ router.post('/add-token', authorizeToken, async (
   try {
     //  get tutor document
     const { tutor } = await getTutorById(tutorId);
-    if (!tutor) return res.status(401).json('unauthorized');
+    if (!tutor) return res.status(401).json({ message: 'unauthorized' });
     // compare request password to tutor saved password
-    if (!await tutor.isCorrectPassword(password)) return res.status(401).json('unauthorized');
+    if (!await tutor.isCorrectPassword(password)) return res.status(401).json({ message: 'unauthorized' });
     const { sendGrid: { accessToken: existingTokenId } } = tutor;
     //  encrypt token with current password
     const encryptedToken = encryptToken(token, password);
@@ -102,6 +102,21 @@ router.post('/send-email', authorizeToken, async ({
   } catch ({ message }) {
     console.error(message);
     return res.status(500).json({ location: 1, message });
+  }
+});
+
+router.delete('/token/:tokenId', authorizeToken, async ({
+  params: { tokenId },
+  tutor: { _id: tutorId },
+}, res) => {
+  try {
+    await AccessToken.findByIdAndDelete(tokenId);
+    await Tutor.findByIdAndUpdate(tutorId, { sendGrid: { accessToken: null } });
+
+    return res.json('token deleted');
+  } catch ({ message }) {
+    console.error(message);
+    return res.status(500).json(message);
   }
 });
 

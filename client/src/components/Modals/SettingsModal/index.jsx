@@ -6,6 +6,7 @@ import {
 } from 'react-bulma-components';
 import { ModalContext } from '../../../context';
 import CourseSettings from './CourseSettings';
+import EmailAccess from './EmailAccess';
 import ProfileDetailList from './ProfileDetailList';
 
 const SettingsModal = () => {
@@ -43,8 +44,7 @@ const SettingsModal = () => {
     const tabFor = {
       profile: <ProfileDetailList />,
       courses: <CourseSettings setDisableControls={setDisableControls} />,
-      students: <h1>Students</h1>,
-      meetings: <h1>Meetings</h1>,
+      emailAccess: <EmailAccess />,
     };
     setComponent(tabFor[activeTab]);
   }, [activeTab]);
@@ -94,20 +94,22 @@ const SettingsModal = () => {
                 Courses
               </strong>
             </Tabs.Tab>
+            <Tabs.Tab
+              className='rounded-top'
+              active={activeTab === 'emailAccess'}
+              onClick={(e) => handleUpdate(e, 'emailAccess')}
+            >
+              <strong
+                className={activeTab !== 'emailAccess' ? 'has-text-grey-lighter' : ''}
+              >
+                Email Access
+              </strong>
+            </Tabs.Tab>
           </Tabs>
         </Modal.Card.Header>
         <Modal.Card.Body className='rounded-top'>
           {component}
         </Modal.Card.Body>
-        {/* <Button
-          className='square-top'
-          fullwidth
-          color='primary'
-          disabled={disableControls}
-          onClick={() => setOpenModal('')}
-        >
-          Done
-        </Button> */}
       </Modal.Card>
     </Modal>
   );

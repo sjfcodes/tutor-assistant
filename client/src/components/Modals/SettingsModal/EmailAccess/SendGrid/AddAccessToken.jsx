@@ -1,12 +1,10 @@
 import { string } from 'prop-types';
 import React, { useContext, useState } from 'react';
 import { Button, Form, Icon } from 'react-bulma-components';
-import { AppContext, CourseContext } from '../../../../context';
-import { createModel } from '../../../../utils';
-import { syncCalendlyResource } from '../../../../utils/api';
+import { AppContext } from '../../../../../context';
+import { createModel } from '../../../../../utils';
 
-const AddAccessToken = ({ courseId, password }) => {
-  const { allCourses, setAllCourses } = useContext(CourseContext);
+const AddAccessToken = ({ password }) => {
   const { tutorDetails, setTutorDetails } = useContext(AppContext);
 
   const [formInputs, setFormInputs] = useState({ token: '' });
@@ -25,48 +23,26 @@ const AddAccessToken = ({ courseId, password }) => {
     e.preventDefault();
     setLoading(true);
 
-    let accessToken;
-    let data;
-
     try {
-      const { _id } = await createModel(
+      const { _id: accessToken } = await createModel(
         {
-          model: 'calendly/token',
+          model: 'sendgrid/add-token',
           body: { ...formInputs, password },
-          _id: courseId,
         },
       );
-      accessToken = _id;
+      setHelpText('');
+      setColor('');
+      setButtonText('success!');
+      setTutorDetails({ ...tutorDetails, sendGrid: { accessToken } });
     } catch (error) {
       // expected case: bad password
       setTutorDetails({
         ...tutorDetails,
-        calendly: {
+        sendGrid: {
           accessToken: null,
-          data: null,
         },
       });
       setHelpText('unauthorized');
-    }
-
-    if (accessToken) try {
-      data = await syncCalendlyResource({ body: { password, courseId } });
-    } catch (error) {
-      // expected case: bad accessToken
-      setHelpText('invalid token, try again');
-      setColor('danger');
-    }
-    if (accessToken && data) {
-      setHelpText('');
-      setColor('');
-      setButtonText('success!');
-      setAllCourses({
-        ...allCourses,
-        [courseId]: {
-          ...allCourses[courseId],
-          calendly: { accessToken, data },
-        },
-      });
     }
     setLoading(false);
   };
@@ -75,9 +51,9 @@ const AddAccessToken = ({ courseId, password }) => {
     <form onSubmit={handleFormSubmit}>
       <Form.Field>
         <Form.Label size='small'>
-          create an access token
+          follow the steps to signup and create a SendGrid API key
           {' '}
-          <a className='my-5' href='https://calendly.com/integrations/api_webhooks' target='_blank' rel='noreferrer'>here</a>
+          <a className='my-5' href='https://docs.sendgrid.com/for-developers/sending-email/quickstart-nodejs' target='_blank' rel='noreferrer'>here</a>
           {' '}
           and paste it below. Note - Tutorly encrypts all access keys for your security.
         </Form.Label>
@@ -113,6 +89,5 @@ const AddAccessToken = ({ courseId, password }) => {
 export default AddAccessToken;
 
 AddAccessToken.propTypes = {
-  courseId: string.isRequired,
   password: string.isRequired,
 };
