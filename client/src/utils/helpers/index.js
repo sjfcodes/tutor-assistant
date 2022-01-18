@@ -5,21 +5,19 @@ import formatCourses from './course';
 import handleError from './error';
 import logoutTutor from './logout';
 import preventBodyScroll from './html';
+import { buildTemplatePreview, formatEmailTemplates } from './emailTemplates';
 
 export {
-  formatMeetings,
-  formatStudents,
+  buildTemplatePreview,
   formatCalendlyMeetings,
   formatCourses,
+  formatEmailTemplates,
+  formatMeetings,
+  formatStudents,
   handleError,
   logoutTutor,
   preventBodyScroll,
 };
-
-export {
-  formatEmailTemplates,
-  buildTemplatePreview,
-} from './emailTemplates';
 
 export {
   getCurrentUnix,

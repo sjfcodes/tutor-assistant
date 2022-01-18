@@ -1,4 +1,4 @@
-import { getLocalDateString } from '.';
+import { getLocalDateString } from './dateTime';
 
 /* eslint-disable no-continue */
 export const formatEmailTemplates = (templates) => {
