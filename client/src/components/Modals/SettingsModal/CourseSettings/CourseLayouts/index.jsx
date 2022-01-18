@@ -8,12 +8,11 @@ import EditCourseNameLayout from './EditCourseNameLayout';
 import DefaultCourseLayout from './DefaultCourseLayout';
 import CalendlyAccess from '../../CalendlyAccess';
 
-const CouseLayouts = ({
+const CourseLayouts = ({
   courseName, courseId,
   courseToEdit, setCourseToEdit,
   courseToDelete, setCourseToDelete,
   handleDeleteCourse, handleUpdateCourse,
-  selectedCalendlyAccess, setSelectedCalendlyAccess,
 }) => {
   const [formInput, setFormInput] = useState('');
   const [layout, setLayout] = useState();
@@ -77,15 +76,13 @@ const CouseLayouts = ({
       </Level>
       <CalendlyAccess
         courseId={courseId}
-        selectedCalendlyAccess={selectedCalendlyAccess}
-        setSelectedCalendlyAccess={setSelectedCalendlyAccess}
       />
     </div>
   );
 };
-export default CouseLayouts;
+export default CourseLayouts;
 
-CouseLayouts.propTypes = {
+CourseLayouts.propTypes = {
   courseName: string.isRequired,
   courseId: string.isRequired,
   courseToDelete: string.isRequired,
@@ -94,6 +91,4 @@ CouseLayouts.propTypes = {
   setCourseToEdit: func.isRequired,
   handleUpdateCourse: func.isRequired,
   handleDeleteCourse: func.isRequired,
-  selectedCalendlyAccess: string.isRequired,
-  setSelectedCalendlyAccess: func.isRequired,
 };

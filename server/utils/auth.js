@@ -14,9 +14,9 @@ module.exports = {
     try {
       const { data } = jwt.verify(token, secret, { maxAge: expiration });
       req.tutor = data;
-    } catch (error) {
-      console.error(error);
-      return res.status(401).json({ location: 2, message: 'unauthorized' });
+    } catch ({ message }) {
+      console.error(message);
+      return res.status(401).json({ location: 2, message });
     }
 
     return next();

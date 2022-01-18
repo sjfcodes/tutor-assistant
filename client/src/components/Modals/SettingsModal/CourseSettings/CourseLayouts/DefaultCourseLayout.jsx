@@ -24,16 +24,6 @@ const DefaultCourseLayout = ({
         >
           edit name
         </Button>
-        {/* <Icon
-          className='mx-1 mr-5'
-          onClick={() => handleEditNameClick(courseName, courseId)}
-        >
-          <i className={`icon-small has-text-primary
-            ${courseToEdit === courseId
-    ? 'far fa-times-circle'
-    : 'fas fa-pen'}`}
-          />
-        </Icon> */}
         <Button
           className='tag px-1'
           size='small'

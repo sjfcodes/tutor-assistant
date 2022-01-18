@@ -1,11 +1,11 @@
-import { func, string } from 'prop-types';
+import { string } from 'prop-types';
 import React, { useContext, useState } from 'react';
 import { Button, Form, Icon } from 'react-bulma-components';
 import { AppContext, CourseContext } from '../../../../context';
 import { createModel } from '../../../../utils';
 import { syncCalendlyResource } from '../../../../utils/api';
 
-const AddAccessToken = ({ courseId, password, setSelectedCalendlyAccess }) => {
+const AddAccessToken = ({ courseId, password }) => {
   const { allCourses, setAllCourses } = useContext(CourseContext);
   const { tutorDetails, setTutorDetails } = useContext(AppContext);
 
@@ -31,7 +31,7 @@ const AddAccessToken = ({ courseId, password, setSelectedCalendlyAccess }) => {
     try {
       const { _id } = await createModel(
         {
-          model: 'access-token',
+          model: 'calendly/token',
           body: { ...formInputs, password },
           _id: courseId,
         },
@@ -47,6 +47,7 @@ const AddAccessToken = ({ courseId, password, setSelectedCalendlyAccess }) => {
         },
       });
       setHelpText('unauthorized');
+      return;
     }
 
     if (accessToken) try {
@@ -55,22 +56,20 @@ const AddAccessToken = ({ courseId, password, setSelectedCalendlyAccess }) => {
       // expected case: bad accessToken
       setHelpText('invalid token, try again');
       setColor('danger');
+      return;
     }
 
-    if (accessToken && data) {
-      setAllCourses({
-        ...allCourses,
-        [courseId]: {
-          ...allCourses[courseId],
-          calendly: { accessToken, data },
-        },
-      });
-      setHelpText('');
-      setColor('');
-      setButtonText('success!');
-      setSelectedCalendlyAccess('');
-    }
+    setHelpText('');
+    setColor('');
+    setButtonText('success!');
     setLoading(false);
+    setAllCourses({
+      ...allCourses,
+      [courseId]: {
+        ...allCourses[courseId],
+        calendly: { accessToken, data },
+      },
+    });
   };
 
   return (
@@ -117,5 +116,4 @@ export default AddAccessToken;
 AddAccessToken.propTypes = {
   courseId: string.isRequired,
   password: string.isRequired,
-  setSelectedCalendlyAccess: func.isRequired,
 };
