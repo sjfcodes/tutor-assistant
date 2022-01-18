@@ -3,13 +3,12 @@ import React, {
 } from 'react';
 import { CourseContext } from '../../../../context';
 import { deleteModel, updateModel } from '../../../../utils';
-import CouseLayouts from './CourseLayouts';
+import CourseLayouts from './CourseLayouts';
 
 // eslint-disable-next-line react/prop-types
 const CourseSettings = ({ setDisableControls }) => {
   const [courseToDelete, setCourseToDelete] = useState('');
   const [courseToEdit, setCourseToEdit] = useState('');
-  const [selectedCalendlyAccess, setSelectedCalendlyAccess] = useState('');
 
   const {
     allCourses,
@@ -59,7 +58,7 @@ const CourseSettings = ({ setDisableControls }) => {
 
   return (
     Object.values(allCourses).map(({ name: courseName, _id: courseId }) => (
-      <CouseLayouts
+      <CourseLayouts
         key={courseId}
         courseId={courseId}
         courseName={courseName}
@@ -69,8 +68,6 @@ const CourseSettings = ({ setDisableControls }) => {
         setCourseToDelete={setCourseToDelete}
         handleDeleteCourse={handleDeleteCourse}
         handleUpdateCourse={handleUpdateCourse}
-        selectedCalendlyAccess={selectedCalendlyAccess}
-        setSelectedCalendlyAccess={setSelectedCalendlyAccess}
       />
     ))
   );

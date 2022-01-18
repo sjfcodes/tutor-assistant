@@ -13,7 +13,7 @@ const DeleteAccessToken = () => {
     await deleteModel(
       {
         _id: accessToken,
-        model: 'access-token',
+        model: 'calendly/token',
         body: { courseId: selectedCourse },
       },
     );

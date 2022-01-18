@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-vars */
-import { func, string } from 'prop-types';
+import { string } from 'prop-types';
 import React, { useContext, useState } from 'react';
 import {
   Box, Button, Content, Form, Heading, Icon, Level,
@@ -13,17 +12,16 @@ import DeleteAccessToken from './DeleteAccessToken';
 import SyncCalendlyDetails from './SyncCalendlyDetails';
 // import SyncCalendly from './SyncCalendly';
 
-const CalendlyAccess = ({ courseId, selectedCalendlyAccess, setSelectedCalendlyAccess }) => {
+const CalendlyAccess = ({ courseId }) => {
   const { allCourses } = useContext(CourseContext);
   const { calendly: { accessToken } } = allCourses[courseId];
 
   const [password, setPassword] = useState('');
   const [display, setDisplay] = useState(!accessToken ? 'addNew' : 'makeDecision');
+  const [displayCalendly, setDisplayCalendly] = useState(false);
 
   const toggleViewAccess = () => (
-    selectedCalendlyAccess === courseId
-      ? setSelectedCalendlyAccess('')
-      : setSelectedCalendlyAccess(courseId)
+    setDisplayCalendly((curr) => !curr)
   );
 
   const getDeleteButton = () => {
@@ -38,7 +36,6 @@ const CalendlyAccess = ({ courseId, selectedCalendlyAccess, setSelectedCalendlyA
           courseId={courseId}
           password={password}
           setPassword={setPassword}
-          setSelectedCalendlyAccess={setSelectedCalendlyAccess}
         />
       ),
       makeDecision: (
@@ -70,7 +67,7 @@ const CalendlyAccess = ({ courseId, selectedCalendlyAccess, setSelectedCalendlyA
     return layoutTo[display] || '';
   };
 
-  if (selectedCalendlyAccess !== courseId) return (
+  if (!displayCalendly) return (
     <Box className='p-3 border'>
       <Level
         className='is-mobile'
@@ -85,7 +82,7 @@ const CalendlyAccess = ({ courseId, selectedCalendlyAccess, setSelectedCalendlyA
         </Level.Side>
         <Level.Side>
           <Icon className='mr-2'>
-            <i className={`fas fa-chevron-${selectedCalendlyAccess === courseId ? 'up' : 'down'}`} />
+            <i className={`fas fa-chevron-${displayCalendly ? 'up' : 'down'}`} />
           </Icon>
         </Level.Side>
       </Level>
@@ -107,7 +104,7 @@ const CalendlyAccess = ({ courseId, selectedCalendlyAccess, setSelectedCalendlyA
         </Level.Side>
         <Level.Side>
           <Icon className='mr-2'>
-            <i className={`fas fa-chevron-${selectedCalendlyAccess === courseId ? 'up' : 'down'}`} />
+            <i className={`fas fa-chevron-${displayCalendly ? 'up' : 'down'}`} />
           </Icon>
         </Level.Side>
       </Level>
@@ -143,6 +140,4 @@ export default CalendlyAccess;
 
 CalendlyAccess.propTypes = {
   courseId: string.isRequired,
-  selectedCalendlyAccess: string.isRequired,
-  setSelectedCalendlyAccess: func.isRequired,
 };
