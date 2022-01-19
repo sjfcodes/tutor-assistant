@@ -5,12 +5,11 @@ import {
 } from 'prop-types';
 import ListItemContainer from '../../List/ListItemContainer';
 import TasksListItemLayout from './TasksListItemLayout';
-import TaskDetailList from '../TaskDetailList';
 
 const TasksListItem = ({ task, selectedTaskId, setSelectedTaskId }) => {
   const [listItem, setListItem] = useState('');
   const [listItemDetails, setListItemDetails] = useState('listItemDetails');
-  const { _id, taskFor } = task;
+  const { _id, taskComponent } = task;
 
   const toggleViewStudent = () => (
     selectedTaskId === _id
@@ -21,15 +20,15 @@ const TasksListItem = ({ task, selectedTaskId, setSelectedTaskId }) => {
   useEffect(() => {
     setListItem(
       <TasksListItemLayout
-        taskFor={taskFor}
+        taskFor={task.taskFor}
       />,
     );
-  }, [taskFor]);
+  }, [task]);
 
   useEffect(() => {
     if (selectedTaskId !== _id) return setListItemDetails('');
-    return setListItemDetails(<TaskDetailList task={task} _id={_id} />);
-  }, [task, _id, selectedTaskId]);
+    return setListItemDetails(taskComponent);
+  }, [task, _id, selectedTaskId, taskComponent]);
 
   return (
     <ListItemContainer

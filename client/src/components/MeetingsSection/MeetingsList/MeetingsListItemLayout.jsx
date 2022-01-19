@@ -9,7 +9,7 @@ const MeetingsListItemLayout = (
   },
 ) => {
   const getDisplayName = () => {
-    if (firstName && lastName) return `${firstName} ${lastName}`;
+    if (firstName || lastName) return `${firstName} ${lastName}`;
     if (studentName) return `${studentName}`;
     return 'work in progress';
   };
