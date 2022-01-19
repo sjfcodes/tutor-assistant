@@ -1,5 +1,13 @@
-import SignupForm from './SignupForm';
-import LoginForm from './LoginForm';
+import TimeZoneSelector from './TimeZoneSelector';
 import FormInput from './FormInput';
+import LoginForm from './LoginForm';
+import SignupForm from './SignupForm';
+import StudentSelector from './StudentSelector';
 
-export { SignupForm, LoginForm, FormInput };
+export {
+  TimeZoneSelector,
+  FormInput,
+  LoginForm,
+  SignupForm,
+  StudentSelector,
+};

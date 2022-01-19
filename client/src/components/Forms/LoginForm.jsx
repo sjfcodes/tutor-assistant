@@ -1,8 +1,11 @@
 import React, { useContext, useState } from 'react';
 import { Form, Icon, Button } from 'react-bulma-components';
 import { AppContext, CourseContext } from '../../context';
-import { loginWithPassword } from '../../utils';
-import { formatCourses, formatStudents } from '../../utils/helpers';
+import {
+  loginWithPassword, passwordIsValid,
+  formatCourses, formatStudents, formatMeetings,
+} from '../../utils';
+import InputPassword from './InputPassword';
 
 const {
   Field, Label, Control, Input,
@@ -10,9 +13,10 @@ const {
 
 const LoginForm = () => {
   const [inputs, setInputs] = useState({
-    email: 'sam@email.com',
+    email: 'demo@email.com',
     password: 'password',
   });
+  const { email, password } = inputs;
 
   const [helpText, setHelpText] = useState('');
 
@@ -36,14 +40,14 @@ const LoginForm = () => {
         .map((course) => ({
           ...course,
           students: formatStudents(course.students),
+          meetings: formatMeetings(course.meetings),
         }));
 
-      const courses = formatCourses(formattedCourses);
-      setAllCourses(courses);
+      setAllCourses(formatCourses(formattedCourses));
 
       setTutorDetails({ ...tutor, loggedIn: true });
-    } catch (error) {
-      setHelpText('** invalid login');
+    } catch ({ message }) {
+      setHelpText(message);
     }
   };
   return (
@@ -55,7 +59,7 @@ const LoginForm = () => {
             placeholder='Username'
             type='text'
             name='email'
-            value={inputs.email}
+            value={email.toLocaleLowerCase()}
             onChange={handleInputChange}
           />
           <Icon align='left'>
@@ -66,24 +70,24 @@ const LoginForm = () => {
       <Field>
         <Label>Password</Label>
         <Control>
-          <Input
+          <InputPassword
             placeholder='Password'
             name='password'
             type='password'
-            value={inputs.password}
+            value={password}
             onChange={handleInputChange}
+            validation={() => passwordIsValid(password)}
           />
           <Icon align='left'>
             <i className='fas fa-fingerprint' />
           </Icon>
         </Control>
       </Field>
-      {helpText && <h6 className='help-error rounded'>{helpText}</h6>}
+      <Form.Help color='danger'>{helpText}</Form.Help>
       <Button.Group>
         <Button
           className='mt-5'
           fullwidth
-          rounded
           color='primary'
           onClick={handleLogin}
         >

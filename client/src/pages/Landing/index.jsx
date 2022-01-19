@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Section, Tabs } from 'react-bulma-components';
+import { Box, Tabs } from 'react-bulma-components';
 import { LoginForm, SignupForm } from '../../components/Forms';
 
 const { Tab } = Tabs;
@@ -8,20 +8,29 @@ const Landing = () => {
   const [form, setForm] = useState('login');
 
   return (
-    <Section className='mx-3 py-5 '>
-      <Box className='background-dark-blurred'>
-        <Tabs type='boxed'>
-          <Tab active={form === 'login'} onClick={() => setForm('login')}>
-            login
-          </Tab>
-          <Tab active={form === 'signup'} onClick={() => setForm('signup')}>
-            signup
-          </Tab>
-        </Tabs>
+
+    <>
+      <Tabs type='boxed' align='left' className=' mb-0 pt-3 pl-2'>
+        <Tab
+          className={form !== 'login' ? 'has-text-white' : ''}
+          active={form === 'login'}
+          onClick={() => setForm('login')}
+        >
+          <strong className={form !== 'login' ? 'has-text-grey-lighter' : ''}>Login</strong>
+        </Tab>
+        <Tab
+          className='rounded-tr'
+          active={form === 'signup'}
+          onClick={() => setForm('signup')}
+        >
+          <strong className={form !== 'signup' ? 'has-text-grey-lighter' : ''}>Signup</strong>
+        </Tab>
+      </Tabs>
+      <Box className='rounded'>
         {form === 'login' && <LoginForm />}
         {form === 'signup' && <SignupForm />}
       </Box>
-    </Section>
+    </>
   );
 };
 export default Landing;

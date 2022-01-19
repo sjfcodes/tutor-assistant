@@ -1,14 +1,8 @@
-const app = require('express').Router();
-const tutorRoutes = require('./tutor');
-const studentRoutes = require('./student');
-const meetingRoutes = require('./meeting');
-const templateRoutes = require('./template');
-const courseRoutes = require('./course');
+const router = require('express').Router();
+const apiRoutes = require('./api');
+// const htmlRoutes = require('./html');
 
-app.use('/tutor', tutorRoutes);
-app.use('/student', studentRoutes);
-app.use('/meeting', meetingRoutes);
-app.use('/template', templateRoutes);
-app.use('/course', courseRoutes);
+router.use('/api', apiRoutes);
+// router.use('/', htmlRoutes);
 
-module.exports = app;
+module.exports = router;

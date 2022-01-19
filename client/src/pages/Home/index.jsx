@@ -1,25 +1,25 @@
 import React, { useContext } from 'react';
-import { Section } from 'react-bulma-components';
-import { MeetingsSection, StudentsSection, CourseTabs } from '../../components';
-import { AddMeeting, AddStudent } from '../../components/Modals';
+import {
+  MeetingsSection, StudentsSection, CourseTabs, TasksSection,
+} from '../../components';
+import MessageBoard from '../../components/MessageBoard';
 import { CourseContext } from '../../context';
 
 const Home = () => {
   const { selectedCourse } = useContext(CourseContext);
 
   return (
-    <Section className='p-3 background-dark-blurred rounded'>
-      <CourseTabs />
+    <>
+      <CourseTabs className='mb-0 pt-3 pl-2' />
+      <MessageBoard />
       {selectedCourse && (
         <>
+          <TasksSection />
           <StudentsSection />
-          <AddStudent />
-
           <MeetingsSection />
-          <AddMeeting />
         </>
       )}
-    </Section>
+    </>
   );
 };
 

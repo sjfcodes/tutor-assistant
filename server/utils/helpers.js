@@ -2,7 +2,6 @@ const { Error } = require('mongoose');
 const { Tutor, Course } = require('../models');
 
 module.exports = {
-
   getTutorById: (id) => new Promise((resolve, reject) => {
     Tutor.findById(id)
       .populate({
@@ -18,7 +17,6 @@ module.exports = {
           },
         ],
       })
-      .select('-password')
       .then((tutor) => {
         if (!tutor) return reject(new Error('tutor not found'));
         return resolve({ tutor });
@@ -55,7 +53,7 @@ module.exports = {
       // { new: true }
     )
       .then((updatedTutor) => {
-        if (!updatedTutor) return reject(new Error('failed to update tutor'));
+        if (!updatedTutor) return reject(new Error('update failed'));
         return resolve(updatedTutor);
       })
       .catch((error) => reject(error));
@@ -67,7 +65,7 @@ module.exports = {
       { $pullAll: { [property]: [modelId] } },
       // { new: true }
     ).then((updatedTutor) => {
-      if (!updatedTutor) return reject(new Error('failed to update tutor'));
+      if (!updatedTutor) return reject(new Error('update failed'));
       Model.findByIdAndDelete(modelId)
         .then(() => resolve(updatedTutor))
         .catch((error) => reject(error));
@@ -83,7 +81,7 @@ module.exports = {
       // { new: true }
     )
       .then((updatedCourse) => {
-        if (!updatedCourse) return reject(new Error('failed to update Course'));
+        if (!updatedCourse) return reject(new Error('update failed'));
         return resolve(updatedCourse);
       })
       .catch((error) => reject(error));
@@ -96,7 +94,7 @@ module.exports = {
       // { new: true }
     )
       .then((updatedCourse) => {
-        if (!updatedCourse) return reject(new Error('failed to update Course'));
+        if (!updatedCourse) return reject(new Error('update failed'));
         Model.findByIdAndDelete(modelId)
           .then(() => resolve(updatedCourse))
           .catch((error) => reject(error));
@@ -105,13 +103,13 @@ module.exports = {
       .catch((error) => reject(error));
   }),
 
-  updateDocumentProperties: (allowUpdate, currentDoc, newProps) => {
+  allowPropertyUpdate: (allowUpdate, newProps) => {
     // eslint-disable-next-line no-restricted-syntax
-    for (const [key, value] of Object.entries(newProps)) {
+    for (const [key] of Object.entries(newProps)) {
       // eslint-disable-next-line no-continue
-      if (key === 'email' && currentDoc.email === newProps.email) continue;
-      // eslint-disable-next-line no-param-reassign
-      if (allowUpdate[key]) currentDoc[key] = value;
+      if (key === '_id') continue;
+      if (!allowUpdate[key]) return false;
     }
+    return true;
   },
 };

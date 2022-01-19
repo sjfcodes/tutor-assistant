@@ -2,12 +2,10 @@ import React, {
   createContext, useContext, useEffect, useMemo, useState,
 } from 'react';
 import { node } from 'prop-types';
-import { loginWithToken } from '../utils';
 import {
-  formatCourses,
-  formatMeetings,
-  formatStudents,
-} from '../utils/helpers';
+  loginWithToken, formatCourses,
+  formatMeetings, formatStudents,
+} from '../utils';
 import { CourseContext } from './CourseProvider';
 import { tokenKey } from '../config';
 
@@ -27,13 +25,14 @@ export const AppProvider = ({ children }) => {
   );
 
   useEffect(() => {
-    const token = localStorage.getItem('tutor-token');
-    if (!token) return;
+    const prevToken = localStorage.getItem(tokenKey);
+    if (!prevToken) return;
 
-    async function loginUser() {
+    const loginUser = async () => {
       try {
-        const { tutor } = await loginWithToken(token);
-        if (!tutor) return;
+        const data = await loginWithToken(prevToken);
+        const { tutor, token } = data;
+        if (!tutor || !token) return;
 
         const formattedCourses = tutor.courses.map((course) => ({
           ...course,
@@ -44,10 +43,9 @@ export const AppProvider = ({ children }) => {
         setAllCourses(formatCourses(formattedCourses));
         setTutorDetails({ ...tutor, loggedIn: true });
       } catch (error) {
-        console.warn(error);
         localStorage.removeItem(tokenKey);
       }
-    }
+    };
 
     loginUser();
   }, [setAllCourses]);

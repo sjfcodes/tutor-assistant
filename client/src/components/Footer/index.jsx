@@ -1,47 +1,61 @@
+import { string } from 'prop-types';
 import React from 'react';
-import { Footer as BulmaFooter } from 'react-bulma-components';
+import { Columns, Footer as BulmaFooter } from 'react-bulma-components';
+import './style.css';
 
-const Footer = () => (
-  <BulmaFooter className='has-text-centered p-3'>
-    <p>
-      <a
-        href='https://github.com/samuelfox1/tutor-assistant'
-        className='has-text-weight-bold '
-      >
-        Tutor Helper
-      </a>
-      {' '}
-      by
-      {' '}
-      <a
-        className='has-text-black has-text-weight-bold'
-        href='https://github.com/samuelfox1'
-      >
-        Samuel Fox
-        {' '}
-      </a>
-      {' '}
-      and
-      <a
-        className='has-text-black has-text-weight-bold'
-        href='https://github.com/Tuzosdaniel12'
-      >
-        {' '}
-        Daniel Soledad
-      </a>
-      .
-    </p>
-    <p>
-      The source code is licensed under
-      <a
-        className='has-text-black has-text-weight-medium'
-        href='http://opensource.org/licenses/mit-license.php'
-      >
-        {' '}
-        MIT
-      </a>
-      .
-    </p>
+const Footer = ({ className }) => (
+  <BulmaFooter
+    className={className}
+  >
+    <Columns
+      vCentered
+      className='is-mobile mt-1'
+    >
+      <Columns.Column size={5} textAlign='center'>
+        <a
+          target='_blank'
+          rel='noreferrer'
+          className='contact rounded hover-large-item p-2 is-size-7'
+          href='mailto:samueljasonfox@gmail.com?&subject=tutor.me'
+        >
+          <i className='far fa-envelope' />
+          {' '}
+          Contact
+        </a>
+
+      </Columns.Column>
+      <Columns.Column size={2} textAlign='center'>
+        <a
+          target='_blank'
+          rel='noreferrer'
+          className='repo rounded hover-large-item p-2 px-4 is-size-4'
+          href='https://github.com/samuelfox1/tutor-assistant'
+        >
+          <i className='fas fa-code-branch' />
+        </a>
+      </Columns.Column>
+      <Columns.Column size={5} textAlign='center'>
+        <a
+          target='_blank'
+          rel='noreferrer'
+          className='issue rounded hover-large-item p-2 is-size-7'
+          href='https://github.com/samuelfox1/tutor-assistant/issues'
+        >
+          <span>
+            Rep
+            <i className='fab fa-github is-size-custom' />
+            rt an issue
+          </span>
+        </a>
+      </Columns.Column>
+    </Columns>
   </BulmaFooter>
 );
 export default Footer;
+
+Footer.propTypes = {
+  className: string,
+};
+Footer.defaultProps = {
+  className: '',
+};

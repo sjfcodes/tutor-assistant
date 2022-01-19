@@ -1,2 +1,8 @@
 # tutor-assistant
-manage student data and provide email templates for all processes
+A progressive web application to connect tutors and student.
+A tutor can
+- create and manage courses
+- add students and create meetings
+- connect calendly accounts if desired
+- create custom email templates
+- automate daily tasks

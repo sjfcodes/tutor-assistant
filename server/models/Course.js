@@ -1,14 +1,21 @@
 const { Schema, model } = require('mongoose');
+const { getISOCurrentDateStamp } = require('../utils/dateTime');
 
 const courseSchema = new Schema({
-  tutor_id: {
-    type: Schema.Types.ObjectId,
-    ref: 'Tutor',
-    required: true,
-  },
   name: {
     type: String,
     required: true,
+  },
+  calendly: {
+    accessToken: {
+      type: Schema.Types.ObjectId,
+      default: null,
+    },
+    data: {
+      type: Schema.Types.ObjectId,
+      ref: 'Calendly',
+      default: null,
+    },
   },
   students: [{
     type: Schema.Types.ObjectId,
@@ -19,9 +26,8 @@ const courseSchema = new Schema({
     ref: 'Meeting',
   }],
   createdAt: {
-    type: Number,
-    default: () => Math.floor(new Date().getTime() / 1000), // unix timestamp https://www.epochconverter.com/
-    // get: (timestamp) => dateFormat(timestamp),
+    type: String,
+    default: () => getISOCurrentDateStamp(),
   },
 });
 

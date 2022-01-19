@@ -1,5 +1,5 @@
 const { Schema, model } = require('mongoose');
-// const dateFormat = require('../utils/dateFormat');
+const { getISOCurrentDateStamp } = require('../utils/dateTime');
 
 const studentSchema = new Schema({
   firstName: {
@@ -17,42 +17,45 @@ const studentSchema = new Schema({
     required: true,
     match: [/.+@.+\..+/, 'Must match an email address!'],
   },
+  githubUsername: {
+    type: String,
+  },
+  timeZoneName: {
+    type: String,
+  },
+  meetingLink: {
+    type: String,
+    required: true,
+  },
   classId: {
     type: String,
-    required: true,
     trim: true,
   },
-  timeZone: {
-    type: String,
-  },
   graduationDate: {
-    type: Number, // unix
-  },
-  fullTimeCourse: {
-    type: Boolean,
-  },
-  gitHubUsername: {
-    type: String,
-  },
-  zoomLink: {
-    type: String,
-    required: true,
+    type: String, // ISO 8601
   },
   meetingsPerWeek: {
     type: Number,
     default: 1,
   },
+  fullTimeCourse: {
+    type: Boolean,
+    required: true,
+  },
   reassignment: {
     type: Boolean,
     required: true,
   },
-  temporary: {
+  recurringMeeting: {
     type: Boolean,
     required: true,
   },
+  notes: {
+    type: String,
+  },
   createdAt: {
-    type: Number,
-    default: () => Math.floor(new Date().getTime() / 1000), // unix timestamp https://www.epochconverter.com/
+    type: String,
+    default: () => getISOCurrentDateStamp(),
     // get: (timestamp) => dateFormat(timestamp),
   },
 });

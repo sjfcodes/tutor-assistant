@@ -1,0 +1,46 @@
+<mxfile host="app.diagrams.net" modified="2022-01-04T23:51:30.497Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36" etag="UG94HGMwZWvV1QjEJhN0" version="16.1.2" type="github">
+  <diagram id="5Rg2z4OTeyWd5P-8urO9" name="Page-1">
+    <mxGraphModel dx="946" dy="1714" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="9BmecX8Q-kQ1gk2FQGLd-1" value="" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="110" y="-10" width="470" height="470" as="geometry" />
+        </mxCell>
+        <mxCell id="9BmecX8Q-kQ1gk2FQGLd-2" value="index" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="100" y="-30" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="9BmecX8Q-kQ1gk2FQGLd-3" value="" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="140" y="20" width="420" height="420" as="geometry" />
+        </mxCell>
+        <mxCell id="9BmecX8Q-kQ1gk2FQGLd-4" value="sectionContainer" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="160" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="9BmecX8Q-kQ1gk2FQGLd-6" value="meetingListFilter" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="160" y="60" width="100" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="9BmecX8Q-kQ1gk2FQGLd-7" value="sectionName" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="160" y="30" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="9BmecX8Q-kQ1gk2FQGLd-8" value="+" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="390" y="30" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="9BmecX8Q-kQ1gk2FQGLd-9" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="160" y="110" width="380" height="310" as="geometry" />
+        </mxCell>
+        <mxCell id="9BmecX8Q-kQ1gk2FQGLd-10" value="MeetingsList" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="160" y="90" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="9BmecX8Q-kQ1gk2FQGLd-11" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="180" y="140" width="340" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="9BmecX8Q-kQ1gk2FQGLd-12" value="MeetingsListItem" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="170" y="120" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="9BmecX8Q-kQ1gk2FQGLd-13" value="clientName" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="185" y="150" width="90" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,21 @@
+a.contact:hover {
+  /* bulma danger => https://bulma.io/documentation/helpers/color-helpers/ */
+  color:var(--success) !important;
+  border: solid 2px var(--success);
+}
+a.issue:hover {
+  /* bulma danger => https://bulma.io/documentation/helpers/color-helpers/ */
+  color:var(--danger) !important;
+  border: solid 2px var(--danger) ;
+}
+a.repo:hover {
+  /* bulma danger => https://bulma.io/documentation/helpers/color-helpers/ */
+  color:var(--success) !important;
+  border: solid 2px var(--success);
+}
+
+.fa-github.is-size-custom {
+  margin-left: .5px;
+  margin-right: .5px;
+  font-size: .65em;
+}

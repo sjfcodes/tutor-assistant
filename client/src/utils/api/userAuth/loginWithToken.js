@@ -11,13 +11,14 @@ const loginWithToken = () => {
     try {
       fetch(getApiEndpoint({ model: 'tutor', action: 'login' }), options)
         .then((res) => res.json())
-        .then(({ token, tutor, courses }) => {
-          if (!token || !tutor) return reject(handleError('missing tutor data'));
-          localStorage.setItem(tokenKey, token);
-          return resolve({ tutor, courses });
+        .then((data) => {
+          if (!data.token || !data.tutor) return reject(handleError('unauthorized'));
+          localStorage.setItem(tokenKey, data.token);
+          return resolve(data);
         });
     } catch (error) {
-      reject(handleError('failed to login tutor by token'));
+      localStorage.removeItem(tokenKey);
+      reject(handleError(error));
     }
   });
 };

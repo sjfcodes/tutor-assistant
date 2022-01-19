@@ -1,27 +1,26 @@
+import { string } from 'prop-types';
 import React, {
   useCallback, useContext, useEffect, useState,
 } from 'react';
 import { Tabs } from 'react-bulma-components';
 import { CourseContext, ModalContext } from '../../context';
-import { AddCourse } from '../Modals';
 import './style.css';
 
 const { Tab } = Tabs;
 
-const CourseTabs = () => {
+const CourseTabs = ({ className }) => {
   const [courseTabs, setCourseTabs] = useState(null);
   const { allCourses, selectedCourse, setSelectedCourse } = useContext(CourseContext);
   const { setOpenModal } = useContext(ModalContext);
 
   const handleUpdate = useCallback(
-    (e, _id) => {
+    (e) => {
       if (!allCourses) return;
       const {
         target: {
           parentNode: { classList },
         },
       } = e;
-      setSelectedCourse(_id);
 
       // if selected tab is already active, return
       if (classList.contains('is-active')) return;
@@ -34,12 +33,12 @@ const CourseTabs = () => {
       // toggle new tab on
       classList.toggle('is-active');
     },
-    [allCourses, setSelectedCourse],
+    [allCourses],
   );
 
   useEffect(() => {
     if (!allCourses) return;
-    const i = 0;
+    let i = 0;
     const arr = [];
     Object.entries(allCourses).forEach(([key, { name, _id }]) => {
       arr.push(
@@ -50,28 +49,38 @@ const CourseTabs = () => {
           active={(!selectedCourse || selectedCourse === _id)}
           onClick={() => setSelectedCourse(_id)}
         >
-          {name}
+          <strong className={selectedCourse !== _id ? 'has-text-grey-lighter' : ''}>
+            {name}
+          </strong>
         </Tab>,
       );
       if (!selectedCourse && i === 0) setSelectedCourse(_id);
+      i += 1;
     });
 
     setCourseTabs(arr);
   }, [allCourses, handleUpdate, selectedCourse, setSelectedCourse]);
 
   return (
-    <>
-      <Tabs type='boxed' id='course-tabs' className='has-background-white'>
-        {courseTabs}
-        <Tab
-          className='add-course-tab'
-          onClick={() => setOpenModal('addCourse')}
-        >
-          Add Course
-        </Tab>
-      </Tabs>
-      <AddCourse />
-    </>
+    <Tabs
+      align='left'
+      type='boxed'
+      id='course-tabs'
+      className={className}
+    >
+      {courseTabs}
+      <Tab onClick={() => setOpenModal('AddCourse')}>
+        <strong className='has-text-grey-lighter'>Add Course</strong>
+      </Tab>
+    </Tabs>
   );
 };
 export default CourseTabs;
+
+CourseTabs.propTypes = {
+  className: string,
+};
+
+CourseTabs.defaultProps = {
+  className: '',
+};

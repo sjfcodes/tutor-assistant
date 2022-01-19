@@ -16,7 +16,7 @@ const loginWithPassword = (inputs) => {
       fetch(getApiEndpoint({ model: 'tutor', action: 'login' }), options)
         .then((res) => res.json())
         .then(({ token, tutor, courses }) => {
-          if (!token || !tutor) return reject(handleError('invalid login'));
+          if (!token || !tutor) return reject(handleError('unauthorized'));
           localStorage.setItem(tokenKey, token);
           return resolve({ tutor, courses });
         });

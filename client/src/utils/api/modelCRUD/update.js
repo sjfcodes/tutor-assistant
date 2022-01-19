@@ -8,7 +8,7 @@ import { handleError } from '../../helpers';
  * @param {Object} body of model to be updated
  * @returns
  */
-const updateModel = (model, body) => {
+const updateModel = ({ model, body, _id }) => {
   const options = {
     method: 'PUT',
     headers: getRequestHeaders(),
@@ -17,14 +17,14 @@ const updateModel = (model, body) => {
 
   return new Promise((resolve, reject) => {
     try {
-      fetch(getApiEndpoint({ model }), options)
-        .then((res) => (res.status === 200 ? res.json() : null))
+      fetch(getApiEndpoint({ model, _id }), options)
+        .then((res) => res.json())
         .then((data) => {
-          if (!data) return reject(handleError('missing model data'));
+          if (data.message) return reject(handleError(data.message));
           return resolve(data);
         });
     } catch (error) {
-      reject(handleError('request failed'));
+      reject(handleError(error));
     }
   });
 };

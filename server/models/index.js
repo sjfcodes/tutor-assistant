@@ -1,9 +1,17 @@
-const Tutor = require('./Tutor');
-const Student = require('./Student');
-const Meeting = require('./Meeting');
-const Template = require('./Template');
+const AccessToken = require('./AccessToken');
 const Course = require('./Course');
+const EmailTemplate = require('./EmailTemplate');
+const Meeting = require('./Meeting');
+const Student = require('./Student');
+const Tutor = require('./Tutor');
+const Calendly = require('./Calendly');
 
 module.exports = {
-  Tutor, Student, Meeting, Template, Course,
+  AccessToken,
+  Course,
+  EmailTemplate,
+  Meeting,
+  Student,
+  Tutor,
+  Calendly,
 };

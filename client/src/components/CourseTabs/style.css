@@ -1,31 +1,24 @@
-:root {
-  --blue: #09b2f5
+.rounded-tr {
+  border-top-right-radius: 6px;
 }
 
-.has-text-white a {
-  color: white !important ;
-  border-top: solid rgb(255, 255, 255) 1px !important;
-  border-left: solid rgb(255, 255, 255) 1px !important;
-}
-.add-course-tab {
-  border-right: solid rgb(255, 255, 255) 1px !important;
-  border-top-right-radius: 4px;
-}
-
-.is-active a {
-  color: #09b2f5 !important ;
-  border: #09b2f5 solid 1px !important ;
+.tabs ul {
+  max-height: 42px;
+  border-bottom-color: none !important;
+  border-bottom-style: none !important;
 }
 
 .tabs ul li {
   transition: all 0.2s ease-in-out;
 }
-.tabs ul li a:hover {
-  color: #09b2f5 !important;
+
+.tabs ul li a {
+  padding-top: 4px !important;
+}
+.tabs ul li a strong:hover {
+  color: var(--blue) !important;
 }
 
 .tabs ul li:hover {
   transform: scale(1.09) translate(5%, 0);
-  border: #09b2f5 solid 1px !important ;
-
 }

@@ -3,16 +3,26 @@ import React, {
 } from 'react';
 import { oneOfType, arrayOf, node } from 'prop-types';
 
+import { readModel, formatCalendlyMeetings } from '../utils';
+
 export const CourseContext = createContext();
 
 export const CourseProvider = ({ children }) => {
-  const [allCourses, setAllCourses] = useState();
-  const [selectedCourse, setSelectedCourse] = useState();
+  const [allCourses, setAllCourses] = useState({});
+  const [selectedCourse, setSelectedCourse] = useState('');
+  const [calendlyMeetings, setCalendlyMeetings] = useState({});
 
   useEffect(() => {
-    if (!allCourses || !selectedCourse) return;
-    // eslint-disable-next-line no-console
-    console.log(allCourses[selectedCourse]);
+    let isMounted = true;
+    if (!selectedCourse || !allCourses) return '';
+    const getCalendlyMeetings = async () => {
+      const { calendlyMeetings: calMeetings } = await readModel({ model: 'calendly/meetings', _id: selectedCourse });
+      if (!isMounted) return;
+      setCalendlyMeetings({ ...formatCalendlyMeetings(calMeetings) });
+    };
+    if (allCourses[selectedCourse].calendly.data) getCalendlyMeetings();
+
+    return () => { isMounted = false; };
   }, [selectedCourse, allCourses]);
 
   const memo = useMemo(() => ({
@@ -20,7 +30,8 @@ export const CourseProvider = ({ children }) => {
     setAllCourses,
     selectedCourse,
     setSelectedCourse,
-  }), [allCourses, selectedCourse]);
+    calendlyMeetings,
+  }), [allCourses, selectedCourse, calendlyMeetings]);
 
   return (
     <CourseContext.Provider value={memo}>{children}</CourseContext.Provider>

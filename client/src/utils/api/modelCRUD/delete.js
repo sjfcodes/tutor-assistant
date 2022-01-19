@@ -8,24 +8,22 @@ import { handleError } from '../../helpers';
  * @param {String} id id of model to be deleted
  * @returns
  */
-const deleteModel = (model, id) => {
+const deleteModel = ({ model, _id, body }) => {
   const options = {
     method: 'DELETE',
     headers: getRequestHeaders(),
-    body: JSON.stringify({ id }),
+    body: JSON.stringify(body),
   };
-
   return new Promise((resolve, reject) => {
     try {
-      fetch(getApiEndpoint({ model, id }), options)
-        .then((res) => (res.status === 200 ? res.json() : null))
+      fetch(getApiEndpoint({ model, _id }), options)
+        .then((res) => res.json())
         .then((data) => {
-          if (!data) return reject(handleError('missing response data'));
+          if (data.message) return reject(handleError(data.message));
           return resolve(data);
         });
-    } catch (err) {
-      console.warn(err);
-      reject(handleError(err));
+    } catch (error) {
+      reject(handleError(error));
     }
   });
 };

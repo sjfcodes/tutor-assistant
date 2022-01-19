@@ -8,10 +8,11 @@
   "main": "server/server.js",
   "scripts": {
     "test": "npm run lint && npm run mocha",
-    "start": "node server/server.js",
-    "develop": "concurrently \"cd server && npm run dev\" \"cd client && npm start\"",
     "install": "cd server && npm i && cd ../client && npm i",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false cd client && npm install && npm run build "
+    "start": "node server/seed/index.js && node server/server.js",
+    "dev": "concurrently \"cd server && npm run dev\" \"cd client && npm start\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false cd client && npm install && npm run build",
+    "seed": " cd server && node seed/index.js"
   },
   "repository": {
     "type": "git",
@@ -25,7 +26,5 @@
   "homepage": "https://github.com/samuelfox1/tutor-assistant#readme",
   "devDependencies": {
     "concurrently": "^6.2.2"
-  },
-  "dependencies": {
   }
 }
