@@ -1,5 +1,7 @@
 import React, { useContext } from 'react';
-import { MeetingsSection, StudentsSection, CourseTabs } from '../../components';
+import {
+  MeetingsSection, StudentsSection, CourseTabs, TasksSection,
+} from '../../components';
 import MessageBoard from '../../components/MessageBoard';
 import { CourseContext } from '../../context';
 
@@ -12,6 +14,7 @@ const Home = () => {
       <MessageBoard />
       {selectedCourse && (
         <>
+          <TasksSection />
           <StudentsSection />
           <MeetingsSection />
         </>
