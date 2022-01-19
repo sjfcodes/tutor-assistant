@@ -53,7 +53,7 @@ const MeetingsList = ({ filterBy }) => {
   }, [selectedCourse, allCourses, calendlyMeetings, filterBy]);
 
   useEffect(() => {
-    if (!displayedMeetings.length) return setMeetingsListItems(<p>no scheduled meetings</p>);
+    if (!displayedMeetings.length) return setMeetingsListItems(<p className='has-text-centered'>no scheduled meetings</p>);
     return setMeetingsListItems(displayedMeetings.map((meeting) => (
       <MeetingsListItem
         key={meeting._id}

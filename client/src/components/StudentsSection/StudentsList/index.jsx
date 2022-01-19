@@ -45,7 +45,7 @@ const StudentsList = ({ filterBy }) => {
   }, [selectedCourse, allCourses, filterBy]);
 
   useEffect(() => {
-    if (!displayedStudents.length) return setStudentsListItems(<p>add a student to get started</p>);
+    if (!displayedStudents.length) return setStudentsListItems(<p className='has-text-centered'>add a student to get started</p>);
     return setStudentsListItems(displayedStudents.map((student) => (
       <StudentsListItem
         key={student._id}
