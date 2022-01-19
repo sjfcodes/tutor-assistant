@@ -1,14 +1,17 @@
-import { number, shape, string } from 'prop-types';
+import {
+  func, number, shape, string,
+} from 'prop-types';
 import React, { useContext, useEffect, useState } from 'react';
 import { Box, Form } from 'react-bulma-components';
 import { AppContext, CourseContext } from '../../../../../context';
 import { buildTemplatePreview } from '../../../../../utils';
 
-const PreviewSubject = ({ selectedStudent, selectedMeeting, text }) => {
+const PreviewSubject = ({
+  previewSubject, setPreviewSubject, selectedStudent, selectedMeeting, text,
+}) => {
   const { tutorDetails } = useContext(AppContext);
   const { allCourses, selectedCourse } = useContext(CourseContext);
   const [errors, setErrors] = useState([]);
-  const [preview, setPreview] = useState(text);
   // eslint-disable-next-line no-unused-vars
   const [helpText, setHelpText] = useState('testing');
 
@@ -25,10 +28,13 @@ const PreviewSubject = ({ selectedStudent, selectedMeeting, text }) => {
       if (results.errors.length) setErrors(results.errors);
       else if (errors.length) setErrors([]);
 
-      setPreview(results.text);
+      setPreviewSubject(results.text);
     },
-    [allCourses, errors.length, selectedCourse,
-      selectedMeeting, selectedStudent, text, tutorDetails],
+    [
+      allCourses, errors.length, selectedCourse,
+      selectedMeeting, selectedStudent,
+      text, tutorDetails, setPreviewSubject,
+    ],
   );
 
   useEffect(() => {
@@ -43,7 +49,7 @@ const PreviewSubject = ({ selectedStudent, selectedMeeting, text }) => {
       <Box className='border-info py-1 px-3'>
         <p>{`To: ${selectedStudent.email}`}</p>
         <p>{`From: ${tutorDetails.email}`}</p>
-        <p>{`Subject: ${preview}`}</p>
+        <p>{`Subject: ${previewSubject}`}</p>
       </Box>
     </Form.Field>
 
@@ -67,4 +73,6 @@ PreviewSubject.propTypes = {
     duration: number.isRequired,
   }).isRequired,
   text: string.isRequired,
+  previewSubject: string.isRequired,
+  setPreviewSubject: func.isRequired,
 };

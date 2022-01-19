@@ -76,9 +76,11 @@ router.post('/add-token', authorizeToken, async (
   }
 });
 
-router.post('/send-email', authorizeToken, async ({
+router.post('/email', authorizeToken, async ({
   tutor: {
-    _id: tutorId, email: tutorEmail, accountKey,
+    _id: tutorId,
+    email: tutorEmail,
+    accountKey,
   },
   body: {
     studentEmail, subject, text, html,

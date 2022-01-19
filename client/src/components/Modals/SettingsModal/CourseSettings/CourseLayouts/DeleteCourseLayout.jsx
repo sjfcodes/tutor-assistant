@@ -15,6 +15,7 @@ const DeleteCourseLayout = ({ courseName, courseId, handleDeleteCourse }) => (
           size='small'
           color='danger'
           className='tag'
+          textSize={6}
           onClick={() => handleDeleteCourse(courseId)}
         >
           confirm

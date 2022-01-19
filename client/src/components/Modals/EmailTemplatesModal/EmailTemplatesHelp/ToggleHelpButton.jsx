@@ -19,6 +19,7 @@ const ToggleHelpButton = () => {
       fullwidth
       color='info'
       className='tag'
+      textSize={6}
       onClick={toggleViewHelp}
     >
       {helpButtonText}
