@@ -88,6 +88,7 @@ const Editor = () => {
               fullwidth
               color='danger'
               className='tag'
+              textSize={6}
               onClick={handleDeleteTemplate}
             >
               Delete this template

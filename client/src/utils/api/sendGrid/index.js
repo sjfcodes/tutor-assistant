@@ -2,12 +2,15 @@ import { getApiEndpoint, getRequestHeaders } from '../apiAccess';
 import { handleError } from '../../helpers';
 
 /**
+ * Provide a model name and a data object to create new db entry
  *
- * @param {*} body { password: String, courseId, String }
+ * @param {Object} body: {
+    studentEmail: String, subject: String, text: String, html: String,
+  }
  * @returns
  */
-const syncCalendlyResource = ({ body }) => {
-  const url = getApiEndpoint({ model: 'calendly', action: 'sync' });
+const sendEmailtoStudent = ({ body }) => {
+  const url = getApiEndpoint({ model: 'sendgrid', action: 'email' });
   const options = {
     method: 'POST',
     headers: getRequestHeaders(),
@@ -27,4 +30,4 @@ const syncCalendlyResource = ({ body }) => {
     }
   });
 };
-export default syncCalendlyResource;
+export default sendEmailtoStudent;

@@ -65,17 +65,23 @@ db.once('open', async () => {
   console.log('==> start db seeds');
 
   await eraseDB();
+
+  // setup demo account
   const tutorId = await createTutor(demo);
   const courseId = await createCourse({ seed: courseSeed, tutorId });
   const studentIds = await createStudents({ seed: studentSeeds, courseId });
   await createMeetings({ seed: meetingSeeds, courseId, studentIds });
-  await createEmailTemplates({ seed: emailTemplateSeed, authorId: tutorId });
 
+  // setup personal account
   const myId = await createTutor(me);
   const myCourseId = await createCourse({ seed: courseSeed, tutorId: myId });
-  await createMeetings({ seed: meetingSeeds, courseId, studentIds });
-  const { _id: tokenId } = await AccessToken.create(tokenSeed);
-  await Course.findByIdAndUpdate(myCourseId, { 'calendly.accessToken': tokenId });
+  const myStudentIds = await createStudents({ seed: studentSeeds, courseId: myCourseId });
+  await createMeetings({ seed: meetingSeeds, courseId: myCourseId, studentIds: myStudentIds });
+  const { _id: calendlyTokenId } = await AccessToken.create(tokenSeed[0]);
+  await Course.findByIdAndUpdate(myCourseId, { 'calendly.accessToken': calendlyTokenId });
+  const { _id: sendGridTokenId } = await AccessToken.create(tokenSeed[1]);
+  await Tutor.findByIdAndUpdate(myId, { 'sendGrid.accessToken': sendGridTokenId });
+  await createEmailTemplates({ seed: emailTemplateSeed, authorId: myId });
 
   console.log('==> db seeds success\n');
   process.exit(0);

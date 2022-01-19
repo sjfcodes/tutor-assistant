@@ -26,6 +26,7 @@ const EmailTemplatesEditor = () => {
           <Button
             color='warning'
             className='tag'
+            textSize={6}
             onClick={handleBackButtonClick}
           >
             <i className='fas fa-chevron-left' />
@@ -47,6 +48,7 @@ const EmailTemplatesEditor = () => {
           <Button
             color='warning'
             className='tag'
+            textSize={6}
             onClick={() => setViewPreview((current) => !current)}
           >
             {!viewPreview ? 'Preview' : 'Editor'}
