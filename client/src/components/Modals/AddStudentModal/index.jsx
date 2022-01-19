@@ -17,7 +17,7 @@ import AddStudentForm from './AddStudentForm';
 
 const clientTimeZone = getClientTimeZone();
 
-const formDefaults = {
+export const addStudentFormDefaults = {
   firstName: '',
   lastName: '',
   email: '',
@@ -36,7 +36,7 @@ const formDefaults = {
 const AddStudentModal = () => {
   const { openModal, setOpenModal } = useContext(ModalContext);
   const { allCourses, setAllCourses, selectedCourse } = useContext(CourseContext);
-  const [formInputs, setFormInputs] = useState(formDefaults);
+  const [formInputs, setFormInputs] = useState(addStudentFormDefaults);
   const [helpText, setHelpText] = useState('');
 
   const handleAddStudent = async (e) => {

@@ -3,10 +3,35 @@ import { string } from 'prop-types';
 import React, { useContext, useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { CourseContext } from '../../../context';
+import AddStudentForm from '../../Modals/AddStudentModal/AddStudentForm';
+import TaskLayoutAddStudent from './TaskLayoutAddStudent';
 import TasksListItem from './TasksListItem';
 
+const checkCalendlyStudents = (students, calendlyMeetings) => {
+  const studentEmails = {};
+  Object
+    .values(students)
+    .forEach((student) => {
+      studentEmails[student.email] = student;
+    });
+
+  const found = [];
+  const missing = Object
+    .values(calendlyMeetings)
+    .filter((meeting) => {
+      if (meeting.status === 'canceled') return false;
+      if (!studentEmails[meeting.email]) return true;
+      found.push(meeting);
+      return false;
+    });
+
+  // console.log('found', found);
+  // console.log('missing', missing);
+  return missing;
+};
+
 const TasksList = ({ filterBy }) => {
-  const { allCourses, selectedCourse } = useContext(CourseContext);
+  const { allCourses, selectedCourse, calendlyMeetings } = useContext(CourseContext);
   const [selectedTaskId, setSelectedTaskId] = useState('');
   const [displayedTasks, setDisplayedTasks] = useState([]);
   const [tasksListItems, setTasksListItems] = useState('');
@@ -19,16 +44,48 @@ const TasksList = ({ filterBy }) => {
 
   useEffect(() => {
     if (!selectedCourse) return;
-    const selectedTasks = [];
+    const collectedTasks = [];
 
     const addTutorTasks = () => {
-      selectedTasks.push({ _id: uuidv4(), taskFor: 'tutor' });
+      // collectedTasks.push(
+      //   {
+      //     _id: uuidv4(),
+      //     taskFor: 'tutorTaskFor',
+      //     taskComponent: <p>tutorTaskComponent</p>,
+      //   },
+      // );
     };
+
     const addStudentTasks = () => {
-      selectedTasks.push({ _id: uuidv4(), taskFor: 'student' });
+      const missingFromDB = checkCalendlyStudents(
+        allCourses[selectedCourse].students,
+        calendlyMeetings,
+      );
+      if (!missingFromDB.length) return;
+      // console.log(missingFromDB);
+      missingFromDB.forEach(({ studentName, email, timeZoneName }) => {
+        collectedTasks.push(
+          {
+            _id: uuidv4(),
+            taskFor: `Add ${studentName} to Tutorly`,
+            taskComponent: <TaskLayoutAddStudent
+              studentName={studentName}
+              email={email}
+              timeZoneName={timeZoneName}
+            />,
+          },
+        );
+      });
     };
+
     const addMeetingTasks = () => {
-      selectedTasks.push({ _id: uuidv4(), taskFor: 'meeting' });
+      // collectedTasks.push(
+      //   {
+      //     _id: uuidv4(),
+      //     taskFor: 'meetingTaskFor',
+      //     taskComponent: <p>MeetingTaskComponent</p>,
+      //   },
+      // );
     };
 
     switch (filterBy) {
@@ -51,8 +108,8 @@ const TasksList = ({ filterBy }) => {
       break;
     }
 
-    setDisplayedTasks(selectedTasks);
-  }, [selectedCourse, allCourses, filterBy]);
+    setDisplayedTasks(collectedTasks);
+  }, [selectedCourse, allCourses, calendlyMeetings, filterBy]);
 
   useEffect(() => {
     if (!displayedTasks.length) return setTasksListItems(<p>add a student to get started</p>);
