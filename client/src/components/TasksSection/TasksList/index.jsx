@@ -112,7 +112,7 @@ const TasksList = ({ filterBy }) => {
   }, [selectedCourse, allCourses, calendlyMeetings, filterBy]);
 
   useEffect(() => {
-    if (!displayedTasks.length) return setTasksListItems(<p>add a student to get started</p>);
+    if (!displayedTasks.length) return setTasksListItems(<p className='has-text-centered'>all tasks completed</p>);
     return setTasksListItems(displayedTasks.map((task) => (
       <TasksListItem
         key={task._id}
