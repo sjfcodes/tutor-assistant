@@ -6,7 +6,7 @@ import ListItemContainer from '../../List/ListItemContainer';
 import StudentsListItemLayout from './StudentsListItemLayout';
 import StudentDetailList from '../StudentDetailList';
 
-const StudentListItem = ({ student, setSelectedStudentId, selectedStudentId }) => {
+const StudentListItem = ({ student, selectedStudentId, setSelectedStudentId }) => {
   const [listItem, setListItem] = useState('');
   const [listItemDetails, setListItemDetails] = useState('listItemDetails');
   const { _id } = student;
