@@ -28,16 +28,20 @@ const bgMagenta = '\x1b[45m';
 const bgCyan = '\x1b[46m';
 const bgWhite = '\x1b[47m';
 
-const statusPattern = (message) => `\n  ${fgMagenta}${ccUnderscore}STATUS:${ccReset}${fgCyan}  ${message}…${ccReset}`;
-const errorPattern = (message) => `\n  ${fgRed}${ccUnderscore}ERROR:${ccReset}${fgYellow}    ${message}!\n${ccReset}`;
-const successPattern = (message) => `\n  ${fgGreen}${ccUnderscore}SUCCESS:${ccReset}${fgYellow}  ${message}!\n${ccReset}`;
+const statusPattern = (message) => `\n  ${fgMagenta}${ccUnderscore}STATUS:${ccReset}${fgCyan}  ${message}…${ccReset}\n`;
+const errorPattern = (message) => `\n  ${fgRed}${ccUnderscore}ERROR:${ccReset}${fgYellow}    ${message}!${ccReset}\n`;
+const successPattern = (message) => `\n  ${fgGreen}${ccUnderscore}SUCCESS:${ccReset}${fgYellow}  ${message}!${ccReset}\n`;
 
 const reportDbConnection = (message) => {
   // substring to remove new line character to create count effect
-  process.stdout.write(`${eraseLine} ${statusPattern(message).substring(2)}`);
+  const string = statusPattern(message).substring(2);
+  process.stdout.write(`${eraseLine} ${string.substring(0, string.length - 1)}`);
 };
 const reportStatus = (message) => {
   process.stdout.write(statusPattern(message));
+};
+const reportError = (message) => {
+  process.stdout.write(errorPattern(message));
 };
 
 const exitWithError = (message) => {
@@ -53,6 +57,7 @@ const exitWithSuccess = (message) => {
 module.exports = {
   reportDbConnection,
   reportStatus,
+  reportError,
   exitWithError,
   exitWithSuccess,
   ccReset,

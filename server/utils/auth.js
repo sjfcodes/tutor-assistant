@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const { reportError } = require('./consoleColors');
 
 const secret = process.env.JWT_SECRET;
 // https://www.npmjs.com/package/jsonwebtoken
@@ -15,7 +16,7 @@ module.exports = {
       const { data } = jwt.verify(token, secret, { maxAge: expiration });
       req.tutor = data;
     } catch ({ message }) {
-      console.error(message);
+      reportError(message);
       return res.status(401).json({ location: 2, message });
     }
 

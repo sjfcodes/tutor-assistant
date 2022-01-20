@@ -3,6 +3,7 @@ const express = require('express');
 const path = require('path');
 const cors = require('cors');
 const compression = require('compression');
+const { reportStatus } = require('./utils/consoleColors');
 require('./config/connection');
 
 const PORT = process.env.PORT || 3001;
@@ -23,5 +24,5 @@ app.get('*', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`running on port ${PORT}`);
+  reportStatus(`running on port ${PORT}`);
 });

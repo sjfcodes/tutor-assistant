@@ -2,6 +2,7 @@ const router = require('express').Router();
 const { Tutor } = require('../../models');
 const { signToken, authorizeToken } = require('../../utils/auth');
 const { getCalendlyMeetings } = require('../../utils/calendly-helpers');
+const { reportError } = require('../../utils/consoleColors');
 const { encryptToken } = require('../../utils/encryption');
 const {
   getTutorByEmail, getTutorById, allowPropertyUpdate,
@@ -21,7 +22,7 @@ router.post('/', async ({ body }, res) => {
     tutor.password = null;
     return res.json({ token, tutor });
   } catch ({ message }) {
-    console.error(message);
+    reportError(message);
     return res.status(500).json({ location: 1, message });
   }
 });
@@ -47,7 +48,7 @@ router.post('/login', async ({ body: { email, password } }, res) => {
     tutor.password = null;
     return res.json({ token, tutor });
   } catch ({ message }) {
-    console.error(message);
+    reportError(message);
     return res.status(401).json({ location: 1, message });
   }
 });
@@ -64,7 +65,7 @@ router.get('/login', authorizeToken, async ({ tutor: { _id, accountKey } }, res)
     tutor.password = null;
     return res.json({ token, tutor });
   } catch ({ message }) {
-    console.error(message);
+    reportError(message);
     return res.status(401).json({ location: 1, message: message || 'unauthorized' });
   }
 });
@@ -96,7 +97,7 @@ router.put('/', authorizeToken, async ({ tutor: { _id }, body }, res) => {
     updated.password = null;
     return res.json(updated);
   } catch ({ message }) {
-    console.error(message);
+    reportError(message);
     return res.status(500).json({ location: 1, message });
   }
 });
@@ -113,7 +114,7 @@ router.put('/password', authorizeToken, async ({ tutor: { _id }, body }, res) =>
     if (!updated) return res.status(500).json('update failed');
     return res.json('password updated');
   } catch ({ message }) {
-    console.error(message);
+    reportError(message);
     return res.status(500).json({ location: 1, message });
   }
 });
@@ -126,7 +127,7 @@ router.delete('/', authorizeToken, async ({ tutor: { _id }, body }, res) => {
     await Tutor.findByIdAndDelete(_id);
     return res.json('tutor deleted');
   } catch ({ message }) {
-    console.error(message);
+    reportError(message);
     return res.status(500).json({ location: 1, message });
   }
 });

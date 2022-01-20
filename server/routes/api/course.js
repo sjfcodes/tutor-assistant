@@ -2,6 +2,7 @@ const router = require('express').Router();
 const { Course } = require('../../models');
 const { authorizeToken } = require('../../utils/auth');
 const { addModelToTutor, deleteModelFromTutor } = require('../../utils/helpers');
+const { reportError } = require('../../utils/consoleColors');
 
 // create a course
 router.post('/', authorizeToken, async (req, res) => {
@@ -12,7 +13,7 @@ router.post('/', authorizeToken, async (req, res) => {
     await addModelToTutor(req.tutor._id, 'courses', course._id);
     return res.json(course);
   } catch ({ message }) {
-    console.error(message);
+    reportError(message);
     return res.status(500).json({ location: 1, message });
   }
 });
@@ -25,7 +26,7 @@ router.put('/', authorizeToken, async (req, res) => {
 
     return res.json('course updated');
   } catch ({ message }) {
-    console.error(message);
+    reportError(message);
     return res.status(500).json({ location: 1, message });
   }
 });
@@ -36,7 +37,7 @@ router.delete('/:id', authorizeToken, async (req, res) => {
     await deleteModelFromTutor(req.tutor._id, 'courses', Course, req.params.id);
     return res.json('course deleted');
   } catch ({ message }) {
-    console.error(message);
+    reportError(message);
     return res.status(500).json({ location: 1, message });
   }
 });
