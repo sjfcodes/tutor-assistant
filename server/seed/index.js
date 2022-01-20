@@ -13,6 +13,7 @@ const courseSeed = require('./course.json');
 const studentSeeds = require('./student');
 const meetingSeeds = require('./meeting');
 const tokenSeed = require('./accesstoken.json');
+const { exitWithSuccess, reportStatus } = require('../utils/consoleColors');
 
 const eraseDB = async () => {
   await AccessToken.deleteMany({});
@@ -40,7 +41,7 @@ const createStudents = async ({ seed, courseId }) => {
     const { _id } = await Student.create(student);
     return _id;
   }));
-  await Course.findByIdAndUpdate(courseId, { $addToSet: { students } });
+  await Course.findByIdAndUpdate(courseId, { $addToSet: { students: { $each: students } } });
   return students;
 };
 
@@ -62,7 +63,7 @@ const createEmailTemplates = async ({ seed, authorId }) => {
 };
 
 db.once('open', async () => {
-  console.log('==> start db seeds');
+  reportStatus('Starting DB seeds');
 
   await eraseDB();
 
@@ -75,14 +76,13 @@ db.once('open', async () => {
   // setup personal account
   const myId = await createTutor(me);
   const myCourseId = await createCourse({ seed: courseSeed, tutorId: myId });
-  const myStudentIds = await createStudents({ seed: studentSeeds, courseId: myCourseId });
-  await createMeetings({ seed: meetingSeeds, courseId: myCourseId, studentIds: myStudentIds });
+  // const myStudentIds = await createStudents({ seed: studentSeeds, courseId: myCourseId });
+  // await createMeetings({ seed: meetingSeeds, courseId: myCourseId, studentIds: myStudentIds });
   const { _id: calendlyTokenId } = await AccessToken.create(tokenSeed[0]);
   await Course.findByIdAndUpdate(myCourseId, { 'calendly.accessToken': calendlyTokenId });
   const { _id: sendGridTokenId } = await AccessToken.create(tokenSeed[1]);
   await Tutor.findByIdAndUpdate(myId, { 'sendGrid.accessToken': sendGridTokenId });
   await createEmailTemplates({ seed: emailTemplateSeed, authorId: myId });
 
-  console.log('==> db seeds success\n');
-  process.exit(0);
+  exitWithSuccess('Seeds Complete');
 });
