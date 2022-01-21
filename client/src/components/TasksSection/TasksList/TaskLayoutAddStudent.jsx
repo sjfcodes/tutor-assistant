@@ -8,13 +8,15 @@ import {
 } from '../../../utils';
 import { CourseContext } from '../../../context';
 
-const TaskLayoutAddStudent = ({ studentName, email, timeZoneName }) => {
+const TaskLayoutAddStudent = ({
+  firstName, lastName, email, timeZoneName,
+}) => {
   const { allCourses, setAllCourses, selectedCourse } = useContext(CourseContext);
   const [helpText, setHelpText] = useState('help');
   const [formInputs, setFormInputs] = useState({
     ...addStudentFormDefaults,
-    firstName: studentName.split(' ')[0] || '',
-    lastName: studentName.split(' ')[1] || '',
+    firstName,
+    lastName,
     email: email || '',
     timeZoneName: timeZoneName || '',
   });
@@ -66,12 +68,14 @@ const TaskLayoutAddStudent = ({ studentName, email, timeZoneName }) => {
 };
 
 TaskLayoutAddStudent.propTypes = {
-  studentName: string,
+  firstName: string,
+  lastName: string,
   email: string,
   timeZoneName: string,
 };
 TaskLayoutAddStudent.defaultProps = {
-  studentName: '',
+  firstName: '',
+  lastName: '',
   email: '',
   timeZoneName: '',
 };
