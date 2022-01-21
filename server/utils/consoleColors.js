@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-console */
+const isProduction = process.env.NODE_ENV === 'production';
 
 const ccReset = '\x1b[0m';
 const bright = '\x1b[1m';
@@ -35,22 +34,29 @@ const successPattern = (message) => `\n  ${fgGreen}${ccUnderscore}SUCCESS:${ccRe
 const reportDbConnection = (message) => {
   // substring to remove new line character to create count effect
   const string = statusPattern(message).substring(2);
+  if (isProduction) process.stdout.write(message);
   process.stdout.write(`${eraseLine} ${string.substring(0, string.length - 1)}`);
 };
+
+// use console.log in production
 const reportStatus = (message) => {
-  process.stdout.write(statusPattern(message));
+  if (isProduction) console.log(message);
+  else process.stdout.write(statusPattern(message));
 };
 const reportError = (message) => {
-  process.stdout.write(errorPattern(message));
+  if (isProduction) console.error(message);
+  else process.stdout.write(errorPattern(message));
 };
 
 const exitWithError = (message) => {
-  process.stdout.write(errorPattern(message));
+  if (isProduction) console.error(message);
+  else process.stdout.write(errorPattern(message));
   process.exit(1);
 };
 
 const exitWithSuccess = (message) => {
-  process.stdout.write(successPattern(message));
+  if (isProduction) console.log(message);
+  else process.stdout.write(successPattern(message));
   process.exit(0);
 };
 
