@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const { Meeting } = require('../../models');
 const { authorizeToken } = require('../../utils/auth');
+const { reportError } = require('../../utils/consoleColors');
 const { calculateEndTime } = require('../../utils/dateTime');
 const { deleteModelFromTutor, addModelToCourse } = require('../../utils/helpers');
 
@@ -13,7 +14,7 @@ router.post('/:tutorId', authorizeToken, async (req, res) => {
     await addModelToCourse(req.params.tutorId, 'meetings', meeting._id);
     return res.json(meeting);
   } catch ({ message }) {
-    console.error(message);
+    reportError(message);
     return res.status(500).json({ location: 1, message });
   }
 });
@@ -25,7 +26,7 @@ router.put('/', authorizeToken, async (req, res) => {
     if (!meeting) return res.status(404).json({ message: 'meeting not found' });
     return res.json(meeting);
   } catch ({ message }) {
-    console.error(message);
+    reportError(message);
     return res.status(500).json({ location: 1, message });
   }
 });
@@ -43,7 +44,7 @@ router.put('/time/:meetingId', authorizeToken, async ({
     );
     return res.json(meeting);
   } catch ({ message }) {
-    console.error(message);
+    reportError(message);
     return res.status(500).json({ location: 1, message });
   }
 });
@@ -54,7 +55,7 @@ router.delete('/', authorizeToken, async (req, res) => {
     await deleteModelFromTutor(req.tutor._id, 'meetings', Meeting, req.body._id);
     return res.json('meeting deleted');
   } catch ({ message }) {
-    console.error(message);
+    reportError(message);
     return res.status(500).json({ location: 1, message });
   }
 });

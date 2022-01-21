@@ -2,6 +2,7 @@ const router = require('express').Router();
 const sgMail = require('@sendgrid/mail');
 const { AccessToken, Tutor } = require('../../models');
 const { authorizeToken } = require('../../utils/auth');
+const { reportError } = require('../../utils/consoleColors');
 const { encryptToken, decryptToken } = require('../../utils/encryption');
 const { getTutorById } = require('../../utils/helpers');
 
@@ -56,7 +57,7 @@ router.post('/add-token', authorizeToken, async (
         if (!newTokenId) res.status(400).json({ message: 'failed to add token' });
         return res.json({ _id: newTokenId });
       } catch ({ message }) {
-        console.error(message);
+        reportError(message);
         return res.status(500).json({ location: 1, message });
       }
     }
@@ -67,11 +68,11 @@ router.post('/add-token', authorizeToken, async (
       await AccessToken.findByIdAndUpdate(existingTokenId, { token: encryptedToken });
       return res.json({ _id: existingTokenId });
     } catch ({ message }) {
-      console.error(message);
+      reportError(message);
       return res.status(500).json({ location: 2, message });
     }
   } catch ({ message }) {
-    console.error(message);
+    reportError(message);
     return res.status(500).json({ location: 3, message });
   }
 });
@@ -102,7 +103,7 @@ router.post('/email', authorizeToken, async ({
     const response = await sgMail.send(msg);
     return res.json(response);
   } catch ({ message }) {
-    console.error(message);
+    reportError(message);
     return res.status(500).json({ location: 1, message });
   }
 });
@@ -117,7 +118,7 @@ router.delete('/token/:tokenId', authorizeToken, async ({
 
     return res.json('token deleted');
   } catch ({ message }) {
-    console.error(message);
+    reportError(message);
     return res.status(500).json(message);
   }
 });

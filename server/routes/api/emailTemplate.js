@@ -3,6 +3,7 @@ const { EmailTemplate } = require('../../models');
 const { authorizeToken } = require('../../utils/auth');
 const { addModelToTutor } = require('../../utils/helpers');
 const demoEmailTemplate = require('../../seed/emailTemplate.json');
+const { reportError } = require('../../utils/consoleColors');
 
 router.get('/', authorizeToken, async (req, res) => {
   try {
@@ -14,7 +15,7 @@ router.get('/', authorizeToken, async (req, res) => {
 
     return res.json(templates);
   } catch ({ message }) {
-    console.error(message);
+    reportError(message);
     return res.status(500).json({ location: 1, message });
   }
 });
@@ -26,7 +27,7 @@ router.post('/', authorizeToken, async (req, res) => {
     await addModelToTutor(req.tutor._id, 'emailTemplates', _id);
     return res.json({ _id });
   } catch ({ message }) {
-    console.error(message);
+    reportError(message);
     return res.status(500).json({ location: 1, message });
   }
 });
@@ -39,7 +40,7 @@ router.put('/', authorizeToken, async (req, res) => {
 
     return res.json('template updated');
   } catch ({ message }) {
-    console.error(message);
+    reportError(message);
     return res.status(500).json({ location: 1, message });
   }
 });
@@ -51,7 +52,7 @@ router.delete('/:_id', authorizeToken, async (req, res) => {
     if (!deleted) return res.status(404).json({ message: 'template not found' });
     return res.json('success');
   } catch ({ message }) {
-    console.error(message);
+    reportError(message);
     return res.status(500).json({ location: 1, message });
   }
 });

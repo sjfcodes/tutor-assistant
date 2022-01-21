@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const { Student } = require('../../models');
 const { authorizeToken } = require('../../utils/auth');
+const { reportError } = require('../../utils/consoleColors');
 const { addModelToCourse, deleteModelFromCourse } = require('../../utils/helpers');
 
 // create new student and add to the course they belong to
@@ -13,7 +14,7 @@ router.post('/:courseId', authorizeToken, async (req, res) => {
     await addModelToCourse(req.params.courseId, 'students', _id);
     return res.json({ _id, createdAt });
   } catch ({ message }) {
-    console.error(message);
+    reportError(message);
     await Student.findByIdAndDelete(studentId);
     return res.status(500).json({ location: 1, message });
   }
@@ -26,7 +27,7 @@ router.put('/', authorizeToken, async (req, res) => {
     if (!student) return res.status(404).json('student not found');
     return res.json(student);
   } catch ({ message }) {
-    console.error(message);
+    reportError(message);
     return res.status(500).json({ location: 1, message });
   }
 });
@@ -37,7 +38,7 @@ router.delete('/', authorizeToken, async (req, res) => {
     await deleteModelFromCourse(req.tutor._id, 'students', Student, req.body._id);
     return res.json('student deleted');
   } catch ({ message }) {
-    console.error(message);
+    reportError(message);
     return res.status(500).json({ location: 1, message });
   }
 });

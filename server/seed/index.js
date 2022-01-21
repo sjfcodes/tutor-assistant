@@ -8,6 +8,7 @@ const {
 } = require('../models');
 
 const { demo, me } = require('./tutor');
+
 const emailTemplateSeed = require('./emailTemplate.json');
 const courseSeed = require('./course.json');
 const studentSeeds = require('./student');
