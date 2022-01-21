@@ -10,7 +10,7 @@
     "test": "npm run lint && npm run mocha",
     "install": "cd server && npm i && cd ../client && npm i",
     "start": "node server/seed/index.js && node server/server.js",
-    "dev": "concurrently \"cd server && npm run dev\" \"cd client && npm start\"",
+    "start:dev": "concurrently \"cd server && npm run dev\" \"cd client && npm start\"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false cd client && npm install && npm run build",
     "seed": " cd server && node seed/index.js"
   },

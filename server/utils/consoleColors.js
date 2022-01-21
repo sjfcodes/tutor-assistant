@@ -1,62 +1,87 @@
-const isProduction = process.env.NODE_ENV === 'production';
+const tools = {
+  resetColor: '\x1b[0m',
+  bright: '\x1b[1m',
+  dim: '\x1b[2m',
+  ccUnderscore: '\x1b[4m',
+  blink: '\x1b[5m',
+  reverse: '\x1b[7m',
+  hidden: '\x1b[8m',
+  eraseLine: '\r\x1b[K',
+};
+const {
+  resetColor, bright, dim, ccUnderscore,
+  blink, reverse, hidden, eraseLine,
+} = tools;
 
-const ccReset = '\x1b[0m';
-const bright = '\x1b[1m';
-const dim = '\x1b[2m';
-const ccUnderscore = '\x1b[4m';
-const blink = '\x1b[5m';
-const reverse = '\x1b[7m';
-const hidden = '\x1b[8m';
-const eraseLine = '\r\x1b[K';
+const fgColors = {
+  fgBlack: '\x1b[30m',
+  fgRed: '\x1b[31m',
+  fgGreen: '\x1b[32m',
+  fgYellow: '\x1b[33m',
+  fgBlue: '\x1b[34m',
+  fgMagenta: '\x1b[35m',
+  fgCyan: '\x1b[36m',
+  fgWhite: '\x1b[37m',
+};
+const fgKeys = Object.keys(fgColors);
+const {
+  fgBlack, fgRed, fgGreen, fgYellow,
+  fgBlue, fgMagenta, fgCyan, fgWhite,
+} = fgColors;
 
-const fgBlack = '\x1b[30m';
-const fgRed = '\x1b[31m';
-const fgGreen = '\x1b[32m';
-const fgYellow = '\x1b[33m';
-const fgBlue = '\x1b[34m';
-const fgMagenta = '\x1b[35m';
-const fgCyan = '\x1b[36m';
-const fgWhite = '\x1b[37m';
+const bgColors = {
+  bgBlack: '\x1b[40m',
+  bgRed: '\x1b[41m',
+  bgGreen: '\x1b[42m',
+  bgYellow: '\x1b[43m',
+  bgBlue: '\x1b[44m',
+  bgMagenta: '\x1b[45m',
+  bgCyan: '\x1b[46m',
+  bgWhite: '\x1b[47m',
+};
+const {
+  bgBlack, bgRed, bgGreen, bgYellow,
+  bgBlue, bgMagenta, bgCyan, bgWhite,
+} = bgColors;
 
-const bgBlack = '\x1b[40m';
-const bgRed = '\x1b[41m';
-const bgGreen = '\x1b[42m';
-const bgYellow = '\x1b[43m';
-const bgBlue = '\x1b[44m';
-const bgMagenta = '\x1b[45m';
-const bgCyan = '\x1b[46m';
-const bgWhite = '\x1b[47m';
+const spacer = (num = 5, char = '~') => {
+  const getRandomColor = () => fgKeys[Math.floor(Math.random() * fgKeys.length)];
+  let str = '';
+  for (let i = 0; i < num; i += 1) {
+    str += `${fgColors[getRandomColor()]}${char}  `;
+  }
+  process.stdout.write(`${str}${resetColor}`);
+};
+spacer();
 
-const statusPattern = (message) => `\n  ${fgMagenta}${ccUnderscore}STATUS:${ccReset}${fgCyan}  ${message}…${ccReset}\n`;
-const errorPattern = (message) => `\n  ${fgRed}${ccUnderscore}ERROR:${ccReset}${fgYellow}    ${message}!${ccReset}\n`;
-const successPattern = (message) => `\n  ${fgGreen}${ccUnderscore}SUCCESS:${ccReset}${fgYellow}  ${message}!${ccReset}\n`;
+const statusPattern = (message) => `\n ${fgMagenta}${ccUnderscore}STATUS:${resetColor}${fgCyan}  ${message}…${resetColor}\n`;
+const errorPattern = (message) => `\n ${fgRed}${ccUnderscore}ERROR:${resetColor}${fgYellow}    ${message}!${resetColor}\n`;
+const successPattern = (message) => `\n ${fgGreen}${ccUnderscore}SUCCESS:${resetColor}${fgCyan}  ${message}!${resetColor}\n`;
 
 const reportDbConnection = (message) => {
   // substring to remove new line character to create count effect
-  const string = statusPattern(message).substring(2);
-  if (isProduction) process.stdout.write(message);
-  process.stdout.write(`${eraseLine} ${string.substring(0, string.length - 1)}`);
+  const string = statusPattern(message).substring(1);
+  // overwrites the existing line
+  process.stdout.write(`${eraseLine}${string.substring(0, string.length - 1)}`);
 };
 
 // use console.log in production
 const reportStatus = (message) => {
-  if (isProduction) console.log(message);
-  else process.stdout.write(statusPattern(message));
+  process.stdout.write(statusPattern(message));
 };
 const reportError = (message) => {
-  if (isProduction) console.error(message);
-  else process.stdout.write(errorPattern(message));
+  process.stdout.write(errorPattern(message));
 };
 
 const exitWithError = (message) => {
-  if (isProduction) console.error(message);
-  else process.stdout.write(errorPattern(message));
+  process.stdout.write(errorPattern(message));
+  spacer();
   process.exit(1);
 };
 
 const exitWithSuccess = (message) => {
-  if (isProduction) console.log(message);
-  else process.stdout.write(successPattern(message));
+  process.stdout.write(successPattern(message));
+  spacer();
   process.exit(0);
 };
 
@@ -66,7 +91,7 @@ module.exports = {
   reportError,
   exitWithError,
   exitWithSuccess,
-  ccReset,
+  resetColor,
   bright,
   dim,
   bgWhite,
