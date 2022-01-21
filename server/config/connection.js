@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 require('dotenv').config('../');
 
 const {
-  reportStatus, exitWithError, reportDbConnection, fgYellow, ccReset, fgCyan,
+  reportStatus, exitWithError, reportDbConnection, fgYellow, resetColor, fgCyan,
 } = require('../utils/consoleColors');
 
 const uri = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/tutor-assistant';
@@ -24,7 +24,7 @@ const reportConnectionTime = (seconds) => {
     ? `0${seconds}`
     : `${seconds}`;
 
-  const pattern = `Await DB connection: ${fgYellow}${printTime}${ccReset} ${fgCyan}milliseconds`;
+  const pattern = `Await DB connection: ${fgYellow}${printTime}${resetColor} ${fgCyan}milliseconds`;
 
   reportDbConnection(pattern);
 

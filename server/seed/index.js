@@ -1,20 +1,19 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-console */
-const db = require('../config/connection');
 const {
   Tutor, EmailTemplate, Course,
   Student, Meeting, AccessToken,
   Calendly,
 } = require('../models');
-
+const { exitWithSuccess, reportStatus } = require('../utils/consoleColors');
 const { demo, me } = require('./tutor');
-
 const emailTemplateSeed = require('./emailTemplate.json');
+
 const courseSeed = require('./course.json');
 const studentSeeds = require('./student');
 const meetingSeeds = require('./meeting');
 const tokenSeed = require('./accesstoken.json');
-const { exitWithSuccess, reportStatus } = require('../utils/consoleColors');
+
+reportStatus('Starting DB seeds');
+const db = require('../config/connection');
 
 const eraseDB = async () => {
   await AccessToken.deleteMany({});
@@ -64,8 +63,6 @@ const createEmailTemplates = async ({ seed, authorId }) => {
 };
 
 db.once('open', async () => {
-  reportStatus('Starting DB seeds');
-
   await eraseDB();
 
   // setup demo account
