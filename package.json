@@ -12,7 +12,8 @@
     "start": "node server/seed/index.js && node server/server.js",
     "start:dev": "concurrently \"cd server && npm run dev\" \"cd client && npm start\"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false cd client && npm install && npm run build",
-    "seed": " cd server && node seed/index.js"
+    "seed": " cd server && npm run seed",
+    "seed:private": " cd server && npm run seed:private"
   },
   "repository": {
     "type": "git",
