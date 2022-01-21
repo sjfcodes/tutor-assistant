@@ -19,7 +19,6 @@ const checkCalendlyStudents = (students, calendlyMeetings) => {
   const missing = Object
     .values(calendlyMeetings)
     .filter((meeting) => {
-      if (meeting.status === 'canceled') return false;
       if (!studentEmails[meeting.email]) return true;
       found.push(meeting);
       return false;
@@ -63,13 +62,16 @@ const TasksList = ({ filterBy }) => {
       );
       if (!missingFromDB.length) return;
       // console.log(missingFromDB);
-      missingFromDB.forEach(({ studentName, email, timeZoneName }) => {
+      missingFromDB.forEach(({
+        firstName, lastName, email, timeZoneName,
+      }) => {
         collectedTasks.push(
           {
             _id: uuidv4(),
-            taskFor: `Add ${studentName} to Tutorly`,
+            taskFor: `Add ${firstName} ${lastName} to Tutorly`,
             taskComponent: <TaskLayoutAddStudent
-              studentName={studentName}
+              firstName={firstName}
+              lastName={lastName}
               email={email}
               timeZoneName={timeZoneName}
             />,
