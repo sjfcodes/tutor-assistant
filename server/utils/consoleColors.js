@@ -52,7 +52,6 @@ const spacer = (num = 5, char = '~') => {
   }
   process.stdout.write(`${str}${resetColor}`);
 };
-spacer();
 
 const statusPattern = (message) => `\n ${fgMagenta}${ccUnderscore}STATUS:${resetColor}${fgCyan}  ${message}…${resetColor}\n`;
 const errorPattern = (message) => `\n ${fgRed}${ccUnderscore}ERROR:${resetColor}${fgYellow}    ${message}!${resetColor}\n`;
