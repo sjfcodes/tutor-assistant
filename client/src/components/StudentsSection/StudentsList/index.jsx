@@ -1,5 +1,7 @@
 import { string } from 'prop-types';
-import React, { useContext, useEffect, useState } from 'react';
+import React, {
+  useContext, useEffect, useMemo, useState,
+} from 'react';
 import { CourseContext } from '../../../context';
 import StudentsListItem from './StudentsListItem';
 
@@ -8,6 +10,12 @@ const StudentsList = ({ filterBy }) => {
   const [selectedStudentId, setSelectedStudentId] = useState('');
   const [displayedStudents, setDisplayedStudents] = useState([]);
   const [studentsListItems, setStudentsListItems] = useState('');
+
+  const allStudents = useMemo(
+    () => Object
+      .values(allCourses[selectedCourse].students),
+    [allCourses, selectedCourse],
+  );
 
   const filterStudentsByGraduationDate = (arr) => (
     arr.length
@@ -21,40 +29,70 @@ const StudentsList = ({ filterBy }) => {
       })
       : []
   );
+  const filterStudentsByFirstName = (arr) => (
+    arr.length
+      ? arr.sort(({ firstName: a }, { firstName: b }) => {
+        const charA = a.charAt(0);
+        const charB = b.charAt(0);
+        // sort newest Students first
+        if (charA > charB) return 1;
+        if (charA === charB) return 0;
+        return -1;
+      })
+      : []
+  );
+  const filterStudentsByLastName = (arr) => (
+    arr.length
+      ? arr.sort(({ lastName: a }, { lastName: b }) => {
+        const charA = a.charAt(0);
+        const charB = b.charAt(0);
+        // sort newest Students first
+        if (charA > charB) return 1;
+        if (charA === charB) return 0;
+        return -1;
+      })
+      : []
+  );
 
   useEffect(() => {
     if (!selectedCourse) return;
-    const selectedStudents = [];
-
-    const addTutorlyStudents = () => {
-      const arr = Object.values(allCourses[selectedCourse].students);
-      if (arr.length) selectedStudents.push(...arr);
-    };
+    if (!allStudents) return;
+    let students;
 
     switch (filterBy) {
-    case 'all':
-      addTutorlyStudents();
+    case 'graduation date':
+      students = filterStudentsByGraduationDate(allStudents);
+      break;
+
+    case 'first name':
+      students = filterStudentsByFirstName(allStudents);
+      break;
+
+    case 'last name':
+      students = filterStudentsByLastName(allStudents);
       break;
 
     default:
-      addTutorlyStudents();
+      students = filterStudentsByFirstName(allStudents);
       break;
     }
-
-    setDisplayedStudents(filterStudentsByGraduationDate(selectedStudents));
-  }, [selectedCourse, allCourses, filterBy]);
+    setDisplayedStudents(students);
+  }, [selectedCourse, allStudents, filterBy]);
 
   useEffect(() => {
     if (!displayedStudents.length) return setStudentsListItems(<p className='has-text-centered'>add a student to get started</p>);
-    return setStudentsListItems(displayedStudents.map((student) => (
-      <StudentsListItem
-        key={student._id}
-        student={student}
-        selectedStudentId={selectedStudentId}
-        setSelectedStudentId={setSelectedStudentId}
-      />
-    )));
-  }, [selectedCourse, allCourses, displayedStudents, selectedStudentId]);
+    return setStudentsListItems(
+      displayedStudents
+        .map((student) => (
+          <StudentsListItem
+            key={student._id}
+            student={student}
+            selectedStudentId={selectedStudentId}
+            setSelectedStudentId={setSelectedStudentId}
+          />
+        )),
+    );
+  }, [selectedCourse, allCourses, displayedStudents, selectedStudentId, filterBy]);
 
   return (studentsListItems);
 };

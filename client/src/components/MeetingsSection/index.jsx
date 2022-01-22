@@ -7,8 +7,8 @@ import MeetingsListFilter from './MeetingsListFilter';
 
 const MeetingsSection = () => {
   const { setOpenModal } = useContext(ModalContext);
-  const [filterBy, setFilterBy] = useState('all');
-  const [filterOptions, setFilterOptions] = useState(['tutorly']);
+  const [filterOptions, setFilterOptions] = useState(['all', 'tutorly']);
+  const [filterBy, setFilterBy] = useState(filterOptions[0]);
   const sectionName = 'Meetings';
 
   return (
@@ -21,7 +21,7 @@ const MeetingsSection = () => {
     >
 
       <Columns className='is-mobile ml-5'>
-        <p className='mr-3'>view</p>
+        <p className='mr-3'>sort</p>
         <MeetingsListFilter
           sectionName={sectionName}
           filterBy={filterBy}

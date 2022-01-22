@@ -23,7 +23,6 @@ const fgColors = {
   fgCyan: '\x1b[36m',
   fgWhite: '\x1b[37m',
 };
-const fgKeys = Object.keys(fgColors);
 const {
   fgBlack, fgRed, fgGreen, fgYellow,
   fgBlue, fgMagenta, fgCyan, fgWhite,
@@ -44,7 +43,8 @@ const {
   bgBlue, bgMagenta, bgCyan, bgWhite,
 } = bgColors;
 
-const spacer = (num = 5, char = '~') => {
+const fgKeys = Object.keys(fgColors);
+const spacer = (num = 20, char = '-') => {
   const getRandomColor = () => fgKeys[Math.floor(Math.random() * fgKeys.length)];
   let str = '';
   for (let i = 0; i < num; i += 1) {
