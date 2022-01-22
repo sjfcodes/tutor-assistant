@@ -4,7 +4,7 @@ import ListFilterSelector from '../List/ListFilterSelector';
 
 const StudentsListFilter = ({
   // eslint-disable-next-line no-unused-vars
-  className, sectionName, filterOptions, setFilterOptions, filterBy, setFilterBy,
+  className, sectionName, filterOptions, filterBy, setFilterBy,
 }) => (
   <ListFilterSelector
     className={`has-text-centered ${className}`}
@@ -20,7 +20,6 @@ StudentsListFilter.propTypes = {
   className: string,
   sectionName: string.isRequired,
   filterOptions: arrayOf(string).isRequired,
-  setFilterOptions: func.isRequired,
   filterBy: string.isRequired,
   setFilterBy: func.isRequired,
 };

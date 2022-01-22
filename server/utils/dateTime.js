@@ -24,10 +24,25 @@ const calculateEndTime = ({ startTime, duration }) => {
   return new Date(endUnix * 1000).toISOString();
 };
 
+/**
+ * convert a date string format
+ * @param {String} gradDate
+ * date pattern expected to be
+ *      MM/DD/YYYY || M/D/YYYY
+ * @returns
+ * ISO8601 string (YYYY-MM-DDT00:00:00.000Z)
+ */
+const getGraduationISOString = (gradDate) => {
+  const date = gradDate.split('/').map((x) => (x.length !== 1 ? x : `0${x}`));
+  if (date.length !== 3) return new Date().toISOString();
+  return `${date[2]}-${date[0]}-${date[1]}T00:00:00.000Z`;
+};
+
 module.exports = {
   calculateEndTime,
   getISOCurrentDateStamp,
   getISOPastHour,
   getISOCurrentHour,
   getISOFutureHour,
+  getGraduationISOString,
 };

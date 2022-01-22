@@ -7,8 +7,8 @@ import TasksListFilter from './TasksListFilter';
 
 const TasksSection = () => {
   const { setOpenModal } = useContext(ModalContext);
-  const [filterBy, setFilterBy] = useState('all');
-  const [filterOptions, setFilterOptions] = useState(['tutor', 'student', 'meeting']);
+  const [filterOptions, setFilterOptions] = useState(['all', 'tutor', 'student', 'meeting']);
+  const [filterBy, setFilterBy] = useState(filterOptions[0]);
   const sectionName = 'Tasks';
 
   return (
@@ -21,7 +21,7 @@ const TasksSection = () => {
     >
 
       <Columns className='is-mobile ml-5'>
-        <p className='mr-3'>view</p>
+        <p className='mr-3'>sort</p>
         <TasksListFilter
           className=''
           sectionName={sectionName}

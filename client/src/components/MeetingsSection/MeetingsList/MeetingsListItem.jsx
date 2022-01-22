@@ -24,7 +24,6 @@ const MeetingListItem = ({ meeting, setSelectedMeetingId, selectedMeetingId }) =
     () => allCourses[selectedCourse].students[studentId] || {},
     [allCourses, selectedCourse, studentId],
   );
-  console.log(meeting);
   useEffect(() => {
     setListItem(
       <MeetingsListItemLayout

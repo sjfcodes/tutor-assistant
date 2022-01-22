@@ -4,7 +4,7 @@
   "engines": {
     "node": "16.x"
   },
-  "description": "manage student data and provide email templates for all processes",
+  "description": "manage student data and build email templates for all daily tasks",
   "main": "server/server.js",
   "scripts": {
     "test": "npm run lint && npm run mocha",
@@ -13,7 +13,8 @@
     "start:dev": "concurrently \"cd server && npm run dev\" \"cd client && npm start\"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false cd client && npm install && npm run build",
     "seed": " cd server && npm run seed",
-    "seed:private": " cd server && npm run seed:private"
+    "seed:private": " cd server && npm run seed:private",
+    "seed:all": "npm run seed && npm run seed:private"
   },
   "repository": {
     "type": "git",

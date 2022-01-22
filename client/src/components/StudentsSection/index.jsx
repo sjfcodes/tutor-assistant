@@ -8,8 +8,8 @@ import StudentsListFilter from './StudentsListFilter';
 
 const StudentsSection = () => {
   const { setOpenModal } = useContext(ModalContext);
-  const [filterBy, setFilterBy] = useState('all');
-  const [filterOptions, setFilterOptions] = useState(['']);
+  const [filterOptions, setFilterOptions] = useState(['first name', 'last name', 'graduation date']);
+  const [filterBy, setFilterBy] = useState(filterOptions[0]);
   const sectionName = 'Students';
 
   return (
@@ -22,7 +22,7 @@ const StudentsSection = () => {
     >
 
       <Columns className='is-mobile ml-5'>
-        <p className='mr-3'>view</p>
+        <p className='mr-3'>sort</p>
         <StudentsListFilter
           className=''
           sectionName={sectionName}

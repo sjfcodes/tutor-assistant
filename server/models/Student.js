@@ -25,7 +25,6 @@ const studentSchema = new Schema({
   },
   meetingLink: {
     type: String,
-    required: true,
   },
   classId: {
     type: String,
