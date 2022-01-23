@@ -1,7 +1,7 @@
 import { SET_CALENDLY_MEETINGS } from './actions';
 
 // eslint-disable-next-line default-param-last
-const calendlyMeetingReducer = (state = '', action) => {
+const calendlyMeetingReducer = (state = {}, action) => {
   switch (action.type) {
   case SET_CALENDLY_MEETINGS: {
     return {

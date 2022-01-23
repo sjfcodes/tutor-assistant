@@ -19,7 +19,7 @@ import {
 // eslint-disable-next-line no-console
 
 // eslint-disable-next-line default-param-last
-const courseReducer = (state = '', action) => {
+const courseReducer = (state = {}, action) => {
   switch (action.type) {
   case SET_ALL_COURSES: {
     return {
