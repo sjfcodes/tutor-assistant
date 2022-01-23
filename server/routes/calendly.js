@@ -3,12 +3,12 @@ const router = require('express').Router();
 const axios = require('axios');
 const {
   Calendly, Course, Tutor, AccessToken,
-} = require('../../models');
-const { authorizeToken } = require('../../utils/auth');
-const { getCalendlyMeetings, getCalendlyHeaders } = require('../../utils/calendly-helpers');
-const { reportError } = require('../../utils/consoleColors/index.js');
-const { getCalendlyToken, encryptToken } = require('../../utils/encryption');
-const { getTutorById } = require('../../utils/helpers');
+} = require('../models');
+const { authorizeToken } = require('../utils/auth');
+const { getCalendlyMeetings, getCalendlyHeaders } = require('../utils/calendly-helpers');
+const { reportError } = require('../utils/consoleColors/index.js');
+const { getCalendlyToken, encryptToken } = require('../utils/encryption');
+const { getTutorById } = require('../utils/helpers');
 
 const getCalendlyUriFromCourse = async (courseId) => {
   const { calendly: { data } } = await Course.findById(courseId)
