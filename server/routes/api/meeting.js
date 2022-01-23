@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const { Meeting } = require('../../models');
 const { authorizeToken } = require('../../utils/auth');
-const { reportError } = require('../../utils/consoleColors');
+const { reportError } = require('../../utils/consoleColors/index.js');
 const { calculateEndTime } = require('../../utils/dateTime');
 const { deleteModelFromTutor, addModelToCourse } = require('../../utils/helpers');
 

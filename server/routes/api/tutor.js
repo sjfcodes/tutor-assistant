@@ -2,7 +2,7 @@ const router = require('express').Router();
 const { Tutor } = require('../../models');
 const { signToken, authorizeToken } = require('../../utils/auth');
 const { getCalendlyMeetings } = require('../../utils/calendly-helpers');
-const { reportError } = require('../../utils/consoleColors');
+const { reportError } = require('../../utils/consoleColors/index.js');
 const { encryptToken } = require('../../utils/encryption');
 const {
   getTutorByEmail, getTutorById, allowPropertyUpdate,

@@ -13,7 +13,6 @@ const loginWithToken = () => {
         .then((res) => res.json())
         .then((data) => {
           if (!data.token || !data.tutor) return reject(handleError('unauthorized'));
-          localStorage.setItem(tokenKey, data.token);
           return resolve(data);
         });
     } catch (error) {

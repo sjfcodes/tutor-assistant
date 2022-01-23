@@ -1,0 +1,3 @@
+export const LOGIN_TUTOR = 'LOGIN_TUTOR';
+export const UPDATE_TUTOR_DETAIL = 'UPDATE_TUTOR_DETAIL';
+export const LOGOUT_TUTOR = 'LOGOUT_TUTOR';

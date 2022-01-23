@@ -6,7 +6,7 @@ const {
 } = require('../../models');
 const { authorizeToken } = require('../../utils/auth');
 const { getCalendlyMeetings, getCalendlyHeaders } = require('../../utils/calendly-helpers');
-const { reportError } = require('../../utils/consoleColors');
+const { reportError } = require('../../utils/consoleColors/index.js');
 const { getCalendlyToken, encryptToken } = require('../../utils/encryption');
 const { getTutorById } = require('../../utils/helpers');
 

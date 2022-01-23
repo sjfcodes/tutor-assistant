@@ -3,7 +3,7 @@ const {
   Student, Meeting, AccessToken,
   Calendly,
 } = require('../models');
-const { exitWithSuccess, reportStatus } = require('../utils/consoleColors');
+const { exitWithSuccess, reportStatus } = require('../utils/consoleColors/index.js');
 const { demo, me } = require('./tutor');
 const emailTemplateSeed = require('./emailTemplate.json');
 

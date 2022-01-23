@@ -1,10 +1,10 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { Form } from 'react-bulma-components';
 import {
   string, func, shape, number,
 } from 'prop-types';
+import { useSelector } from 'react-redux';
 import { convertAddMeetingFormToISO8601 } from '../../../../utils';
-import { AppContext } from '../../../../context';
 
 export const addMeetingFormPropTypes = {
   formInputs: shape({
@@ -25,7 +25,7 @@ const MeetingTime = ({ formInputs, setFormInputs, updateDuration }) => {
 
   const { day, hour, amPm } = date;
   const { studentId, startTime } = formInputs;
-  const { tutorDetails: { timeZoneName } } = useContext(AppContext);
+  const { timeZoneName } = useSelector((state) => state.tutor);
 
   const validatestartTime = (data) => !!(data.day && data.hour && data.amPm);
 

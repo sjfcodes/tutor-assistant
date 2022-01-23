@@ -5,19 +5,22 @@ import { Form, Columns, Icon } from 'react-bulma-components';
 import {
   string, number, oneOfType, bool, array,
 } from 'prop-types';
-import { CourseContext } from '../../../context';
+import { useDispatch, useSelector } from 'react-redux';
 import { updateModel } from '../../../utils';
 import ListItem from '../../Forms/ListItem';
+import { UPDATE_MEETING_DETAIL } from '../../../store/courses/actions';
 
 const MeetingListItemDetail = ({
   _id, property, value, type,
 }) => {
+  const { allCourses, selectedCourse } = useSelector((state) => state.courses);
+  const dispatch = useDispatch();
+
   const [allowedToEdit, setAllowedToEdit] = useState(true);
   const [itemToEdit, setItemToEdit] = useState('');
   const [input, setInput] = useState(`${value}`);
   const [displayedEditIcon, setDisplayedEditIcon] = useState('');
   const [displayPropertyName, setDisplayProperyName] = useState(property);
-  const { allCourses, setAllCourses, selectedCourse } = useContext(CourseContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -37,20 +40,13 @@ const MeetingListItemDetail = ({
 
     try {
       const response = await updateModel({ model, body });
-      // target the current property being edited of the selected meeting in the selected course
-      const thisCourse = { ...allCourses[selectedCourse] };
-      const allMeetings = { ...thisCourse.meetings };
 
-      setAllCourses({
-        ...allCourses,
-        [selectedCourse]: {
-          ...thisCourse,
-          meetings: {
-            ...allMeetings,
-            [_id]: { ...response, type },
-          },
-        },
+      const meeting = { ...response, type };
+      dispatch({
+        type: UPDATE_MEETING_DETAIL,
+        payload: meeting,
       });
+
       setItemToEdit('');
     } catch (error) {
       setInput(value);

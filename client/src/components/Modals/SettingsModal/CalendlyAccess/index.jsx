@@ -1,9 +1,9 @@
 import { string } from 'prop-types';
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import {
   Box, Button, Content, Form, Heading, Icon, Level,
 } from 'react-bulma-components';
-import { CourseContext } from '../../../../context';
+import { useSelector } from 'react-redux';
 import { passwordIsValid } from '../../../../utils';
 import InputPassword from '../../../Forms/InputPassword';
 
@@ -13,7 +13,7 @@ import SyncCalendlyDetails from './SyncCalendlyDetails';
 // import SyncCalendly from './SyncCalendly';
 
 const CalendlyAccess = ({ courseId }) => {
-  const { allCourses } = useContext(CourseContext);
+  const { allCourses } = useSelector((state) => state.courses);
   const { calendly: { accessToken } } = allCourses[courseId];
 
   const [password, setPassword] = useState('');

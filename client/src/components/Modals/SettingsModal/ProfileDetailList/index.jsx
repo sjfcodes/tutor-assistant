@@ -1,13 +1,13 @@
 import React, {
-  useContext, useEffect, useMemo, useState,
+  useEffect, useMemo, useState,
 } from 'react';
+import { useSelector } from 'react-redux';
 import { v4 as uuid } from 'uuid';
 
 import ProfileDetailListItem from './ProfileDetailListItem';
-import { AppContext } from '../../../../context';
 
 const ProfileDetailList = () => {
-  const { tutorDetails } = useContext(AppContext);
+  const tutorDetails = useSelector((state) => state.tutor);
 
   const [listItems, setListItems] = useState();
   const doNotDisplay = useMemo(() => [

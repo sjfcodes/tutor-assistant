@@ -1,12 +1,16 @@
 import React, { useContext, useState } from 'react';
 import { Button, Heading, Modal } from 'react-bulma-components';
-import { CourseContext, ModalContext } from '../../../context';
+import { useDispatch, useSelector } from 'react-redux';
+import { ModalContext } from '../../../context';
+import { ADD_MEETING_TO_COURSE } from '../../../store/courses/actions';
 import { createModel, missingFormInputs } from '../../../utils';
 import AddMeetingForm from './AddMeetingForm';
 
 const AddMeetingModal = () => {
+  const { selectedCourse } = useSelector((state) => state.courses);
+  const dispatch = useDispatch();
+
   const { openModal, setOpenModal } = useContext(ModalContext);
-  const { allCourses, setAllCourses, selectedCourse } = useContext(CourseContext);
   const [formInputs, setFormInputs] = useState({
     duration: 1,
     startTime: '',
@@ -17,7 +21,7 @@ const AddMeetingModal = () => {
   const handleAddMeeting = async (e) => {
     e.preventDefault();
 
-    const newMeeting = await createModel(
+    const meeting = await createModel(
       {
         model: 'meeting',
         body: formInputs,
@@ -25,17 +29,9 @@ const AddMeetingModal = () => {
       },
     );
 
-    const currentMeetings = allCourses[selectedCourse].meetings;
-    const updatedCourse = {
-      ...allCourses[selectedCourse],
-      meetings: {
-        ...currentMeetings,
-        [newMeeting._id]: { ...newMeeting, type: 'tutorly' },
-      },
-    };
-    setAllCourses({
-      ...allCourses,
-      [selectedCourse]: updatedCourse,
+    dispatch({
+      type: ADD_MEETING_TO_COURSE,
+      payload: { ...meeting, type: 'tutorly' },
     });
     setOpenModal('');
 

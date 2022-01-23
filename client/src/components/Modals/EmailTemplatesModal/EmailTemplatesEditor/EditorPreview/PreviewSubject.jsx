@@ -1,16 +1,16 @@
 import {
   func, number, shape, string,
 } from 'prop-types';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Form } from 'react-bulma-components';
-import { AppContext, CourseContext } from '../../../../../context';
+import { useSelector } from 'react-redux';
 import { buildTemplatePreview } from '../../../../../utils';
 
 const PreviewSubject = ({
   previewSubject, setPreviewSubject, selectedStudent, selectedMeeting, text,
 }) => {
-  const { tutorDetails } = useContext(AppContext);
-  const { allCourses, selectedCourse } = useContext(CourseContext);
+  const tutorDetails = useSelector((state) => state.tutor);
+  const { allCourses, selectedCourse } = useSelector((state) => state.courses);
   const [errors, setErrors] = useState([]);
   // eslint-disable-next-line no-unused-vars
   const [helpText, setHelpText] = useState('testing');
@@ -68,7 +68,7 @@ PreviewSubject.propTypes = {
   }).isRequired,
   selectedMeeting: shape({
     status: string.isRequired,
-    notes: string.isRequired,
+    notes: string,
     startTime: string.isRequired,
     duration: number.isRequired,
   }).isRequired,

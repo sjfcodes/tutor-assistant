@@ -17,7 +17,7 @@ const me = {
   email: 'samueljasonfox@gmail.com',
   timeZoneName: 'America/Los_Angeles',
   githubUsername: 'samuelfox1',
-  scheduleLink: 'https://calendly.com',
+  scheduleLink: 'https://calendly.com/samueljfox-2u/tutor-session',
   password: process.env.MY_PW,
   courses: [],
 };

@@ -1,3 +1,6 @@
+import formatMeetings from './meeting';
+import formatStudents from './student';
+
 /**
  *
  * @param {Array} courses
@@ -12,6 +15,8 @@ const formatCourses = (courses) => {
     const values = { ...course };
     delete values.tutorId;
     courseObj[key] = values;
+    courseObj[key].students = formatStudents(course.students);
+    courseObj[key].meetings = formatMeetings(course.meetings);
   });
   return courseObj;
 };

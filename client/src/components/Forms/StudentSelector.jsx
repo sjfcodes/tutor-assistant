@@ -1,10 +1,12 @@
 import { func, string } from 'prop-types';
-import React, { useContext } from 'react';
+import React from 'react';
 import { Form } from 'react-bulma-components';
-import { CourseContext } from '../../context';
+import { useSelector } from 'react-redux';
 
 const StudentSelector = ({ className, studentId, onChange }) => {
-  const { allCourses, selectedCourse } = useContext(CourseContext);
+  const { allCourses, selectedCourse } = useSelector((state) => state.courses);
+
+  if (!selectedCourse) return '';
 
   return (
     <Form.Control className={className}>

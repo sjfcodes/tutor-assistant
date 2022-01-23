@@ -1,54 +1,47 @@
 import React, {
-  useCallback, useContext, useEffect, useState,
+  useCallback, useEffect, useState,
 } from 'react';
-import { CourseContext } from '../../../../context';
+import { useDispatch, useSelector } from 'react-redux';
+import { DELETE_COURSE, UPDATE_COURSE_DETAIL } from '../../../../store/courses/actions';
 import { deleteModel, updateModel } from '../../../../utils';
 import CourseLayouts from './CourseLayouts';
 
 // eslint-disable-next-line react/prop-types
 const CourseSettings = ({ setDisableControls }) => {
+  const { allCourses } = useSelector((state) => state.courses);
+  const dispatch = useDispatch();
+
   const [courseToDelete, setCourseToDelete] = useState('');
   const [courseToEdit, setCourseToEdit] = useState('');
-
-  const {
-    allCourses,
-    setAllCourses,
-    selectedCourse,
-    setSelectedCourse,
-  } = useContext(CourseContext);
 
   const handleUpdateCourse = useCallback(
     async (_id, name) => {
       setCourseToEdit('');
       if (!_id || !name) return;
 
-      const body = { _id, name };
-      await updateModel({ model: 'course', body });
+      const course = { _id, name };
+      await updateModel({ model: 'course', body: course });
 
-      const updatedCourses = { ...allCourses };
-      updatedCourses[_id].name = name;
-      setAllCourses({ ...updatedCourses });
+      dispatch({
+        type: UPDATE_COURSE_DETAIL,
+        payload: course,
+      });
     },
-    [allCourses, setAllCourses],
+
+    [dispatch],
   );
 
   const handleDeleteCourse = useCallback(async (_id) => {
-    const idToDelete = _id;
     setCourseToDelete('');
     if (!_id) return;
 
     await deleteModel({ model: 'course', _id });
 
-    const updatedCourses = { ...allCourses };
-    delete updatedCourses[_id];
-
-    if (idToDelete === selectedCourse) {
-      const keys = Object.keys(updatedCourses);
-      setSelectedCourse(keys.length ? keys[0] : null);
-    }
-
-    setAllCourses({ ...updatedCourses });
-  }, [allCourses, setAllCourses, selectedCourse, setSelectedCourse]);
+    dispatch({
+      type: DELETE_COURSE,
+      payload: _id,
+    });
+  }, [dispatch]);
 
   useEffect(() => {
     if (courseToEdit || courseToDelete) setDisableControls(true);

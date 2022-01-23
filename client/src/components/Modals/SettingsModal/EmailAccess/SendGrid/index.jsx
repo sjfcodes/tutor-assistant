@@ -1,15 +1,15 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import {
   Box, Content, Form, Heading, Icon, Level,
 } from 'react-bulma-components';
-import { AppContext } from '../../../../../context';
+import { useSelector } from 'react-redux';
 import { passwordIsValid } from '../../../../../utils';
 import InputPassword from '../../../../Forms/InputPassword';
 import AddAccessToken from './AddAccessToken';
 import DeleteAccessToken from './DeleteAccessToken';
 
 const SendGridAccess = () => {
-  const { tutorDetails: { sendGrid: { accessToken } } } = useContext(AppContext);
+  const { sendGrid: { accessToken } } = useSelector((state) => state.tutor);
   const [displaySendGrid, setDisplaySendGrid] = useState(false);
   const [password, setPassword] = useState('');
 

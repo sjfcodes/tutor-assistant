@@ -1,11 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form, Icon } from 'react-bulma-components';
 import {
   string, number, oneOfType, bool,
 } from 'prop-types';
-import { AppContext } from '../../../../context';
+import { useDispatch } from 'react-redux';
 import { emailIsValid, updateModel } from '../../../../utils';
 import ListItem from '../../../Forms/ListItem';
+import { UPDATE_TUTOR_DETAIL } from '../../../../store/tutor/actions';
 
 const ProfileListItemDetail = ({ _id, property, value }) => {
   const [allowedToEdit, setAllowedToEdit] = useState(true);
@@ -13,8 +14,9 @@ const ProfileListItemDetail = ({ _id, property, value }) => {
   const [input, setInput] = useState(`${value}`);
   const [displayedEditIcon, setDisplayedEditIcon] = useState('');
   const [displayPropertyName, setDisplayProperyName] = useState(property);
-  const { tutorDetails, setTutorDetails } = useContext(AppContext);
+
   const [helpText, setHelpText] = useState('');
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,7 +27,10 @@ const ProfileListItemDetail = ({ _id, property, value }) => {
 
     try {
       const response = await updateModel({ model, body });
-      setTutorDetails({ ...tutorDetails, ...response });
+      dispatch({
+        type: UPDATE_TUTOR_DETAIL,
+        payload: response,
+      });
       setHelpText('');
       return setItemToEdit('');
     } catch ({ message }) {

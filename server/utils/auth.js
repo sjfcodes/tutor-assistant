@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { reportError } = require('./consoleColors');
+const { reportError } = require('./consoleColors/index.js');
 
 const secret = process.env.JWT_SECRET;
 // https://www.npmjs.com/package/jsonwebtoken

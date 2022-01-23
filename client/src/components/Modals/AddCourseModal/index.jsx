@@ -2,19 +2,23 @@ import React, { useContext, useEffect, useState } from 'react';
 import {
   Button, Form, Heading, Modal,
 } from 'react-bulma-components';
-import { AppContext, CourseContext, ModalContext } from '../../../context';
+import { useDispatch, useSelector } from 'react-redux';
+import { ModalContext } from '../../../context';
+import { ADD_COURSE, SET_SELECTED_COURSE } from '../../../store/courses/actions';
 import { createModel, missingFormInputs } from '../../../utils';
 
 const AddCourseModal = () => {
+  const {
+    tutor: { _id },
+    courses: { allCourses },
+  } = useSelector((state) => state);
+  const dispatch = useDispatch();
+
   const { openModal, setOpenModal } = useContext(ModalContext);
   const [formInputs, setFormInputs] = useState({ courseName: '' });
   const { courseName } = formInputs;
   const [helpMessage, setHelpMessage] = useState(null);
 
-  const {
-    tutorDetails: { _id },
-  } = useContext(AppContext);
-  const { allCourses, setAllCourses, setSelectedCourse } = useContext(CourseContext);
   const [existingNames, setExistingNames] = useState(null);
 
   useEffect(() => {
@@ -42,16 +46,22 @@ const AddCourseModal = () => {
     }
 
     const body = { tutorId: _id, name: courseName };
-    const newCourse = await createModel({ model: 'course', body });
+    const course = await createModel({ model: 'course', body });
     // initialize meetings and students to empty objects
-    newCourse.meetings = {};
-    newCourse.students = {};
-
-    setAllCourses((currentState) => ({ ...currentState, [newCourse._id]: newCourse }));
 
     resetForm();
     setHelpMessage('');
-    setSelectedCourse(newCourse._id);
+
+    dispatch({
+      type: ADD_COURSE,
+      payload: course,
+    });
+
+    dispatch({
+      type: SET_SELECTED_COURSE,
+      payload: course._id,
+    });
+
     setOpenModal('');
   };
 
