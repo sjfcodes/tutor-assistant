@@ -1,12 +1,12 @@
 const router = require('express').Router();
-const { Tutor } = require('../../models');
-const { signToken, authorizeToken } = require('../../utils/auth');
-const { getCalendlyMeetings } = require('../../utils/calendly-helpers');
-const { reportError } = require('../../utils/consoleColors/index.js');
-const { encryptToken } = require('../../utils/encryption');
+const { Tutor } = require('../models');
+const { signToken, authorizeToken } = require('../utils/auth');
+const { getCalendlyMeetings } = require('../utils/calendly-helpers');
+const { reportError } = require('../utils/consoleColors/index.js');
+const { encryptToken } = require('../utils/encryption');
 const {
   getTutorByEmail, getTutorById, allowPropertyUpdate,
-} = require('../../utils/helpers');
+} = require('../utils/helpers');
 
 // create a new tutor
 router.post('/', async ({ body }, res) => {

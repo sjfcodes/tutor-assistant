@@ -1,9 +1,9 @@
 const router = require('express').Router();
-const { EmailTemplate } = require('../../models');
-const { authorizeToken } = require('../../utils/auth');
-const { addModelToTutor } = require('../../utils/helpers');
-const demoEmailTemplate = require('../../seed/emailTemplate.json');
-const { reportError } = require('../../utils/consoleColors/index.js');
+const { EmailTemplate } = require('../models');
+const { authorizeToken } = require('../utils/auth');
+const { addModelToTutor } = require('../utils/helpers');
+const demoEmailTemplate = require('../seed/emailTemplate.json');
+const { reportError } = require('../utils/consoleColors/index.js');
 
 router.get('/', authorizeToken, async (req, res) => {
   try {

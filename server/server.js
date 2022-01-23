@@ -14,7 +14,7 @@ app.use(cors());
 app.use(compression());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use(require('./routes'));
+app.use('/api', require('./routes'));
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../client/build')));
