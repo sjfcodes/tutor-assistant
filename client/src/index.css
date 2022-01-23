@@ -1,4 +1,6 @@
 :root {
+  --background: rgba(0, 0, 0, 0.7);
+
   --blue: #09b2f5;
   --border: rgba(0, 0, 0, 0.6);
   --border-light: rgba(0, 0, 0, 0.3);
@@ -61,7 +63,7 @@ footer {
   backdrop-filter: blur(2px);
 }
 .background-blurred-dark {
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: var(--background);
   backdrop-filter: blur(2px);
 }
 .background-blurred-light {
@@ -69,7 +71,7 @@ footer {
   backdrop-filter: blur(10px);
 }
 .background-dark {
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: var(--background);
 }
 .background-clear {
   background-color: var(--clear);
