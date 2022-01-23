@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Button, Form } from 'react-bulma-components';
-import { AppContext } from '../../../../context';
+import { useSelector } from 'react-redux';
 import {
   createModel, deleteModel, getTextareaRows, updateModel,
 } from '../../../../utils';
 import { EmailTemplatesContext } from '../EmailTemplatesProvider';
 
 const Editor = () => {
-  const { tutorDetails } = useContext(AppContext);
+  const tutor = useSelector((state) => state.tutor);
   const {
     allTemplates, setAllTemplates,
     selectedTemplate, setSelectedTemplate,
@@ -29,7 +29,7 @@ const Editor = () => {
   };
 
   const handleCreateTemplate = async () => {
-    const body = { ...selectedTemplate, authorId: tutorDetails._id };
+    const body = { ...selectedTemplate, authorId: tutor._id };
     const { _id } = await createModel({ model: 'email-template', body });
     setAllTemplates({ ...allTemplates, [_id]: { ...body, _id } });
     resetEditor();

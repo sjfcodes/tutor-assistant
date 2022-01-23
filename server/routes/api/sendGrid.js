@@ -2,7 +2,7 @@ const router = require('express').Router();
 const sgMail = require('@sendgrid/mail');
 const { AccessToken, Tutor } = require('../../models');
 const { authorizeToken } = require('../../utils/auth');
-const { reportError } = require('../../utils/consoleColors');
+const { reportError } = require('../../utils/consoleColors/index.js');
 const { encryptToken, decryptToken } = require('../../utils/encryption');
 const { getTutorById } = require('../../utils/helpers');
 

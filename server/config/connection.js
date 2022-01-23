@@ -1,9 +1,8 @@
-const mongoose = require('mongoose');
 require('dotenv').config('../');
-
-const {
-  reportStatus, exitWithError, reportDbConnection, fgYellow, resetColor, fgCyan,
-} = require('../utils/consoleColors');
+const mongoose = require('mongoose');
+const { fgYellow, fgCyan } = require('../utils/consoleColors/fgColors');
+const { reportStatus, exitWithError, reportDbConnection } = require('../utils/consoleColors/index.js');
+const { resetColor } = require('../utils/consoleColors/tools');
 
 const uri = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/tutor-assistant';
 let loading = true;

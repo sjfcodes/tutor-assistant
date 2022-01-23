@@ -1,12 +1,12 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Button } from 'react-bulma-components';
-import { CourseContext } from '../../../../context';
+import { useSelector } from 'react-redux';
 import { deleteModel } from '../../../../utils';
 
 const DeleteAccessToken = () => {
 //   const [deleteState, setDeleteState] = useState('');
 //   const [loading, setLoading] = useState(false);
-  const { allCourses, selectedCourse } = useContext(CourseContext);
+  const { allCourses, selectedCourse } = useSelector((state) => state.courses);
   const { calendly: { accessToken } } = allCourses[selectedCourse];
 
   const handleDeleteAccessToken = async () => {

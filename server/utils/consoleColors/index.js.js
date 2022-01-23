@@ -1,50 +1,17 @@
-const tools = {
-  resetColor: '\x1b[0m',
-  bright: '\x1b[1m',
-  dim: '\x1b[2m',
-  ccUnderscore: '\x1b[4m',
-  blink: '\x1b[5m',
-  reverse: '\x1b[7m',
-  hidden: '\x1b[8m',
-  eraseLine: '\r\x1b[K',
-};
+const tools = require('./tools');
+const fgColors = require('./fgColors');
+
 const {
-  resetColor, bright, dim, ccUnderscore,
-  blink, reverse, hidden, eraseLine,
+  resetColor, ccUnderscore, eraseLine,
 } = tools;
 
-const fgColors = {
-  fgBlack: '\x1b[30m',
-  fgRed: '\x1b[31m',
-  fgGreen: '\x1b[32m',
-  fgYellow: '\x1b[33m',
-  fgBlue: '\x1b[34m',
-  fgMagenta: '\x1b[35m',
-  fgCyan: '\x1b[36m',
-  fgWhite: '\x1b[37m',
-};
 const {
-  fgBlack, fgRed, fgGreen, fgYellow,
-  fgBlue, fgMagenta, fgCyan, fgWhite,
+  fgRed, fgGreen, fgYellow,
+  fgMagenta, fgCyan,
 } = fgColors;
 
-const bgColors = {
-  bgBlack: '\x1b[40m',
-  bgRed: '\x1b[41m',
-  bgGreen: '\x1b[42m',
-  bgYellow: '\x1b[43m',
-  bgBlue: '\x1b[44m',
-  bgMagenta: '\x1b[45m',
-  bgCyan: '\x1b[46m',
-  bgWhite: '\x1b[47m',
-};
-const {
-  bgBlack, bgRed, bgGreen, bgYellow,
-  bgBlue, bgMagenta, bgCyan, bgWhite,
-} = bgColors;
-
 const fgKeys = Object.keys(fgColors);
-const spacer = (num = 20, char = '-') => {
+const spacer = (num = 3, char = '-') => {
   const getRandomColor = () => fgKeys[Math.floor(Math.random() * fgKeys.length)];
   let str = '';
   for (let i = 0; i < num; i += 1) {
@@ -90,28 +57,4 @@ module.exports = {
   reportError,
   exitWithError,
   exitWithSuccess,
-  resetColor,
-  bright,
-  dim,
-  bgWhite,
-  ccUnderscore,
-  bgCyan,
-  blink,
-  bgMagenta,
-  reverse,
-  bgBlue,
-  hidden,
-  bgYellow,
-  eraseLine,
-  bgGreen,
-  bgRed,
-  fgBlack,
-  bgBlack,
-  fgRed,
-  fgWhite,
-  fgGreen,
-  fgCyan,
-  fgMagenta,
-  fgBlue,
-  fgYellow,
 };

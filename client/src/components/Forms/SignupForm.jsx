@@ -1,9 +1,9 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import {
   Form, Button, Columns, Icon,
 } from 'react-bulma-components';
-import { tokenKey } from '../../config';
-import { AppContext } from '../../context';
+import { useDispatch } from 'react-redux';
+import { LOGIN_TUTOR } from '../../store/tutor/actions';
 import {
   createModel,
   emailIsValid,
@@ -21,7 +21,7 @@ const {
 const { Column } = Columns;
 
 const SignupForm = () => {
-  const { setTutorDetails } = useContext(AppContext);
+  const dispatch = useDispatch();
   const clientTimeZone = getClientTimeZone();
   const [formInputs, setFormInputs] = useState({
     firstName: '',
@@ -56,15 +56,18 @@ const SignupForm = () => {
     setLoading(true);
     try {
       const { tutor, token } = await createModel({ model: 'tutor', body: formInputs });
-      localStorage.setItem(tokenKey, token);
-      setTutorDetails({ ...tutor, loggedIn: true });
       setHelpText('');
+      setLoading(false);
+      dispatch({
+        type: LOGIN_TUTOR,
+        payload: { tutor, token },
+      });
       return;
     } catch ({ message }) {
       if (message.includes('E11000 duplicate key error')) setHelpText('email already in use');
       else setHelpText(message);
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   return (

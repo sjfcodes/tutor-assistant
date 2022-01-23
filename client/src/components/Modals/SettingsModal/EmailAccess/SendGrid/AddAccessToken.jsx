@@ -1,11 +1,12 @@
 import { string } from 'prop-types';
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { Button, Form, Icon } from 'react-bulma-components';
-import { AppContext } from '../../../../../context';
+import { useDispatch } from 'react-redux';
+import { UPDATE_TUTOR_DETAIL } from '../../../../../store/tutor/actions';
 import { createModel } from '../../../../../utils';
 
 const AddAccessToken = ({ password }) => {
-  const { tutorDetails, setTutorDetails } = useContext(AppContext);
+  const dispatch = useDispatch();
 
   const [formInputs, setFormInputs] = useState({ token: '' });
   const [loading, setLoading] = useState(false);
@@ -33,15 +34,21 @@ const AddAccessToken = ({ password }) => {
       setHelpText('');
       setColor('');
       setButtonText('success!');
-      setTutorDetails({ ...tutorDetails, sendGrid: { accessToken } });
-    } catch (error) {
-      // expected case: bad password
-      setTutorDetails({
-        ...tutorDetails,
-        sendGrid: {
-          accessToken: null,
+      dispatch({
+        type: UPDATE_TUTOR_DETAIL,
+        payload: {
+          sendGrid: { accessToken },
         },
       });
+    } catch (error) {
+      // expected case: bad password
+      dispatch({
+        type: UPDATE_TUTOR_DETAIL,
+        payload: {
+          sendGrid: { accessToken: null },
+        },
+      });
+
       setHelpText('unauthorized');
     }
     setLoading(false);

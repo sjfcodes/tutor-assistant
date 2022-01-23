@@ -1,17 +1,20 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { string } from 'prop-types';
 import { Button, Form } from 'react-bulma-components';
+import { useDispatch, useSelector } from 'react-redux';
 import AddStudentForm from '../../Modals/AddStudentModal/AddStudentForm';
 import { addStudentFormDefaults } from '../../Modals/AddStudentModal';
 import {
-  convertDatePickerToISO8601, createModel, handleError, missingFormInputs,
+  convertDatePickerToISO8601, createModel,
+  handleError, missingFormInputs,
 } from '../../../utils';
-import { CourseContext } from '../../../context';
+import { ADD_STUDENT_TO_COURSE } from '../../../store/courses/actions';
 
 const TaskLayoutAddStudent = ({
   firstName, lastName, email, timeZoneName,
 }) => {
-  const { allCourses, setAllCourses, selectedCourse } = useContext(CourseContext);
+  const { selectedCourse } = useSelector((state) => state.courses);
+  const dispatch = useDispatch();
   const [helpText, setHelpText] = useState('help');
   const [formInputs, setFormInputs] = useState({
     ...addStudentFormDefaults,
@@ -27,20 +30,13 @@ const TaskLayoutAddStudent = ({
       const inputs = { ...formInputs };
       inputs.graduationDate = convertDatePickerToISO8601(formInputs.graduationDate);
 
-      const { _id: newStudentId, createdAt } = await createModel({ model: 'student', body: inputs, _id: selectedCourse });
-      if (!newStudentId) return handleError('createModel [student] did not return _id');
+      const student = await createModel({ model: 'student', body: inputs, _id: selectedCourse });
+      if (!student._id) return handleError('missing student id');
 
-      const currentStudents = allCourses[selectedCourse].students;
-      const updatedStudents = {
-        ...currentStudents,
-        [newStudentId]: {
-          _id: newStudentId,
-          ...inputs,
-          createdAt,
-        },
-      };
-      const updatedCourse = { ...allCourses[selectedCourse], students: updatedStudents };
-      setAllCourses({ ...allCourses, [selectedCourse]: updatedCourse });
+      dispatch({
+        type: ADD_STUDENT_TO_COURSE,
+        payload: student,
+      });
     } catch ({ message }) {
       if (message.includes('E11000 duplicate key error')) setHelpText('email already in use');
       else setHelpText(message);

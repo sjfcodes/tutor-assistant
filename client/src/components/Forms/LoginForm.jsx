@@ -1,9 +1,10 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { Form, Icon, Button } from 'react-bulma-components';
-import { AppContext, CourseContext } from '../../context';
+import { useDispatch } from 'react-redux';
+import { LOGIN_TUTOR } from '../../store/tutor/actions';
+import { SET_ALL_COURSES } from '../../store/courses/actions';
 import {
   loginWithPassword, passwordIsValid,
-  formatCourses, formatStudents, formatMeetings,
 } from '../../utils';
 import InputPassword from './InputPassword';
 
@@ -12,16 +13,13 @@ const {
 } = Form;
 
 const LoginForm = () => {
+  const dispatch = useDispatch();
   const [inputs, setInputs] = useState({
     email: 'demo@email.com',
     password: 'password',
   });
   const { email, password } = inputs;
-
   const [helpText, setHelpText] = useState('');
-
-  const { setTutorDetails } = useContext(AppContext);
-  const { setAllCourses } = useContext(CourseContext);
 
   const handleInputChange = (e) => {
     const {
@@ -34,18 +32,18 @@ const LoginForm = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const { tutor } = await loginWithPassword(inputs);
+      const { tutor, token } = await loginWithPassword(inputs);
       if (!tutor) return;
-      const formattedCourses = tutor.courses
-        .map((course) => ({
-          ...course,
-          students: formatStudents(course.students),
-          meetings: formatMeetings(course.meetings),
-        }));
 
-      setAllCourses(formatCourses(formattedCourses));
+      dispatch({
+        type: LOGIN_TUTOR,
+        payload: { tutor, token },
+      });
 
-      setTutorDetails({ ...tutor, loggedIn: true });
+      dispatch({
+        type: SET_ALL_COURSES,
+        payload: tutor.courses,
+      });
     } catch ({ message }) {
       setHelpText(message);
     }

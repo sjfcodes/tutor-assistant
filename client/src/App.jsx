@@ -1,26 +1,45 @@
-/* eslint-disable no-unused-vars */
-import React, { useEffect, useContext } from 'react';
-import {
-  Routes, Route, useNavigate, useLocation,
-} from 'react-router-dom';
+import React, { useEffect } from 'react';
 import { Columns, Container, Section } from 'react-bulma-components';
+import { useDispatch, useSelector } from 'react-redux';
+
 import { Nav, Footer, BackgroundImage } from './components';
-import { Home, Landing } from './pages';
-import { AppContext } from './context';
+import { Home, Landing } from './views';
+import { loginWithToken } from './utils';
+import { LOGIN_TUTOR } from './store/tutor/actions';
+import { SET_ALL_COURSES } from './store/courses/actions';
+import { tokenKey } from './config';
 import './App.sass';
-import AllModals from './components/Modals';
 
 const App = () => {
-  const navigate = useNavigate();
-  const { tutorDetails } = useContext(AppContext);
-  const { loggedIn, githubUsername } = tutorDetails;
-  const location = useLocation();
+  const dispatch = useDispatch();
+  const { loggedIn } = useSelector((state) => state.tutor);
+  const prevToken = localStorage.getItem(tokenKey);
 
   useEffect(() => {
-    if (location.pathname !== '/' && !loggedIn) return navigate('/');
-    if (location.pathname === '/' && githubUsername) navigate(`/${githubUsername}`);
-    return '';
-  }, [loggedIn, githubUsername, navigate, tutorDetails, location.pathname]);
+    document.title = 'The Tutor App';
+    if (loggedIn || !prevToken) return;
+
+    const loginUser = async (lsToken) => {
+      try {
+        const { tutor, token } = await loginWithToken(lsToken);
+        if (!tutor || !token) return;
+
+        dispatch({
+          type: LOGIN_TUTOR,
+          payload: { tutor, token },
+        });
+
+        dispatch({
+          type: SET_ALL_COURSES,
+          payload: tutor.courses,
+        });
+      } catch (error) {
+        localStorage.removeItem(tokenKey);
+      }
+    };
+
+    loginUser(prevToken);
+  }, [dispatch, loggedIn, prevToken]);
 
   return (
     <>
@@ -32,9 +51,6 @@ const App = () => {
       </Section>
 
       <BackgroundImage url='./images/bg-image.jpg' />
-
-      {loggedIn && <AllModals />}
-
       <Section renderAs='main' className='background-blurred-dark p-0'>
         <Container className='is-max-desktop'>
           <Columns centered className='m-0'>
@@ -42,16 +58,17 @@ const App = () => {
               desktop={{ size: 10 }}
               tablet={{ size: 8 }}
             >
-              <Routes>
-                <Route path='/:tutor' element={<Home />} />
-                <Route path='/' element={<Landing />} />
-              </Routes>
+              {
+                loggedIn
+                  ? <Home />
+                  : <Landing />
+              }
+
             </Columns.Column>
           </Columns>
         </Container>
       </Section>
       <Footer className='background-dark border-top py-0' />
-
     </>
   );
 };

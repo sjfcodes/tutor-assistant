@@ -1,10 +1,13 @@
 import { string } from 'prop-types';
-import React, { useContext, useEffect, useState } from 'react';
-import { CourseContext } from '../../../context';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import MeetingsListItem from './MeetingsListItem';
 
 const MeetingsList = ({ filterBy }) => {
-  const { allCourses, selectedCourse, calendlyMeetings } = useContext(CourseContext);
+  const {
+    calendlyMeetings,
+    courses: { allCourses, selectedCourse },
+  } = useSelector((state) => state);
   const [selectedMeetingId, setSelectedMeetingId] = useState('');
   const [displayedMeetings, setDisplayedMeetings] = useState([]);
   const [meetingsListItems, setMeetingsListItems] = useState('');
@@ -54,14 +57,15 @@ const MeetingsList = ({ filterBy }) => {
 
   useEffect(() => {
     if (!displayedMeetings.length) return setMeetingsListItems(<p className='has-text-centered'>no scheduled meetings</p>);
-    return setMeetingsListItems(displayedMeetings.map((meeting) => (
-      <MeetingsListItem
-        key={meeting._id}
-        meeting={meeting}
-        selectedMeetingId={selectedMeetingId}
-        setSelectedMeetingId={setSelectedMeetingId}
-      />
-    )));
+    return setMeetingsListItems(displayedMeetings
+      .map((meeting) => (
+        <MeetingsListItem
+          key={meeting._id}
+          meeting={meeting}
+          selectedMeetingId={selectedMeetingId}
+          setSelectedMeetingId={setSelectedMeetingId}
+        />
+      )));
   }, [selectedCourse, allCourses, calendlyMeetings, displayedMeetings, selectedMeetingId]);
 
   return meetingsListItems;

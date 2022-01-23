@@ -1,14 +1,13 @@
-import React, {
-  useContext, useEffect, useMemo, useState,
-} from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { func, shape, string } from 'prop-types';
-import { CourseContext } from '../../../context';
+import { useSelector } from 'react-redux';
 import MeetingDetailList from '../MeetingDetailList';
 import ListItemContainer from '../../List/ListItemContainer';
 import MeetingsListItemLayout from './MeetingsListItemLayout';
 
 const MeetingListItem = ({ meeting, setSelectedMeetingId, selectedMeetingId }) => {
-  const { allCourses, selectedCourse } = useContext(CourseContext);
+  const { allCourses, selectedCourse } = useSelector((state) => state.courses);
+
   const [listItem, setListItem] = useState('');
   const [listItemDetails, setListItemDetails] = useState('');
 

@@ -1,12 +1,12 @@
 import { string } from 'prop-types';
 import React, {
-  useContext, useEffect, useMemo, useState,
+  useEffect, useMemo, useState,
 } from 'react';
-import { CourseContext } from '../../../context';
+import { useSelector } from 'react-redux';
 import StudentsListItem from './StudentsListItem';
 
 const StudentsList = ({ filterBy }) => {
-  const { allCourses, selectedCourse } = useContext(CourseContext);
+  const { allCourses, selectedCourse } = useSelector((state) => state.courses);
   const [selectedStudentId, setSelectedStudentId] = useState('');
   const [displayedStudents, setDisplayedStudents] = useState([]);
   const [studentsListItems, setStudentsListItems] = useState('');

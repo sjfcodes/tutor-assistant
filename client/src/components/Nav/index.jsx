@@ -1,26 +1,30 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, {
-  useContext, useEffect, useState,
+  useContext, useEffect,
 } from 'react';
 import { Button, Navbar } from 'react-bulma-components';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { AppContext, CourseContext, ModalContext } from '../../context';
-import { logoutTutor, preventBodyScroll } from '../../utils';
+import { ModalContext } from '../../context';
+import { LOGOUT_TUTOR } from '../../store/tutor/actions';
+import { preventBodyScroll } from '../../utils';
 import './style.css';
 
 const Nav = () => {
-  const { tutorDetails } = useContext(AppContext);
-  const { allCourses, selectedCourse, calendlyMeetings } = useContext(CourseContext);
-  const { loggedIn, firstName, lastName } = tutorDetails;
+  const {
+    tutor,
+    calendlyMeetings,
+    courses: { allCourses, selectedCourse },
+  } = useSelector((state) => state);
+
+  const { loggedIn, firstName, lastName } = tutor;
   const { setOpenModal } = useContext(ModalContext);
-  const [showNav, setShowNav] = useState(false);
+  const dispatch = useDispatch();
 
   const displayState = () => {
     console.group('context');
-    console.log('~ tutorDetails ~');
-    console.log(tutorDetails);
+    console.log('~ tutor ~');
+    console.log(tutor);
     console.log('~ allCourses ~');
     console.log(allCourses);
     console.log('~ selectedCourse ~');
@@ -28,6 +32,11 @@ const Nav = () => {
     console.log('~ calendlyMeetings ~');
     console.log(calendlyMeetings);
     console.groupEnd('context');
+  };
+
+  const logoutTutor = () => {
+    dispatch({ type: LOGOUT_TUTOR });
+    window.location.href = '/';
   };
 
   useEffect(() => {

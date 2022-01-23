@@ -1,9 +1,7 @@
-/* eslint-disable no-unused-vars */
 import { string } from 'prop-types';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
-import { CourseContext } from '../../../context';
-import AddStudentForm from '../../Modals/AddStudentModal/AddStudentForm';
 import TaskLayoutAddStudent from './TaskLayoutAddStudent';
 import TasksListItem from './TasksListItem';
 
@@ -30,7 +28,13 @@ const checkCalendlyStudents = (students, calendlyMeetings) => {
 };
 
 const TasksList = ({ filterBy }) => {
-  const { allCourses, selectedCourse, calendlyMeetings } = useContext(CourseContext);
+  const {
+    courses: {
+      allCourses, selectedCourse,
+    },
+    calendlyMeetings,
+  } = useSelector((state) => state);
+
   const [selectedTaskId, setSelectedTaskId] = useState('');
   const [displayedTasks, setDisplayedTasks] = useState([]);
   const [tasksListItems, setTasksListItems] = useState('');

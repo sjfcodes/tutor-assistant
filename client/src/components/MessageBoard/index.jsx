@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box } from 'react-bulma-components';
-import { AppContext } from '../../context';
+import { useSelector } from 'react-redux';
 import { getClientTimeZone, getISO8601TimeStamp } from '../../utils';
 import { MeetingDateFull, TimeZoneAbbreviation } from '../DateTime';
 
@@ -18,7 +18,7 @@ const MessageBoard = () => {
   const [date, setDate] = useState(getISO8601TimeStamp());
   const [partOfDay, setPartOfDay] = useState(getPartOfDay(date));
 
-  const { tutorDetails: { firstName, timeZoneName } } = useContext(AppContext);
+  const { firstName, timeZoneName } = useSelector((state) => state.tutor);
 
   useEffect(() => {
     let isMounted = true;

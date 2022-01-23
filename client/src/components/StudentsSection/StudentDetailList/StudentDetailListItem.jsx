@@ -1,21 +1,23 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form, Icon } from 'react-bulma-components';
 import {
   string, number, oneOfType, bool,
 } from 'prop-types';
-import { CourseContext } from '../../../context';
+import { useDispatch } from 'react-redux';
 import { emailIsValid, updateModel } from '../../../utils';
 import ListItem from '../../Forms/ListItem';
+import { UPDATE_STUDENT_DETAIL } from '../../../store/courses/actions';
 
 const StudentListItemDetail = ({
   _id, property, value,
 }) => {
+  const dispatch = useDispatch();
+
   const [allowedToEdit, setAllowedToEdit] = useState(true);
   const [itemToEdit, setItemToEdit] = useState('');
   const [input, setInput] = useState(`${value}`);
   const [displayedEditIcon, setDisplayedEditIcon] = useState('');
   const [displayPropertyName, setDisplayProperyName] = useState(property);
-  const { allCourses, setAllCourses, selectedCourse } = useContext(CourseContext);
   const [helpText, setHelpText] = useState('');
 
   const handleSubmit = async (e) => {
@@ -26,20 +28,12 @@ const StudentListItemDetail = ({
     if (property === 'email' && !emailIsValid(input)) return setHelpText('invalid email');
 
     try {
-      const response = await updateModel({ model, body });
+      const student = await updateModel({ model, body });
       // target the current property being edited of the selected student in the selected course
-      const thisCourse = { ...allCourses[selectedCourse] };
-      const allStudents = { ...thisCourse.students };
 
-      setAllCourses({
-        ...allCourses,
-        [selectedCourse]: {
-          ...thisCourse,
-          students: {
-            ...allStudents,
-            [_id]: { ...response },
-          },
-        },
+      dispatch({
+        type: UPDATE_STUDENT_DETAIL,
+        payload: student,
       });
 
       setHelpText('');

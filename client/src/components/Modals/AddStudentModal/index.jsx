@@ -1,9 +1,10 @@
-/* eslint-disable no-unused-vars */
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   Button, Form, Heading, Modal,
 } from 'react-bulma-components';
-import { CourseContext, ModalContext } from '../../../context';
+import { useDispatch, useSelector } from 'react-redux';
+import { ModalContext } from '../../../context';
+import { ADD_STUDENT_TO_COURSE } from '../../../store/courses/actions';
 import {
   createModel,
   missingFormInputs,
@@ -34,8 +35,10 @@ export const addStudentFormDefaults = {
 };
 
 const AddStudentModal = () => {
+  const { selectedCourse } = useSelector((state) => state.courses);
+  const dispatch = useDispatch();
+
   const { openModal, setOpenModal } = useContext(ModalContext);
-  const { allCourses, setAllCourses, selectedCourse } = useContext(CourseContext);
   const [formInputs, setFormInputs] = useState(addStudentFormDefaults);
   const [helpText, setHelpText] = useState('');
 
@@ -48,17 +51,17 @@ const AddStudentModal = () => {
       const { _id: newStudentId, createdAt } = await createModel({ model: 'student', body: inputs, _id: selectedCourse });
       if (!newStudentId) return handleError('createModel [student] did not return _id');
 
-      const currentStudents = allCourses[selectedCourse].students;
-      const updatedStudents = {
-        ...currentStudents,
-        [newStudentId]: {
-          _id: newStudentId,
-          ...inputs,
-          createdAt,
-        },
+      const newStudent = {
+        _id: newStudentId,
+        ...inputs,
+        createdAt,
       };
-      const updatedCourse = { ...allCourses[selectedCourse], students: updatedStudents };
-      setAllCourses({ ...allCourses, [selectedCourse]: updatedCourse });
+
+      dispatch({
+        type: ADD_STUDENT_TO_COURSE,
+        payload: newStudent,
+      });
+
       setOpenModal('');
     } catch ({ message }) {
       if (message.includes('E11000 duplicate key error')) setHelpText('email already in use');

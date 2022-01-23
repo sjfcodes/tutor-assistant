@@ -1,12 +1,12 @@
 import { arrayOf, func, string } from 'prop-types';
-import React, { useContext, useEffect } from 'react';
-import { CourseContext } from '../../context';
+import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import ListFilterSelector from '../List/ListFilterSelector';
 
 const MeetingsListFilter = ({
   sectionName, filterOptions, setFilterOptions, filterBy, setFilterBy,
 }) => {
-  const { calendlyMeetings } = useContext(CourseContext);
+  const { calendlyMeetings } = useSelector((state) => state);
 
   useEffect(() => {
     let isMounted = true;

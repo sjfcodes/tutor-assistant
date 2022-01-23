@@ -1,4 +1,3 @@
-import { tokenKey } from '../../../config';
 import { handleError } from '../../helpers';
 import { getApiEndpoint } from '../apiAccess';
 
@@ -17,8 +16,7 @@ const loginWithPassword = (inputs) => {
         .then((res) => res.json())
         .then(({ token, tutor, courses }) => {
           if (!token || !tutor) return reject(handleError('unauthorized'));
-          localStorage.setItem(tokenKey, token);
-          return resolve({ tutor, courses });
+          return resolve({ tutor, token, courses });
         });
     } catch (error) {
       reject(handleError(error));

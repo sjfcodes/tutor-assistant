@@ -1,6 +1,7 @@
 const axios = require('axios');
 const { getISOCurrentDateStamp } = require('./dateTime');
 const { getCalendlyToken, decryptToken } = require('./encryption');
+const { formatName } = require('./format');
 
 const getCalendlyHeaders = (token) => ({
   authorization: `Bearer ${token}`,
@@ -46,8 +47,8 @@ const getCalendlyMeetings = async ({
           status: event.status,
           cancelUrl: student.cancel_url,
           email: student.email,
-          firstName: student.name.split(' ')[0],
-          lastName: student.name.split(' ')[1],
+          firstName: formatName(student.name.split(' ')[0]) || '(first)',
+          lastName: formatName(student.name.split(' ')[1]) || '(last)',
           questionsAndAnswers: student.questions_and_answers,
           rescheduleUrl: student.reschedule_url,
           rescheduled: student.rescheduled,
