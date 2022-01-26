@@ -8,12 +8,32 @@ const templateSchema = new Schema({
     required: true,
   },
   body: {
-    type: String,
-    required: true,
+    html: {
+      type: String,
+      required: true,
+    },
+    text: {
+      type: String,
+      required: true,
+    },
   },
   name: {
     type: String,
     required: true,
+  },
+  includePropertiesFor: {
+    tutor: {
+      type: Boolean,
+      default: true,
+    },
+    student: {
+      type: Boolean,
+      default: true,
+    },
+    meeting: {
+      type: Boolean,
+      default: false,
+    },
   },
   subject: {
     type: String,
@@ -23,6 +43,12 @@ const templateSchema = new Schema({
     type: String,
     default: () => getISOCurrentDateStamp(),
   },
+});
+
+templateSchema.pre('save', (next) => {
+  // setting default array of properties
+  this.includePropertiesFor = ['tutor', 'student'];
+  next();
 });
 
 const EmailTemplate = model('EmailTemplate', templateSchema);

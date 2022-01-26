@@ -5,30 +5,33 @@ import { LoginForm, SignupForm } from '../../components/Forms';
 const { Tab } = Tabs;
 
 const Landing = () => {
-  const [form, setForm] = useState('login');
+  const LOGIN_TAB = 'login';
+  const SIGNUP_TAB = 'signup';
+  const [form, setForm] = useState(LOGIN_TAB);
+
+  const getLabelClassName = (component) => ((component !== form) ? 'has-text-grey-lighter' : '');
 
   return (
 
     <>
       <Tabs type='boxed' align='left' className=' mb-0 pt-3 pl-2'>
         <Tab
-          className={form !== 'login' ? 'has-text-white' : ''}
-          active={form === 'login'}
-          onClick={() => setForm('login')}
+          active={form === LOGIN_TAB}
+          onClick={() => setForm(LOGIN_TAB)}
         >
-          <strong className={form !== 'login' ? 'has-text-grey-lighter' : ''}>Login</strong>
+          <strong className={getLabelClassName(LOGIN_TAB)}>Login</strong>
         </Tab>
         <Tab
-          className='rounded-tr'
-          active={form === 'signup'}
-          onClick={() => setForm('signup')}
+          className='rounded-tr '
+          active={form === SIGNUP_TAB}
+          onClick={() => setForm(SIGNUP_TAB)}
         >
-          <strong className={form !== 'signup' ? 'has-text-grey-lighter' : ''}>Signup</strong>
+          <strong className={getLabelClassName(SIGNUP_TAB)}>Signup</strong>
         </Tab>
       </Tabs>
       <Box className='rounded'>
-        {form === 'login' && <LoginForm />}
-        {form === 'signup' && <SignupForm />}
+        {form === LOGIN_TAB && <LoginForm />}
+        {form === SIGNUP_TAB && <SignupForm />}
       </Box>
     </>
   );

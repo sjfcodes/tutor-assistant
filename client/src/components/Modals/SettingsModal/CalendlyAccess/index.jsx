@@ -42,18 +42,18 @@ const CalendlyAccess = ({ courseId }) => {
         <>
           <Button
             fullwidth
+            color='primary'
             className='mb-3'
+            onClick={() => setDisplay('syncExisting')}
+          >
+            re-sync current connection
+          </Button>
+          <Button
+            fullwidth
             color='success'
             onClick={() => setDisplay('addNew')}
           >
             create new connection
-          </Button>
-          <Button
-            fullwidth
-            color='primary'
-            onClick={() => setDisplay('syncExisting')}
-          >
-            re-sync current connection
           </Button>
         </>
       ),

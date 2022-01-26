@@ -28,7 +28,7 @@ A tutor can
 > * THEN the student is added to a list
 > * AND I can schedule a meeting.
 > * IF I have added an EMAIL_ACCESS_TOKEN
->   * THEN I can send an introduction email
+>   * THEN I can send an introduction email                 
 
 > * WHEN I schedula a meeting
 > * THEN the meeting is added to a list
