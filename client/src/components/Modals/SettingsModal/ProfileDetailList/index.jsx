@@ -22,9 +22,7 @@ const ProfileDetailList = () => {
   ], []);
 
   useEffect(() => {
-    if (!tutorDetails._id) return '';
-
-    setListItems(
+    if (tutorDetails._id) setListItems(
       Object.entries(tutorDetails)
         .map(([property, value]) => {
           if (doNotDisplay.indexOf(property) !== -1) return null;
@@ -38,8 +36,6 @@ const ProfileDetailList = () => {
           );
         }),
     );
-
-    return '';
   }, [tutorDetails, doNotDisplay]);
 
   return (

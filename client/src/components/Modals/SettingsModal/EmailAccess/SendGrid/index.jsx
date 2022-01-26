@@ -4,6 +4,7 @@ import {
 } from 'react-bulma-components';
 import { useSelector } from 'react-redux';
 import { passwordIsValid } from '../../../../../utils';
+import DropDownIcon from '../../../../DropDownIcon';
 import InputPassword from '../../../../Forms/InputPassword';
 import AddAccessToken from './AddAccessToken';
 import DeleteAccessToken from './DeleteAccessToken';
@@ -36,9 +37,7 @@ const SendGridAccess = () => {
           </Heading>
         </Level.Side>
         <Level.Side>
-          <Icon className='mr-2'>
-            <i className={`fas fa-chevron-${displaySendGrid ? 'up' : 'down'}`} />
-          </Icon>
+          <DropDownIcon active={displaySendGrid} />
         </Level.Side>
       </Level>
     </Box>
@@ -57,9 +56,7 @@ const SendGridAccess = () => {
           </Heading>
         </Level.Side>
         <Level.Side>
-          <Icon className='mr-2'>
-            <i className={`fas fa-chevron-${displaySendGrid ? 'up' : 'down'}`} />
-          </Icon>
+          <DropDownIcon active={displaySendGrid} />
         </Level.Side>
       </Level>
       <Content className='border-bottom pb-3 mb-4'>

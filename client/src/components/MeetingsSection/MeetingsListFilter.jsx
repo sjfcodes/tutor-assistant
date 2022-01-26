@@ -13,26 +13,23 @@ const MeetingsListFilter = ({
     const optionName = 'calendly';
     const hasItemsToFilter = (Object.keys(calendlyMeetings).length > 0);
 
+    if (hasItemsToFilter) {
     /**
          * if there are items to display
          *  if already an option, return
          * add option
          */
-    if (hasItemsToFilter) {
-      if (filterOptions.includes(optionName)) return '';
-      if (!isMounted) return '';
-      return setFilterOptions([...filterOptions, optionName]);
-    }
-
+      if (isMounted
+      && !filterOptions.includes(optionName)
+      ) setFilterOptions([...filterOptions, optionName]);
+    } else if (filterOptions.includes(optionName)) {
     /*
         * if there are no items to display & option is included
         * remove option
         * update state
         */
-    if (filterOptions.includes(optionName)) {
       const removeCalendlyOption = filterOptions.filter((option) => option !== optionName);
-      if (!isMounted) return '';
-      return setFilterOptions([...removeCalendlyOption]);
+      if (isMounted) setFilterOptions([...removeCalendlyOption]);
     }
 
     return () => { isMounted = false; };

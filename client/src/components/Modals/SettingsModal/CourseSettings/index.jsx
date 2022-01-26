@@ -46,7 +46,6 @@ const CourseSettings = ({ setDisableControls }) => {
   useEffect(() => {
     if (courseToEdit || courseToDelete) setDisableControls(true);
     else setDisableControls(false);
-    return '';
   }, [allCourses, courseToDelete, courseToEdit, setDisableControls]);
 
   return (
