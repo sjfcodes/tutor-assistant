@@ -14,9 +14,7 @@ const StudentDetailList = ({ student }) => {
 
   useEffect(() => {
     let count = 0;
-    if (!student._id) return '';
-
-    setListItems(
+    if (student._id) setListItems(
       Object.entries(student)
         .map(([property, value]) => {
           if (doNotDisplay.indexOf(property) !== -1) return null;
@@ -32,8 +30,6 @@ const StudentDetailList = ({ student }) => {
           );
         }),
     );
-
-    return '';
   }, [student, doNotDisplay]);
 
   return (

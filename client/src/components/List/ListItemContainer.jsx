@@ -1,7 +1,8 @@
 import { func, string } from 'prop-types';
 import React from 'react';
-import { Box, Icon, Level } from 'react-bulma-components';
+import { Box, Level } from 'react-bulma-components';
 import { LevelSide } from '../BulmaHelpers';
+import DropDownIcon from '../DropDownIcon';
 
 const ListItemContainer = ({
   // eslint-disable-next-line react/prop-types
@@ -21,9 +22,7 @@ const ListItemContainer = ({
         {listItem}
       </LevelSide>
       <Level.Side>
-        <Icon className='mr-2'>
-          <i className={`fas fa-chevron-${selectedItemId === itemId ? 'up' : 'down'}`} />
-        </Icon>
+        <DropDownIcon active={(selectedItemId === itemId)} />
       </Level.Side>
     </Level>
     {selectedItemId === itemId ? listItemDetails : null}

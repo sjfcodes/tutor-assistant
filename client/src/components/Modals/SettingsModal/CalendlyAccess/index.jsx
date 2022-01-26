@@ -5,6 +5,7 @@ import {
 } from 'react-bulma-components';
 import { useSelector } from 'react-redux';
 import { passwordIsValid } from '../../../../utils';
+import DropDownIcon from '../../../DropDownIcon';
 import InputPassword from '../../../Forms/InputPassword';
 
 import AddAccessToken from './AddAccessToken';
@@ -81,9 +82,7 @@ const CalendlyAccess = ({ courseId }) => {
           </Heading>
         </Level.Side>
         <Level.Side>
-          <Icon className='mr-2'>
-            <i className={`fas fa-chevron-${displayCalendly ? 'up' : 'down'}`} />
-          </Icon>
+          <DropDownIcon active={displayCalendly} />
         </Level.Side>
       </Level>
     </Box>
@@ -103,9 +102,7 @@ const CalendlyAccess = ({ courseId }) => {
           </Heading>
         </Level.Side>
         <Level.Side>
-          <Icon className='mr-2'>
-            <i className={`fas fa-chevron-${displayCalendly ? 'up' : 'down'}`} />
-          </Icon>
+          <DropDownIcon active={displayCalendly} />
         </Level.Side>
       </Level>
       <Content className='border-bottom pb-3 mb-4'>

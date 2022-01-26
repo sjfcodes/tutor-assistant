@@ -55,33 +55,32 @@ const StudentsList = ({ filterBy }) => {
   );
 
   useEffect(() => {
-    if (!selectedCourse) return;
-    if (!allStudents) return;
-    let students;
+    if (selectedCourse && allStudents) {
+      let students;
+      switch (filterBy) {
+      case 'graduation date':
+        students = filterStudentsByGraduationDate(allStudents);
+        break;
 
-    switch (filterBy) {
-    case 'graduation date':
-      students = filterStudentsByGraduationDate(allStudents);
-      break;
+      case 'first name':
+        students = filterStudentsByFirstName(allStudents);
+        break;
 
-    case 'first name':
-      students = filterStudentsByFirstName(allStudents);
-      break;
+      case 'last name':
+        students = filterStudentsByLastName(allStudents);
+        break;
 
-    case 'last name':
-      students = filterStudentsByLastName(allStudents);
-      break;
-
-    default:
-      students = filterStudentsByFirstName(allStudents);
-      break;
+      default:
+        students = filterStudentsByFirstName(allStudents);
+        break;
+      }
+      setDisplayedStudents(students);
     }
-    setDisplayedStudents(students);
   }, [selectedCourse, allStudents, filterBy]);
 
   useEffect(() => {
-    if (!displayedStudents.length) return setStudentsListItems(<p className='has-text-centered'>add a student to get started</p>);
-    return setStudentsListItems(
+    if (!displayedStudents.length) setStudentsListItems(<p className='has-text-centered'>add a student to get started</p>);
+    else setStudentsListItems(
       displayedStudents
         .map((student) => (
           <StudentsListItem
@@ -94,7 +93,7 @@ const StudentsList = ({ filterBy }) => {
     );
   }, [selectedCourse, allCourses, displayedStudents, selectedStudentId, filterBy]);
 
-  return (studentsListItems);
+  return studentsListItems;
 };
 export default StudentsList;
 
