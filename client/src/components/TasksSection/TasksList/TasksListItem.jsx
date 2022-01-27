@@ -3,27 +3,18 @@ import {
   func,
   shape, string,
 } from 'prop-types';
+import { Level } from 'react-bulma-components';
 import ListItemContainer from '../../List/ListItemContainer';
-import TasksListItemLayout from './TasksListItemLayout';
 
 const TasksListItem = ({ task, selectedTaskId, setSelectedTaskId }) => {
-  const [listItem, setListItem] = useState('');
   const [listItemDetails, setListItemDetails] = useState('listItemDetails');
-  const { _id, taskComponent } = task;
+  const { _id, taskComponent, taskFor } = task;
 
   const toggleViewStudent = () => (
     selectedTaskId === _id
       ? setSelectedTaskId('')
       : setSelectedTaskId(_id)
   );
-
-  useEffect(() => {
-    setListItem(
-      <TasksListItemLayout
-        taskFor={task.taskFor}
-      />,
-    );
-  }, [task]);
 
   useEffect(() => {
     if (selectedTaskId !== _id) return setListItemDetails('');
@@ -35,9 +26,10 @@ const TasksListItem = ({ task, selectedTaskId, setSelectedTaskId }) => {
       itemId={_id}
       selectedItemId={selectedTaskId}
       toggleViewItem={toggleViewStudent}
-      listItem={listItem}
       listItemDetails={listItemDetails}
-    />
+    >
+      <Level.Item className='ml-3 mr-1'>{taskFor}</Level.Item>
+    </ListItemContainer>
   );
 };
 export default TasksListItem;
