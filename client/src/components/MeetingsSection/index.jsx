@@ -1,20 +1,24 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Columns } from 'react-bulma-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { ModalContext } from '../../context';
 import { SET_CALENDLY_MEETINGS } from '../../store/calendly/actions';
 import { formatCalendlyMeetings, readModel } from '../../utils';
+import { HomeContext, MEETINGS_SECTION } from '../../views/Home/HomeProvider';
 import SectionContainer from '../SectionContainer';
 import MeetingsList from './MeetingsList';
 import MeetingsListFilter from './MeetingsListFilter';
+import { MeetingsContext } from './MeetingsProvider';
 
 const MeetingsSection = () => {
-  const { setOpenModal } = useContext(ModalContext);
-  const [filterOptions, setFilterOptions] = useState(['all', 'tutorly']);
-  const [filterBy, setFilterBy] = useState(filterOptions[0]);
-  const sectionName = 'Meetings';
   const { allCourses, selectedCourse } = useSelector((state) => state.courses);
   const dispatch = useDispatch();
+  const { setOpenModal } = useContext(ModalContext);
+  const { handleActivate } = useContext(HomeContext);
+  const {
+    filterBy, setFilterBy,
+    isActive, sectionName, filterOptions,
+  } = useContext(MeetingsContext);
 
   useEffect(() => {
     let isMounted = true;
@@ -34,28 +38,26 @@ const MeetingsSection = () => {
 
   return (
     <SectionContainer
+      active={isActive}
+      handleActivate={() => handleActivate(MEETINGS_SECTION)}
       sectionName={sectionName}
       filterBy={filterBy}
       setFilterBy={setFilterBy}
       filterOptions={filterOptions}
       addListItemClick={() => setOpenModal('AddMeeting')}
     >
+      { isActive && (
+        <>
+          <Columns className='is-mobile ml-5'>
+            <p className='mr-3'>sort</p>
+            <MeetingsListFilter />
+          </Columns>
 
-      <Columns className='is-mobile ml-5'>
-        <p className='mr-3'>sort</p>
-        <MeetingsListFilter
-          sectionName={sectionName}
-          filterBy={filterBy}
-          setFilterBy={setFilterBy}
-          filterOptions={filterOptions}
-          setFilterOptions={setFilterOptions}
-        />
-      </Columns>
-
-      <MeetingsList
-        filterBy={filterBy}
-      />
-
+          <MeetingsList
+            filterBy={filterBy}
+          />
+        </>
+      )}
     </SectionContainer>
   );
 };

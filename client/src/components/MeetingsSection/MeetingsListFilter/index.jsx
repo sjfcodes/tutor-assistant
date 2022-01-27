@@ -1,12 +1,17 @@
-import { arrayOf, func, string } from 'prop-types';
-import React, { useEffect } from 'react';
+import { string } from 'prop-types';
+import React, { useContext, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import ListFilterSelector from '../List/ListFilterSelector';
+import ListFilterSelector from '../../List/ListFilterSelector';
+import { MeetingsContext } from '../MeetingsProvider';
 
-const MeetingsListFilter = ({
-  sectionName, filterOptions, setFilterOptions, filterBy, setFilterBy,
-}) => {
+const MeetingsListFilter = ({ className }) => {
   const { calendlyMeetings } = useSelector((state) => state);
+
+  const {
+    sectionName,
+    filterBy, setFilterBy,
+    filterOptions, setFilterOptions,
+  } = useContext(MeetingsContext);
 
   useEffect(() => {
     let isMounted = true;
@@ -37,7 +42,7 @@ const MeetingsListFilter = ({
 
   return (
     <ListFilterSelector
-      className='py-0 has-text-centered'
+      className={`py-0 has-text-centered ${className}`}
       sectionName={sectionName}
       filterOptions={filterOptions}
       filterBy={filterBy}
@@ -47,10 +52,5 @@ const MeetingsListFilter = ({
 };
 export default MeetingsListFilter;
 
-MeetingsListFilter.propTypes = {
-  sectionName: string.isRequired,
-  filterOptions: arrayOf(string).isRequired,
-  setFilterOptions: func.isRequired,
-  filterBy: string.isRequired,
-  setFilterBy: func.isRequired,
-};
+MeetingsListFilter.propTypes = { className: string };
+MeetingsListFilter.defaultProps = { className: '' };
