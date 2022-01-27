@@ -45,13 +45,13 @@ const App = () => {
     <>
       <Section
         renderAs='header'
-        className='background-dark border-bottom-light p-0'
+        className='border-bottom-light p-0'
       >
         <Nav />
       </Section>
 
       <BackgroundImage url='./images/bg-image.jpg' />
-      <Section renderAs='main' className='background-blurred-dark p-0'>
+      <Section renderAs='main' className='p-0'>
         <Container className='is-max-desktop'>
           <Columns centered className='m-0'>
             <Columns.Column
@@ -68,7 +68,7 @@ const App = () => {
           </Columns>
         </Container>
       </Section>
-      <Footer className='background-dark border-top py-0' />
+      <Footer className='border-top py-0' />
     </>
   );
 };

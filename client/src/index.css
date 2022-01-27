@@ -1,5 +1,5 @@
 :root {
-  --background: rgba(0, 0, 0, 0.7);
+  --background: rgba(0, 0, 0, 0.5);
 
   --primary: #06b0f38e;
   --border: rgba(0, 0, 0, 0.6);
@@ -16,6 +16,7 @@
 /* ~ ~ ~ ~ ~ MAIN LAYOUT ~ ~ ~ ~ ~ ~ */
 html,
 body {
+  background-color: var(--background);
   margin-top: 0 !important;
   margin-bottom: 0 !important;
 
