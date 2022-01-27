@@ -11,7 +11,7 @@ export const HomeContext = createContext({});
 const HomeProvider = ({ children }) => {
   const [activeComponent, setActiveComponent] = useState(MEETINGS_SECTION);
 
-  const handleActivate = useCallback((item) => {
+  const handleToggle = useCallback((item) => {
     setActiveComponent(
       activeComponent !== item
         ? item
@@ -23,9 +23,9 @@ const HomeProvider = ({ children }) => {
     {
       activeComponent,
       setActiveComponent,
-      handleActivate,
+      handleToggle,
     }
-  ), [activeComponent, setActiveComponent, handleActivate]);
+  ), [activeComponent, setActiveComponent, handleToggle]);
 
   return (
     <HomeContext.Provider value={value}>

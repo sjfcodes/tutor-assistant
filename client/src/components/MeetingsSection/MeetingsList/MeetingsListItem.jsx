@@ -8,7 +8,6 @@ import MeetingsListItemLayout from './MeetingsListItemLayout';
 const MeetingListItem = ({ meeting, setSelectedMeetingId, selectedMeetingId }) => {
   const { allCourses, selectedCourse } = useSelector((state) => state.courses);
 
-  const [listItem, setListItem] = useState('');
   const [listItemDetails, setListItemDetails] = useState('');
 
   const { _id, studentId } = meeting;
@@ -23,14 +22,6 @@ const MeetingListItem = ({ meeting, setSelectedMeetingId, selectedMeetingId }) =
     () => allCourses[selectedCourse].students[studentId] || {},
     [allCourses, selectedCourse, studentId],
   );
-  useEffect(() => {
-    setListItem(
-      <MeetingsListItemLayout
-        student={student}
-        meeting={meeting}
-      />,
-    );
-  }, [student, meeting]);
 
   useEffect(() => {
     if (selectedMeetingId !== _id) return setListItemDetails('');
@@ -42,9 +33,13 @@ const MeetingListItem = ({ meeting, setSelectedMeetingId, selectedMeetingId }) =
       itemId={_id}
       selectedItemId={selectedMeetingId}
       toggleViewItem={toggleViewMeeting}
-      listItem={listItem}
       listItemDetails={listItemDetails}
-    />
+    >
+      <MeetingsListItemLayout
+        student={student}
+        meeting={meeting}
+      />
+    </ListItemContainer>
   );
 };
 export default MeetingListItem;

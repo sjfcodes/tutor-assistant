@@ -2,30 +2,22 @@ import React, { useEffect, useState } from 'react';
 import {
   bool, func, number, shape, string,
 } from 'prop-types';
+import { Level } from 'react-bulma-components';
 import ListItemContainer from '../../List/ListItemContainer';
-import StudentsListItemLayout from './StudentsListItemLayout';
 import StudentDetailList from '../StudentDetailList';
+import { TimeZoneAbbreviation } from '../../DateTime';
 
 const StudentListItem = ({ student, selectedStudentId, setSelectedStudentId }) => {
-  const [listItem, setListItem] = useState('');
   const [listItemDetails, setListItemDetails] = useState('listItemDetails');
-  const { _id } = student;
+  const {
+    _id, firstName, lastName, timeZoneName,
+  } = student;
 
   const toggleViewStudent = () => (
     selectedStudentId === _id
       ? setSelectedStudentId('')
       : setSelectedStudentId(_id)
   );
-
-  useEffect(() => {
-    setListItem(
-      <StudentsListItemLayout
-        firstName={student.firstName}
-        lastName={student.lastName}
-        timeZoneName={student.timeZoneName}
-      />,
-    );
-  }, [student]);
 
   useEffect(() => {
     if (selectedStudentId !== _id) return setListItemDetails('');
@@ -37,9 +29,21 @@ const StudentListItem = ({ student, selectedStudentId, setSelectedStudentId }) =
       itemId={_id}
       selectedItemId={selectedStudentId}
       toggleViewItem={toggleViewStudent}
-      listItem={listItem}
       listItemDetails={listItemDetails}
-    />
+    >
+      <Level.Item className='ml-3 mr-1'>
+        {`${firstName} ${lastName}`}
+      </Level.Item>
+      <Level.Item>
+        <p>
+          <TimeZoneAbbreviation
+            className='is-size-7 has-text-weight-bold has-text-primary'
+            timeZoneName={timeZoneName}
+          />
+        </p>
+      </Level.Item>
+
+    </ListItemContainer>
   );
 };
 export default StudentListItem;
