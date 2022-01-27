@@ -19,19 +19,13 @@ mongoose
   });
 
 const reportConnectionTime = (seconds) => {
-  const printTime = seconds < 10
-    ? `0${seconds}`
-    : `${seconds}`;
-
+  const printTime = seconds < 10 ? `0${seconds}` : `${seconds}`;
   const pattern = `Await DB connection: ${fgYellow}${printTime}${resetColor} ${fgCyan}milliseconds`;
-
   reportDbConnection(pattern);
-
-  setTimeout(() => {
-    if (loading) reportConnectionTime(seconds + 1);
-  }, 1);
+  setTimeout(() => { if (loading) reportConnectionTime(seconds + 1); }, 1);
 };
 
 reportConnectionTime(1);
 
+mongoose.set('toJSON', { virtuals: true });
 module.exports = mongoose.connection;
