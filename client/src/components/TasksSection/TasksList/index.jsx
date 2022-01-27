@@ -1,7 +1,7 @@
-import { string } from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
+import { TasksContext } from '../TasksProvider';
 import TaskLayoutAddStudent from './TaskLayoutAddStudent';
 import TasksListItem from './TasksListItem';
 
@@ -27,7 +27,7 @@ const checkCalendlyStudents = (students, calendlyMeetings) => {
   return missing;
 };
 
-const TasksList = ({ filterBy }) => {
+const TasksList = () => {
   const {
     courses: {
       allCourses, selectedCourse,
@@ -35,6 +35,7 @@ const TasksList = ({ filterBy }) => {
     calendlyMeetings,
   } = useSelector((state) => state);
 
+  const { filterBy } = useContext(TasksContext);
   const [selectedTaskId, setSelectedTaskId] = useState('');
   const [displayedTasks, setDisplayedTasks] = useState([]);
   const [tasksListItems, setTasksListItems] = useState('');
@@ -132,7 +133,3 @@ const TasksList = ({ filterBy }) => {
   return (tasksListItems);
 };
 export default TasksList;
-
-TasksList.propTypes = {
-  filterBy: string.isRequired,
-};

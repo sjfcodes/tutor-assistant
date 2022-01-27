@@ -16,7 +16,7 @@
   padding-top: 4px !important;
 }
 .tabs ul li a strong:hover {
-  color: var(--blue) !important;
+  color: var(--primary) !important;
 }
 
 .tabs ul li:hover {

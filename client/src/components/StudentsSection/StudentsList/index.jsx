@@ -1,12 +1,15 @@
-import { string } from 'prop-types';
 import React, {
+  useContext,
   useEffect, useMemo, useState,
 } from 'react';
 import { useSelector } from 'react-redux';
+import { StudentsContext } from '../StudentsProvider';
 import StudentsListItem from './StudentsListItem';
 
-const StudentsList = ({ filterBy }) => {
+const StudentsList = () => {
   const { allCourses, selectedCourse } = useSelector((state) => state.courses);
+
+  const { filterBy } = useContext(StudentsContext);
   const [selectedStudentId, setSelectedStudentId] = useState('');
   const [displayedStudents, setDisplayedStudents] = useState([]);
   const [studentsListItems, setStudentsListItems] = useState('');
@@ -96,7 +99,3 @@ const StudentsList = ({ filterBy }) => {
   return studentsListItems;
 };
 export default StudentsList;
-
-StudentsList.propTypes = {
-  filterBy: string.isRequired,
-};

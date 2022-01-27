@@ -1,27 +1,34 @@
 import { func, string } from 'prop-types';
 import React from 'react';
 import {
-  Box, Heading, Icon, Level,
+  Box, Button, Heading, Icon, Level,
 } from 'react-bulma-components';
 import { LevelSide } from '../BulmaHelpers';
+import DropDownIcon from '../DropDownIcon';
 
 const SectionContainer = ({
   // eslint-disable-next-line react/prop-types
-  children, sectionName, addListItemClick,
+  children, sectionName, addListItemClick, active, handleActivate,
 }) => (
-  <Box className='has-background-white py-1 px-3 mb-3'>
-    <Level renderAs='div' className='is-mobile mt-2'>
+  <Box className={`has-background-white py-1 px-3 mb-3 ${active ? 'border-primary' : ''}`}>
+    <Level renderAs='div' className='is-mobile my-2'>
       <LevelSide>
-        <Heading size={4} className='mr-5'>{sectionName}</Heading>
+        <Heading size={4} className='mr-3'>{sectionName}</Heading>
       </LevelSide>
       <LevelSide>
-        <Icon
-          className='p-4 mr-1 hover'
-          color='primary'
+        <Button
+          color='primary mr-5'
+          className='tag'
           onClick={addListItemClick}
         >
-          <i className='fas fa-plus' />
-        </Icon>
+          <Icon>
+            <i className='fas fa-plus' />
+          </Icon>
+        </Button>
+        <DropDownIcon
+          onClick={handleActivate}
+          active={active}
+        />
       </LevelSide>
     </Level>
 
