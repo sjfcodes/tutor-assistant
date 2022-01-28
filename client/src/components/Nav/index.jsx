@@ -1,24 +1,22 @@
 /* eslint-disable no-console */
-import React, {
-  useContext, useEffect,
-} from 'react';
+import React, { useEffect } from 'react';
 import { Button, Navbar } from 'react-bulma-components';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { ModalContext } from '../../context';
 import { LOGOUT_TUTOR } from '../../store/tutor/actions';
-import { preventBodyScroll } from '../../utils';
+import { EMAIL_TEMPLATES_MODAL, SETTINGS_MODAL, SET_OPEN_MODAL } from '../../store/view/actions';
+import { collapseNavbar, preventBodyScroll } from '../../utils';
 import './style.css';
 
 const Nav = () => {
   const {
     tutor,
     calendlyMeetings,
+    view: { openModal },
     courses: { allCourses, selectedCourse },
   } = useSelector((state) => state);
 
   const { loggedIn, firstName, lastName } = tutor;
-  const { setOpenModal } = useContext(ModalContext);
   const dispatch = useDispatch();
 
   const displayState = () => {
@@ -40,6 +38,11 @@ const Nav = () => {
   };
 
   useEffect(() => {
+    preventBodyScroll(!!openModal);
+    if (openModal) collapseNavbar();
+  }, [openModal]);
+
+  useEffect(() => {
     // Get all "navbar-burger" elements
     const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
     // Check if there are any navbar burgers
@@ -57,6 +60,13 @@ const Nav = () => {
       });
     });
   }, [loggedIn]);
+
+  const openSettingsModal = () => dispatch(
+    { type: SET_OPEN_MODAL, payload: SETTINGS_MODAL },
+  );
+  const openEmailTemplatesModal = () => dispatch(
+    { type: SET_OPEN_MODAL, payload: EMAIL_TEMPLATES_MODAL },
+  );
 
   return (
     <Navbar className='background-blurred is-transparent'>
@@ -109,28 +119,30 @@ const Nav = () => {
                       <Button
                         fullwidth
                         color='primary'
-                        onClick={() => setOpenModal('Settings')}
+                        onClick={openSettingsModal}
                       >
                         Settings
                       </Button>
                       <Button
                         fullwidth
                         color='primary'
-                        onClick={() => setOpenModal('EmailTemplates')}
+                        onClick={openEmailTemplatesModal}
                       >
                         Email Templates
                       </Button>
                     </Button.Group>
                   </Navbar.Item>
                   <Navbar.Divider />
-                  <Navbar.Item
-                    renderAs='a'
-                    textColor='danger'
-                    textAlign='right'
-                    className='logout'
-                    onClick={logoutTutor}
-                  >
-                    Logout
+                  <Navbar.Item renderAs='div'>
+                    <Button
+                      color='danger'
+                      outlined
+                      className='logout tag'
+                      onClick={logoutTutor}
+
+                    >
+                      Logout
+                    </Button>
                   </Navbar.Item>
                 </Navbar.Dropdown>
               </Navbar.Item>

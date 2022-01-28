@@ -3,18 +3,13 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import store from './store';
 import App from './App';
-import { ModalProvider } from './context';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-
-      <ModalProvider>
-        <App />
-      </ModalProvider>
-
+      <App />
     </Provider>
   </React.StrictMode>,
   document.getElementById('root'),

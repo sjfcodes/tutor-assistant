@@ -2,8 +2,11 @@ import React, { useEffect } from 'react';
 import { Columns, Container, Section } from 'react-bulma-components';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Nav, Footer, BackgroundImage } from './components';
-import { Home, Landing } from './views';
+import Nav from './components/Nav';
+import Footer from './components/Footer';
+import BackgroundImage from './components/BackgroundImage';
+import Home from './views/Home';
+import Landing from './views/Landing';
 import { loginWithToken } from './utils';
 import { LOGIN_TUTOR } from './store/tutor/actions';
 import { SET_ALL_COURSES } from './store/courses/actions';

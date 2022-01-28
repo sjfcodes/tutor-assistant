@@ -1,15 +1,16 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import HomeProvider from './HomeProvider';
-import {
-  CourseTabs, TasksSection,
-  MeetingsSection, StudentsSection,
-} from '../../components';
+import TasksSection from '../../components/TasksSection';
+
 import MessageBoard from '../../components/MessageBoard';
 import AllModals from '../../components/Modals';
 import TasksProvider from '../../components/TasksSection/TasksProvider';
 import StudentsProvider from '../../components/StudentsSection/StudentsProvider';
 import MeetingsProvider from '../../components/MeetingsSection/MeetingsProvider';
+import StudentsSection from '../../components/StudentsSection';
+import MeetingsSection from '../../components/MeetingsSection';
+import CourseTabs from '../../components/CourseTabs';
 
 const Home = () => {
   const {

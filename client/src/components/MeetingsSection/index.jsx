@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Columns } from 'react-bulma-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { ModalContext } from '../../context';
 import { SET_CALENDLY_MEETINGS } from '../../store/calendly/actions';
+import { ADD_MEETING_MODAL, SET_OPEN_MODAL } from '../../store/view/actions';
 import { formatCalendlyMeetings, readModel } from '../../utils';
 import { HomeContext, MEETINGS_SECTION } from '../../views/Home/HomeProvider';
 import SectionContainer from '../Section/Container';
@@ -14,7 +14,6 @@ import { MeetingsContext } from './MeetingsProvider';
 const MeetingsSection = () => {
   const { allCourses, selectedCourse } = useSelector((state) => state.courses);
   const dispatch = useDispatch();
-  const { setOpenModal } = useContext(ModalContext);
   const { handleToggle } = useContext(HomeContext);
   const {
     filterBy, setFilterBy,
@@ -63,7 +62,7 @@ const MeetingsSection = () => {
       filterBy={filterBy}
       setFilterBy={setFilterBy}
       filterOptions={filterOptions}
-      addListItemClick={() => setOpenModal('AddMeeting')}
+      addListItemClick={() => dispatch({ type: SET_OPEN_MODAL, payload: ADD_MEETING_MODAL })}
     >
       { isActive && (
         <>

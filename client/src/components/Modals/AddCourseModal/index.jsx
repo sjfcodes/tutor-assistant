@@ -1,20 +1,20 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Button, Form, Heading, Modal,
 } from 'react-bulma-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { ModalContext } from '../../../context';
 import { ADD_COURSE, SET_SELECTED_COURSE } from '../../../store/courses/actions';
+import { ADD_COURSE_MODAL, CLOSE_MODAL } from '../../../store/view/actions';
 import { createModel, missingFormInputs } from '../../../utils';
 
 const AddCourseModal = () => {
   const {
     tutor: { _id },
     courses: { allCourses },
+    view: { openModal },
   } = useSelector((state) => state);
   const dispatch = useDispatch();
 
-  const { openModal, setOpenModal } = useContext(ModalContext);
   const [formInputs, setFormInputs] = useState({ courseName: '' });
   const { courseName } = formInputs;
   const [helpMessage, setHelpMessage] = useState(null);
@@ -62,18 +62,18 @@ const AddCourseModal = () => {
       payload: course._id,
     });
 
-    setOpenModal('');
+    dispatch({ type: CLOSE_MODAL });
   };
 
   const handleCloseModal = () => {
-    setOpenModal('');
+    dispatch({ type: CLOSE_MODAL });
     resetForm();
   };
 
   return (
     <Modal
       className='background-blurred-light'
-      show={openModal === 'AddCourse'}
+      show={openModal === ADD_COURSE_MODAL}
       onClose={handleCloseModal}
     >
       <Modal.Card>

@@ -1,20 +1,19 @@
 import { string } from 'prop-types';
 import React, {
-  useCallback, useContext, useEffect, useState,
+  useCallback, useEffect, useState,
 } from 'react';
 import { Tabs } from 'react-bulma-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { ModalContext } from '../../context';
 import { SET_SELECTED_COURSE } from '../../store/courses/actions';
+import { ADD_COURSE_MODAL, SET_OPEN_MODAL } from '../../store/view/actions';
 import './style.css';
 
 const { Tab } = Tabs;
 
 const CourseTabs = ({ className }) => {
-  const [courseTabs, setCourseTabs] = useState(null);
   const { allCourses, selectedCourse } = useSelector((state) => state.courses);
-  const { setOpenModal } = useContext(ModalContext);
   const dispatch = useDispatch();
+  const [courseTabs, setCourseTabs] = useState(null);
 
   const handleUpdate = useCallback(
     (e) => {
@@ -81,7 +80,7 @@ const CourseTabs = ({ className }) => {
       className={className}
     >
       {courseTabs}
-      <Tab onClick={() => setOpenModal('AddCourse')}>
+      <Tab onClick={() => dispatch({ type: SET_OPEN_MODAL, payload: ADD_COURSE_MODAL })}>
         <strong className='has-text-grey-lighter'>Add Course</strong>
       </Tab>
     </Tabs>

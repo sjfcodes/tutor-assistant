@@ -1,6 +1,5 @@
 import formatCalendlyMeetings from './calendlyMeetings';
 import handleError from './error';
-import preventBodyScroll from './html';
 import { buildTemplatePreview, formatEmailTemplates } from './emailTemplates';
 
 export {
@@ -8,8 +7,12 @@ export {
   formatCalendlyMeetings,
   formatEmailTemplates,
   handleError,
-  preventBodyScroll,
 };
+
+export {
+  preventBodyScroll,
+  collapseNavbar,
+} from './html';
 
 export {
   getCurrentUnix,

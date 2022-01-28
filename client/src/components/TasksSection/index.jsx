@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { Columns } from 'react-bulma-components';
-import { ModalContext } from '../../context';
+import { useDispatch } from 'react-redux';
+import { ADD_TASK_MODAL, SET_OPEN_MODAL } from '../../store/view/actions';
 import { HomeContext, TASKS_SECTION } from '../../views/Home/HomeProvider';
 import SectionContainer from '../Section/Container';
 import SectionHeading from '../Section/Heading';
@@ -9,7 +10,7 @@ import TasksListFilter from './TasksListFilter';
 import { TasksContext } from './TasksProvider';
 
 const TasksSection = () => {
-  const { setOpenModal } = useContext(ModalContext);
+  const dispatch = useDispatch();
   const { handleToggle } = useContext(HomeContext);
   const {
     count,
@@ -39,6 +40,8 @@ const TasksSection = () => {
     />
   );
 
+  const openAddTaskModal = () => dispatch({ type: SET_OPEN_MODAL, payload: ADD_TASK_MODAL });
+
   return (
     <SectionContainer
       heading={heading}
@@ -48,7 +51,7 @@ const TasksSection = () => {
       filterBy={filterBy}
       setFilterBy={setFilterBy}
       filterOptions={filterOptions}
-      addListItemClick={() => setOpenModal('AddTask')}
+      addListItemClick={openAddTaskModal}
     >
       {getChildren()}
     </SectionContainer>
