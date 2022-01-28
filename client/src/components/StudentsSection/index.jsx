@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Columns } from 'react-bulma-components';
-import { useSelector } from 'react-redux';
-import { ModalContext } from '../../context';
+import { useDispatch, useSelector } from 'react-redux';
+import { ADD_STUDENT_MODAL, SET_OPEN_MODAL } from '../../store/view/actions';
 import { HomeContext, STUDENTS_SECTION } from '../../views/Home/HomeProvider';
 import SectionContainer from '../Section/Container';
 import SectionHeading from '../Section/Heading';
@@ -11,7 +11,8 @@ import { StudentsContext } from './StudentsProvider';
 
 const StudentsSection = () => {
   const { allCourses, selectedCourse } = useSelector((state) => state.courses);
-  const { setOpenModal } = useContext(ModalContext);
+  const dispatch = useDispatch();
+
   const { handleToggle } = useContext(HomeContext);
   const {
     filterBy, setFilterBy,
@@ -45,6 +46,7 @@ const StudentsSection = () => {
     />
   );
 
+  const openAddStudentModal = () => dispatch({ type: SET_OPEN_MODAL, payload: ADD_STUDENT_MODAL });
   return (
     <SectionContainer
       heading={heading}
@@ -54,7 +56,7 @@ const StudentsSection = () => {
       filterBy={filterBy}
       setFilterBy={setFilterBy}
       filterOptions={filterOptions}
-      addListItemClick={() => setOpenModal('AddStudent')}
+      addListItemClick={openAddStudentModal}
     >
       {getChildren()}
     </SectionContainer>

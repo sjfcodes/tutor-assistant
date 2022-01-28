@@ -9,6 +9,7 @@ export {
 
 export {
   buildTemplatePreview,
+  collapseNavbar,
   convertAddMeetingFormToISO8601,
   convertDatePickerToISO8601,
   convertISO8601ToDatePicker,
