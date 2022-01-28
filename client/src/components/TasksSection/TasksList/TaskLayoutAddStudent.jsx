@@ -30,12 +30,12 @@ const TaskLayoutAddStudent = ({
       const inputs = { ...formInputs };
       inputs.graduationDate = convertDatePickerToISO8601(formInputs.graduationDate);
 
-      const student = await createModel({ model: 'student', body: inputs, _id: selectedCourse });
-      if (!student._id) return handleError('missing student id');
+      const { _id } = await createModel({ model: 'student', body: inputs, _id: selectedCourse });
+      if (!_id) return handleError('missing student id');
 
       dispatch({
         type: ADD_STUDENT_TO_COURSE,
-        payload: student,
+        payload: { _id, ...formInputs },
       });
     } catch ({ message }) {
       if (message.includes('E11000 duplicate key error')) setHelpText('email already in use');
