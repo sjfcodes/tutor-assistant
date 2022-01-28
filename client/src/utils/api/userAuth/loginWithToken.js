@@ -1,4 +1,4 @@
-import { tokenKey } from '../../../config';
+import { LOCAL_STORAGE_KEY } from '../../../config';
 import { handleError } from '../../helpers';
 import { getApiEndpoint, getRequestHeaders } from '../apiAccess';
 
@@ -16,7 +16,7 @@ const loginWithToken = () => {
           return resolve(data);
         });
     } catch (error) {
-      localStorage.removeItem(tokenKey);
+      localStorage.removeItem(LOCAL_STORAGE_KEY);
       reject(handleError(error));
     }
   });

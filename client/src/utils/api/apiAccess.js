@@ -1,4 +1,4 @@
-import { APIBase, tokenKey } from '../../config';
+import { API_BASE_URL, LOCAL_STORAGE_KEY } from '../../config';
 
 /**
  * the url based on the paramaters passed in
@@ -7,14 +7,9 @@ import { APIBase, tokenKey } from '../../config';
  * @returns complete url to access a model
  */
 export const getApiEndpoint = ({ model, action, _id }) => {
-  // https://myserver.com
-  // let url = APIBase;
-  let url = APIBase;
-  // https://myserver.com/modelName
+  let url = API_BASE_URL;
   if (model) url += `/${model}`;
-  // https://myserver.com/modelName/action
   if (action) url += `/${action}`;
-  // https://myserver.com/modelName[/action?]/:id
   if (_id) url += `/${_id}`;
 
   return url;
@@ -23,6 +18,6 @@ export const getApiEndpoint = ({ model, action, _id }) => {
 export const getRequestHeaders = () => (
   {
     'Content-Type': 'application/json',
-    authorization: `Bearer: ${localStorage.getItem(tokenKey)}`,
+    authorization: `Bearer: ${localStorage.getItem(LOCAL_STORAGE_KEY)}`,
   }
 );

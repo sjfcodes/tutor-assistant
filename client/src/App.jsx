@@ -10,13 +10,13 @@ import Landing from './views/Landing';
 import { loginWithToken } from './utils';
 import { LOGIN_TUTOR } from './store/tutor/actions';
 import { SET_ALL_COURSES } from './store/courses/actions';
-import { tokenKey } from './config';
+import { LOCAL_STORAGE_KEY } from './config';
 import './App.sass';
 
 const App = () => {
   const dispatch = useDispatch();
   const { loggedIn } = useSelector((state) => state.tutor);
-  const prevToken = localStorage.getItem(tokenKey);
+  const prevToken = localStorage.getItem(LOCAL_STORAGE_KEY);
 
   useEffect(() => {
     document.title = 'The Tutor App';
@@ -37,7 +37,7 @@ const App = () => {
           payload: tutor.courses,
         });
       } catch (error) {
-        localStorage.removeItem(tokenKey);
+        localStorage.removeItem(LOCAL_STORAGE_KEY);
       }
     };
 
