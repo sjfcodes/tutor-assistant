@@ -3,10 +3,6 @@ const { getISOCurrentDateStamp } = require('../utils/dateTime');
 
 const courseSchema = new Schema(
   {
-    name: {
-      type: String,
-      required: true,
-    },
     calendly: {
       accessToken: {
         type: Schema.Types.ObjectId,
@@ -18,18 +14,22 @@ const courseSchema = new Schema(
         default: null,
       },
     },
-    students: [{
-      type: Schema.Types.ObjectId,
-      ref: 'Student',
-    }],
-    meetings: [{
-      type: Schema.Types.ObjectId,
-      ref: 'Meeting',
-    }],
     createdAt: {
       type: String,
       default: () => getISOCurrentDateStamp(),
     },
+    meetings: [{
+      type: Schema.Types.ObjectId,
+      ref: 'Meeting',
+    }],
+    name: {
+      type: String,
+      required: true,
+    },
+    students: [{
+      type: Schema.Types.ObjectId,
+      ref: 'Student',
+    }],
   },
   {
     virtuals: true,

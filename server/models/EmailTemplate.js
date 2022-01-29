@@ -17,9 +17,9 @@ const templateSchema = new Schema({
       required: true,
     },
   },
-  name: {
+  createdAt: {
     type: String,
-    required: true,
+    default: () => getISOCurrentDateStamp(),
   },
   includePropertiesFor: {
     tutor: {
@@ -35,13 +35,13 @@ const templateSchema = new Schema({
       default: false,
     },
   },
+  name: {
+    type: String,
+    required: true,
+  },
   subject: {
     type: String,
     requied: true,
-  },
-  createdAt: {
-    type: String,
-    default: () => getISOCurrentDateStamp(),
   },
 });
 

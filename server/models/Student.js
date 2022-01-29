@@ -2,44 +2,49 @@ const { Schema, model } = require('mongoose');
 const { getISOCurrentDateStamp } = require('../utils/dateTime');
 
 const studentSchema = new Schema({
-  firstName: {
+  classId: {
     type: String,
-    required: true,
     trim: true,
   },
-  lastName: {
+  createdAt: {
     type: String,
-    required: true,
-    trim: true,
+    default: () => getISOCurrentDateStamp(),
+    // get: (timestamp) => dateFormat(timestamp),
   },
   email: {
     type: String,
     required: true,
     match: [/.+@.+\..+/, 'Must match an email address!'],
   },
+  firstName: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  fullTimeCourse: {
+    type: Boolean,
+    required: true,
+  },
   githubUsername: {
     type: String,
   },
-  timeZoneName: {
+  graduationDate: {
+    type: String, // ISO 8601
+  },
+  lastName: {
     type: String,
+    required: true,
+    trim: true,
   },
   meetingLink: {
     type: String,
-  },
-  classId: {
-    type: String,
-    trim: true,
-  },
-  graduationDate: {
-    type: String, // ISO 8601
   },
   meetingsPerWeek: {
     type: Number,
     default: 1,
   },
-  fullTimeCourse: {
-    type: Boolean,
-    required: true,
+  notes: {
+    type: String,
   },
   reassignment: {
     type: Boolean,
@@ -49,13 +54,9 @@ const studentSchema = new Schema({
     type: Boolean,
     required: true,
   },
-  notes: {
+  timeZoneName: {
     type: String,
-  },
-  createdAt: {
-    type: String,
-    default: () => getISOCurrentDateStamp(),
-    // get: (timestamp) => dateFormat(timestamp),
+    required: true,
   },
 });
 

@@ -19,6 +19,8 @@ router.get('/', authorizeToken, async (req, res) => {
     return res.status(500).json({ location: 1, message });
   }
 });
+
+// EMAIL-TEMPLATE-APP get route
 router.get('/:id', authorizeToken, async (req, res) => {
   try {
     const template = await EmailTemplate.findOne(
@@ -32,9 +34,32 @@ router.get('/:id', authorizeToken, async (req, res) => {
       template,
       user_token: req.tutor.token,
       save_template_to: 'route to save to',
-      return_user_to: 'route to send user back to',
+      return_user_to: 'https://www.tutor-me.io',
     };
     return res.json(response);
+  } catch ({ message }) {
+    reportError(message);
+    return res.status(500).json({ location: 1, message });
+  }
+});
+
+// EMAIL-TEMPLATE-APP save route
+router.post('/:id', authorizeToken, async (req, res) => {
+  try {
+    // const template = await EmailTemplate.findOne(
+    //   {
+    //     authorId: req.tutor._id,
+    //     _id: req.params.id,
+    //   },
+    // ).select('body name includePropertiesFor subject createdAt');
+
+    // const response = {
+    //   template,
+    //   user_token: req.tutor.token,
+    //   save_template_to: 'route to save to',
+    //   return_user_to: 'https://www.tutor-me.io',
+    // };
+    return res.json({ data: req.body, message: 'success' });
   } catch ({ message }) {
     reportError(message);
     return res.status(500).json({ location: 1, message });

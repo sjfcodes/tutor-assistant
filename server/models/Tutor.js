@@ -4,21 +4,41 @@ const { getISOCurrentDateStamp } = require('../utils/dateTime');
 
 const tutorSchema = new Schema(
   {
-    firstName: {
+    courses: [{
+      type: Schema.Types.ObjectId,
+      ref: 'Course',
+    }],
+    createdAt: {
       type: String,
-      required: true,
-      trim: true,
-    },
-    lastName: {
-      type: String,
-      required: true,
-      trim: true,
+      default: () => getISOCurrentDateStamp(),
     },
     email: {
       type: String,
       required: true,
       unique: true,
       match: [/.+@.+\..+/, 'Must match an email address!'],
+    },
+    firstName: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    githubUsername: {
+      type: String,
+    },
+    lastName: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    password: {
+      type: String,
+      required: true,
+      minlength: 8,
+    },
+    scheduleLink: {
+      type: String,
+      required: true,
     },
     sendGrid: {
       accessToken: {
@@ -29,26 +49,6 @@ const tutorSchema = new Schema(
     timeZoneName: {
       type: String,
       required: true,
-    },
-    githubUsername: {
-      type: String,
-    },
-    scheduleLink: {
-      type: String,
-      required: true,
-    },
-    password: {
-      type: String,
-      required: true,
-      minlength: 8,
-    },
-    courses: [{
-      type: Schema.Types.ObjectId,
-      ref: 'Course',
-    }],
-    createdAt: {
-      type: String,
-      default: () => getISOCurrentDateStamp(),
     },
   },
 );
