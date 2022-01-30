@@ -3,7 +3,7 @@ const path = require('path');
 const cors = require('cors');
 const compression = require('compression');
 const { ApolloServer } = require('apollo-server-express');
-const { typeDefs, resolvers } = require('./schemas');
+const schema = require('./schemas');
 const db = require('./config/connection');
 // const { authMiddleware } = require('./utils/auth');
 
@@ -13,8 +13,7 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 const server = new ApolloServer({
-  typeDefs,
-  resolvers,
+  schema,
   // context: authMiddleware,
 });
 

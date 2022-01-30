@@ -6,6 +6,8 @@ const Student = require('./Student');
 const Tutor = require('./Tutor');
 const Calendly = require('./Calendly');
 
+// Tutor.find({}).then((data) => console.log(data));
+
 module.exports = {
   AccessToken,
   Course,
