@@ -3,10 +3,10 @@ import { Box, Tabs } from 'react-bulma-components';
 import { LoginForm, SignupForm } from '../../components/Forms';
 
 const { Tab } = Tabs;
+const LOGIN_TAB = 'login';
+const SIGNUP_TAB = 'signup';
 
 const Landing = () => {
-  const LOGIN_TAB = 'login';
-  const SIGNUP_TAB = 'signup';
   const [form, setForm] = useState(LOGIN_TAB);
 
   const getLabelClassName = (component) => ((component !== form) ? 'has-text-grey-lighter' : '');

@@ -12,8 +12,10 @@ const typeDefs = gql`
     _id: ID!
     calendly: CalendlyToken
     createdAt: String!
+    meetingCount: Int
     meetings: [Meeting]
     name: String!
+    studentCount: Int
     students: [Student]
   }
 

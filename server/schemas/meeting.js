@@ -11,7 +11,7 @@ const typeDefs = gql`
     notes: String
     startTime: String!
     status: String!
-    studentId: Student!
+    studentId: String!
   }
 
   extend type Query {

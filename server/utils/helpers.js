@@ -41,7 +41,7 @@ module.exports = {
       })
       .then((tutor) => {
         if (!tutor) return reject(new Error('tutor not found'));
-        return resolve({ tutor });
+        return resolve(tutor);
       })
       .catch((error) => reject(error));
   }),

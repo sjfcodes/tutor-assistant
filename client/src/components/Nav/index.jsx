@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { Button, Navbar } from 'react-bulma-components';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { LOGOUT_TUTOR } from '../../store/tutor/actions';
+import { SET_TUTOR_LOGOUT } from '../../store/tutor/actions';
 import { EMAIL_TEMPLATES_MODAL, SETTINGS_MODAL, SET_OPEN_MODAL } from '../../store/view/actions';
 import { collapseNavbar, preventBodyScroll } from '../../utils';
 import './style.css';
@@ -33,7 +33,7 @@ const Nav = () => {
   };
 
   const logoutTutor = () => {
-    dispatch({ type: LOGOUT_TUTOR });
+    dispatch({ type: SET_TUTOR_LOGOUT });
     window.location.href = '/';
   };
 

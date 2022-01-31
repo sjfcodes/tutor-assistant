@@ -1,5 +1,5 @@
 import { LOCAL_STORAGE_KEY } from '../../config';
-import { LOGIN_TUTOR, LOGOUT_TUTOR, UPDATE_TUTOR_DETAIL } from './actions';
+import { SET_TUTOR_LOGIN, SET_TUTOR_LOGOUT, UPDATE_TUTOR_DETAIL } from './actions';
 
 const tutorDefault = {
   firstName: '',
@@ -16,14 +16,12 @@ const tutorDefault = {
 // eslint-disable-next-line default-param-last
 const tutorReducer = (state = tutorDefault, action) => {
   switch (action.type) {
-  case LOGIN_TUTOR: {
-    const tutorWithoutCourses = { ...action.payload.tutor };
-    delete tutorWithoutCourses.courses;
-
-    localStorage.setItem(LOCAL_STORAGE_KEY, action.payload.token);
+  case SET_TUTOR_LOGIN: {
+    const copy = { ...action.payload };
+    delete copy.courses;
     return {
       loggedIn: true,
-      ...tutorWithoutCourses,
+      ...copy,
     };
   }
 
@@ -34,7 +32,7 @@ const tutorReducer = (state = tutorDefault, action) => {
     };
   }
 
-  case LOGOUT_TUTOR: {
+  case SET_TUTOR_LOGOUT: {
     localStorage.removeItem(LOCAL_STORAGE_KEY);
     return { loggedIn: false };
   }

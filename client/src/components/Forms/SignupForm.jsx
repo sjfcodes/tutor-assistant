@@ -3,7 +3,7 @@ import {
   Form, Button, Columns, Icon,
 } from 'react-bulma-components';
 import { useDispatch } from 'react-redux';
-import { LOGIN_TUTOR } from '../../store/tutor/actions';
+import { SET_TUTOR_LOGIN } from '../../store/tutor/actions';
 import {
   createModel,
   emailIsValid,
@@ -59,7 +59,7 @@ const SignupForm = () => {
       setHelpText('');
       setLoading(false);
       dispatch({
-        type: LOGIN_TUTOR,
+        type: SET_TUTOR_LOGIN,
         payload: { tutor, token },
       });
       return;

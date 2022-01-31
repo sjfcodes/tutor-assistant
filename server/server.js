@@ -5,7 +5,7 @@ const compression = require('compression');
 const { ApolloServer } = require('apollo-server-express');
 const schema = require('./schemas');
 const db = require('./config/connection');
-// const { authMiddleware } = require('./utils/auth');
+const { authMiddleware } = require('./utils/auth');
 
 const { reportStatus } = require('./utils/consoleColors/index.js');
 
@@ -14,7 +14,7 @@ const PORT = process.env.PORT || 3001;
 
 const server = new ApolloServer({
   schema,
-  // context: authMiddleware,
+  context: authMiddleware,
 });
 
 app.use(cors());
