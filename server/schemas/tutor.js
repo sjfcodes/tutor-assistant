@@ -1,6 +1,6 @@
-const { gql, ApolloError } = require('apollo-server-express');
+const { gql, ApolloError, AuthenticationError } = require('apollo-server-express');
 const { Tutor } = require('../models');
-const { getTutorByEmail } = require('../utils/helpers');
+const { getTutorByEmail, getTutorById } = require('../utils/helpers');
 const { encryptToken } = require('../utils/encryption');
 const { signToken } = require('../utils/auth');
 // const { getCalendlyMeetings } = require('../utils/calendly-helpers');
@@ -53,6 +53,7 @@ const typeDefs = gql`
       email:String!,
       password: String!
     ):Auth
+    loginWithToken:Auth
   }
 `;
 
@@ -84,24 +85,28 @@ const resolvers = {
       try {
         const tutor = await getTutorByEmail(email);
         if (!tutor || !await tutor.isCorrectPassword(password)) return new ApolloError('unauthorized');
-
-        // store encrypted password to access a users encrypted api keys
-        const accountKey = encryptToken(password, process.env.JWT_SECRET);
-        const { _id } = tutor;
-        // const { _id, calendly } = tutor;
-
-        const token = signToken({ _id, email, accountKey });
-
-        // if (calendly?.uri) {
-        //   const { uri } = calendly;
-        //   const calendlyMeetings = await getCalendlyMeetings({ _id, accountKey, uri });
-        //   return { token, tutor, calendlyMeetings };
-        // }
-
-        return { token, tutor };
+        return {
+          tutor,
+          token: signToken({
+            email,
+            _id: tutor._id,
+            accountKey: encryptToken(password, process.env.JWT_SECRET),
+          }),
+        };
       } catch ({ message }) {
         reportError(message);
-        return new ApolloError({ code: 1, message });
+        throw new AuthenticationError('You need to be logged in!');
+      }
+    },
+    loginWithToken: async (parent, args, context) => {
+      try {
+        const { tutor: { _id, email, accountKey } } = context;
+        return {
+          tutor: await getTutorById(_id),
+          token: signToken({ _id, email, accountKey }),
+        };
+      } catch (error) {
+        throw new AuthenticationError('You need to be logged in!');
       }
     },
   },

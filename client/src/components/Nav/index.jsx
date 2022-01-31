@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import React, { useEffect } from 'react';
-import { Button, Navbar } from 'react-bulma-components';
+import { Button, Navbar, Section } from 'react-bulma-components';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { SET_TUTOR_LOGOUT } from '../../store/tutor/actions';
@@ -69,88 +69,93 @@ const Nav = () => {
   );
 
   return (
-    <Navbar className='background-blurred is-transparent'>
-      <Navbar.Brand>
-        <Navbar.Item
-          renderAs='h1'
-          className='brand py-0'
-          textColor='primary'
-          onClick={displayState}
-        >
-          tutorly
-        </Navbar.Item>
-        <Navbar.Item
-          renderAs='p'
-          className='border-left has-text-white'
-        >
-          {loggedIn ? `${firstName} ${lastName}` : 'Welcome'}
-        </Navbar.Item>
-        {loggedIn
-          ? (
-            <Navbar.Burger
-              className='has-text-white'
-              data-target='navbar-toggle'
-            />
-          )
-          : ''}
-      </Navbar.Brand>
+    <Section
+      renderAs='header'
+      className='border-bottom-light p-0'
+    >
+      <Navbar className='background-blurred is-transparent'>
+        <Navbar.Brand>
+          <Navbar.Item
+            renderAs='h1'
+            className='brand py-0'
+            textColor='primary'
+            onClick={displayState}
+          >
+            tutorly
+          </Navbar.Item>
+          <Navbar.Item
+            renderAs='p'
+            className='border-left has-text-white'
+          >
+            {loggedIn ? `${firstName} ${lastName}` : 'Welcome'}
+          </Navbar.Item>
+          {loggedIn
+            ? (
+              <Navbar.Burger
+                className='has-text-white'
+                data-target='navbar-toggle'
+              />
+            )
+            : ''}
+        </Navbar.Brand>
 
-      <Navbar.Menu id='navbar-toggle' className='py-0'>
-        {/* <Navbar.Container align='left' /> */}
-        {loggedIn
-          ? (
-            <Navbar.Container
-              align='right'
-              className='background-clear'
-            >
-              <Navbar.Item
-                renderAs='div'
-                className='has-dropdown is-hoverable'
-                textAlign='right'
+        <Navbar.Menu id='navbar-toggle' className='py-0'>
+          {/* <Navbar.Container align='left' /> */}
+          {loggedIn
+            ? (
+              <Navbar.Container
+                align='right'
+                className='background-clear'
               >
-                <Navbar.Item className='navbar-link has-text-primary' />
-                <Navbar.Dropdown
-                  right
-                  boxed
+                <Navbar.Item
                   renderAs='div'
+                  className='has-dropdown is-hoverable'
+                  textAlign='right'
                 >
-                  <Navbar.Item renderAs='div'>
-                    <Button.Group>
+                  <Navbar.Item className='navbar-link has-text-primary' />
+                  <Navbar.Dropdown
+                    right
+                    boxed
+                    renderAs='div'
+                  >
+                    <Navbar.Item renderAs='div'>
+                      <Button.Group>
+                        <Button
+                          fullwidth
+                          color='primary'
+                          onClick={openSettingsModal}
+                        >
+                          Settings
+                        </Button>
+                        <Button
+                          fullwidth
+                          color='primary'
+                          onClick={openEmailTemplatesModal}
+                        >
+                          Email Templates
+                        </Button>
+                      </Button.Group>
+                    </Navbar.Item>
+                    <Navbar.Divider />
+                    <Navbar.Item renderAs='div'>
                       <Button
-                        fullwidth
-                        color='primary'
-                        onClick={openSettingsModal}
-                      >
-                        Settings
-                      </Button>
-                      <Button
-                        fullwidth
-                        color='primary'
-                        onClick={openEmailTemplatesModal}
-                      >
-                        Email Templates
-                      </Button>
-                    </Button.Group>
-                  </Navbar.Item>
-                  <Navbar.Divider />
-                  <Navbar.Item renderAs='div'>
-                    <Button
-                      color='danger'
-                      outlined
-                      className='logout tag'
-                      onClick={logoutTutor}
+                        color='danger'
+                        outlined
+                        className='logout tag'
+                        onClick={logoutTutor}
 
-                    >
-                      Logout
-                    </Button>
-                  </Navbar.Item>
-                </Navbar.Dropdown>
-              </Navbar.Item>
-            </Navbar.Container>
-          )
-          : '' }
-      </Navbar.Menu>
-    </Navbar>
+                      >
+                        Logout
+                      </Button>
+                    </Navbar.Item>
+                  </Navbar.Dropdown>
+                </Navbar.Item>
+              </Navbar.Container>
+            )
+            : '' }
+        </Navbar.Menu>
+      </Navbar>
+    </Section>
   );
 };
 

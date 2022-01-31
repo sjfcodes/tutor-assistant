@@ -36,24 +36,16 @@ const LoginForm = () => {
     e.preventDefault();
     try {
       try {
-        const { data: { loginTutor: { token, tutor } } } = await loginTutor({
-          variables: { ...inputs },
-        });
+        const {
+          data: { loginTutor: { token, tutor } },
+        } = await loginTutor({ variables: { ...inputs } });
 
         Auth.login(token);
-
-        dispatch({
-          type: SET_TUTOR_LOGIN,
-          payload: tutor,
-        });
-        dispatch({
-          type: SET_ALL_COURSES,
-          payload: tutor.courses,
-        });
-
-        // eslint-disable-next-line no-shadow
+        dispatch({ type: SET_TUTOR_LOGIN, payload: tutor });
+        dispatch({ type: SET_ALL_COURSES, payload: tutor.courses });
       } catch (error) {
         console.error(error);
+        Auth.logout();
       }
     } catch ({ message }) {
       setHelpText(message);
