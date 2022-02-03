@@ -28,6 +28,7 @@ export {
   getUnixFromFormInputs,
   handleError,
   inputIsSelected,
+  loadTemplateEditorApp,
   missingFormInputs,
   passwordIsValid,
   preventBodyScroll,

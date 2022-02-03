@@ -2,14 +2,15 @@ import React, { useState } from 'react';
 import { Heading, Modal } from 'react-bulma-components';
 import { useDispatch, useSelector } from 'react-redux';
 import EmailTemplatesProvider from './EmailTemplatesProvider';
-import ToggleHelpButton from './EmailTemplatesHelp/ToggleHelpButton';
-import EmailTemplatesHelp from './EmailTemplatesHelp';
+// import ToggleHelpButton from './EmailTemplatesHelp/ToggleHelpButton';
+// import EmailTemplatesHelp from './EmailTemplatesHelp';
 import EmailTemplatesButtons from './EmailTemplatesButtons';
 import EmailTemplatesEditor from './EmailTemplatesEditor';
 import { CLOSE_MODAL, EMAIL_TEMPLATES_MODAL } from '../../../store/view/actions';
+import NewTemplateForm from './NewTemplateForm';
 
 const EmailTemplatesModal = () => {
-  const { openModal } = useSelector((state) => state);
+  const { openModal } = useSelector((state) => state.view);
   const dispatch = useDispatch();
   // eslint-disable-next-line no-unused-vars
   const [disableControls, setDisableControls] = useState(false);
@@ -23,7 +24,6 @@ const EmailTemplatesModal = () => {
     >
 
       <EmailTemplatesProvider>
-
         <Modal.Card>
           <Modal.Card.Header
             flexDirection='column'
@@ -34,17 +34,17 @@ const EmailTemplatesModal = () => {
             <Heading textColor='grey-lighter'>
               Email Templates
             </Heading>
-            <ToggleHelpButton />
+            {/* <ToggleHelpButton /> */}
           </Modal.Card.Header>
 
           <Modal.Card.Body className='rounded-top p-1 mt-5'>
-            <EmailTemplatesHelp />
+            {/* <EmailTemplatesHelp /> */}
             <EmailTemplatesButtons />
             <EmailTemplatesEditor />
+            <NewTemplateForm />
           </Modal.Card.Body>
 
         </Modal.Card>
-
       </EmailTemplatesProvider>
     </Modal>
   );

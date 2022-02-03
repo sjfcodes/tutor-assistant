@@ -1,8 +1,6 @@
 const router = require('express').Router();
 const { EmailTemplate } = require('../models');
 const { authorizeToken } = require('../utils/auth');
-const { addModelToTutor } = require('../utils/helpers');
-const demoEmailTemplate = require('../seed/emailTemplate.json');
 const { reportError } = require('../utils/consoleColors/index.js');
 
 router.get('/', authorizeToken, async (req, res) => {
@@ -10,7 +8,7 @@ router.get('/', authorizeToken, async (req, res) => {
     const templates = await EmailTemplate.find({ authorId: req.tutor._id });
     if (!templates.length) {
       // send demo template
-      return res.json({ ...demoEmailTemplate, authorId: req._id });
+      return res.json('no templates available');
     }
 
     return res.json(templates);
@@ -30,9 +28,8 @@ router.get('/:id', authorizeToken, async (req, res) => {
 
     const response = {
       template,
-      user_token: req.tutor.token,
-      save_template_to: 'route to save to',
-      return_user_to: 'route to send user back to',
+      saveTemplateTo: `${process.env.SERVER_ADDRESS}/api/email-template/${req.params.id}`,
+      returnUserTo: process.env.CLIENT_ADDRESS,
     };
     return res.json(response);
   } catch ({ message }) {
@@ -41,12 +38,32 @@ router.get('/:id', authorizeToken, async (req, res) => {
   }
 });
 
+router.put('/:id', authorizeToken, async (req, res) => {
+  try {
+    const result = await EmailTemplate.findByIdAndUpdate(
+      req.params.id,
+      req.body.template,
+      { new: true },
+    );
+
+    return res.json(result);
+  } catch ({ message }) {
+    reportError(message);
+    return res.status(500).json({ location: 1, message });
+  }
+});
+
+// create email tempalte
 router.post('/', authorizeToken, async (req, res) => {
   try {
-    const { _id } = await EmailTemplate.create(req.body);
-    if (!_id) return res.statusMessage(500).json({ message: 'failed to create template' });
-    await addModelToTutor(req.tutor._id, 'emailTemplates', _id);
-    return res.json({ _id });
+    const object = {
+      ...req.body,
+      authorId: req.tutor._id,
+    };
+    const template = await EmailTemplate.create(object);
+    // if (!_id) return res.statusMessage(500).json({ message: 'failed to create template' });
+    // await addModelToTutor(req.tutor._id, 'emailTemplates', _id);
+    return res.json(template);
   } catch ({ message }) {
     reportError(message);
     return res.status(500).json({ location: 1, message });
@@ -54,9 +71,9 @@ router.post('/', authorizeToken, async (req, res) => {
 });
 
 // update a templates information
-router.put('/', authorizeToken, async (req, res) => {
+router.put('/:id', authorizeToken, async (req, res) => {
   try {
-    const template = await EmailTemplate.findByIdAndUpdate(req.body._id, req.body);
+    const template = await EmailTemplate.findByIdAndUpdate(req.params._id, req.body);
     if (!template) return res.status(404).json({ message: 'template not found' });
 
     return res.json('template updated');

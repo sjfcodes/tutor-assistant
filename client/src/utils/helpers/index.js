@@ -1,13 +1,15 @@
 import formatCalendlyMeetings from './calendlyMeetings';
 import handleError from './error';
-import { buildTemplatePreview, formatEmailTemplates } from './emailTemplates';
 
 export {
-  buildTemplatePreview,
   formatCalendlyMeetings,
-  formatEmailTemplates,
   handleError,
 };
+export {
+  buildTemplatePreview,
+  formatEmailTemplates,
+  loadTemplateEditorApp,
+} from './emailTemplates';
 
 export {
   preventBodyScroll,

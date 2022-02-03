@@ -1,20 +1,16 @@
-import React, { useContext } from 'react';
 import { Button, Heading } from 'react-bulma-components';
-import { EmailTemplatesContext } from '../EmailTemplatesProvider';
+import React, { useContext } from 'react';
+import { EmailTemplatesContext, NEW_TEMPLATE_FORM } from '../EmailTemplatesProvider';
+import { loadTemplateEditorApp } from '../../../../utils';
 
 const EmailTemplatesButtons = () => {
   const {
-    defaultTemplate,
-    allTemplates, setSelectedTemplate,
-    displayComponent, setDisplayComponent,
+    allTemplates,
+    displayComponent,
+    setDisplayComponent,
   } = useContext(EmailTemplatesContext);
 
   if (displayComponent !== 'default') return '';
-
-  const loadTemplateEditor = (template) => {
-    setSelectedTemplate(template);
-    setDisplayComponent('EmailTemplatesEditor');
-  };
 
   return (
     <Button.Group className='m-3'>
@@ -22,7 +18,8 @@ const EmailTemplatesButtons = () => {
         fullwidth
         color='success'
         className='mb-5'
-        onClick={() => loadTemplateEditor(defaultTemplate)}
+        // onClick={() => loadTemplateEditor(defaultTemplate)}
+        onClick={() => setDisplayComponent(NEW_TEMPLATE_FORM)}
       >
         create new template
       </Button>
@@ -35,14 +32,14 @@ const EmailTemplatesButtons = () => {
       </Heading>
       {Object
         .values(allTemplates)
-        .map((template) => (
+        .map(({ _id, name }) => (
           <Button
-            key={template._id}
+            key={_id}
             fullwidth
             color='primary'
-            onClick={() => loadTemplateEditor(template)}
+            onClick={() => loadTemplateEditorApp(_id)}
           >
-            {template.name}
+            {name}
           </Button>
         )) }
     </Button.Group>

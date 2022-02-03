@@ -1,5 +1,6 @@
 const { Schema, model } = require('mongoose');
 const { getISOCurrentDateStamp } = require('../utils/dateTime');
+const { name, subject, body: { html, text } } = require('../seed/emailTemplate.json');
 
 const templateSchema = new Schema({
   authorId: {
@@ -11,15 +12,18 @@ const templateSchema = new Schema({
     html: {
       type: String,
       required: true,
+      default: html,
     },
     text: {
       type: String,
       required: true,
+      default: text,
     },
   },
   name: {
     type: String,
     required: true,
+    default: name,
   },
   includePropertiesFor: {
     tutor: {
@@ -38,6 +42,7 @@ const templateSchema = new Schema({
   subject: {
     type: String,
     requied: true,
+    default: subject,
   },
   createdAt: {
     type: String,
