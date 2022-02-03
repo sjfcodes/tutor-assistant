@@ -1,3 +1,23 @@
-export const API_BASE_URL = `${process.env.REACT_APP_DEPLOYED_URL || 'http://localhost:3001'}/api`;
-export const BASE_URL = `${process.env.REACT_APP_DEPLOYED_URL || 'http://localhost:3001'}`;
+const TUTORLY_LOCALHOST = 'http://localhost:3001';
+const EMAIL_TEMPLATE_LOCALHOST = 'http://localhost:3002';
+
+export const BASE_URL_API = (
+  `${process.env.REACT_APP_DEPLOYED_URL || TUTORLY_LOCALHOST}/api`
+);
+
+export const BASE_URL = (
+  process.env.REACT_APP_DEPLOYED_URL
+    || TUTORLY_LOCALHOST
+);
+
+export const EMAIL_TEMPLATE_APP = (
+  process.env.REACT_EMAIL_TEMPLATE_APP
+    || EMAIL_TEMPLATE_LOCALHOST
+);
+
+export const EMAIL_TEMPLATE_APP_API = (
+  `${process.env.REACT_EMAIL_TEMPLATE_APP
+     || EMAIL_TEMPLATE_LOCALHOST}/api`
+);
+
 export const LOCAL_STORAGE_KEY = 'tutor-token';
