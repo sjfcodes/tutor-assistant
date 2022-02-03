@@ -11,7 +11,7 @@ export const BASE_URL = (
 );
 
 export const EMAIL_TEMPLATE_APP = (
-  process.env.REACT_EMAIL_TEMPLATE_APP
+  process.env.REACT_APP_EMAIL_TEMPLATE_APP
     || EMAIL_TEMPLATE_LOCALHOST
 );
 console.log(EMAIL_TEMPLATE_APP);
