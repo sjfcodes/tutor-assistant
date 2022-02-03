@@ -11,7 +11,7 @@ import EmailAccess from './EmailAccess';
 import ProfileDetailList from './ProfileDetailList';
 
 const SettingsModal = () => {
-  const { openModal } = useSelector((state) => state);
+  const { openModal } = useSelector((state) => state.view);
   const dispatch = useDispatch();
   const [disableControls, setDisableControls] = useState(false);
   const [activeTab, setActiveTab] = useState('profile');

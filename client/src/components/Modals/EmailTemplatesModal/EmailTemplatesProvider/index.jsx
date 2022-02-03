@@ -3,13 +3,16 @@ import React, {
 } from 'react';
 import { formatEmailTemplates, readModel } from '../../../../utils';
 
+export const NEW_TEMPLATE_FORM = 'NEW_TEMPLATE_FORM';
+export const EMAIL_TEMPLATE_EDITOR = 'EMAIL_TEMPLATE_EDITOR';
+
 export const EmailTemplatesContext = createContext();
 
-const defaultTemplate = {
-  name: '',
-  subject: 'Welcome, [student-firstName]!',
-  body: 'Hi [tutor-firstName]!\n\nClick "Show Help" for more info.',
-};
+// const defaultTemplate = {
+//   name: '',
+//   subject: 'Welcome, [student-firstName]!',
+//   body: 'Hi [tutor-firstName]!\n\nClick "Show Help" for more info.',
+// };
 
 // eslint-disable-next-line react/prop-types
 const EmailTemplatesProvider = ({ children }) => {
@@ -19,7 +22,7 @@ const EmailTemplatesProvider = ({ children }) => {
   const [displayComponent, setDisplayComponent] = useState('default');
 
   const helpContext = useMemo(() => ({
-    defaultTemplate,
+    // defaultTemplate,
     viewHelp,
     setViewHelp,
     allTemplates,
@@ -35,7 +38,10 @@ const EmailTemplatesProvider = ({ children }) => {
 
     const getTutorsEmailTemplates = async () => {
       const templateArr = await readModel({ model: 'email-template' });
-      if (!isMounted) return;
+      if (!isMounted
+        || typeof templateArr !== 'object'
+      ) return;
+      console.log(templateArr);
       setAllTemplates(formatEmailTemplates(templateArr));
     };
 
