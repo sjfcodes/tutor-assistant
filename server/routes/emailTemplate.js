@@ -2,7 +2,6 @@ const router = require('express').Router();
 const { EmailTemplate } = require('../models');
 const { authorizeToken } = require('../utils/auth');
 const { reportError } = require('../utils/consoleColors/index.js');
-const { getTemplateProperties } = require('../utils/emailTemplate');
 const { addModelToTutor } = require('../utils/helpers');
 
 // CREATE EMAIL TEMPLATE
@@ -12,7 +11,9 @@ router.post('/', authorizeToken, async (req, res) => {
       ...req.body,
       authorId: req.tutor._id,
     };
+    console.log(object);
     const template = await EmailTemplate.create(object);
+    console.log(template);
     if (!template._id) return res.statusMessage(500).json({ message: 'failed to create template' });
     await addModelToTutor(req.tutor._id, 'emailTemplates', template._id);
     return res.json(template);
@@ -46,12 +47,10 @@ router.get('/:templateId', authorizeToken, async ({
   try {
     const template = await EmailTemplate.findOne(
       { _id: templateId, authorId: _id },
-    ).select('body name includePropertiesFor subject createdAt');
-    const availableProperties = await getTemplateProperties(template.includePropertiesFor);
+    ).select('body name propertiesFor subject createdAt');
 
     const response = {
       template,
-      availableProperties,
       saveTemplateTo: `${process.env.SERVER_ADDRESS}/api/email-template/${templateId}`,
       returnUserTo: process.env.CLIENT_ADDRESS,
     };

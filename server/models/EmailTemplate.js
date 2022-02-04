@@ -1,6 +1,27 @@
 const { Schema, model } = require('mongoose');
 const { getISOCurrentDateStamp } = require('../utils/dateTime');
 const { name, subject, body: { html, text } } = require('../seed/emailTemplate.json');
+const { getPropertiesFor } = require('../utils/emailTemplate');
+const Meeting = require('./Meeting');
+const Student = require('./Student');
+const Tutor = require('./Tutor');
+
+const bodySchema = Schema({ html: String, text: String }, { _id: false });
+
+const propertiesForSchema = new Schema({
+  tutor: {
+    isIncluded: { type: Boolean, default: true },
+    options: { type: Object, default: null },
+  },
+  student: {
+    isIncluded: { type: Boolean, default: true },
+    options: { type: Object, default: null },
+  },
+  meeting: {
+    isIncluded: { type: Boolean, default: false },
+    options: { type: Object, default: null },
+  },
+}, { _id: false });
 
 const templateSchema = new Schema({
   authorId: {
@@ -9,36 +30,16 @@ const templateSchema = new Schema({
     required: true,
   },
   body: {
-    html: {
-      type: String,
-      required: true,
-      default: html,
-    },
-    text: {
-      type: String,
-      required: true,
-      default: text,
-    },
+    type: bodySchema,
+    required: true,
+    default: { html, text },
   },
   name: {
     type: String,
     required: true,
     default: name,
   },
-  includePropertiesFor: {
-    tutor: {
-      type: Boolean,
-      default: true,
-    },
-    student: {
-      type: Boolean,
-      default: true,
-    },
-    meeting: {
-      type: Boolean,
-      default: false,
-    },
-  },
+  propertiesFor: { type: propertiesForSchema, required: true },
   subject: {
     type: String,
     requied: true,
@@ -46,13 +47,18 @@ const templateSchema = new Schema({
   },
   createdAt: {
     type: String,
+    required: true,
     default: () => getISOCurrentDateStamp(),
   },
 });
 
-templateSchema.pre('save', (next) => {
-  // setting default array of properties
-  this.includePropertiesFor = ['tutor', 'student'];
+templateSchema.pre('save', async function checkPropertiesFor(next) {
+  const { propertiesFor: { student, meeting, tutor } } = this;
+  // if a model is included, get available properties for the model
+  if (meeting.isIncluded) meeting.options = await getPropertiesFor(Meeting);
+  if (student.isIncluded) student.options = await getPropertiesFor(Student);
+  if (tutor.isIncluded) tutor.options = await getPropertiesFor(Tutor);
+  // console.log(this.propertiesFor);
   next();
 });
 
