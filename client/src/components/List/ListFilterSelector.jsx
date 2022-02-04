@@ -14,7 +14,6 @@ const ListFilterSelector = ({
       value={filterBy}
       onChange={({ target: { value } }) => setFilterBy(value)}
     >
-      <option value='all'>all</option>
       {filterOptions.map((option, i) => (
         <option
           key={`${sectionName}-${i}`}

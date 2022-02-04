@@ -1,13 +1,13 @@
 import React, {
-  useContext, useEffect, useMemo, useState,
+  useEffect, useMemo, useState,
 } from 'react';
+import { useSelector } from 'react-redux';
 import { v4 as uuid } from 'uuid';
 
 import ProfileDetailListItem from './ProfileDetailListItem';
-import { AppContext } from '../../../../context';
 
 const ProfileDetailList = () => {
-  const { tutorDetails } = useContext(AppContext);
+  const tutorDetails = useSelector((state) => state.tutor);
 
   const [listItems, setListItems] = useState();
   const doNotDisplay = useMemo(() => [
@@ -22,9 +22,7 @@ const ProfileDetailList = () => {
   ], []);
 
   useEffect(() => {
-    if (!tutorDetails._id) return '';
-
-    setListItems(
+    if (tutorDetails._id) setListItems(
       Object.entries(tutorDetails)
         .map(([property, value]) => {
           if (doNotDisplay.indexOf(property) !== -1) return null;
@@ -38,8 +36,6 @@ const ProfileDetailList = () => {
           );
         }),
     );
-
-    return '';
   }, [tutorDetails, doNotDisplay]);
 
   return (

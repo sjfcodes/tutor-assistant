@@ -1,9 +1,10 @@
-/* eslint-disable no-unused-vars */
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   Button, Form, Heading, Modal,
 } from 'react-bulma-components';
-import { CourseContext, ModalContext } from '../../../context';
+import { useDispatch, useSelector } from 'react-redux';
+import { ADD_STUDENT_TO_COURSE } from '../../../store/courses/actions';
+import { ADD_STUDENT_MODAL, CLOSE_MODAL } from '../../../store/view/actions';
 import {
   createModel,
   missingFormInputs,
@@ -18,24 +19,27 @@ import AddStudentForm from './AddStudentForm';
 const clientTimeZone = getClientTimeZone();
 
 export const addStudentFormDefaults = {
-  firstName: '',
-  lastName: '',
-  email: '',
   classId: '',
-  timeZoneName: clientTimeZone || '',
-  graduationDate: getCurrentDatePicker() || '',
+  email: '',
+  firstName: '',
   fullTimeCourse: false,
   githubUsername: '',
-  meetingLink:
-    '',
+  graduationDate: getCurrentDatePicker() || '',
+  lastName: '',
+  meetingLink: '',
   meetingsPerWeek: 1,
   reassignment: false,
   recurringMeeting: true,
+  timeZoneName: clientTimeZone || '',
 };
 
 const AddStudentModal = () => {
-  const { openModal, setOpenModal } = useContext(ModalContext);
-  const { allCourses, setAllCourses, selectedCourse } = useContext(CourseContext);
+  const {
+    courses: { selectedCourse },
+    view: { openModal },
+  } = useSelector((state) => state);
+  const dispatch = useDispatch();
+
   const [formInputs, setFormInputs] = useState(addStudentFormDefaults);
   const [helpText, setHelpText] = useState('');
 
@@ -48,18 +52,18 @@ const AddStudentModal = () => {
       const { _id: newStudentId, createdAt } = await createModel({ model: 'student', body: inputs, _id: selectedCourse });
       if (!newStudentId) return handleError('createModel [student] did not return _id');
 
-      const currentStudents = allCourses[selectedCourse].students;
-      const updatedStudents = {
-        ...currentStudents,
-        [newStudentId]: {
-          _id: newStudentId,
-          ...inputs,
-          createdAt,
-        },
+      const newStudent = {
+        _id: newStudentId,
+        ...inputs,
+        createdAt,
       };
-      const updatedCourse = { ...allCourses[selectedCourse], students: updatedStudents };
-      setAllCourses({ ...allCourses, [selectedCourse]: updatedCourse });
-      setOpenModal('');
+
+      dispatch({
+        type: ADD_STUDENT_TO_COURSE,
+        payload: newStudent,
+      });
+
+      dispatch({ type: CLOSE_MODAL });
     } catch ({ message }) {
       if (message.includes('E11000 duplicate key error')) setHelpText('email already in use');
       else setHelpText(message);
@@ -71,8 +75,8 @@ const AddStudentModal = () => {
   return (
     <Modal
       className='background-blurred-light'
-      show={openModal === 'AddStudent'}
-      onClose={() => setOpenModal('')}
+      show={openModal === ADD_STUDENT_MODAL}
+      onClose={() => dispatch({ type: CLOSE_MODAL })}
     >
       <Modal.Card>
         <Modal.Card.Header
@@ -94,7 +98,7 @@ const AddStudentModal = () => {
 
           <Modal.Card.Footer renderAs={Button.Group} align='right' hasAddons>
             <Form.Help size='small' color='danger'>{helpText}</Form.Help>
-            <Button type='button' onClick={() => setOpenModal('')}>
+            <Button type='button' onClick={() => dispatch({ type: CLOSE_MODAL })}>
               cancel
             </Button>
             <Button

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Box, Form } from 'react-bulma-components';
-import { AppContext, CourseContext } from '../../../../../context';
+import { useSelector } from 'react-redux';
 import { getISO8601TimeStamp } from '../../../../../utils';
 import MeetingSelector from '../../../../Forms/MeetingSelector';
 import StudentSelector from '../../../../Forms/StudentSelector';
@@ -25,8 +25,14 @@ const demoMeeting = {
 };
 
 const EditorPreview = () => {
-  const { tutorDetails: { email: tutorEmail, sendGrid: { accessToken } } } = useContext(AppContext);
-  const { allCourses, selectedCourse } = useContext(CourseContext);
+  const {
+    tutor: {
+      email: tutorEmail,
+      sendGrid: { accessToken },
+    },
+    courses: { allCourses, selectedCourse },
+  } = useSelector((state) => state);
+
   const { selectedTemplate } = useContext(EmailTemplatesContext);
   const [selectedStudentId, setSelectedStudentId] = useState('');
   const [selectedStudent, setSelectedStudent] = useState(demoStudent);

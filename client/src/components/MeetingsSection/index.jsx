@@ -1,40 +1,81 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Columns } from 'react-bulma-components';
-import { ModalContext } from '../../context';
-import SectionContainer from '../SectionContainer';
+import { useDispatch, useSelector } from 'react-redux';
+import { SET_CALENDLY_MEETINGS } from '../../store/calendly/actions';
+import { ADD_MEETING_MODAL, SET_OPEN_MODAL } from '../../store/view/actions';
+import { formatCalendlyMeetings, readModel } from '../../utils';
+import { HomeContext, MEETINGS_SECTION } from '../../views/Home/HomeProvider';
+import SectionContainer from '../Section/Container';
+import SectionHeading from '../Section/Heading';
 import MeetingsList from './MeetingsList';
 import MeetingsListFilter from './MeetingsListFilter';
+import { MeetingsContext } from './MeetingsProvider';
 
 const MeetingsSection = () => {
-  const { setOpenModal } = useContext(ModalContext);
-  const [filterBy, setFilterBy] = useState('all');
-  const [filterOptions, setFilterOptions] = useState(['tutorly']);
-  const sectionName = 'Meetings';
+  const { allCourses, selectedCourse } = useSelector((state) => state.courses);
+  const dispatch = useDispatch();
+  const { handleToggle } = useContext(HomeContext);
+  const {
+    filterBy, setFilterBy,
+    isActive, sectionName, filterOptions,
+  } = useContext(MeetingsContext);
+  const [calendlyCount, setCalendlyCount] = useState(0);
+
+  const toggleSection = () => handleToggle(MEETINGS_SECTION);
+  const getMeetingCount = () => {
+    let count = 0;
+    if (allCourses && selectedCourse) count += allCourses[selectedCourse].meetingCount;
+    if (calendlyCount) count += calendlyCount;
+    return count > 0 ? count : '~';
+  };
+
+  useEffect(() => {
+    let isMounted = true;
+    if (!selectedCourse || !allCourses) return '';
+    const getCalendlyMeetings = async () => {
+      const { calendlyMeetings: meetings } = await readModel({ model: 'calendly/meetings', _id: selectedCourse });
+      if (!isMounted) return;
+      dispatch({
+        type: SET_CALENDLY_MEETINGS,
+        payload: formatCalendlyMeetings(meetings),
+      });
+      setCalendlyCount(meetings.length);
+    };
+    if (allCourses[selectedCourse].calendly.data) getCalendlyMeetings();
+
+    return () => { isMounted = false; };
+  }, [selectedCourse, allCourses, dispatch]);
+
+  const heading = (
+    <SectionHeading
+      sectionName={sectionName}
+      count={getMeetingCount()}
+    />
+  );
 
   return (
     <SectionContainer
+      heading={heading}
+      active={isActive}
+      handleToggle={toggleSection}
       sectionName={sectionName}
       filterBy={filterBy}
       setFilterBy={setFilterBy}
       filterOptions={filterOptions}
-      addListItemClick={() => setOpenModal('AddMeeting')}
+      addListItemClick={() => dispatch({ type: SET_OPEN_MODAL, payload: ADD_MEETING_MODAL })}
     >
+      { isActive && (
+        <>
+          <Columns className='is-mobile ml-5'>
+            <p className='mr-3'>sort</p>
+            <MeetingsListFilter />
+          </Columns>
 
-      <Columns className='is-mobile ml-5'>
-        <p className='mr-3'>view</p>
-        <MeetingsListFilter
-          sectionName={sectionName}
-          filterBy={filterBy}
-          setFilterBy={setFilterBy}
-          filterOptions={filterOptions}
-          setFilterOptions={setFilterOptions}
-        />
-      </Columns>
-
-      <MeetingsList
-        filterBy={filterBy}
-      />
-
+          <MeetingsList
+            filterBy={filterBy}
+          />
+        </>
+      )}
     </SectionContainer>
   );
 };

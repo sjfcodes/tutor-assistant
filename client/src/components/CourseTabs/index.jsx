@@ -1,17 +1,19 @@
 import { string } from 'prop-types';
 import React, {
-  useCallback, useContext, useEffect, useState,
+  useCallback, useEffect, useState,
 } from 'react';
 import { Tabs } from 'react-bulma-components';
-import { CourseContext, ModalContext } from '../../context';
+import { useDispatch, useSelector } from 'react-redux';
+import { SET_SELECTED_COURSE } from '../../store/courses/actions';
+import { ADD_COURSE_MODAL, SET_OPEN_MODAL } from '../../store/view/actions';
 import './style.css';
 
 const { Tab } = Tabs;
 
 const CourseTabs = ({ className }) => {
+  const { allCourses, selectedCourse } = useSelector((state) => state.courses);
+  const dispatch = useDispatch();
   const [courseTabs, setCourseTabs] = useState(null);
-  const { allCourses, selectedCourse, setSelectedCourse } = useContext(CourseContext);
-  const { setOpenModal } = useContext(ModalContext);
 
   const handleUpdate = useCallback(
     (e) => {
@@ -38,8 +40,17 @@ const CourseTabs = ({ className }) => {
 
   useEffect(() => {
     if (!allCourses) return;
+
+    const setSelectedCourse = (_id) => {
+      dispatch({
+        type: SET_SELECTED_COURSE,
+        payload: _id,
+      });
+    };
+
     let i = 0;
     const arr = [];
+
     Object.entries(allCourses).forEach(([key, { name, _id }]) => {
       arr.push(
         <Tab
@@ -59,7 +70,7 @@ const CourseTabs = ({ className }) => {
     });
 
     setCourseTabs(arr);
-  }, [allCourses, handleUpdate, selectedCourse, setSelectedCourse]);
+  }, [allCourses, handleUpdate, selectedCourse, dispatch]);
 
   return (
     <Tabs
@@ -69,7 +80,7 @@ const CourseTabs = ({ className }) => {
       className={className}
     >
       {courseTabs}
-      <Tab onClick={() => setOpenModal('AddCourse')}>
+      <Tab onClick={() => dispatch({ type: SET_OPEN_MODAL, payload: ADD_COURSE_MODAL })}>
         <strong className='has-text-grey-lighter'>Add Course</strong>
       </Tab>
     </Tabs>

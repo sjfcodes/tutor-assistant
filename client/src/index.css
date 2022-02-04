@@ -1,19 +1,23 @@
 :root {
-  --blue: #09b2f5;
+  --background: rgba(0, 0, 0, 0.5);
+  /* --background: #0000008c; */
+
+  --primary: #06b0f38e;
   --border: rgba(0, 0, 0, 0.6);
   --border-light: rgba(0, 0, 0, 0.3);
   --clear:rgba(255, 255, 255, 0);
 
-  --success: hsl(171, 100%, 41%);
-  --danger: hsl(348, 100%, 61%);
-  --warning: hsl(48, 100%, 67%);
-  --info: #9f7dfd;
+  --success: hsla(171, 100%, 41%, 0.521);
+  --danger: hsla(348, 100%, 61%, 0.541);
+  --warning: hsla(48, 100%, 67%, 0.507);
+  --info: #9f7dfd8c;
 
 }
 
 /* ~ ~ ~ ~ ~ MAIN LAYOUT ~ ~ ~ ~ ~ ~ */
 html,
 body {
+  background-color: var(--background);
   margin-top: 0 !important;
   margin-bottom: 0 !important;
 
@@ -61,7 +65,7 @@ footer {
   backdrop-filter: blur(2px);
 }
 .background-blurred-dark {
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: var(--background);
   backdrop-filter: blur(2px);
 }
 .background-blurred-light {
@@ -69,7 +73,7 @@ footer {
   backdrop-filter: blur(10px);
 }
 .background-dark {
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: var(--background);
 }
 .background-clear {
   background-color: var(--clear);
@@ -101,16 +105,19 @@ footer {
   border: solid 2px rgb(0, 0, 0);
 }
 .border-danger {
-  border: solid 1px var(--danger);
-}
-.border-success {
-  border: solid 1px var(--success);
-}
-.border-warning {
-  border: solid 1px var(--warning);
+  border: solid 2px var(--danger);
 }
 .border-info {
-  border: solid 1px var(--info);
+  border: solid 2px var(--info);
+}
+.border-primary {
+  border: solid 2px var(--primary);
+}
+.border-success {
+  border: solid 2px var(--success);
+}
+.border-warning {
+  border: solid 2px var(--warning);
 }
 .rounded {
   border-radius: 4px;

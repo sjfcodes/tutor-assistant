@@ -1,13 +1,14 @@
 import { string } from 'prop-types';
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { Button, Form, Icon } from 'react-bulma-components';
-import { AppContext, CourseContext } from '../../../../context';
+import { useDispatch } from 'react-redux';
+import { UPDATE_COURSE_DETAIL } from '../../../../store/courses/actions';
+import { UPDATE_TUTOR_DETAIL } from '../../../../store/tutor/actions';
 import { createModel } from '../../../../utils';
 import { syncCalendlyResource } from '../../../../utils/api';
 
 const AddAccessToken = ({ courseId, password }) => {
-  const { allCourses, setAllCourses } = useContext(CourseContext);
-  const { tutorDetails, setTutorDetails } = useContext(AppContext);
+  const dispatch = useDispatch();
 
   const [formInputs, setFormInputs] = useState({ token: '' });
   const [loading, setLoading] = useState(false);
@@ -39,13 +40,17 @@ const AddAccessToken = ({ courseId, password }) => {
       accessToken = _id;
     } catch (error) {
       // expected case: bad password
-      setTutorDetails({
-        ...tutorDetails,
-        calendly: {
-          accessToken: null,
-          data: null,
+
+      dispatch({
+        type: UPDATE_TUTOR_DETAIL,
+        payload: {
+          calendly: {
+            accessToken: null,
+            data: null,
+          },
         },
       });
+
       setHelpText('unauthorized');
     }
 
@@ -60,12 +65,10 @@ const AddAccessToken = ({ courseId, password }) => {
       setHelpText('');
       setColor('');
       setButtonText('success!');
-      setAllCourses({
-        ...allCourses,
-        [courseId]: {
-          ...allCourses[courseId],
-          calendly: { accessToken, data },
-        },
+
+      dispatch({
+        type: UPDATE_COURSE_DETAIL,
+        payload: { calendly: { accessToken, data } },
       });
     }
     setLoading(false);

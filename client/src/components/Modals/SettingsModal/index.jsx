@@ -1,20 +1,21 @@
 import React, {
-  useState, useContext, useEffect, useCallback,
+  useState, useEffect, useCallback,
 } from 'react';
 import {
   Heading, Modal, Tabs,
 } from 'react-bulma-components';
-import { ModalContext } from '../../../context';
+import { useDispatch, useSelector } from 'react-redux';
+import { CLOSE_MODAL, SETTINGS_MODAL } from '../../../store/view/actions';
 import CourseSettings from './CourseSettings';
 import EmailAccess from './EmailAccess';
 import ProfileDetailList from './ProfileDetailList';
 
 const SettingsModal = () => {
+  const { openModal } = useSelector((state) => state.view);
+  const dispatch = useDispatch();
   const [disableControls, setDisableControls] = useState(false);
   const [activeTab, setActiveTab] = useState('profile');
   const [component, setComponent] = useState('');
-
-  const { openModal, setOpenModal } = useContext(ModalContext);
 
   const handleUpdate = useCallback(
     (e, courseName) => {
@@ -53,8 +54,8 @@ const SettingsModal = () => {
     <Modal
       className='background-blurred-light'
       showClose={!disableControls}
-      show={openModal === 'Settings'}
-      onClose={() => setOpenModal('')}
+      show={openModal === SETTINGS_MODAL}
+      onClose={() => dispatch({ type: CLOSE_MODAL })}
     >
       <Modal.Card>
         <Modal.Card.Header

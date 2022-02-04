@@ -1,15 +1,13 @@
-import React, {
-  useContext, useEffect, useMemo, useState,
-} from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { func, shape, string } from 'prop-types';
-import { CourseContext } from '../../../context';
+import { useSelector } from 'react-redux';
 import MeetingDetailList from '../MeetingDetailList';
 import ListItemContainer from '../../List/ListItemContainer';
 import MeetingsListItemLayout from './MeetingsListItemLayout';
 
 const MeetingListItem = ({ meeting, setSelectedMeetingId, selectedMeetingId }) => {
-  const { allCourses, selectedCourse } = useContext(CourseContext);
-  const [listItem, setListItem] = useState('');
+  const { allCourses, selectedCourse } = useSelector((state) => state.courses);
+
   const [listItemDetails, setListItemDetails] = useState('');
 
   const { _id, studentId } = meeting;
@@ -26,15 +24,6 @@ const MeetingListItem = ({ meeting, setSelectedMeetingId, selectedMeetingId }) =
   );
 
   useEffect(() => {
-    setListItem(
-      <MeetingsListItemLayout
-        student={student}
-        meeting={meeting}
-      />,
-    );
-  }, [student, meeting]);
-
-  useEffect(() => {
     if (selectedMeetingId !== _id) return setListItemDetails('');
     return setListItemDetails(<MeetingDetailList meeting={meeting} _id={_id} />);
   }, [meeting, _id, selectedMeetingId]);
@@ -44,9 +33,13 @@ const MeetingListItem = ({ meeting, setSelectedMeetingId, selectedMeetingId }) =
       itemId={_id}
       selectedItemId={selectedMeetingId}
       toggleViewItem={toggleViewMeeting}
-      listItem={listItem}
       listItemDetails={listItemDetails}
-    />
+    >
+      <MeetingsListItemLayout
+        student={student}
+        meeting={meeting}
+      />
+    </ListItemContainer>
   );
 };
 export default MeetingListItem;

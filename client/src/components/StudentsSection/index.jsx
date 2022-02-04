@@ -1,42 +1,64 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { Columns } from 'react-bulma-components';
-import { ModalContext } from '../../context';
-import SectionContainer from '../SectionContainer';
+import { useDispatch, useSelector } from 'react-redux';
+import { ADD_STUDENT_MODAL, SET_OPEN_MODAL } from '../../store/view/actions';
+import { HomeContext, STUDENTS_SECTION } from '../../views/Home/HomeProvider';
+import SectionContainer from '../Section/Container';
+import SectionHeading from '../Section/Heading';
 import StudentsList from './StudentsList';
-// import StudentsList from './StudentsList';
 import StudentsListFilter from './StudentsListFilter';
+import { StudentsContext } from './StudentsProvider';
 
 const StudentsSection = () => {
-  const { setOpenModal } = useContext(ModalContext);
-  const [filterBy, setFilterBy] = useState('all');
-  const [filterOptions, setFilterOptions] = useState(['']);
-  const sectionName = 'Students';
+  const { allCourses, selectedCourse } = useSelector((state) => state.courses);
+  const dispatch = useDispatch();
 
+  const { handleToggle } = useContext(HomeContext);
+  const {
+    filterBy, setFilterBy,
+    isActive, sectionName, filterOptions,
+  } = useContext(StudentsContext);
+
+  const toggleSection = () => handleToggle(STUDENTS_SECTION);
+  const getStudentCount = () => {
+    let count = 0;
+    if (allCourses && selectedCourse) count += allCourses[selectedCourse].studentCount;
+    return count > 0 ? count : '~';
+  };
+
+  const getChildren = () => {
+    if (!isActive) return '';
+    return (
+      <>
+        <Columns className='is-mobile ml-5'>
+          <p className='mr-3'>sort</p>
+          <StudentsListFilter />
+        </Columns>
+        <StudentsList />
+      </>
+    );
+  };
+
+  const heading = (
+    <SectionHeading
+      sectionName={sectionName}
+      count={getStudentCount()}
+    />
+  );
+
+  const openAddStudentModal = () => dispatch({ type: SET_OPEN_MODAL, payload: ADD_STUDENT_MODAL });
   return (
     <SectionContainer
+      heading={heading}
+      active={isActive}
+      handleToggle={toggleSection}
       sectionName={sectionName}
       filterBy={filterBy}
       setFilterBy={setFilterBy}
       filterOptions={filterOptions}
-      addListItemClick={() => setOpenModal('AddStudent')}
+      addListItemClick={openAddStudentModal}
     >
-
-      <Columns className='is-mobile ml-5'>
-        <p className='mr-3'>view</p>
-        <StudentsListFilter
-          className=''
-          sectionName={sectionName}
-          filterBy={filterBy}
-          setFilterBy={setFilterBy}
-          filterOptions={filterOptions}
-          setFilterOptions={setFilterOptions}
-        />
-      </Columns>
-
-      <StudentsList
-        filterBy={filterBy}
-      />
-
+      {getChildren()}
     </SectionContainer>
   );
 };

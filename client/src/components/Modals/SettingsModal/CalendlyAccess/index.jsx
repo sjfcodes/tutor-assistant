@@ -1,10 +1,11 @@
 import { string } from 'prop-types';
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import {
   Box, Button, Content, Form, Heading, Icon, Level,
 } from 'react-bulma-components';
-import { CourseContext } from '../../../../context';
+import { useSelector } from 'react-redux';
 import { passwordIsValid } from '../../../../utils';
+import DropDownIcon from '../../../DropDownIcon';
 import InputPassword from '../../../Forms/InputPassword';
 
 import AddAccessToken from './AddAccessToken';
@@ -13,7 +14,7 @@ import SyncCalendlyDetails from './SyncCalendlyDetails';
 // import SyncCalendly from './SyncCalendly';
 
 const CalendlyAccess = ({ courseId }) => {
-  const { allCourses } = useContext(CourseContext);
+  const { allCourses } = useSelector((state) => state.courses);
   const { calendly: { accessToken } } = allCourses[courseId];
 
   const [password, setPassword] = useState('');
@@ -42,18 +43,18 @@ const CalendlyAccess = ({ courseId }) => {
         <>
           <Button
             fullwidth
+            color='primary'
             className='mb-3'
+            onClick={() => setDisplay('syncExisting')}
+          >
+            re-sync current connection
+          </Button>
+          <Button
+            fullwidth
             color='success'
             onClick={() => setDisplay('addNew')}
           >
             create new connection
-          </Button>
-          <Button
-            fullwidth
-            color='primary'
-            onClick={() => setDisplay('syncExisting')}
-          >
-            re-sync current connection
           </Button>
         </>
       ),
@@ -81,9 +82,7 @@ const CalendlyAccess = ({ courseId }) => {
           </Heading>
         </Level.Side>
         <Level.Side>
-          <Icon className='mr-2'>
-            <i className={`fas fa-chevron-${displayCalendly ? 'up' : 'down'}`} />
-          </Icon>
+          <DropDownIcon active={displayCalendly} />
         </Level.Side>
       </Level>
     </Box>
@@ -103,9 +102,7 @@ const CalendlyAccess = ({ courseId }) => {
           </Heading>
         </Level.Side>
         <Level.Side>
-          <Icon className='mr-2'>
-            <i className={`fas fa-chevron-${displayCalendly ? 'up' : 'down'}`} />
-          </Icon>
+          <DropDownIcon active={displayCalendly} />
         </Level.Side>
       </Level>
       <Content className='border-bottom pb-3 mb-4'>

@@ -1,12 +1,12 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Button } from 'react-bulma-components';
-import { AppContext } from '../../../../../context';
+import { useSelector } from 'react-redux';
 import { deleteModel } from '../../../../../utils';
 
 const DeleteAccessToken = () => {
 //   const [deleteState, setDeleteState] = useState('');
 //   const [loading, setLoading] = useState(false);
-  const { tutorDetails: { sendGrid: { accessToken } } } = useContext(AppContext);
+  const { sendGrid: { accessToken } } = useSelector((state) => state.tutor);
 
   const handleDeleteAccessToken = async () => {
     await deleteModel(

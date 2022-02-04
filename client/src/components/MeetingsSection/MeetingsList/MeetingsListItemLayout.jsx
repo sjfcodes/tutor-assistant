@@ -5,12 +5,14 @@ import { MeetingDateShort, MeetingTime } from '../../DateTime';
 const MeetingsListItemLayout = (
   {
     student: { firstName, lastName },
-    meeting: { startTime, endTime, studentName },
+    meeting: {
+      startTime, endTime, firstName: calFirstName, lastName: calLastName,
+    },
   },
 ) => {
   const getDisplayName = () => {
+    if (calFirstName || calLastName) return `${calFirstName} ${calLastName}`;
     if (firstName || lastName) return `${firstName} ${lastName}`;
-    if (studentName) return `${studentName}`;
     return 'work in progress';
   };
 
@@ -40,12 +42,17 @@ MeetingsListItemLayout.propTypes = {
   meeting: shape({
     startTime: string.isRequired,
     endTime: string.isRequired,
-    studentName: string,
-  }).isRequired,
+    firstName: string,
+    lastName: string,
+  }),
 };
 
 MeetingsListItemLayout.defaultProps = {
   student: shape({
+    firstName: '',
+    lastName: '',
+  }),
+  meeting: shape({
     firstName: '',
     lastName: '',
   }),

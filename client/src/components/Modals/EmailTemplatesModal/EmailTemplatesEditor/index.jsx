@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { Button, Columns } from 'react-bulma-components';
 
-import { EmailTemplatesContext } from '../EmailTemplatesProvider';
+import { EmailTemplatesContext, EMAIL_TEMPLATE_EDITOR } from '../EmailTemplatesProvider';
 import Editor from './Editor';
 import EditorPreview from './EditorPreview';
 
@@ -9,7 +9,7 @@ const EmailTemplatesEditor = () => {
   const { displayComponent, setDisplayComponent } = useContext(EmailTemplatesContext);
   const [viewPreview, setViewPreview] = useState(false);
 
-  if (displayComponent !== 'EmailTemplatesEditor') return '';
+  if (displayComponent !== EMAIL_TEMPLATE_EDITOR) return '';
 
   const handleBackButtonClick = () => {
     setDisplayComponent('default');

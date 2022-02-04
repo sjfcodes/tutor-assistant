@@ -1,12 +1,18 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { Button, Heading, Modal } from 'react-bulma-components';
-import { CourseContext, ModalContext } from '../../../context';
+import { useDispatch, useSelector } from 'react-redux';
+import { ADD_MEETING_TO_COURSE } from '../../../store/courses/actions';
+import { ADD_MEETING_MODAL, CLOSE_MODAL } from '../../../store/view/actions';
 import { createModel, missingFormInputs } from '../../../utils';
 import AddMeetingForm from './AddMeetingForm';
 
 const AddMeetingModal = () => {
-  const { openModal, setOpenModal } = useContext(ModalContext);
-  const { allCourses, setAllCourses, selectedCourse } = useContext(CourseContext);
+  const {
+    courses: { selectedCourse },
+    view: { openModal },
+  } = useSelector((state) => state);
+  const dispatch = useDispatch();
+
   const [formInputs, setFormInputs] = useState({
     duration: 1,
     startTime: '',
@@ -17,7 +23,7 @@ const AddMeetingModal = () => {
   const handleAddMeeting = async (e) => {
     e.preventDefault();
 
-    const newMeeting = await createModel(
+    const meeting = await createModel(
       {
         model: 'meeting',
         body: formInputs,
@@ -25,19 +31,11 @@ const AddMeetingModal = () => {
       },
     );
 
-    const currentMeetings = allCourses[selectedCourse].meetings;
-    const updatedCourse = {
-      ...allCourses[selectedCourse],
-      meetings: {
-        ...currentMeetings,
-        [newMeeting._id]: { ...newMeeting, type: 'tutorly' },
-      },
-    };
-    setAllCourses({
-      ...allCourses,
-      [selectedCourse]: updatedCourse,
+    dispatch({
+      type: ADD_MEETING_TO_COURSE,
+      payload: { ...meeting, type: 'tutorly' },
     });
-    setOpenModal('');
+    dispatch({ type: CLOSE_MODAL });
 
     return '';
   };
@@ -45,8 +43,8 @@ const AddMeetingModal = () => {
   return (
     <Modal
       className='background-blurred-light'
-      show={openModal === 'AddMeeting'}
-      onClose={() => setOpenModal('')}
+      show={openModal === ADD_MEETING_MODAL}
+      onClose={() => dispatch({ type: CLOSE_MODAL })}
     >
       <Modal.Card>
         <Modal.Card.Header
@@ -66,7 +64,7 @@ const AddMeetingModal = () => {
             />
           </Modal.Card.Body>
           <Modal.Card.Footer renderAs={Button.Group} align='right' hasAddons>
-            <Button type='button' onClick={() => setOpenModal('')}>
+            <Button type='button' onClick={() => dispatch({ type: CLOSE_MODAL })}>
               cancel
             </Button>
             <Button

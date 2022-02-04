@@ -12,9 +12,7 @@ const MeetingDetailList = ({ _id, meeting }) => {
 
   useEffect(() => {
     let count = 0;
-    if (!_id || !meeting) return '';
-
-    setListItems(
+    if (_id && meeting) setListItems(
       Object.entries(meeting)
         .map(([property, value]) => {
           if (doNotDisplay.indexOf(property) !== -1) return null;
@@ -31,8 +29,6 @@ const MeetingDetailList = ({ _id, meeting }) => {
           );
         }),
     );
-
-    return '';
   }, [_id, meeting, doNotDisplay]);
 
   return (

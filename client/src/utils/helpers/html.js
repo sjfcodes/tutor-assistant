@@ -4,4 +4,12 @@ const preventBodyScroll = (prevent) => {
   return bodyClass.remove('is-fixed');
 };
 
-export default preventBodyScroll;
+const collapseNavbar = () => {
+  document.querySelector('.navbar-burger').classList.remove('is-active');
+  document.querySelector('.navbar-menu').classList.remove('is-active');
+};
+
+export {
+  preventBodyScroll,
+  collapseNavbar,
+};

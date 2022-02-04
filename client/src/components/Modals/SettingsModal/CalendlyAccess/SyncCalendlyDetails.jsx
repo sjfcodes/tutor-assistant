@@ -1,12 +1,14 @@
 import { string } from 'prop-types';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Form } from 'react-bulma-components';
-import { CourseContext } from '../../../../context';
+import { useDispatch, useSelector } from 'react-redux';
+import { UPDATE_COURSE_DETAIL } from '../../../../store/courses/actions';
 import { passwordIsValid } from '../../../../utils';
 import { syncCalendlyResource } from '../../../../utils/api';
 
 export const SyncCalendlyDetails = ({ courseId, password }) => {
-  const { allCourses, setAllCourses } = useContext(CourseContext);
+  const { allCourses } = useSelector((state) => state.courses);
+  const dispatch = useDispatch();
   const { calendly: { accessToken } } = allCourses[courseId];
 
   const [loading, setLoading] = useState(false);
@@ -32,14 +34,13 @@ export const SyncCalendlyDetails = ({ courseId, password }) => {
     }
 
     if (accessToken && data) {
-      setAllCourses({
-        ...allCourses,
-        [courseId]: {
-          ...allCourses[courseId],
-          calendly: { accessToken, data },
-        },
-      });
       setButtonText('success!');
+      dispatch({
+        type: UPDATE_COURSE_DETAIL,
+        payload: { calendly: { accessToken, data } },
+      });
+      setLoading(false);
+      return;
     }
 
     setLoading(false);

@@ -1,41 +1,59 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { Columns } from 'react-bulma-components';
-import { ModalContext } from '../../context';
-import SectionContainer from '../SectionContainer';
+import { useDispatch } from 'react-redux';
+import { ADD_TASK_MODAL, SET_OPEN_MODAL } from '../../store/view/actions';
+import { HomeContext, TASKS_SECTION } from '../../views/Home/HomeProvider';
+import SectionContainer from '../Section/Container';
+import SectionHeading from '../Section/Heading';
 import TasksList from './TasksList';
 import TasksListFilter from './TasksListFilter';
+import { TasksContext } from './TasksProvider';
 
 const TasksSection = () => {
-  const { setOpenModal } = useContext(ModalContext);
-  const [filterBy, setFilterBy] = useState('all');
-  const [filterOptions, setFilterOptions] = useState(['tutor', 'student', 'meeting']);
-  const sectionName = 'Tasks';
+  const dispatch = useDispatch();
+  const { handleToggle } = useContext(HomeContext);
+  const {
+    count,
+    filterBy, setFilterBy,
+    isActive, sectionName, filterOptions,
+  } = useContext(TasksContext);
+
+  const toggleSection = () => handleToggle(TASKS_SECTION);
+  const getTaskCount = () => (count || '~');
+  const getChildren = () => {
+    if (!isActive) return '';
+    return (
+      <>
+        <Columns className='is-mobile ml-5'>
+          <p className='mr-3'>sort</p>
+          <TasksListFilter />
+        </Columns>
+        <TasksList />
+      </>
+    );
+  };
+
+  const heading = (
+    <SectionHeading
+      sectionName={sectionName}
+      count={getTaskCount()}
+    />
+  );
+
+  const openAddTaskModal = () => dispatch({ type: SET_OPEN_MODAL, payload: ADD_TASK_MODAL });
 
   return (
     <SectionContainer
+      heading={heading}
+      active={isActive}
+      handleToggle={toggleSection}
       sectionName={sectionName}
       filterBy={filterBy}
       setFilterBy={setFilterBy}
       filterOptions={filterOptions}
-      addListItemClick={() => setOpenModal('AddTask')}
+      addListItemClick={openAddTaskModal}
     >
-
-      <Columns className='is-mobile ml-5'>
-        <p className='mr-3'>view</p>
-        <TasksListFilter
-          className=''
-          sectionName={sectionName}
-          filterBy={filterBy}
-          setFilterBy={setFilterBy}
-          filterOptions={filterOptions}
-          setFilterOptions={setFilterOptions}
-        />
-      </Columns>
-
-      <TasksList
-        filterBy={filterBy}
-      />
-
+      {getChildren()}
     </SectionContainer>
   );
 };

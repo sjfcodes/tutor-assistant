@@ -1,4 +1,4 @@
-import { tokenKey } from '../../../config';
+import { LOCAL_STORAGE_KEY } from '../../../config';
 import { handleError } from '../../helpers';
 import { getApiEndpoint, getRequestHeaders } from '../apiAccess';
 
@@ -13,11 +13,10 @@ const loginWithToken = () => {
         .then((res) => res.json())
         .then((data) => {
           if (!data.token || !data.tutor) return reject(handleError('unauthorized'));
-          localStorage.setItem(tokenKey, data.token);
           return resolve(data);
         });
     } catch (error) {
-      localStorage.removeItem(tokenKey);
+      localStorage.removeItem(LOCAL_STORAGE_KEY);
       reject(handleError(error));
     }
   });

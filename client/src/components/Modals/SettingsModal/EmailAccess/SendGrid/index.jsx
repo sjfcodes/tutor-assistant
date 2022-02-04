@@ -1,15 +1,16 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import {
   Box, Content, Form, Heading, Icon, Level,
 } from 'react-bulma-components';
-import { AppContext } from '../../../../../context';
+import { useSelector } from 'react-redux';
 import { passwordIsValid } from '../../../../../utils';
+import DropDownIcon from '../../../../DropDownIcon';
 import InputPassword from '../../../../Forms/InputPassword';
 import AddAccessToken from './AddAccessToken';
 import DeleteAccessToken from './DeleteAccessToken';
 
 const SendGridAccess = () => {
-  const { tutorDetails: { sendGrid: { accessToken } } } = useContext(AppContext);
+  const { sendGrid: { accessToken } } = useSelector((state) => state.tutor);
   const [displaySendGrid, setDisplaySendGrid] = useState(false);
   const [password, setPassword] = useState('');
 
@@ -36,9 +37,7 @@ const SendGridAccess = () => {
           </Heading>
         </Level.Side>
         <Level.Side>
-          <Icon className='mr-2'>
-            <i className={`fas fa-chevron-${displaySendGrid ? 'up' : 'down'}`} />
-          </Icon>
+          <DropDownIcon active={displaySendGrid} />
         </Level.Side>
       </Level>
     </Box>
@@ -57,9 +56,7 @@ const SendGridAccess = () => {
           </Heading>
         </Level.Side>
         <Level.Side>
-          <Icon className='mr-2'>
-            <i className={`fas fa-chevron-${displaySendGrid ? 'up' : 'down'}`} />
-          </Icon>
+          <DropDownIcon active={displaySendGrid} />
         </Level.Side>
       </Level>
       <Content className='border-bottom pb-3 mb-4'>

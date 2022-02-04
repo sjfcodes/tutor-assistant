@@ -1,16 +1,18 @@
 import {
   func, number, shape, string,
 } from 'prop-types';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form } from 'react-bulma-components';
-import { AppContext, CourseContext } from '../../../../../context';
+import { useSelector } from 'react-redux';
+
 import { buildTemplatePreview, getTextareaRows } from '../../../../../utils';
 
 const PreviewBody = ({
-  previewBody, setPreviewBody, selectedStudent, selectedMeeting, text,
+  previewBody, setPreviewBody, text,
+  selectedStudent, selectedMeeting,
 }) => {
-  const { tutorDetails } = useContext(AppContext);
-  const { allCourses, selectedCourse } = useContext(CourseContext);
+  const tutorDetails = useSelector((state) => state.tutor);
+  const { allCourses, selectedCourse } = useSelector((state) => state.courses);
   const [errors, setErrors] = useState([]);
   const [rows, setRows] = useState(getTextareaRows(previewBody));
   // eslint-disable-next-line no-unused-vars
@@ -77,7 +79,7 @@ PreviewBody
     }).isRequired,
     selectedMeeting: shape({
       status: string.isRequired,
-      notes: string.isRequired,
+      notes: string,
       startTime: string.isRequired,
       duration: number.isRequired,
     }).isRequired,
