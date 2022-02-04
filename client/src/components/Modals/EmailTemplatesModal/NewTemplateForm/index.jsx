@@ -5,13 +5,22 @@ import { EmailTemplatesContext, NEW_TEMPLATE_FORM } from '../EmailTemplatesProvi
 
 const NewTemplateForm = () => {
   const { displayComponent } = useContext(EmailTemplatesContext);
-  // eslint-disable-next-line no-unused-vars
-  const [formState, setFormState] = useState({ includeMeeting: false });
+
+  // formState matches EmailTemplate's 'propertiesFor' property
+  const [formState, setFormState] = useState({
+    meeting: { isIncluded: false, options: null },
+    tutor: { isIncluded: true, options: null },
+    student: { isIncluded: true, options: null },
+  });
 
   if (displayComponent !== NEW_TEMPLATE_FORM) return '';
 
   const handleFormChange = ({ target: { name, value } }) => {
-    if (value === 'true' || value === 'false') setFormState((currState) => ({ ...currState, [name]: !currState[name] }));
+    const [model, property] = name.split('.');
+
+    if (value === 'true' || value === 'false') setFormState(
+      (currState) => ({ ...currState, [model]: { [property]: !(currState[model][property]) } }),
+    );
   };
 
   const handleFormSubmit = async (e) => {
@@ -19,7 +28,7 @@ const NewTemplateForm = () => {
     const { _id } = await createModel(
       {
         model: 'email-template',
-        body: { includePropertiesFor: { meeting: formState.includeMeeting } },
+        body: { propertiesFor: formState },
       },
     );
     if (!_id) return;
@@ -34,9 +43,9 @@ const NewTemplateForm = () => {
         <Form.Control>
           <Form.Radio
             className='border rounded px-3 mr-3'
-            value={formState.includeMeeting}
-            name='includeMeeting'
-            checked={formState.includeMeeting}
+            value={formState.meeting.isIncluded}
+            name='meeting.isIncluded'
+            checked={formState.meeting.isIncluded}
             onChange={() => null}
             onClick={handleFormChange}
           >
@@ -44,9 +53,9 @@ const NewTemplateForm = () => {
           </Form.Radio>
           <Form.Radio
             className='border rounded px-3'
-            value={!formState.includeMeeting}
-            name='includeMeeting'
-            checked={!formState.includeMeeting}
+            value={!(formState.meeting.isIncluded)}
+            name='meeting.isIncluded'
+            checked={!(formState.meeting.isIncluded)}
             onChange={() => null}
             onClick={handleFormChange}
           >
