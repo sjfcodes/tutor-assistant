@@ -9,10 +9,13 @@ const endPoints = [
 ];
 
 const refreshOtherServers = async (urls) => {
-  const promises = urls.map((url) => axios.get(url).then(() => console.log(`${url} completed`)));
-  await Promise.all(promises);
-
-  console.log('callbot completed');
+  try {
+    const promises = urls.map((url) => axios.get(url).then(() => console.log(`${url} completed`)));
+    await Promise.all(promises);
+    console.log('callbot completed');
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const minute = 60 * 1000;
