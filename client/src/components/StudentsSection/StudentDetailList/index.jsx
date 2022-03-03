@@ -8,7 +8,7 @@ import StudentDetailListItem from './StudentDetailListItem';
 const StudentDetailList = ({ student }) => {
   const [listItems, setListItems] = useState();
   const doNotDisplay = useMemo(
-    () => ['_id', '__v', 'createdAt', 'studentId'],
+    () => ['_id', 'id', '__v', 'createdAt', 'studentId'],
     [],
   );
 

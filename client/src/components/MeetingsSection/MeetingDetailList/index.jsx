@@ -6,7 +6,15 @@ import MeetingDetailListItem from './MeetingDetailListItem';
 const MeetingDetailList = ({ _id, meeting }) => {
   const [listItems, setListItems] = useState();
   const doNotDisplay = useMemo(
-    () => ['_id', '__v', 'tutorId', 'createdAt', 'studentId', 'type'],
+    () => [
+      '_id',
+      'id',
+      '__v',
+      'tutorId',
+      'createdAt',
+      'studentId',
+      'type',
+    ],
     [],
   );
 

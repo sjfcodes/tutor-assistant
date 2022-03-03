@@ -12,6 +12,7 @@ const ProfileDetailList = () => {
   const [listItems, setListItems] = useState();
   const doNotDisplay = useMemo(() => [
     '_id',
+    'id',
     '__v',
     'courses',
     'createdAt',
