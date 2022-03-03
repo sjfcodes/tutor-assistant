@@ -8,7 +8,7 @@ import DropDownIcon from '../../DropDownIcon';
 
 const SectionContainer = ({
   // eslint-disable-next-line react/prop-types
-  children, heading, addListItemClick, active, handleToggle,
+  children, heading, addListItemClick, active, handleToggle, disabled = false,
 }) => (
   <Box className={`has-background-white py-1 px-3 mb-3 ${active ? 'border-primary' : ''}`}>
     <Level renderAs='div' className='is-mobile my-2'>
@@ -19,6 +19,7 @@ const SectionContainer = ({
         <Button
           color='primary mr-5'
           className='tag'
+          disabled={disabled}
           onClick={addListItemClick}
         >
           <Icon>

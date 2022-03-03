@@ -52,6 +52,7 @@ const TasksSection = () => {
       setFilterBy={setFilterBy}
       filterOptions={filterOptions}
       addListItemClick={openAddTaskModal}
+      disabled
     >
       {getChildren()}
     </SectionContainer>
