@@ -45,7 +45,7 @@ section header {
 
 main {
   min-width: none;
-  flex-grow: 1;
+  flex: 1;
 }
 footer {
   margin: 0;
