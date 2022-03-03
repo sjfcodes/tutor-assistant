@@ -15,6 +15,7 @@ const getBooleanSpan = (boolean) => <span className={`has-text-${boolean ? 'succ
 const getElementFor = ({ property, value }) => {
   const elementFor = {
     createdAt: () => <span>{getLocalDateString(value)}</span>,
+    clockOutNotes: () => <textarea className='list-item p-1' value={value} onChange={() => null} disabled />,
     default: () => (
       <p className='rounded'>{`${value}`}</p>
     ),
@@ -31,10 +32,12 @@ const getElementFor = ({ property, value }) => {
     ),
     graduationDate: () => <GraduationDate iso8601={value} />,
     meetingLink: () => <a href={value} target='_blank' rel='noreferrer'>{value}</a>,
+    notes: () => <textarea className='list-item p-1' value={value} onChange={() => null} disabled />,
     reassignment: () => getBooleanSpan(value),
     recurringMeeting: () => getBooleanSpan(value),
     scheduleLink: () => <a href={value} target='_blank' rel='noreferrer'>{value}</a>,
     startTime: () => <p className='mb-3'><MeetingDateFull iso8601={value} /></p>,
+
   };
   return elementFor[property] || elementFor.default;
 };
@@ -74,6 +77,7 @@ const ListItem = ({
     meetingsPerWeek: <LitsItemInput type='number' {...args} />,
     notes: <Form.Textarea {...args} />,
     timeZoneName: <TimeZoneSelector {...args} />,
+    clockOutNotes: <Form.Textarea {...args} />,
   };
 
   useEffect(() => {
