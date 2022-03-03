@@ -54,24 +54,26 @@ const App = () => {
       </Section>
 
       <BackgroundImage url='./images/bg-image.jpg' />
-      <Section renderAs='main' className='p-0'>
-        <Container className='is-max-desktop'>
-          <Columns centered className='m-0'>
-            <Columns.Column
-              desktop={{ size: 10 }}
-              tablet={{ size: 8 }}
-            >
-              {
-                loggedIn
-                  ? <Home />
-                  : <Landing />
-              }
+      <div id='app-wrapper'>
+        <Section renderAs='main' className='p-0'>
+          <Container className='is-max-desktop'>
+            <Columns centered className='m-0'>
+              <Columns.Column
+                desktop={{ size: 10 }}
+                tablet={{ size: 8 }}
+              >
+                {
+                  loggedIn
+                    ? <Home />
+                    : <Landing />
+                }
 
-            </Columns.Column>
-          </Columns>
-        </Container>
-      </Section>
-      <Footer className='border-top py-0' />
+              </Columns.Column>
+            </Columns>
+          </Container>
+        </Section>
+        <Footer className='border-top py-0' />
+      </div>
     </>
   );
 };
