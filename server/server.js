@@ -6,6 +6,7 @@ const compression = require('compression');
 const { reportStatus } = require('./utils/consoleColors/index.js');
 
 require('./config/connection');
+require('./utils/callbot');
 
 const PORT = process.env.PORT || 3001;
 const app = express();
