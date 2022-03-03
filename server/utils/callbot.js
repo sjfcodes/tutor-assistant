@@ -4,6 +4,7 @@ this bot is not necessarily part of this project,
 simply a tool keep the email server and some other project servers from sleeping
 */
 const axios = require('axios');
+const { reportStatus, reportError } = require('./consoleColors/index.js');
 
 const minute = 60 * 1000;
 const endPoints = [
@@ -13,11 +14,11 @@ const endPoints = [
 
 const refreshOtherServers = async (urls) => {
   try {
-    const promises = urls.map((url) => axios.get(url).then(() => console.log(`${url} completed`)));
+    const promises = urls.map((url) => axios.get(url));
     await Promise.all(promises);
-    console.log('callbot completed');
+    reportStatus('callbot completed');
   } catch (error) {
-    console.log(error);
+    reportError(error.message);
   }
 };
 
