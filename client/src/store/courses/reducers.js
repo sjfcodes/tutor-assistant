@@ -106,9 +106,12 @@ const courseReducer = (state = {}, action) => {
     const allCourses = { ...state.allCourses };
     allCourses[state.selectedCourse].meetings[meeting._id] = meeting;
 
+    const meetingCount = allCourses[state.selectedCourse].meetingCount + 1;
+
     return {
       ...state,
       allCourses,
+      meetingCount,
     };
   }
 
