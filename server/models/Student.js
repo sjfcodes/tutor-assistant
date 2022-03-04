@@ -82,6 +82,13 @@ studentSchema.virtual('clockOutNotes').get(function () {
 3. B2B-No/yes
 `;
 });
+// eslint-disable-next-line func-names
+// eslint-disable-next-line prefer-arrow-callback
+studentSchema.virtual('sessionReview').get(function () {
+  return `${'`session review`'}
+classCode: ${this.classId}
+https://docs.google.com/forms/d/e/1FAIpQLSdb4ejjbqoqKO-Q4k7zeO_xwykwB0dxYLWYm1mX5Ik45MzEeg/viewform`;
+});
 
 const Student = model('Student', studentSchema);
 
