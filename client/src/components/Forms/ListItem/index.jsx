@@ -18,6 +18,7 @@ import ListItemTime from './ListITemTime';
 const getElementFor = ({ property, value }) => {
   const elementFor = {
     createdAt: () => <span>{getLocalDateString(value)}</span>,
+    cancelUrl: () => <ListItemLink value={value} />,
     clockOutNotes: () => <ListItemTextArea value={value} />,
     default: () => (<p className='rounded'>{`${value}`}</p>),
     endTime: () => <ListItemTime value={value} />,
@@ -27,10 +28,12 @@ const getElementFor = ({ property, value }) => {
     meetingLink: () => <ListItemLink value={value} />,
     notes: () => <ListItemTextArea value={value} />,
     reassignment: () => <ListItemBooleanSpan value={value} />,
+    rescheduleUrl: () => <ListItemLink value={value} />,
     recurringMeeting: () => <ListItemBooleanSpan value={value} />,
     sessionReview: () => <ListItemTextArea value={value} />,
     scheduleLink: () => <ListItemLink value={value} />,
     startTime: () => <ListItemTime value={value} />,
+    updatedAt: () => <ListItemTime value={value} />,
   };
 
   return elementFor[property] || elementFor.default;
