@@ -18,6 +18,7 @@ const AddMeetingModal = () => {
     startTime: '',
     status: 'scheduled',
     studentId: '',
+    recurringMeeting: false,
   });
 
   const handleAddMeeting = async (e) => {

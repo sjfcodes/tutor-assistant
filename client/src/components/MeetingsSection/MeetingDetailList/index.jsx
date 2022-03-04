@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { v4 as uuid } from 'uuid';
-import { shape, string } from 'prop-types';
+import { bool, shape, string } from 'prop-types';
 import MeetingDetailListItem from './MeetingDetailListItem';
 
 const MeetingDetailList = ({ _id, meeting }) => {
@@ -56,5 +56,6 @@ MeetingDetailList.propTypes = {
     startTime: string.isRequired,
     status: string.isRequired,
     createdAt: string.isRequired,
+    recurringMeeting: bool.isRequired,
   }).isRequired,
 };

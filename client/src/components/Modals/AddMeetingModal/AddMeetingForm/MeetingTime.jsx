@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Form } from 'react-bulma-components';
 import {
-  string, func, shape, number,
+  string, func, shape, number, bool,
 } from 'prop-types';
 import { useSelector } from 'react-redux';
 import { convertAddMeetingFormToISO8601 } from '../../../../utils';
@@ -12,6 +12,7 @@ export const addMeetingFormPropTypes = {
     startTime: string.isRequired,
     studentId: string.isRequired,
     status: string.isRequired,
+    recurringMeeting: bool.isRequired,
   }).isRequired,
   setFormInputs: func.isRequired,
 };

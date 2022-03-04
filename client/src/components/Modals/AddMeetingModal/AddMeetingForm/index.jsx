@@ -7,13 +7,17 @@ import MeetingTime, { addMeetingFormPropTypes } from './MeetingTime';
 import { StudentSelector } from '../../../Forms';
 
 const AddMeetingForm = ({ formInputs, setFormInputs }) => {
-  const { studentId, startTime, duration } = formInputs;
+  const {
+    studentId, startTime, duration, recurringMeeting,
+  } = formInputs;
 
   const handleInputChange = (e) => {
     const {
       target: { name, value },
     } = e;
-    setFormInputs({ ...formInputs, [name]: value });
+    if (value === 'true' || value === 'false') return setFormInputs((currState) => ({ ...currState, [name]: !currState[name] }));
+
+    return setFormInputs({ ...formInputs, [name]: value });
   };
 
   // eslint-disable-next-line no-unused-vars
@@ -77,6 +81,29 @@ const AddMeetingForm = ({ formInputs, setFormInputs }) => {
             </Form.Control>
           </Form.Field>
         </LevelSide>
+      </Columns.Column>
+      <Columns.Column>
+        <Form.Label>Recurring Meeting?</Form.Label>
+        <Form.Control>
+          <Form.Radio
+            value='true'
+            name='recurringMeeting'
+            checked={recurringMeeting}
+            onChange={() => null}
+            onClick={handleInputChange}
+          >
+            Yes
+          </Form.Radio>
+          <Form.Radio
+            value='false'
+            name='recurringMeeting'
+            checked={!recurringMeeting}
+            onChange={() => null}
+            onClick={handleInputChange}
+          >
+            No
+          </Form.Radio>
+        </Form.Control>
       </Columns.Column>
     </Columns>
   );
