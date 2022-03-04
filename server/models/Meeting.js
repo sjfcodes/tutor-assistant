@@ -4,18 +4,9 @@ const { getISOCurrentDateStamp, calculateEndTime } = require('../utils/dateTime'
 
 const meetingSchema = new Schema(
   {
-    status: {
+    createdAt: {
       type: String,
-      required: true,
-    },
-    studentId: {
-      type: Schema.Types.ObjectId,
-      ref: 'Student',
-      required: true,
-    },
-    startTime: {
-      type: String,
-      required: true,
+      default: () => getISOCurrentDateStamp(),
     },
     duration: {
       type: Number,
@@ -27,9 +18,22 @@ const meetingSchema = new Schema(
     notes: {
       type: String,
     },
-    createdAt: {
+    recurringMeeting: {
+      type: Boolean,
+      required: true,
+    },
+    startTime: {
       type: String,
-      default: () => getISOCurrentDateStamp(),
+      required: true,
+    },
+    status: {
+      type: String,
+      required: true,
+    },
+    studentId: {
+      type: Schema.Types.ObjectId,
+      ref: 'Student',
+      required: true,
     },
   },
 );
