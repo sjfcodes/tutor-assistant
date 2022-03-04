@@ -30,7 +30,7 @@ const StudentsSection = () => {
     if (!isActive) return '';
     return (
       <>
-        <Columns className='is-mobile ml-5'>
+        <Columns className='is-mobile ml-5 mt-2'>
           <p className='mr-3'>sort</p>
           <StudentsListFilter />
         </Columns>

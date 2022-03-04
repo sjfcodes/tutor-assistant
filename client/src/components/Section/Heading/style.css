@@ -1,0 +1,12 @@
+.heading-wrapper {
+  width: 220px;
+  display: flex;
+  justify-content: space-between;
+
+}
+
+.heading-count {
+  display: flex;
+  width: 50px;
+  justify-content: space-between;
+}

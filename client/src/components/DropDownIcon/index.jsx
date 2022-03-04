@@ -1,22 +1,17 @@
-import { bool, func } from 'prop-types';
+import { bool } from 'prop-types';
 import React from 'react';
 import { Icon } from 'react-bulma-components';
 
-const DropDownIcon = ({ active, onClick }) => (
+const DropDownIcon = ({ active }) => (
   <Icon
     className='mr-2'
-    onClick={onClick}
   >
     <i className={`fas fa-chevron-${active ? 'up' : 'down'}`} />
   </Icon>
 );
 
-export default DropDownIcon;
-
 DropDownIcon.propTypes = {
   active: bool.isRequired,
-  onClick: func,
 };
-DropDownIcon.defaultProps = {
-  onClick: () => null,
-};
+
+export default DropDownIcon;
