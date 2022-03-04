@@ -17,16 +17,26 @@ const MeetingsListItemLayout = (
   };
 
   return (
-    <div className='ml-3'>
-      <p>{getDisplayName()}</p>
-      <p>
+    <div className='ml-3' style={{ display: 'flex' }}>
+      <p style={{
+        width: '6em',
+        display: 'flex',
+        justifyContent: 'space-between',
+        // border: 'solid red 1px',
+      }}
+      >
         <span className=''>[</span>
         <MeetingDateShort iso8601={startTime} />
         <span className=''>]</span>
+      </p>
+      <p className='ml-2'>
         <span className=''>{' '}</span>
         <MeetingTime iso8601={startTime} />
         <span className='is-size-7'>{' - '}</span>
         <MeetingTime iso8601={endTime} />
+      </p>
+      <p className='ml-2'>
+        {getDisplayName()}
       </p>
     </div>
   );

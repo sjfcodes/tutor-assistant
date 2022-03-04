@@ -14,9 +14,9 @@ const MeetingTime = ({ iso8601, className }) => {
 
   return (
     <span className={className}>
-      <DateItem str={t[0]} className='has-text-weight-bold has-text-primary' />
+      <DateItem str={t[0]} className='has-text-weight-bold has-text-info' />
       :
-      <DateItem str={t[1]} className='has-text-weight-bold has-text-primary' />
+      <DateItem str={t[1]} className='has-text-weight-bold has-text-info' />
       {' '}
       <DateItem str={t[2]} size={7} />
     </span>
