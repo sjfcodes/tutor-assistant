@@ -13,13 +13,13 @@ const StudentsSection = () => {
   const { allCourses, selectedCourse } = useSelector((state) => state.courses);
   const dispatch = useDispatch();
 
-  const { handleToggle } = useContext(DashboardContext);
+  const { toggleDisplayedSection } = useContext(DashboardContext);
   const {
     filterBy, setFilterBy,
     isActive, sectionName, filterOptions,
   } = useContext(StudentsContext);
 
-  const toggleSection = () => handleToggle(STUDENTS_SECTION);
+  const toggleSection = () => toggleDisplayedSection(STUDENTS_SECTION);
   const getStudentCount = () => {
     let count = 0;
     if (allCourses && selectedCourse) count += allCourses[selectedCourse].studentCount;
@@ -51,7 +51,7 @@ const StudentsSection = () => {
     <SectionContainer
       heading={heading}
       active={isActive}
-      handleToggle={toggleSection}
+      toggleDisplayedSection={toggleSection}
       sectionName={sectionName}
       filterBy={filterBy}
       setFilterBy={setFilterBy}

@@ -8,7 +8,7 @@ import DropDownIcon from '../../DropDownIcon';
 
 const SectionContainer = ({
   // eslint-disable-next-line react/prop-types
-  children, heading, addListItemClick, active, handleToggle, disabled = false,
+  children, heading, addListItemClick, active, toggleDisplayedSection, disabled = false,
 }) => {
   const handleListItemCLicked = (e) => {
     e.stopPropagation();
@@ -19,7 +19,7 @@ const SectionContainer = ({
       <Level
         renderAs='div'
         className='is-mobile my-2'
-        onClick={handleToggle}
+        onClick={toggleDisplayedSection}
       >
         <LevelSide>
           {heading}

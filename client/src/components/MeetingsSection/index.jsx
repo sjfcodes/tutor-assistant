@@ -14,14 +14,14 @@ import { MeetingsContext } from './MeetingsProvider';
 const MeetingsSection = () => {
   const { allCourses, selectedCourse } = useSelector((state) => state.courses);
   const dispatch = useDispatch();
-  const { handleToggle } = useContext(DashboardContext);
+  const { toggleDisplayedSection } = useContext(DashboardContext);
   const {
     filterBy, setFilterBy,
     isActive, sectionName, filterOptions,
   } = useContext(MeetingsContext);
   const [calendlyCount, setCalendlyCount] = useState(0);
 
-  const toggleSection = () => handleToggle(MEETINGS_SECTION);
+  const toggleSection = () => toggleDisplayedSection(MEETINGS_SECTION);
   const getMeetingCount = () => {
     let count = 0;
     if (allCourses && selectedCourse) count += allCourses[selectedCourse].meetingCount;
@@ -57,7 +57,7 @@ const MeetingsSection = () => {
     <SectionContainer
       heading={heading}
       active={isActive}
-      handleToggle={toggleSection}
+      toggleDisplayedSection={toggleSection}
       sectionName={sectionName}
       filterBy={filterBy}
       setFilterBy={setFilterBy}

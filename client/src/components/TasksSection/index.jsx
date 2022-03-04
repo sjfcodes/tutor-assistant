@@ -11,14 +11,14 @@ import { TasksContext } from './TasksProvider';
 
 const TasksSection = () => {
   const dispatch = useDispatch();
-  const { handleToggle } = useContext(DashboardContext);
+  const { toggleDisplayedSection } = useContext(DashboardContext);
   const {
     count,
     filterBy, setFilterBy,
     isActive, sectionName, filterOptions,
   } = useContext(TasksContext);
 
-  const toggleSection = () => handleToggle(TASKS_SECTION);
+  const toggleSection = () => toggleDisplayedSection(TASKS_SECTION);
   const getTaskCount = () => (count || '~');
   const getChildren = () => {
     if (!isActive) return '';
@@ -46,7 +46,7 @@ const TasksSection = () => {
     <SectionContainer
       heading={heading}
       active={isActive}
-      handleToggle={toggleSection}
+      toggleDisplayedSection={toggleSection}
       sectionName={sectionName}
       filterBy={filterBy}
       setFilterBy={setFilterBy}

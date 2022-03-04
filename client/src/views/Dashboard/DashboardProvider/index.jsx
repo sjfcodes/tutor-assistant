@@ -11,7 +11,7 @@ export const DashboardContext = createContext({});
 const DashboardProvider = ({ children }) => {
   const [activeComponent, setActiveComponent] = useState(MEETINGS_SECTION);
 
-  const handleToggle = useCallback((item) => {
+  const toggleDisplayedSection = useCallback((item) => {
     setActiveComponent(
       activeComponent !== item
         ? item
@@ -23,9 +23,9 @@ const DashboardProvider = ({ children }) => {
     {
       activeComponent,
       setActiveComponent,
-      handleToggle,
+      toggleDisplayedSection,
     }
-  ), [activeComponent, setActiveComponent, handleToggle]);
+  ), [activeComponent, setActiveComponent, toggleDisplayedSection]);
 
   return (
     <DashboardContext.Provider value={value}>
