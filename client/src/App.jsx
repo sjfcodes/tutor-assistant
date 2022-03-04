@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Nav from './components/Nav';
 import Footer from './components/Footer';
 import BackgroundImage from './components/BackgroundImage';
-import Home from './views/Home';
+import Dashboard from './views/Dashboard';
 import Landing from './views/Landing';
 import { loginWithToken } from './utils';
 import { LOGIN_TUTOR } from './store/tutor/actions';
@@ -64,7 +64,7 @@ const App = () => {
               >
                 {
                   loggedIn
-                    ? <Home />
+                    ? <Dashboard />
                     : <Landing />
                 }
 

@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Columns } from 'react-bulma-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { ADD_STUDENT_MODAL, SET_OPEN_MODAL } from '../../store/view/actions';
-import { HomeContext, STUDENTS_SECTION } from '../../views/Home/HomeProvider';
+import { DashboardContext, STUDENTS_SECTION } from '../../views/Dashboard/DashboardProvider';
 import SectionContainer from '../Section/Container';
 import SectionHeading from '../Section/Heading';
 import StudentsList from './StudentsList';
@@ -13,7 +13,7 @@ const StudentsSection = () => {
   const { allCourses, selectedCourse } = useSelector((state) => state.courses);
   const dispatch = useDispatch();
 
-  const { handleToggle } = useContext(HomeContext);
+  const { handleToggle } = useContext(DashboardContext);
   const {
     filterBy, setFilterBy,
     isActive, sectionName, filterOptions,

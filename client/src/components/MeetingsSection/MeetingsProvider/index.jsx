@@ -1,13 +1,13 @@
 import React, {
   createContext, useContext, useMemo, useState,
 } from 'react';
-import { HomeContext, MEETINGS_SECTION } from '../../../views/Home/HomeProvider';
+import { DashboardContext, MEETINGS_SECTION } from '../../../views/Dashboard/DashboardProvider';
 
 export const MeetingsContext = createContext({});
 
 // eslint-disable-next-line react/prop-types
 const MeetingsProvider = ({ children }) => {
-  const { activeComponent } = useContext(HomeContext);
+  const { activeComponent } = useContext(DashboardContext);
   const [filterOptions, setFilterOptions] = useState(['all', 'tutorly']);
   const [filterBy, setFilterBy] = useState(filterOptions[0]);
 

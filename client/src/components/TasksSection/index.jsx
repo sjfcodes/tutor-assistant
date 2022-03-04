@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Columns } from 'react-bulma-components';
 import { useDispatch } from 'react-redux';
 import { ADD_TASK_MODAL, SET_OPEN_MODAL } from '../../store/view/actions';
-import { HomeContext, TASKS_SECTION } from '../../views/Home/HomeProvider';
+import { DashboardContext, TASKS_SECTION } from '../../views/Dashboard/DashboardProvider';
 import SectionContainer from '../Section/Container';
 import SectionHeading from '../Section/Heading';
 import TasksList from './TasksList';
@@ -11,7 +11,7 @@ import { TasksContext } from './TasksProvider';
 
 const TasksSection = () => {
   const dispatch = useDispatch();
-  const { handleToggle } = useContext(HomeContext);
+  const { handleToggle } = useContext(DashboardContext);
   const {
     count,
     filterBy, setFilterBy,

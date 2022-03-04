@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { SET_CALENDLY_MEETINGS } from '../../store/calendly/actions';
 import { ADD_MEETING_MODAL, SET_OPEN_MODAL } from '../../store/view/actions';
 import { formatCalendlyMeetings, readModel } from '../../utils';
-import { HomeContext, MEETINGS_SECTION } from '../../views/Home/HomeProvider';
+import { DashboardContext, MEETINGS_SECTION } from '../../views/Dashboard/DashboardProvider';
 import SectionContainer from '../Section/Container';
 import SectionHeading from '../Section/Heading';
 import MeetingsList from './MeetingsList';
@@ -14,7 +14,7 @@ import { MeetingsContext } from './MeetingsProvider';
 const MeetingsSection = () => {
   const { allCourses, selectedCourse } = useSelector((state) => state.courses);
   const dispatch = useDispatch();
-  const { handleToggle } = useContext(HomeContext);
+  const { handleToggle } = useContext(DashboardContext);
   const {
     filterBy, setFilterBy,
     isActive, sectionName, filterOptions,

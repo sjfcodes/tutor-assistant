@@ -5,10 +5,10 @@ import React, {
 export const TASKS_SECTION = 'tasks_section';
 export const STUDENTS_SECTION = 'students_section';
 export const MEETINGS_SECTION = 'meetings_section';
-export const HomeContext = createContext({});
+export const DashboardContext = createContext({});
 
 // eslint-disable-next-line react/prop-types
-const HomeProvider = ({ children }) => {
+const DashboardProvider = ({ children }) => {
   const [activeComponent, setActiveComponent] = useState(MEETINGS_SECTION);
 
   const handleToggle = useCallback((item) => {
@@ -28,10 +28,10 @@ const HomeProvider = ({ children }) => {
   ), [activeComponent, setActiveComponent, handleToggle]);
 
   return (
-    <HomeContext.Provider value={value}>
+    <DashboardContext.Provider value={value}>
       {children}
-    </HomeContext.Provider>
+    </DashboardContext.Provider>
   );
 };
 
-export default HomeProvider;
+export default DashboardProvider;

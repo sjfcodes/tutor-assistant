@@ -2,7 +2,7 @@ import React, {
   createContext, useContext, useEffect, useMemo, useState,
 } from 'react';
 import { useSelector } from 'react-redux';
-import { HomeContext, TASKS_SECTION } from '../../../views/Home/HomeProvider';
+import { DashboardContext, TASKS_SECTION } from '../../../views/Dashboard/DashboardProvider';
 
 export const TasksContext = createContext({});
 
@@ -35,7 +35,7 @@ const TasksProvider = ({ children }) => {
     courses: { allCourses, selectedCourse },
     calendlyMeetings,
   } = useSelector((state) => state);
-  const { activeComponent } = useContext(HomeContext);
+  const { activeComponent } = useContext(DashboardContext);
   const [filterOptions, setFilterOptions] = useState(['all', 'tutor', 'student', 'meeting']);
   const [filterBy, setFilterBy] = useState(filterOptions[0]);
   // eslint-disable-next-line no-unused-vars
