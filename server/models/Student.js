@@ -46,10 +46,7 @@ const studentSchema = new Schema(
       type: Boolean,
       required: true,
     },
-    recurringMeeting: {
-      type: Boolean,
-      required: true,
-    },
+
     notes: {
       type: String,
     },
@@ -72,6 +69,11 @@ studentSchema.pre('save', async function (next) {
   next();
 });
 
+// eslint-disable-next-line func-names
+// eslint-disable-next-line prefer-arrow-callback
+studentSchema.virtual('fullName').get(function () {
+  return `${this.firstName} ${this.lastName}`;
+});
 // eslint-disable-next-line func-names
 // eslint-disable-next-line prefer-arrow-callback
 studentSchema.virtual('clockOutNotes').get(function () {
