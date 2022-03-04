@@ -29,7 +29,6 @@ export const addStudentFormDefaults = {
   meetingLink: '',
   meetingsPerWeek: 1,
   reassignment: false,
-  recurringMeeting: true,
   timeZoneName: clientTimeZone || '',
 };
 

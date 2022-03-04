@@ -20,7 +20,7 @@ const AddStudentForm = ({ formInputs, setFormInputs }) => {
   const {
     firstName, lastName, email, classId, timeZoneName,
     graduationDate, fullTimeCourse, githubUsername, meetingLink,
-    meetingsPerWeek, reassignment, recurringMeeting,
+    meetingsPerWeek, reassignment,
   } = formInputs;
 
   const [displayHelpText, setDisplayHelpText] = useState();
@@ -230,29 +230,6 @@ const AddStudentForm = ({ formInputs, setFormInputs }) => {
               </Form.Radio>
             </Form.Control>
           </Column>
-          <Column>
-            <Form.Label>Recurring Meeting?</Form.Label>
-            <Form.Control>
-              <Form.Radio
-                value='true'
-                name='recurringMeeting'
-                checked={recurringMeeting}
-                onChange={() => null}
-                onClick={handleInputChange}
-              >
-                Yes
-              </Form.Radio>
-              <Form.Radio
-                value='false'
-                name='recurringMeeting'
-                checked={!recurringMeeting}
-                onChange={() => null}
-                onClick={handleInputChange}
-              >
-                No
-              </Form.Radio>
-            </Form.Control>
-          </Column>
         </Level>
       </Columns>
       {displayHelpText}
@@ -274,7 +251,6 @@ AddStudentForm.propTypes = {
     meetingLink: string.isRequired,
     meetingsPerWeek: number.isRequired,
     reassignment: bool.isRequired,
-    recurringMeeting: bool.isRequired,
   }).isRequired,
   setFormInputs: func.isRequired,
 };
