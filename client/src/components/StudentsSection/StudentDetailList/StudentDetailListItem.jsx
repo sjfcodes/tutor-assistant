@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import { emailIsValid, updateModel } from '../../../utils';
 import ListItem from '../../Forms/ListItem';
 import { UPDATE_STUDENT_DETAIL } from '../../../store/courses/actions';
+import CopyToClipboardIcon from '../../CopyToClipboardIcon';
 
 const StudentListItemDetail = ({
   _id, property, value,
@@ -86,10 +87,11 @@ const StudentListItemDetail = ({
         <Form.Field kind='addons' className=''>
           <Form.Control fullwidth className='border-bottom-light'>
             <Form.Label
-              className='mb-0 mt-3 has-text-primary'
+              className='mb-0 mt-3 has-text-info'
               size='small'
             >
               {displayPropertyName}
+              <CopyToClipboardIcon className='' data={value} />
             </Form.Label>
 
             <Form.Help textAlign='right' className='ml-5' color='danger'>{helpText}</Form.Help>
