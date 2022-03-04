@@ -52,6 +52,7 @@ const getCalendlyMeetings = async ({
           questionsAndAnswers: student.questions_and_answers,
           rescheduleUrl: student.reschedule_url,
           rescheduled: student.rescheduled,
+          recurringMeeting: false,
           timeZoneName: student.timezone,
           updatedAt: student.updated_at,
           createdAt: event.created_at,
