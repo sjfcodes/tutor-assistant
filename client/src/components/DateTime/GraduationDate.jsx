@@ -19,7 +19,6 @@ const GraduationDate = ({ iso8601, className }) => {
     </p>
   );
 };
-export default GraduationDate;
 
 GraduationDate.propTypes = {
   iso8601: string.isRequired,
@@ -28,3 +27,5 @@ GraduationDate.propTypes = {
 GraduationDate.defaultProps = {
   className: '',
 };
+
+export default GraduationDate;
