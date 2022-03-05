@@ -52,10 +52,12 @@ const MeetingsListItemLayout = (
       {
         studentId && (
           <Button
+            className='tag ml-2'
             size='small'
+            color='info'
             onClick={showStudentDetails}
           >
-            {studentId}
+            show student
           </Button>
         )
       }
