@@ -46,20 +46,23 @@ const MeetingsListItemLayout = (
         <span className='is-size-7'>{' - '}</span>
         <MeetingTime iso8601={endTime} />
       </p>
-      <p className='ml-2'>
-        {getDisplayName()}
-      </p>
+
       {
-        studentId && (
-          <Button
-            className='tag ml-2'
-            size='small'
-            color='info'
-            onClick={showStudentDetails}
-          >
-            show student
-          </Button>
-        )
+        studentId
+          ? (
+            <Button
+              className='tag ml-2 p-1'
+              size='small'
+              color='info'
+              onClick={showStudentDetails}
+            >
+              {getDisplayName()}
+            </Button>
+          ) : (
+            <p className='ml-2'>
+              {getDisplayName()}
+            </p>
+          )
       }
     </div>
   );
