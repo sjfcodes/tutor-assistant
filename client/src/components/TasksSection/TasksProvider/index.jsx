@@ -6,7 +6,8 @@ import { DashboardContext, TASKS_SECTION } from '../../../views/Dashboard/Dashbo
 
 export const TasksContext = createContext({});
 
-const checkCalendlyStudents = (students, calendlyMeetings) => {
+const checkCalendlyStudentsByEmail = (students, calendlyMeetings) => {
+  // collect emails for existing students
   const studentEmails = {};
   Object
     .values(students)
@@ -35,7 +36,7 @@ const TasksProvider = ({ children }) => {
     courses: { allCourses, selectedCourse },
     calendlyMeetings,
   } = useSelector((state) => state);
-  const { activeComponent } = useContext(DashboardContext);
+  const { activeComponent: { component } } = useContext(DashboardContext);
   const [filterOptions, setFilterOptions] = useState(['all', 'tutor', 'student', 'meeting']);
   const [filterBy, setFilterBy] = useState(filterOptions[0]);
   // eslint-disable-next-line no-unused-vars
@@ -58,17 +59,17 @@ const TasksProvider = ({ children }) => {
         filterOptions,
         setFilterOptions,
         sectionName: 'Tasks',
-        isActive: activeComponent === TASKS_SECTION,
+        isActive: component === TASKS_SECTION,
       }
     ),
     [
       count, tutorTasks, studentTasks, meetingTasks,
-      activeComponent, filterBy, filterOptions,
+      component, filterBy, filterOptions,
     ],
   );
 
   useEffect(() => {
-    const missingFromDB = checkCalendlyStudents(
+    const missingFromDB = checkCalendlyStudentsByEmail(
       allCourses[selectedCourse].students,
       calendlyMeetings,
     );

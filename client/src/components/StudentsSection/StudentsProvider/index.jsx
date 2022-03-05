@@ -7,7 +7,7 @@ export const StudentsContext = createContext({});
 
 // eslint-disable-next-line react/prop-types
 const StudentsProvider = ({ children }) => {
-  const { activeComponent } = useContext(DashboardContext);
+  const { activeComponent: { component } } = useContext(DashboardContext);
   const [filterOptions, setFilterOptions] = useState(['first name', 'last name', 'graduation date']);
   const [filterBy, setFilterBy] = useState(filterOptions[0]);
 
@@ -18,9 +18,9 @@ const StudentsProvider = ({ children }) => {
       filterOptions,
       setFilterOptions,
       sectionName: 'Students',
-      isActive: activeComponent === STUDENTS_SECTION,
+      isActive: component === STUDENTS_SECTION,
     }
-  ), [activeComponent, filterBy, filterOptions]);
+  ), [component, filterBy, filterOptions]);
 
   return (
     <StudentsContext.Provider value={value}>

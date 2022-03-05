@@ -7,7 +7,7 @@ export const MeetingsContext = createContext({});
 
 // eslint-disable-next-line react/prop-types
 const MeetingsProvider = ({ children }) => {
-  const { activeComponent } = useContext(DashboardContext);
+  const { activeComponent: { component } } = useContext(DashboardContext);
   const [filterOptions, setFilterOptions] = useState(['all', 'tutorly']);
   const [filterBy, setFilterBy] = useState(filterOptions[0]);
 
@@ -18,9 +18,9 @@ const MeetingsProvider = ({ children }) => {
       filterOptions,
       setFilterOptions,
       sectionName: 'Meetings',
-      isActive: activeComponent === MEETINGS_SECTION,
+      isActive: component === MEETINGS_SECTION,
     }
-  ), [activeComponent, filterBy, filterOptions]);
+  ), [component, filterBy, filterOptions]);
 
   return (
     <MeetingsContext.Provider value={value}>
