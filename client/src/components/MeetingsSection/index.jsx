@@ -4,7 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { SET_CALENDLY_MEETINGS } from '../../store/calendly/actions';
 import { ADD_MEETING_MODAL, SET_OPEN_MODAL } from '../../store/view/actions';
 import { formatCalendlyMeetings, readModel } from '../../utils';
-import { DashboardContext, MEETINGS_SECTION } from '../../views/Dashboard/DashboardProvider';
+import {
+  DashboardContext,
+  MEETINGS_SECTION,
+} from '../../views/Dashboard/DashboardProvider';
 import SectionContainer from '../Section/Container';
 import SectionHeading from '../Section/Heading';
 import MeetingsList from './MeetingsList';
@@ -16,8 +19,7 @@ const MeetingsSection = () => {
   const dispatch = useDispatch();
   const { toggleDisplayedSection } = useContext(DashboardContext);
   const {
-    filterBy, setFilterBy,
-    isActive, sectionName, filterOptions,
+    filterBy, setFilterBy, isActive, sectionName, filterOptions,
   } = useContext(MeetingsContext);
   const [calendlyCount, setCalendlyCount] = useState(0);
 
@@ -33,24 +35,28 @@ const MeetingsSection = () => {
     let isMounted = true;
     if (!selectedCourse || !allCourses) return '';
     const getCalendlyMeetings = async () => {
-      const { calendlyMeetings: meetings } = await readModel({ model: 'calendly/meetings', _id: selectedCourse });
+      const { calendlyMeetings: meetings } = await readModel({
+        model: 'calendly/meetings',
+        _id: selectedCourse,
+      });
       if (!isMounted) return;
+
       dispatch({
         type: SET_CALENDLY_MEETINGS,
         payload: formatCalendlyMeetings(meetings),
       });
+
       setCalendlyCount(meetings.length);
     };
     if (allCourses[selectedCourse].calendly.data) getCalendlyMeetings();
 
-    return () => { isMounted = false; };
+    return () => {
+      isMounted = false;
+    };
   }, [selectedCourse, allCourses, dispatch]);
 
   const heading = (
-    <SectionHeading
-      sectionName={sectionName}
-      count={getMeetingCount()}
-    />
+    <SectionHeading sectionName={sectionName} count={getMeetingCount()} />
   );
 
   return (
@@ -64,16 +70,14 @@ const MeetingsSection = () => {
       filterOptions={filterOptions}
       addListItemClick={() => dispatch({ type: SET_OPEN_MODAL, payload: ADD_MEETING_MODAL })}
     >
-      { isActive && (
+      {isActive && (
         <>
           <Columns className='is-mobile ml-5 mt-2'>
             <p className='mr-3'>sort</p>
             <MeetingsListFilter />
           </Columns>
 
-          <MeetingsList
-            filterBy={filterBy}
-          />
+          <MeetingsList filterBy={filterBy} />
         </>
       )}
     </SectionContainer>

@@ -1,21 +1,28 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { func, shape, string } from 'prop-types';
+import React, {
+  useContext, useEffect, useMemo, useState,
+} from 'react';
+import { shape, string } from 'prop-types';
 import { useSelector } from 'react-redux';
 import MeetingDetailList from '../MeetingDetailList';
 import ListItemContainer from '../../List/ListItemContainer';
 import MeetingsListItemLayout from './MeetingsListItemLayout';
+import { DashboardContext, MEETINGS_SECTION } from '../../../views/Dashboard/DashboardProvider';
 
-const MeetingListItem = ({ meeting, setSelectedMeetingId, selectedMeetingId }) => {
+const MeetingListItem = ({ meeting }) => {
   const { allCourses, selectedCourse } = useSelector((state) => state.courses);
+
+  const { activeComponent, setActiveComponent } = useContext(DashboardContext);
+  const { component, selectedItemId } = activeComponent;
 
   const [listItemDetails, setListItemDetails] = useState('');
 
   const { _id, studentId } = meeting;
 
   const toggleViewMeeting = () => (
-    selectedMeetingId === _id
-      ? setSelectedMeetingId('')
-      : setSelectedMeetingId(_id)
+    setActiveComponent({
+      ...activeComponent,
+      selectedItemId: selectedItemId === _id ? '' : _id,
+    })
   );
 
   const student = useMemo(
@@ -24,14 +31,15 @@ const MeetingListItem = ({ meeting, setSelectedMeetingId, selectedMeetingId }) =
   );
 
   useEffect(() => {
-    if (selectedMeetingId !== _id) return setListItemDetails('');
+    if (component !== MEETINGS_SECTION) return '';
+    if (selectedItemId !== _id) return setListItemDetails('');
     return setListItemDetails(<MeetingDetailList meeting={meeting} _id={_id} />);
-  }, [meeting, _id, selectedMeetingId]);
+  }, [meeting, _id, selectedItemId, component]);
 
   return (
     <ListItemContainer
       itemId={_id}
-      selectedItemId={selectedMeetingId}
+      selectedItemId={selectedItemId}
       toggleViewItem={toggleViewMeeting}
       listItemDetails={listItemDetails}
     >
@@ -53,6 +61,4 @@ MeetingListItem.propTypes = {
     status: string.isRequired,
     createdAt: string.isRequired,
   }).isRequired,
-  selectedMeetingId: string.isRequired,
-  setSelectedMeetingId: func.isRequired,
 };

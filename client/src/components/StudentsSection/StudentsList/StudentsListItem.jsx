@@ -1,33 +1,39 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
-  bool, func, number, shape, string,
+  bool, number, shape, string,
 } from 'prop-types';
 import { Level } from 'react-bulma-components';
 import ListItemContainer from '../../List/ListItemContainer';
 import StudentDetailList from '../StudentDetailList';
 import { TimeZoneAbbreviation } from '../../DateTime';
+import { DashboardContext, STUDENTS_SECTION } from '../../../views/Dashboard/DashboardProvider';
 
-const StudentListItem = ({ student, selectedStudentId, setSelectedStudentId }) => {
+const StudentListItem = ({ student }) => {
   const [listItemDetails, setListItemDetails] = useState('listItemDetails');
   const {
     _id, firstName, lastName, timeZoneName,
   } = student;
+  const { activeComponent, setActiveComponent } = useContext(DashboardContext);
+  const { component, selectedItemId } = activeComponent;
 
   const toggleViewStudent = () => (
-    selectedStudentId === _id
-      ? setSelectedStudentId('')
-      : setSelectedStudentId(_id)
+    setActiveComponent({
+      ...activeComponent,
+      selectedItemId: selectedItemId === _id ? '' : _id,
+    })
   );
 
   useEffect(() => {
-    if (selectedStudentId !== _id) return setListItemDetails('');
+    if (component !== STUDENTS_SECTION) return '';
+
+    if (selectedItemId !== _id) return setListItemDetails('');
     return setListItemDetails(<StudentDetailList student={student} _id={_id} />);
-  }, [student, _id, selectedStudentId]);
+  }, [student, _id, component, selectedItemId]);
 
   return (
     <ListItemContainer
       itemId={_id}
-      selectedItemId={selectedStudentId}
+      selectedItemId={selectedItemId}
       toggleViewItem={toggleViewStudent}
       listItemDetails={listItemDetails}
     >
@@ -65,6 +71,4 @@ StudentListItem.propTypes = {
     recurringMeeting: bool,
     createdAt: string,
   }).isRequired,
-  selectedStudentId: string.isRequired,
-  setSelectedStudentId: func.isRequired,
 };

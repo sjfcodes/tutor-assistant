@@ -10,7 +10,6 @@ const StudentsList = () => {
   const { allCourses, selectedCourse } = useSelector((state) => state.courses);
 
   const { filterBy } = useContext(StudentsContext);
-  const [selectedStudentId, setSelectedStudentId] = useState('');
   const [displayedStudents, setDisplayedStudents] = useState([]);
   const [studentsListItems, setStudentsListItems] = useState('');
 
@@ -89,12 +88,10 @@ const StudentsList = () => {
           <StudentsListItem
             key={student._id}
             student={student}
-            selectedStudentId={selectedStudentId}
-            setSelectedStudentId={setSelectedStudentId}
           />
         )),
     );
-  }, [selectedCourse, allCourses, displayedStudents, selectedStudentId, filterBy]);
+  }, [selectedCourse, allCourses, displayedStudents, filterBy]);
 
   return studentsListItems;
 };

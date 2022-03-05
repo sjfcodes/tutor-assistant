@@ -9,7 +9,6 @@ const TasksList = () => {
   const { selectedCourse } = useSelector((state) => state.courses);
 
   const { filterBy, setCount, studentTasks } = useContext(TasksContext);
-  const [selectedTaskId, setSelectedTaskId] = useState('');
   const [displayedTasks, setDisplayedTasks] = useState([]);
   const [tasksListItems, setTasksListItems] = useState('');
 
@@ -96,12 +95,10 @@ const TasksList = () => {
           <TasksListItem
             key={task._id}
             task={task}
-            selectedTaskId={selectedTaskId}
-            setSelectedTaskId={setSelectedTaskId}
           />
         )),
     );
-  }, [selectedCourse, displayedTasks, selectedTaskId]);
+  }, [selectedCourse, displayedTasks]);
 
   return (tasksListItems);
 };

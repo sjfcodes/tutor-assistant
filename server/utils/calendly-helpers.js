@@ -1,4 +1,5 @@
 const axios = require('axios');
+const { Course } = require('../models');
 const { getISOCurrentDateStamp } = require('./dateTime');
 const { getCalendlyToken, decryptToken } = require('./encryption');
 const { formatName } = require('./format');
@@ -30,6 +31,21 @@ const getCalendlyMeetings = async ({
     },
   );
 
+  // object we'll use to link email's to existing students on the roster { email:_id, email:_id }
+  const studentEmailIdObject = await Course
+    .findById(courseId)
+    .populate('students')
+    .then((data) => {
+      const emailIdObject = {};
+      data.students
+        .forEach(({ _id, email }) => {
+          emailIdObject[email] = _id;
+        });
+      return emailIdObject;
+    });
+
+  // console.log(studentEmailIdObject);
+
   const stillActive = collection.filter(({ status }) => status !== 'canceled');
 
   const populatedMeetings = await Promise
@@ -53,6 +69,7 @@ const getCalendlyMeetings = async ({
           rescheduleUrl: student.reschedule_url,
           rescheduled: student.rescheduled,
           recurringMeeting: false,
+          studentId: studentEmailIdObject[student.email] || null,
           timeZoneName: student.timezone,
           updatedAt: student.updated_at,
           createdAt: event.created_at,

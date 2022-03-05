@@ -5,19 +5,20 @@ import React, {
 export const TASKS_SECTION = 'tasks_section';
 export const STUDENTS_SECTION = 'students_section';
 export const MEETINGS_SECTION = 'meetings_section';
+
 export const DashboardContext = createContext({});
 
 // eslint-disable-next-line react/prop-types
 const DashboardProvider = ({ children }) => {
-  const [activeComponent, setActiveComponent] = useState(MEETINGS_SECTION);
+  const [activeComponent, setActiveComponent] = useState({ component: MEETINGS_SECTION, selectedItemId: '' });
+  const { component } = activeComponent;
 
   const toggleDisplayedSection = useCallback((item) => {
-    setActiveComponent(
-      activeComponent !== item
-        ? item
-        : '',
-    );
-  }, [activeComponent]);
+    setActiveComponent({
+      ...activeComponent,
+      component: component !== item ? item : '',
+    });
+  }, [component, activeComponent]);
 
   const value = useMemo(() => (
     {

@@ -1,31 +1,37 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
-  func,
   shape, string,
 } from 'prop-types';
 import { Level } from 'react-bulma-components';
 import ListItemContainer from '../../List/ListItemContainer';
+import { DashboardContext, TASKS_SECTION } from '../../../views/Dashboard/DashboardProvider';
 
-const TasksListItem = ({ task, selectedTaskId, setSelectedTaskId }) => {
+const TasksListItem = ({ task }) => {
   const [listItemDetails, setListItemDetails] = useState('listItemDetails');
   const { _id, taskComponent, taskFor } = task;
 
-  const toggleViewStudent = () => (
-    selectedTaskId === _id
-      ? setSelectedTaskId('')
-      : setSelectedTaskId(_id)
+  const { activeComponent, setActiveComponent } = useContext(DashboardContext);
+  const { component, selectedItemId } = activeComponent;
+
+  const toggleViewTask = () => (
+    setActiveComponent({
+      ...activeComponent,
+      selectedItemId: selectedItemId === _id ? '' : _id,
+    })
   );
 
   useEffect(() => {
-    if (selectedTaskId !== _id) return setListItemDetails('');
+    if (component !== TASKS_SECTION) return '';
+
+    if (selectedItemId !== _id) return setListItemDetails('');
     return setListItemDetails(taskComponent);
-  }, [task, _id, selectedTaskId, taskComponent]);
+  }, [task, _id, selectedItemId, component, taskComponent]);
 
   return (
     <ListItemContainer
       itemId={_id}
-      selectedItemId={selectedTaskId}
-      toggleViewItem={toggleViewStudent}
+      selectedItemId={selectedItemId}
+      toggleViewItem={toggleViewTask}
       listItemDetails={listItemDetails}
     >
       <Level.Item className='ml-3 mr-1'>{taskFor}</Level.Item>
@@ -38,6 +44,4 @@ TasksListItem.propTypes = {
   task: shape({
     _id: string.isRequired,
   }).isRequired,
-  selectedTaskId: string.isRequired,
-  setSelectedTaskId: func.isRequired,
 };

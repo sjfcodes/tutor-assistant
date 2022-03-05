@@ -1,19 +1,30 @@
 import { shape, string } from 'prop-types';
-import React from 'react';
+import React, { useContext } from 'react';
+import { Button } from 'react-bulma-components';
+import { DashboardContext, STUDENTS_SECTION } from '../../../views/Dashboard/DashboardProvider';
 import { MeetingDateShort, MeetingTime } from '../../DateTime';
 
 const MeetingsListItemLayout = (
   {
     student: { firstName, lastName },
     meeting: {
-      startTime, endTime, firstName: calFirstName, lastName: calLastName,
+      startTime, endTime, firstName: calFirstName, lastName: calLastName, studentId,
     },
   },
 ) => {
+  const { activeComponent, setActiveComponent } = useContext(DashboardContext);
   const getDisplayName = () => {
     if (calFirstName || calLastName) return `${calFirstName} ${calLastName}`;
     if (firstName || lastName) return `${firstName} ${lastName}`;
     return 'work in progress';
+  };
+  const showStudentDetails = (e) => {
+    e.stopPropagation();
+    setActiveComponent({
+      ...activeComponent,
+      component: STUDENTS_SECTION,
+      selectedItemId: studentId,
+    });
   };
 
   return (
@@ -35,9 +46,24 @@ const MeetingsListItemLayout = (
         <span className='is-size-7'>{' - '}</span>
         <MeetingTime iso8601={endTime} />
       </p>
-      <p className='ml-2'>
-        {getDisplayName()}
-      </p>
+
+      {
+        studentId
+          ? (
+            <Button
+              className='tag ml-2 p-1'
+              size='small'
+              color='info'
+              onClick={showStudentDetails}
+            >
+              {getDisplayName()}
+            </Button>
+          ) : (
+            <p className='ml-2'>
+              {getDisplayName()}
+            </p>
+          )
+      }
     </div>
   );
 };

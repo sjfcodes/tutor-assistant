@@ -8,7 +8,6 @@ const MeetingsList = ({ filterBy }) => {
     calendlyMeetings,
     courses: { allCourses, selectedCourse },
   } = useSelector((state) => state);
-  const [selectedMeetingId, setSelectedMeetingId] = useState('');
   const [displayedMeetings, setDisplayedMeetings] = useState([]);
   const [meetingsListItems, setMeetingsListItems] = useState('');
 
@@ -62,11 +61,9 @@ const MeetingsList = ({ filterBy }) => {
         <MeetingsListItem
           key={meeting._id}
           meeting={meeting}
-          selectedMeetingId={selectedMeetingId}
-          setSelectedMeetingId={setSelectedMeetingId}
         />
       )));
-  }, [selectedCourse, allCourses, calendlyMeetings, displayedMeetings, selectedMeetingId]);
+  }, [selectedCourse, allCourses, calendlyMeetings, displayedMeetings]);
 
   return meetingsListItems;
 };
