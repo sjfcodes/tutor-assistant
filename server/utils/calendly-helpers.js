@@ -10,10 +10,11 @@ const getCalendlyHeaders = (token) => ({
 });
 
 const getCalendlyMeetings = async ({
+  uri,
   courseId,
   accountKey,
-  uri,
-}, minstartTime = getISOCurrentDateStamp()) => {
+  minStartTime = getISOCurrentDateStamp(),
+}) => {
   //  get & decrypt accountKey (users password)
   const password = decryptToken(accountKey, process.env.JWT_SECRET);
   // use account key to get & decrypt calendly token
@@ -26,7 +27,7 @@ const getCalendlyMeetings = async ({
       params: {
         user: uri,
         // count: 10,
-        min_start_time: minstartTime,
+        min_start_time: minStartTime,
       },
     },
   );
