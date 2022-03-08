@@ -1,0 +1,19 @@
+.meeting-time-details {
+    width: 275px;
+}
+
+.meeting-past {
+    background-color: rgba(255, 108, 108, 0.356);
+}
+
+.meeting-present {
+    background-color: rgba(255, 196, 0, 0.61);
+}
+
+.meeting-future {
+    background-color: rgba(0, 255, 0, 0.61);
+}
+
+button.meeting-student {
+    width: 150px;
+}

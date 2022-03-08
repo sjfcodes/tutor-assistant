@@ -31,7 +31,7 @@ const MessageBoard = () => {
     return () => { isMounted = false; };
   }, [date]);
   return (
-    <Box className='p-3 mb-3'>
+    <Box className='p-3 mb-3 has-background-white-ter'>
       <p className='pb-2 border-bottom has-text-centered'>
         <MeetingDateFull iso8601={date} />
         {' '}

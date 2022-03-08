@@ -9,19 +9,19 @@ const ListItemContainer = ({
   children, itemId, selectedItemId, toggleViewItem, listItemDetails,
 }) => (
   <Box
-    className={`border rounded px-0 py-1 mb-3
-      ${selectedItemId !== itemId && 'hover-large-item'}`}
+    className={`border rounded px-0 py-0 mb-3
+      ${selectedItemId !== itemId && 'hover-large-item'} `}
   >
     <Level
       renderAs='div'
       breakpoint='mobile'
-      className={`${selectedItemId === itemId && 'border-bottom pb-1 mb-0'}`}
+      className={`py-1 ${selectedItemId === itemId && 'border-bottom pb-1 mb-0'}`}
       onClick={toggleViewItem}
     >
       <LevelSide>
         {children}
       </LevelSide>
-      <Level.Side>
+      <Level.Side align='right'>
         <DropDownIcon active={(selectedItemId === itemId)} />
       </Level.Side>
     </Level>

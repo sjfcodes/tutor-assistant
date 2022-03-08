@@ -7,6 +7,7 @@ const {
 const { authorizeToken } = require('../utils/auth');
 const { getCalendlyMeetings, getCalendlyHeaders } = require('../utils/calendly-helpers');
 const { reportError } = require('../utils/consoleColors/index.js');
+const { getISOPastHour } = require('../utils/dateTime');
 const { getCalendlyToken, encryptToken } = require('../utils/encryption');
 const { getTutorById } = require('../utils/helpers');
 
@@ -78,11 +79,18 @@ router.post('/token/:courseId', authorizeToken, async (
 router.get('/meetings/:courseId', authorizeToken, async ({
   tutor: { accountKey },
   params: { courseId },
+  query: { minStartTime },
+
 }, res) => {
   try {
     const uri = await getCalendlyUriFromCourse(courseId);
     if (uri) {
-      const calendlyMeetings = await getCalendlyMeetings({ courseId, accountKey, uri });
+      const calendlyMeetings = await getCalendlyMeetings({
+        uri,
+        courseId,
+        accountKey,
+        minStartTime: getISOPastHour(minStartTime || 12),
+      });
       return res.json({ calendlyMeetings });
     }
     return res.status(404).json({ message: 'data unavailable' });
