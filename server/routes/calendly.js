@@ -79,6 +79,8 @@ router.post('/token/:courseId', authorizeToken, async (
 router.get('/meetings/:courseId', authorizeToken, async ({
   tutor: { accountKey },
   params: { courseId },
+  query: { minStartTime },
+
 }, res) => {
   try {
     const uri = await getCalendlyUriFromCourse(courseId);
@@ -87,7 +89,7 @@ router.get('/meetings/:courseId', authorizeToken, async ({
         uri,
         courseId,
         accountKey,
-        minStartTime: getISOPastHour(12),
+        minStartTime: getISOPastHour(minStartTime || 12),
       });
       return res.json({ calendlyMeetings });
     }
