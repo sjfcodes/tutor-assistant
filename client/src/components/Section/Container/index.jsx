@@ -15,7 +15,7 @@ const SectionContainer = ({
     addListItemClick();
   };
   return (
-    <Box className={`has-background-white py-1 px-3 mb-3 ${active ? 'border-primary' : ''}`}>
+    <Box className={` py-1 px-3 mb-3 ${active ? 'border-primary has-background-white-ter' : 'has-background-grey-light'}`}>
       <Level
         renderAs='div'
         className='is-mobile my-2'

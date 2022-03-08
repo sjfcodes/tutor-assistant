@@ -39,8 +39,6 @@ const MeetingListItem = ({ meeting }) => {
   return (
     <ListItemContainer
       itemId={_id}
-      meetingStartTime={meeting.startTime}
-      meetingEndTime={meeting.endTime}
       selectedItemId={selectedItemId}
       toggleViewItem={toggleViewMeeting}
       listItemDetails={listItemDetails}
