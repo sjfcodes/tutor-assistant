@@ -6,18 +6,19 @@ import { DashboardContext, TASKS_SECTION } from '../../../views/Dashboard/Dashbo
 
 export const TasksContext = createContext({});
 
-const checkCalendlyStudentsByEmail = (students, calendlyMeetings) => {
+const checkCalendlyStudentsByEmail = (selectedCourse) => {
   // collect emails for existing students
   const studentEmails = {};
   Object
-    .values(students)
+    .values(selectedCourse.students)
     .forEach((student) => {
       studentEmails[student.email] = true;
     });
 
   const missing = [];
   Object
-    .values(calendlyMeetings)
+    .values(selectedCourse.meetings)
+    .filter(({ type }) => type === 'calendly')
     .forEach((meeting) => {
       if (!studentEmails[meeting.email]) {
         studentEmails[meeting.email] = true;
@@ -34,7 +35,6 @@ const checkCalendlyStudentsByEmail = (students, calendlyMeetings) => {
 const TasksProvider = ({ children }) => {
   const {
     courses: { allCourses, selectedCourse },
-    calendlyMeetings,
   } = useSelector((state) => state);
   const { activeComponent: { component } } = useContext(DashboardContext);
   const [filterOptions, setFilterOptions] = useState(['all', 'tutor', 'student', 'meeting']);
@@ -69,15 +69,12 @@ const TasksProvider = ({ children }) => {
   );
 
   useEffect(() => {
-    const missingFromDB = checkCalendlyStudentsByEmail(
-      allCourses[selectedCourse].students,
-      calendlyMeetings,
-    );
+    const missingFromDB = checkCalendlyStudentsByEmail(allCourses[selectedCourse]);
     if (!missingFromDB.length) return;
     // console.log(missingFromDB);
     setCount(missingFromDB.length);
     setStudentTasks(missingFromDB);
-  }, [allCourses, selectedCourse, calendlyMeetings, setCount]);
+  }, [allCourses, selectedCourse, setCount]);
 
   return (
     <TasksContext.Provider value={value}>

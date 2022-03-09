@@ -1,7 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Columns } from 'react-bulma-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { SET_CALENDLY_MEETINGS } from '../../store/calendly/actions';
+import { SET_CALENDLY_MEETINGS_FOR_COURSE } from '../../store/courses/actions';
 import { ADD_MEETING_MODAL, SET_OPEN_MODAL } from '../../store/view/actions';
 import { formatCalendlyMeetings, readModel } from '../../utils';
 import {
@@ -21,13 +21,11 @@ const MeetingsSection = () => {
   const {
     filterBy, setFilterBy, isActive, sectionName, filterOptions,
   } = useContext(MeetingsContext);
-  const [calendlyCount, setCalendlyCount] = useState(0);
 
   const toggleSection = () => toggleDisplayedSection(MEETINGS_SECTION);
   const getMeetingCount = () => {
     let count = 0;
     if (allCourses && selectedCourse) count += allCourses[selectedCourse].meetingCount;
-    if (calendlyCount) count += calendlyCount;
     return count > 0 ? count : '~';
   };
 
@@ -42,11 +40,12 @@ const MeetingsSection = () => {
       if (!isMounted) return;
 
       dispatch({
-        type: SET_CALENDLY_MEETINGS,
-        payload: formatCalendlyMeetings(meetings),
+        type: SET_CALENDLY_MEETINGS_FOR_COURSE,
+        payload: {
+          selectedCourse,
+          calendlyMeetings: formatCalendlyMeetings(meetings),
+        },
       });
-
-      setCalendlyCount(meetings.length);
     };
     if (allCourses[selectedCourse].calendly.data) getCalendlyMeetings();
 

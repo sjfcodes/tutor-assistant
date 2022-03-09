@@ -5,8 +5,7 @@ import ListFilterSelector from '../../List/ListFilterSelector';
 import { MeetingsContext } from '../MeetingsProvider';
 
 const MeetingsListFilter = ({ className }) => {
-  const { calendlyMeetings } = useSelector((state) => state);
-
+  const { allCourses, selectedCourse } = useSelector((state) => state);
   const {
     sectionName,
     filterBy, setFilterBy,
@@ -16,7 +15,9 @@ const MeetingsListFilter = ({ className }) => {
   useEffect(() => {
     let isMounted = true;
     const optionName = 'calendly';
-    const hasItemsToFilter = (Object.keys(calendlyMeetings).length > 0);
+    if (!allCourses || !selectedCourse) return '';
+    const { meetings } = allCourses[selectedCourse];
+    const hasItemsToFilter = (Object.keys(meetings).length > 0);
 
     if (hasItemsToFilter) {
     /**
@@ -38,7 +39,7 @@ const MeetingsListFilter = ({ className }) => {
     }
 
     return () => { isMounted = false; };
-  }, [calendlyMeetings, filterOptions, setFilterOptions]);
+  }, [allCourses, selectedCourse, filterOptions, setFilterOptions]);
 
   return (
     <ListFilterSelector
