@@ -27,7 +27,9 @@ const CalendlyAccess = ({ courseId }) => {
 
   const getDeleteButton = () => {
     if (!accessToken) return '';
-    return <DeleteAccessToken />;
+    return (
+      <DeleteAccessToken courseId={courseId} />
+    );
   };
 
   const getFieldToDisplay = () => {

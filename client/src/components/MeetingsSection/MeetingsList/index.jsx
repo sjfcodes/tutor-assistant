@@ -5,11 +5,12 @@ import MeetingsListItem from './MeetingsListItem';
 
 const MeetingsList = ({ filterBy }) => {
   const {
-    calendlyMeetings,
     courses: { allCourses, selectedCourse },
   } = useSelector((state) => state);
   const [displayedMeetings, setDisplayedMeetings] = useState([]);
   const [meetingsListItems, setMeetingsListItems] = useState('');
+
+  const meetings = allCourses[selectedCourse]?.meetings;
 
   const filterMeetingsByStartTime = (arr) => (
     arr.length
@@ -25,26 +26,26 @@ const MeetingsList = ({ filterBy }) => {
   );
 
   useEffect(() => {
-    if (!selectedCourse) return;
+    if (!allCourses || !selectedCourse || !meetings) return;
     const selectedMeetings = [];
 
-    const addCalendlyMeetings = () => {
-      const arr = Object.values(calendlyMeetings);
-      if (arr.length) selectedMeetings.push(...arr);
-      return '';
-    };
+    // const addCalendlyMeetings = () => {
+    //   const arr = Object.values(calendlyMeetings);
+    //   if (arr.length) selectedMeetings.push(...arr);
+    //   return '';
+    // };
     const addTutorlyMeetings = () => {
-      const arr = Object.values(allCourses[selectedCourse].meetings);
+      const arr = Object.values(meetings);
       if (arr.length) selectedMeetings.push(...arr);
     };
 
     switch (filterBy) {
     case 'all':
       addTutorlyMeetings();
-      addCalendlyMeetings();
+      // addCalendlyMeetings();
       break;
     case 'calendly':
-      addCalendlyMeetings();
+      // addCalendlyMeetings();
       break;
     default:
       addTutorlyMeetings();
@@ -52,7 +53,7 @@ const MeetingsList = ({ filterBy }) => {
     }
 
     setDisplayedMeetings(filterMeetingsByStartTime(selectedMeetings));
-  }, [selectedCourse, allCourses, calendlyMeetings, filterBy]);
+  }, [selectedCourse, allCourses, filterBy, meetings]);
 
   useEffect(() => {
     if (!displayedMeetings.length) return setMeetingsListItems(<p className='has-text-centered'>no scheduled meetings</p>);
@@ -63,7 +64,7 @@ const MeetingsList = ({ filterBy }) => {
           meeting={meeting}
         />
       )));
-  }, [selectedCourse, allCourses, calendlyMeetings, displayedMeetings]);
+  }, [selectedCourse, allCourses, displayedMeetings]);
 
   return meetingsListItems;
 };

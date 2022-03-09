@@ -14,6 +14,7 @@ import {
   ADD_MEETING_TO_COURSE,
   UPDATE_MEETING_DETAIL,
   DELETE_MEETING,
+  SET_CALENDLY_MEETINGS_FOR_COURSE,
 } from './actions';
 
 // eslint-disable-next-line no-console
@@ -133,6 +134,19 @@ const courseReducer = (state = {}, action) => {
     return {
       ...state,
       allCourses,
+    };
+  }
+
+  case SET_CALENDLY_MEETINGS_FOR_COURSE: {
+    const { selectedCourse, calendlyMeetings } = action.payload;
+    const allCourses = { ...state.allCourses };
+    const mergedMeetings = { ...allCourses[selectedCourse].meetings, ...calendlyMeetings };
+    allCourses[selectedCourse].meetings = mergedMeetings;
+    console.log(allCourses);
+
+    return {
+      ...state,
+      // allCourses,
     };
   }
 
