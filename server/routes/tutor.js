@@ -4,9 +4,7 @@ const { signToken, authorizeToken } = require('../utils/auth');
 const { getCalendlyMeetings } = require('../utils/calendly-helpers');
 const { reportError } = require('../utils/consoleColors/index.js');
 const { encryptToken } = require('../utils/encryption');
-const {
-  getTutorByEmail, getTutorById, allowPropertyUpdate,
-} = require('../utils/helpers');
+const { getTutor, allowPropertyUpdate } = require('../utils/helpers');
 
 // create a new tutor
 router.post('/', async ({ body }, res) => {
@@ -30,7 +28,7 @@ router.post('/', async ({ body }, res) => {
 // login tutor with email and password
 router.post('/login', async ({ body: { email, password } }, res) => {
   try {
-    const { tutor } = await getTutorByEmail(email);
+    const { tutor } = await getTutor({ email });
     if (!tutor) return res.status(401).json({ message: 'unauthorized' });
     if (!await tutor.isCorrectPassword(password)) return res.status(401).json({ message: 'unauthorized' });
 
@@ -56,7 +54,7 @@ router.post('/login', async ({ body: { email, password } }, res) => {
 // login tutor with token
 router.get('/login', authorizeToken, async ({ tutor: { _id, accountKey } }, res) => {
   try {
-    const { tutor } = await getTutorById(_id);
+    const { tutor } = await getTutor({ _id });
     if (!tutor) return res.status(401).json({ message: 'unauthorized' });
 
     const { email } = tutor;
@@ -105,7 +103,7 @@ router.put('/', authorizeToken, async ({ tutor: { _id }, body }, res) => {
 // update a tutors password
 router.put('/password', authorizeToken, async ({ tutor: { _id }, body }, res) => {
   try {
-    const tutorDoc = await getTutorById(_id);
+    const tutorDoc = await getTutor({ _id });
     if (!await tutorDoc.isCorrectPassword(body.password)) return res.status(401).json({ message: 'unauthorized' });
 
     // update password to overwrite
@@ -122,7 +120,7 @@ router.put('/password', authorizeToken, async ({ tutor: { _id }, body }, res) =>
 // delete tutor
 router.delete('/', authorizeToken, async ({ tutor: { _id }, body }, res) => {
   try {
-    const tutorDoc = await getTutorById(_id);
+    const tutorDoc = await getTutor({ _id });
     if (!await tutorDoc.isCorrectPassword(body.password)) return res.status(401).json({ message: 'unauthorized' });
     await Tutor.findByIdAndDelete(_id);
     return res.json('tutor deleted');

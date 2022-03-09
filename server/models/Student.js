@@ -46,7 +46,6 @@ const studentSchema = new Schema(
       type: Boolean,
       required: true,
     },
-
     notes: {
       type: String,
     },

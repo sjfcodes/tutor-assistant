@@ -9,7 +9,7 @@ const { getCalendlyMeetings, getCalendlyHeaders } = require('../utils/calendly-h
 const { reportError } = require('../utils/consoleColors/index.js');
 const { getISOPastHour } = require('../utils/dateTime');
 const { getCalendlyToken, encryptToken } = require('../utils/encryption');
-const { getTutorById } = require('../utils/helpers');
+const { getTutor } = require('../utils/helpers');
 
 const getCalendlyUriFromCourse = async (courseId) => {
   const { calendly: { data } } = await Course.findById(courseId)
@@ -40,7 +40,7 @@ router.post('/token/:courseId', authorizeToken, async (
 ) => {
   try {
     //  get tutor document
-    const { tutor } = await getTutorById(tutorId);
+    const { tutor } = await getTutor({ _id: tutorId });
     if (!tutor) return res.status(401).json({ message: 'unauthorized' });
     // compare request password to tutor saved password
     if (!await tutor.isCorrectPassword(password)) return res.status(401).json({ message: 'unauthorized' });

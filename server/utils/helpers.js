@@ -2,8 +2,13 @@ const { Error } = require('mongoose');
 const { Tutor, Course } = require('../models');
 
 module.exports = {
-  getTutorById: (id) => new Promise((resolve, reject) => {
-    Tutor.findById(id)
+  getTutor: ({ _id, email }) => new Promise((resolve, reject) => {
+    const getField = () => {
+      if (_id) return ({ _id });
+      if (email) return ({ email });
+      return null;
+    };
+    Tutor.findOne(getField())
       .populate({
         path: 'courses',
         populate: [
@@ -13,28 +18,7 @@ module.exports = {
           },
           {
             path: 'meetings',
-            model: 'Meeting',
-          },
-        ],
-      })
-      .then((tutor) => {
-        if (!tutor) return reject(new Error('tutor not found'));
-        return resolve({ tutor });
-      })
-      .catch((error) => reject(error));
-  }),
-
-  getTutorByEmail: (email) => new Promise((resolve, reject) => {
-    Tutor.findOne({ email })
-      .populate({
-        path: 'courses',
-        populate: [
-          {
-            path: 'students',
-            model: 'Student',
-          },
-          {
-            path: 'meetings',
+            // match: { startTimeUnix: { $gte: (new Date().getTime() / 1000) } },
             model: 'Meeting',
           },
         ],
