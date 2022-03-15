@@ -62,9 +62,9 @@ const TasksList = () => {
         collectedTasks.push(...addMeetingTasks(meetingTasks));
         break;
       default:
-        addTutorTasks();
-        addStudentTasks();
-        addMeetingTasks();
+        collectedTasks.push(...addTutorTasks(tutorTasks));
+        collectedTasks.push(...addStudentTasks(studentTasks));
+        collectedTasks.push(...addMeetingTasks(meetingTasks));
       }
 
       setDisplayedTasks(collectedTasks);
