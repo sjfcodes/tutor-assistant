@@ -59,7 +59,7 @@ const AddCourseModal = () => {
 
     dispatch({
       type: SET_SELECTED_COURSE,
-      payload: course._id,
+      payload: { _id: course._id },
     });
 
     dispatch({ type: CLOSE_MODAL });
