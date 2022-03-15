@@ -53,8 +53,8 @@ const TasksProvider = ({ children }) => {
 
   useEffect(() => {
     const missingStudents = findMissingStudents(allMeetings);
-    if (!missingStudents.length) return;
-    setStudentTasks(missingStudents);
+    if (missingStudents.length) setStudentTasks(missingStudents);
+    else setStudentTasks([]);
   }, [allMeetings]);
 
   return (

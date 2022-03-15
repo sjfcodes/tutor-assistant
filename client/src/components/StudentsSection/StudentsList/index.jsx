@@ -67,20 +67,18 @@ const StudentsList = ({ focusedStudents }) => {
         break;
       }
       setDisplayedStudents(students);
-    }
+    } else setDisplayedStudents([]);
   }, [selectedCourse, filterBy, focusedStudents, setDisplayedStudents]);
 
   useEffect(() => {
     if (!displayedStudents.length) setStudentsListItems(<p className='has-text-centered'>add a student to get started</p>);
-    else setStudentsListItems(
-      displayedStudents
-        .map((student) => (
-          <StudentsListItem
-            key={student._id}
-            student={student}
-          />
-        )),
-    );
+    else setStudentsListItems(displayedStudents
+      .map((student) => (
+        <StudentsListItem
+          key={student._id}
+          student={student}
+        />
+      )));
   }, [selectedCourse, displayedStudents]);
 
   return studentsListItems;

@@ -23,30 +23,34 @@ const MeetingsSection = () => {
     sectionName, filterOptions, displayedMeetings,
   } = useContext(MeetingsContext);
 
-  const { meetings: allMeetings } = allCourses[selectedCourse];
+  const { meetings: allMeetings } = useMemo(
+    () => allCourses[selectedCourse],
+    [allCourses, selectedCourse],
+  );
 
   // will be used for updating focused meetings based on checkbox settings, see students section
   const focusedMeetings = useMemo(() => Object.values(allMeetings), [allMeetings]);
 
   useEffect(() => {
     let isMounted = true;
-    if (!selectedCourse || !allCourses) return '';
-    const getCalendlyMeetings = async () => {
-      const { calendlyMeetings: meetings } = await readModel({
-        model: 'calendly/meetings',
-        _id: selectedCourse,
-      });
-      if (!isMounted) return;
+    if (allCourses && selectedCourse) {
+      const getCalendlyMeetings = async () => {
+        const { calendlyMeetings: meetings } = await readModel({
+          model: 'calendly/meetings',
+          _id: selectedCourse,
+        });
+        if (!isMounted) return;
+        dispatch({
+          type: SET_CALENDLY_MEETINGS_FOR_COURSE,
+          payload: {
+            selectedCourse,
+            calendlyMeetings: formatCalendlyMeetings(meetings),
+          },
+        });
+      };
 
-      dispatch({
-        type: SET_CALENDLY_MEETINGS_FOR_COURSE,
-        payload: {
-          selectedCourse,
-          calendlyMeetings: formatCalendlyMeetings(meetings),
-        },
-      });
-    };
-    if (allCourses[selectedCourse].calendly.data) getCalendlyMeetings();
+      if (allCourses[selectedCourse].calendly.data) getCalendlyMeetings();
+    }
 
     return () => {
       isMounted = false;
