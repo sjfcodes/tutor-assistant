@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 import { Columns } from 'react-bulma-components';
 import { useDispatch } from 'react-redux';
 import { ADD_TASK_MODAL, SET_OPEN_MODAL } from '../../store/view/actions';
@@ -14,19 +14,27 @@ const TasksSection = () => {
   const dispatch = useDispatch();
   const { toggleDisplayedSection } = useContext(DashboardContext);
   const {
-    filterBy, setFilterBy, displayedTasks,
+    filterBy, setFilterBy,
+    studentTasks, meetingTasks, tutorTasks,
     isActive, sectionName, filterOptions,
   } = useContext(TasksContext);
+
+  const listItemCount = useMemo(
+    () => {
+      const getAllTaskCount = () => studentTasks.length + meetingTasks.length + tutorTasks.length;
+
+      return getCourseSectionListItemCount({
+        displayed: getAllTaskCount(),
+        focused: null,
+      });
+    },
+    [meetingTasks, studentTasks, tutorTasks],
+  );
 
   const headingComponent = (
     <SectionHeading
       sectionName={sectionName}
-      count={
-        getCourseSectionListItemCount({
-          displayed: displayedTasks.length,
-          focused: null,
-        })
-      }
+      count={listItemCount}
     />
   );
 
