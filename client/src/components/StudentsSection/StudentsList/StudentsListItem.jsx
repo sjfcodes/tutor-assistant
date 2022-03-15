@@ -5,16 +5,18 @@ import {
 import { Level } from 'react-bulma-components';
 import ListItemContainer from '../../List/ListItemContainer';
 import StudentDetailList from '../StudentDetailList';
-import { TimeZoneAbbreviation } from '../../DateTime';
+import { GraduationDate, TimeZoneAbbreviation } from '../../DateTime';
 import { DashboardContext, STUDENTS_SECTION } from '../../../views/Dashboard/DashboardProvider';
+import { StudentsContext } from '../StudentsProvider';
 
 const StudentListItem = ({ student }) => {
   const [listItemDetails, setListItemDetails] = useState('listItemDetails');
   const {
-    _id, firstName, lastName, timeZoneName,
+    _id, firstName, lastName, timeZoneName, graduationDate,
   } = student;
   const { activeComponent, setActiveComponent } = useContext(DashboardContext);
   const { component, selectedItemId } = activeComponent;
+  const { filterBy } = useContext(StudentsContext);
 
   const toggleViewStudent = () => (
     setActiveComponent({
@@ -37,8 +39,23 @@ const StudentListItem = ({ student }) => {
       toggleViewItem={toggleViewStudent}
       listItemDetails={listItemDetails}
     >
+      {
+        filterBy === 'graduation date'
+          ? (
+            <Level.Item className='ml-3 mr-1'>
+              [
+              <GraduationDate iso8601={graduationDate} />
+              ]
+            </Level.Item>
+          )
+          : ''
+      }
       <Level.Item className='ml-3 mr-1'>
-        {`${firstName} ${lastName}`}
+        {
+          filterBy === 'first name'
+            ? `${firstName} ${lastName}`
+            : `${lastName}, ${firstName}`
+        }
       </Level.Item>
       <Level.Item>
         <p>
