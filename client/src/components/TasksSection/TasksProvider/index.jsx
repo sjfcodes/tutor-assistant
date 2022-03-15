@@ -37,6 +37,7 @@ const TasksProvider = ({ children }) => {
     courses: { allCourses, selectedCourse },
   } = useSelector((state) => state);
   const { activeComponent: { component } } = useContext(DashboardContext);
+  const [displayedTasks, setDisplayedTasks] = useState([]);
   const [filterOptions, setFilterOptions] = useState(['all', 'tutor', 'student', 'meeting']);
   const [filterBy, setFilterBy] = useState(filterOptions[0]);
   // eslint-disable-next-line no-unused-vars
@@ -44,27 +45,26 @@ const TasksProvider = ({ children }) => {
   const [studentTasks, setStudentTasks] = useState([]);
   // eslint-disable-next-line no-unused-vars
   const [meetingTasks, setMeetingTasks] = useState([]);
-  const [count, setCount] = useState(0);
 
   const value = useMemo(
     () => (
       {
-        count,
         tutorTasks,
         studentTasks,
         meetingTasks,
-        setCount,
         filterBy,
         setFilterBy,
         filterOptions,
         setFilterOptions,
+        displayedTasks,
+        setDisplayedTasks,
         sectionName: 'Tasks',
         isActive: component === TASKS_SECTION,
       }
     ),
     [
-      count, tutorTasks, studentTasks, meetingTasks,
-      component, filterBy, filterOptions,
+      tutorTasks, studentTasks, meetingTasks,
+      component, filterBy, filterOptions, displayedTasks,
     ],
   );
 
@@ -72,9 +72,8 @@ const TasksProvider = ({ children }) => {
     const missingFromDB = checkCalendlyStudentsByEmail(allCourses[selectedCourse]);
     if (!missingFromDB.length) return;
     // console.log(missingFromDB);
-    setCount(missingFromDB.length);
     setStudentTasks(missingFromDB);
-  }, [allCourses, selectedCourse, setCount]);
+  }, [allCourses, selectedCourse]);
 
   return (
     <TasksContext.Provider value={value}>
