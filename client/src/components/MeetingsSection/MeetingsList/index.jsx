@@ -50,20 +50,18 @@ const MeetingsList = ({ focusedMeetings }) => {
       }
 
       setDisplayedMeetings(filterMeetingsByStartTime(meetings));
-    }
+    } else setDisplayedMeetings([]);
   }, [selectedCourse, filterBy, focusedMeetings, setDisplayedMeetings]);
 
   useEffect(() => {
     if (!displayedMeetings.length) setMeetingsListItems(<p className='has-text-centered'>no scheduled meetings</p>);
-    else setMeetingsListItems(
-      displayedMeetings
-        .map((meeting) => (
-          <MeetingsListItem
-            key={meeting._id}
-            meeting={meeting}
-          />
-        )),
-    );
+    else setMeetingsListItems(displayedMeetings
+      .map((meeting) => (
+        <MeetingsListItem
+          key={meeting._id}
+          meeting={meeting}
+        />
+      )));
   }, [selectedCourse, displayedMeetings]);
 
   return meetingsListItems;
