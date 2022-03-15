@@ -1,7 +1,9 @@
-import React, { useContext } from 'react';
-import { Columns } from 'react-bulma-components';
+import React, { useContext, useMemo, useState } from 'react';
+import { Columns, Form } from 'react-bulma-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { ADD_STUDENT_MODAL, SET_OPEN_MODAL } from '../../store/view/actions';
+import { getCurrentUnix } from '../../utils';
+import { getUnixFromISO } from '../../utils/helpers/dateTime';
 import { DashboardContext, STUDENTS_SECTION } from '../../views/Dashboard/DashboardProvider';
 import SectionContainer from '../Section/Container';
 import SectionHeading from '../Section/Heading';
@@ -14,16 +16,32 @@ const StudentsSection = () => {
   const dispatch = useDispatch();
 
   const { toggleDisplayedSection } = useContext(DashboardContext);
+  const [checkBox, setCheckBox] = useState({ currentStudentsOnly: true });
+
+  const focusedStudents = useMemo(
+    () => {
+      const allStudents = Object
+        .values(allCourses[selectedCourse].students);
+
+      const currentDateUnix = getCurrentUnix();
+
+      return checkBox.currentStudentsOnly
+        ? allStudents
+          .filter(({ graduationDate }) => getUnixFromISO(graduationDate) > currentDateUnix)
+        : allStudents;
+    },
+    [allCourses, selectedCourse, checkBox.currentStudentsOnly],
+  );
+
   const {
     filterBy, setFilterBy,
     isActive, sectionName, filterOptions,
   } = useContext(StudentsContext);
 
   const toggleSection = () => toggleDisplayedSection(STUDENTS_SECTION);
-  const getStudentCount = () => {
-    let count = 0;
-    if (allCourses && selectedCourse) count += allCourses[selectedCourse].studentCount;
-    return count > 0 ? count : '~';
+
+  const toggleCheckbox = ({ target: { name, checked } }) => {
+    setCheckBox({ ...checkBox, [name]: checked });
   };
 
   const getChildren = () => {
@@ -31,10 +49,24 @@ const StudentsSection = () => {
     return (
       <>
         <Columns className='is-mobile ml-5 mt-2'>
-          <p className='mr-3'>sort</p>
-          <StudentsListFilter />
+          <Columns.Column>
+            <Form.Field kind='addons'>
+              <Form.Label className='mr-3 mb-0'>
+                sort
+              </Form.Label>
+              <StudentsListFilter />
+            </Form.Field>
+          </Columns.Column>
+          <Columns.Column>
+            <Form.Field kind='addons'>
+              <Form.Label className='mr-3 mb-0'>
+                Current Students
+              </Form.Label>
+              <Form.Checkbox name='currentStudentsOnly' checked={checkBox.currentStudentsOnly} onChange={toggleCheckbox} />
+            </Form.Field>
+          </Columns.Column>
         </Columns>
-        <StudentsList />
+        <StudentsList focusedStudents={focusedStudents} />
       </>
     );
   };
@@ -42,7 +74,7 @@ const StudentsSection = () => {
   const heading = (
     <SectionHeading
       sectionName={sectionName}
-      count={getStudentCount()}
+      count={focusedStudents.length}
     />
   );
 

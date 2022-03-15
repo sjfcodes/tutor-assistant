@@ -1,23 +1,14 @@
-import React, {
-  useContext,
-  useEffect, useMemo, useState,
-} from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { StudentsContext } from '../StudentsProvider';
 import StudentsListItem from './StudentsListItem';
 
-const StudentsList = () => {
-  const { allCourses, selectedCourse } = useSelector((state) => state.courses);
+const StudentsList = ({ focusedStudents }) => {
+  const { selectedCourse } = useSelector((state) => state.courses);
 
   const { filterBy } = useContext(StudentsContext);
   const [displayedStudents, setDisplayedStudents] = useState([]);
   const [studentsListItems, setStudentsListItems] = useState('');
-
-  const allStudents = useMemo(
-    () => Object
-      .values(allCourses[selectedCourse].students),
-    [allCourses, selectedCourse],
-  );
 
   const filterStudentsByGraduationDate = (arr) => (
     arr.length
@@ -57,28 +48,28 @@ const StudentsList = () => {
   );
 
   useEffect(() => {
-    if (selectedCourse && allStudents) {
+    if (selectedCourse && focusedStudents.length) {
       let students;
       switch (filterBy) {
       case 'graduation date':
-        students = filterStudentsByGraduationDate(allStudents);
+        students = filterStudentsByGraduationDate(focusedStudents);
         break;
 
       case 'first name':
-        students = filterStudentsByFirstName(allStudents);
+        students = filterStudentsByFirstName(focusedStudents);
         break;
 
       case 'last name':
-        students = filterStudentsByLastName(allStudents);
+        students = filterStudentsByLastName(focusedStudents);
         break;
 
       default:
-        students = filterStudentsByFirstName(allStudents);
+        students = filterStudentsByFirstName(focusedStudents);
         break;
       }
       setDisplayedStudents(students);
     }
-  }, [selectedCourse, allStudents, filterBy]);
+  }, [selectedCourse, filterBy, focusedStudents]);
 
   useEffect(() => {
     if (!displayedStudents.length) setStudentsListItems(<p className='has-text-centered'>add a student to get started</p>);
@@ -91,7 +82,7 @@ const StudentsList = () => {
           />
         )),
     );
-  }, [selectedCourse, allCourses, displayedStudents, filterBy]);
+  }, [selectedCourse, displayedStudents, filterBy]);
 
   return studentsListItems;
 };
