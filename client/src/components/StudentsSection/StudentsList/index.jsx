@@ -6,8 +6,7 @@ import StudentsListItem from './StudentsListItem';
 const StudentsList = ({ focusedStudents }) => {
   const { selectedCourse } = useSelector((state) => state.courses);
 
-  const { filterBy } = useContext(StudentsContext);
-  const [displayedStudents, setDisplayedStudents] = useState([]);
+  const { filterBy, displayedStudents, setDisplayedStudents } = useContext(StudentsContext);
   const [studentsListItems, setStudentsListItems] = useState('');
 
   const filterStudentsByGraduationDate = (arr) => (
@@ -69,7 +68,7 @@ const StudentsList = ({ focusedStudents }) => {
       }
       setDisplayedStudents(students);
     }
-  }, [selectedCourse, filterBy, focusedStudents]);
+  }, [selectedCourse, filterBy, focusedStudents, setDisplayedStudents]);
 
   useEffect(() => {
     if (!displayedStudents.length) setStudentsListItems(<p className='has-text-centered'>add a student to get started</p>);
@@ -82,7 +81,7 @@ const StudentsList = ({ focusedStudents }) => {
           />
         )),
     );
-  }, [selectedCourse, displayedStudents, filterBy]);
+  }, [selectedCourse, displayedStudents]);
 
   return studentsListItems;
 };

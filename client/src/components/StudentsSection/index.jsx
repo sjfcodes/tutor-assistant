@@ -16,6 +16,7 @@ const StudentsSection = () => {
   const dispatch = useDispatch();
 
   const { toggleDisplayedSection } = useContext(DashboardContext);
+  const { displayedStudents } = useContext(StudentsContext);
   const [checkBox, setCheckBox] = useState({ currentStudentsOnly: true });
 
   const focusedStudents = useMemo(
@@ -37,8 +38,6 @@ const StudentsSection = () => {
     filterBy, setFilterBy,
     isActive, sectionName, filterOptions,
   } = useContext(StudentsContext);
-
-  const toggleSection = () => toggleDisplayedSection(STUDENTS_SECTION);
 
   const toggleCheckbox = ({ target: { name, checked } }) => {
     setCheckBox({ ...checkBox, [name]: checked });
@@ -74,7 +73,7 @@ const StudentsSection = () => {
   const heading = (
     <SectionHeading
       sectionName={sectionName}
-      count={focusedStudents.length}
+      count={displayedStudents.length || focusedStudents.length}
     />
   );
 
@@ -83,7 +82,7 @@ const StudentsSection = () => {
     <SectionContainer
       heading={heading}
       active={isActive}
-      toggleDisplayedSection={toggleSection}
+      toggleDisplayedSection={() => toggleDisplayedSection(STUDENTS_SECTION)}
       sectionName={sectionName}
       filterBy={filterBy}
       setFilterBy={setFilterBy}
