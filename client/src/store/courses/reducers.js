@@ -20,22 +20,22 @@ import {
 // eslint-disable-next-line no-console
 
 // eslint-disable-next-line default-param-last
-const courseReducer = (state = {}, action) => {
-  switch (action.type) {
+const courseReducer = (state = {}, { type, payload }) => {
+  switch (type) {
   case SET_ALL_COURSES: {
     return {
-      allCourses: formatCourses(action.payload),
+      allCourses: formatCourses(payload),
     };
   }
   case SET_SELECTED_COURSE: {
     return {
       ...state,
-      selectedCourse: action.payload,
+      selectedCourse: payload._id,
     };
   }
 
   case ADD_COURSE: {
-    const course = action.payload;
+    const course = payload;
     course.students = {};
     course.meetings = {};
     const allCourses = { ...state.allCourses };
@@ -49,7 +49,7 @@ const courseReducer = (state = {}, action) => {
   case UPDATE_COURSE_DETAIL: {
     const course = {
       ...state.allCourses[state.selectedCourse],
-      ...action.payload,
+      ...payload,
     };
     const allCourses = { ...state.allCourses, [course._id]: course };
     return {
@@ -58,7 +58,7 @@ const courseReducer = (state = {}, action) => {
     };
   }
   case DELETE_COURSE: {
-    const _id = action.payload;
+    const _id = payload;
     const copy = { ...state.allCourses };
     delete copy[_id];
 
@@ -72,7 +72,7 @@ const courseReducer = (state = {}, action) => {
   }
 
   case ADD_STUDENT_TO_COURSE: {
-    const student = action.payload;
+    const student = payload;
     const allCourses = { ...state.allCourses };
     allCourses[state.selectedCourse].students[student._id] = student;
 
@@ -83,7 +83,7 @@ const courseReducer = (state = {}, action) => {
   }
 
   case UPDATE_STUDENT_DETAIL: {
-    const student = action.payload;
+    const student = payload;
     const allCourses = { ...state.allCourses };
     allCourses[state.selectedCourse].students[student._id] = student;
 
@@ -93,7 +93,7 @@ const courseReducer = (state = {}, action) => {
     };
   }
   case DELETE_STUDENT: {
-    const _id = action.payload;
+    const _id = payload;
     const allCourses = { ...state.allCourses };
     delete allCourses[state.selectedCourse].students[_id];
 
@@ -103,7 +103,7 @@ const courseReducer = (state = {}, action) => {
     };
   }
   case ADD_MEETING_TO_COURSE: {
-    const meeting = action.payload;
+    const meeting = payload;
     const allCourses = { ...state.allCourses };
     allCourses[state.selectedCourse].meetings[meeting._id] = meeting;
 
@@ -117,7 +117,7 @@ const courseReducer = (state = {}, action) => {
   }
 
   case UPDATE_MEETING_DETAIL: {
-    const meeting = action.payload;
+    const meeting = payload;
     const allCourses = { ...state.allCourses };
     allCourses[state.selectedCourse].meetings[meeting._id] = meeting;
 
@@ -127,7 +127,7 @@ const courseReducer = (state = {}, action) => {
     };
   }
   case DELETE_MEETING: {
-    const _id = action.payload;
+    const _id = payload;
     const allCourses = { ...state.allCourses };
     delete allCourses[state.selectedCourse].meetings[_id];
 
@@ -138,7 +138,7 @@ const courseReducer = (state = {}, action) => {
   }
 
   case SET_CALENDLY_MEETINGS_FOR_COURSE: {
-    const { selectedCourse, calendlyMeetings } = action.payload;
+    const { selectedCourse, calendlyMeetings } = payload;
     const allCourses = { ...state.allCourses };
     const mergedMeetings = { ...allCourses[selectedCourse].meetings, ...calendlyMeetings };
     allCourses[selectedCourse].meetings = mergedMeetings;

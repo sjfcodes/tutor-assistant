@@ -1,7 +1,5 @@
 import { string } from 'prop-types';
-import React, {
-  useCallback, useEffect, useState,
-} from 'react';
+import React, { useEffect, useState } from 'react';
 import { Tabs } from 'react-bulma-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { SET_SELECTED_COURSE } from '../../store/courses/actions';
@@ -15,62 +13,36 @@ const CourseTabs = ({ className }) => {
   const dispatch = useDispatch();
   const [courseTabs, setCourseTabs] = useState(null);
 
-  const handleUpdate = useCallback(
-    (e) => {
-      if (!allCourses) return;
-      const {
-        target: {
-          parentNode: { classList },
-        },
-      } = e;
-
-      // if selected tab is already active, return
-      if (classList.contains('is-active')) return;
-
-      // toggle current active tab off
-      document
-        .querySelector('#course-tabs ul li.is-active')
-        .classList.toggle('is-active');
-
-      // toggle new tab on
-      classList.toggle('is-active');
-    },
-    [allCourses],
-  );
-
   useEffect(() => {
     if (!allCourses) return;
 
-    const setSelectedCourse = (_id) => {
+    const setSelectedCourse = ({ _id }) => {
       dispatch({
+        payload: { _id },
         type: SET_SELECTED_COURSE,
-        payload: _id,
       });
     };
 
-    let i = 0;
-    const arr = [];
+    const arr = Object.entries(allCourses).map(([key, { name, _id }], idx) => {
+      if (!selectedCourse && idx === 0) setSelectedCourse({ _id });
 
-    Object.entries(allCourses).forEach(([key, { name, _id }]) => {
-      arr.push(
+      return (
         <Tab
           key={key}
           id={key}
           className='rounded'
-          active={(!selectedCourse || selectedCourse === _id)}
-          onClick={() => setSelectedCourse(_id)}
+          active={selectedCourse === _id}
+          onClick={() => setSelectedCourse({ _id })}
         >
           <strong className={selectedCourse !== _id ? 'has-text-grey-lighter' : ''}>
             {name}
           </strong>
-        </Tab>,
+        </Tab>
       );
-      if (!selectedCourse && i === 0) setSelectedCourse(_id);
-      i += 1;
     });
 
     setCourseTabs(arr);
-  }, [allCourses, handleUpdate, selectedCourse, dispatch]);
+  }, [allCourses, selectedCourse, dispatch]);
 
   return (
     <Tabs

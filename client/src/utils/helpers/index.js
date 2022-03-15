@@ -12,12 +12,6 @@ export {
 } from './course';
 
 export {
-  buildTemplatePreview,
-  formatEmailTemplates,
-  loadTemplateEditorApp,
-} from './emailTemplates';
-
-export {
   getCurrentUnix,
   getISO8601TimeStamp,
   getUnixFromFormInputs,
@@ -30,6 +24,12 @@ export {
   convertISO8601ToDatePicker,
   getCurrentDatePicker,
 } from './dateTime';
+
+export {
+  buildTemplatePreview,
+  formatEmailTemplates,
+  loadTemplateEditorApp,
+} from './emailTemplates';
 
 export {
   convertStrToBool,

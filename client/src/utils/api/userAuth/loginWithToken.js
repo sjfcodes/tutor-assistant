@@ -1,4 +1,4 @@
-import { LOCAL_STORAGE_KEY } from '../../../config';
+import { removeLocalStorageData } from '../../../store_local';
 import { handleError } from '../../helpers';
 import { getApiEndpoint, getRequestHeaders } from '../apiAccess';
 
@@ -16,7 +16,7 @@ const loginWithToken = () => {
           return resolve(data);
         });
     } catch (error) {
-      localStorage.removeItem(LOCAL_STORAGE_KEY);
+      removeLocalStorageData();
       reject(handleError(error));
     }
   });
