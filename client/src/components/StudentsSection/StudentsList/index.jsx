@@ -45,7 +45,6 @@ const StudentsList = ({ focusedStudents }) => {
       })
       : []
   );
-
   useEffect(() => {
     if (selectedCourse && focusedStudents.length) {
       let students;
@@ -56,10 +55,12 @@ const StudentsList = ({ focusedStudents }) => {
 
       case 'first name':
         students = filterStudentsByFirstName(focusedStudents);
+
         break;
 
       case 'last name':
         students = filterStudentsByLastName(focusedStudents);
+
         break;
 
       default:
@@ -79,7 +80,7 @@ const StudentsList = ({ focusedStudents }) => {
           student={student}
         />
       )));
-  }, [selectedCourse, displayedStudents]);
+  }, [selectedCourse, displayedStudents, filterBy]);
 
   return studentsListItems;
 };
