@@ -6,29 +6,10 @@ import { DashboardContext, TASKS_SECTION } from '../../../views/Dashboard/Dashbo
 
 export const TasksContext = createContext({});
 
-const checkCalendlyStudentsByEmail = (selectedCourse) => {
-  // collect emails for existing students
-  const studentEmails = {};
-  Object
-    .values(selectedCourse.students)
-    .forEach((student) => {
-      studentEmails[student.email] = true;
-    });
-
-  const missing = [];
-  Object
-    .values(selectedCourse.meetings)
-    .filter(({ type }) => type === 'calendly')
-    .forEach((meeting) => {
-      if (!studentEmails[meeting.email]) {
-        studentEmails[meeting.email] = true;
-        missing.push(meeting);
-      }
-    });
-
-  // console.log('found', studentEmails);
-  // console.log('missing', missing);
-  return missing;
+const findMissingStudents = (courseMeetings) => {
+  const meetings = Object.values(courseMeetings);
+  return meetings
+    .filter(({ studentId }) => !studentId);
 };
 
 // eslint-disable-next-line react/prop-types
@@ -68,12 +49,13 @@ const TasksProvider = ({ children }) => {
     ],
   );
 
+  const { meetings: allMeetings } = allCourses[selectedCourse];
+
   useEffect(() => {
-    const missingFromDB = checkCalendlyStudentsByEmail(allCourses[selectedCourse]);
-    if (!missingFromDB.length) return;
-    // console.log(missingFromDB);
-    setStudentTasks(missingFromDB);
-  }, [allCourses, selectedCourse]);
+    const missingStudents = findMissingStudents(allMeetings);
+    if (!missingStudents.length) return;
+    setStudentTasks(missingStudents);
+  }, [allMeetings]);
 
   return (
     <TasksContext.Provider value={value}>

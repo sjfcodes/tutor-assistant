@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { v4 as uuidv4 } from 'uuid';
 import { TasksContext } from '../TasksProvider';
 import TaskLayoutAddStudent from './TaskLayoutAddStudent';
 import TasksListItem from './TasksListItem';
@@ -11,7 +10,7 @@ const TasksList = () => {
   const {
     filterBy, studentTasks, displayedTasks, setDisplayedTasks,
   } = useContext(TasksContext);
-  const [tasksListItems, setTasksListItems] = useState('');
+  const [tasksListComponents, setTasksListComponents] = useState('');
 
   useEffect(
     () => {
@@ -33,11 +32,11 @@ const TasksList = () => {
         const addStudentTasks = () => {
           if (!studentTasks.length) return;
           studentTasks.forEach(({
-            firstName, lastName, email, timeZoneName,
+            _id, firstName, lastName, email, timeZoneName,
           }) => {
             collectedTasks.push(
               {
-                _id: uuidv4(),
+                _id,
                 taskFor: `Add ${firstName} ${lastName} to Tutorly`,
                 taskComponent: <TaskLayoutAddStudent
                   firstName={firstName}
@@ -88,8 +87,8 @@ const TasksList = () => {
   );
 
   useEffect(() => {
-    if (!displayedTasks.length) setTasksListItems(<p className='has-text-centered'>all tasks completed</p>);
-    else setTasksListItems(
+    if (!displayedTasks.length) setTasksListComponents(<p className='has-text-centered'>all tasks completed</p>);
+    else setTasksListComponents(
       displayedTasks
         .map((task) => (
           <TasksListItem
@@ -100,6 +99,6 @@ const TasksList = () => {
     );
   }, [selectedCourse, displayedTasks]);
 
-  return (tasksListItems);
+  return (tasksListComponents);
 };
 export default TasksList;
