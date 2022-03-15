@@ -34,6 +34,7 @@
         "react/jsx-props-no-spreading": ["error", {
             "html": "enforce",
             "custom": "ignore"
-        }]
+        }],
+        "function-paren-newline": ["error","multiline"]
     }
 }
