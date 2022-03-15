@@ -2,7 +2,7 @@ import React, { useContext, useMemo, useState } from 'react';
 import { Columns, Form } from 'react-bulma-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { ADD_STUDENT_MODAL, SET_OPEN_MODAL } from '../../store/view/actions';
-import { getCurrentUnix } from '../../utils';
+import { getCourseSectionListItemCount, getCurrentUnix } from '../../utils';
 import { getUnixFromISO } from '../../utils/helpers/dateTime';
 import { DashboardContext, STUDENTS_SECTION } from '../../views/Dashboard/DashboardProvider';
 import SectionContainer from '../Section/Container';
@@ -73,7 +73,12 @@ const StudentsSection = () => {
   const heading = (
     <SectionHeading
       sectionName={sectionName}
-      count={displayedStudents.length || focusedStudents.length}
+      count={
+        getCourseSectionListItemCount({
+          displayed: displayedStudents.length,
+          focused: focusedStudents.length,
+        })
+      }
     />
   );
 

@@ -1,9 +1,9 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useMemo } from 'react';
 import { Columns } from 'react-bulma-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { SET_CALENDLY_MEETINGS_FOR_COURSE } from '../../store/courses/actions';
 import { ADD_MEETING_MODAL, SET_OPEN_MODAL } from '../../store/view/actions';
-import { formatCalendlyMeetings, readModel } from '../../utils';
+import { formatCalendlyMeetings, getCourseSectionListItemCount, readModel } from '../../utils';
 import {
   DashboardContext,
   MEETINGS_SECTION,
@@ -19,15 +19,14 @@ const MeetingsSection = () => {
   const dispatch = useDispatch();
   const { toggleDisplayedSection } = useContext(DashboardContext);
   const {
-    filterBy, setFilterBy, isActive, sectionName, filterOptions,
+    filterBy, setFilterBy, isActive,
+    sectionName, filterOptions,
+    displayedMeetings,
   } = useContext(MeetingsContext);
 
-  const toggleSection = () => toggleDisplayedSection(MEETINGS_SECTION);
-  const getMeetingCount = () => {
-    let count = 0;
-    if (allCourses && selectedCourse) count += allCourses[selectedCourse].meetingCount;
-    return count > 0 ? count : '~';
-  };
+  const { meetings: allMeetings } = allCourses[selectedCourse];
+
+  const focusedMeetings = useMemo(() => Object.values(allMeetings), [allMeetings]);
 
   useEffect(() => {
     let isMounted = true;
@@ -55,14 +54,22 @@ const MeetingsSection = () => {
   }, [selectedCourse, allCourses, dispatch]);
 
   const heading = (
-    <SectionHeading sectionName={sectionName} count={getMeetingCount()} />
+    <SectionHeading
+      sectionName={sectionName}
+      count={
+        getCourseSectionListItemCount({
+          displayed: displayedMeetings.length,
+          focused: focusedMeetings.length,
+        })
+      }
+    />
   );
 
   return (
     <SectionContainer
       heading={heading}
       active={isActive}
-      toggleDisplayedSection={toggleSection}
+      toggleDisplayedSection={() => toggleDisplayedSection(MEETINGS_SECTION)}
       sectionName={sectionName}
       filterBy={filterBy}
       setFilterBy={setFilterBy}
@@ -73,10 +80,10 @@ const MeetingsSection = () => {
         <>
           <Columns className='is-mobile ml-5 mt-2'>
             <p className='mr-3'>sort</p>
-            <MeetingsListFilter />
+            <MeetingsListFilter meetings={Object.values(allMeetings)} />
           </Columns>
 
-          <MeetingsList filterBy={filterBy} />
+          <MeetingsList focusedMeetings={focusedMeetings} />
         </>
       )}
     </SectionContainer>
