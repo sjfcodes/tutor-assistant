@@ -8,8 +8,8 @@ export const MeetingsContext = createContext({});
 // eslint-disable-next-line react/prop-types
 const MeetingsProvider = ({ children }) => {
   const { activeComponent: { component } } = useContext(DashboardContext);
-  const [filterOptions, setFilterOptions] = useState(['all', 'tutorly']);
   const [displayedMeetings, setDisplayedMeetings] = useState([]);
+  const [filterOptions, setFilterOptions] = useState(['all', 'tutorly']);
   const [filterBy, setFilterBy] = useState(filterOptions[0]);
 
   const value = useMemo(() => (

@@ -20,12 +20,12 @@ const MeetingsSection = () => {
   const { toggleDisplayedSection } = useContext(DashboardContext);
   const {
     filterBy, setFilterBy, isActive,
-    sectionName, filterOptions,
-    displayedMeetings,
+    sectionName, filterOptions, displayedMeetings,
   } = useContext(MeetingsContext);
 
   const { meetings: allMeetings } = allCourses[selectedCourse];
 
+  // will be used for updating focused meetings based on checkbox settings, see students section
   const focusedMeetings = useMemo(() => Object.values(allMeetings), [allMeetings]);
 
   useEffect(() => {
@@ -53,7 +53,7 @@ const MeetingsSection = () => {
     };
   }, [selectedCourse, allCourses, dispatch]);
 
-  const heading = (
+  const headingComponent = (
     <SectionHeading
       sectionName={sectionName}
       count={
@@ -65,9 +65,23 @@ const MeetingsSection = () => {
     />
   );
 
+  const getChildren = () => {
+    if (!isActive) return '';
+    return (
+      <>
+        <Columns className='is-mobile ml-5 mt-2'>
+          <p className='mr-3'>sort</p>
+          <MeetingsListFilter meetings={Object.values(allMeetings)} />
+        </Columns>
+
+        <MeetingsList focusedMeetings={focusedMeetings} />
+      </>
+    );
+  };
+
   return (
     <SectionContainer
-      heading={heading}
+      heading={headingComponent}
       active={isActive}
       toggleDisplayedSection={() => toggleDisplayedSection(MEETINGS_SECTION)}
       sectionName={sectionName}
@@ -76,16 +90,7 @@ const MeetingsSection = () => {
       filterOptions={filterOptions}
       addListItemClick={() => dispatch({ type: SET_OPEN_MODAL, payload: ADD_MEETING_MODAL })}
     >
-      {isActive && (
-        <>
-          <Columns className='is-mobile ml-5 mt-2'>
-            <p className='mr-3'>sort</p>
-            <MeetingsListFilter meetings={Object.values(allMeetings)} />
-          </Columns>
-
-          <MeetingsList focusedMeetings={focusedMeetings} />
-        </>
-      )}
+      {getChildren()}
     </SectionContainer>
   );
 };
