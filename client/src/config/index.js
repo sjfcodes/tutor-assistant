@@ -14,5 +14,3 @@ export const EMAIL_TEMPLATE_APP = (
   process.env.REACT_APP_EMAIL_TEMPLATE_APP
     || EMAIL_TEMPLATE_LOCALHOST
 );
-
-export const LOCAL_STORAGE_KEY = 'tutor-token';

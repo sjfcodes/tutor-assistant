@@ -1,4 +1,5 @@
-import { BASE_URL_API, EMAIL_TEMPLATE_APP, LOCAL_STORAGE_KEY } from '../../config';
+import { BASE_URL_API, EMAIL_TEMPLATE_APP } from '../../config';
+import { getLocalStorageValueFor, TUTOR_AUTH_TOKEN } from '../../store_local';
 import { getLocalDateString } from './dateTime';
 
 /* eslint-disable no-continue */
@@ -108,7 +109,7 @@ export const loadTemplateEditorApp = (_id) => {
   // the 'token' is our current session bearer token the template app will use to
   // fetch the document on our behalf
   const endpoint = `${BASE_URL_API}/email-template/${_id}`;
-  const token = localStorage.getItem(LOCAL_STORAGE_KEY);
+  const token = getLocalStorageValueFor({ key: TUTOR_AUTH_TOKEN });
   const url = `${EMAIL_TEMPLATE_APP}?endpoint=${endpoint}&token=${token}`;
   window.location.href = (url);
 };

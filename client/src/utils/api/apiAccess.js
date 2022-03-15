@@ -1,4 +1,5 @@
-import { BASE_URL_API, LOCAL_STORAGE_KEY } from '../../config';
+import { BASE_URL_API } from '../../config';
+import { getLocalStorageValueFor, TUTOR_AUTH_TOKEN } from '../../store_local';
 
 /**
  * the url based on the paramaters passed in
@@ -18,6 +19,6 @@ export const getApiEndpoint = ({ model, action, _id }) => {
 export const getRequestHeaders = () => (
   {
     'Content-Type': 'application/json',
-    authorization: `Bearer: ${localStorage.getItem(LOCAL_STORAGE_KEY)}`,
+    authorization: `Bearer: ${getLocalStorageValueFor({ key: TUTOR_AUTH_TOKEN })}`,
   }
 );
