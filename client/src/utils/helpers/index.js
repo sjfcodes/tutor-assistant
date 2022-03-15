@@ -5,16 +5,17 @@ export {
   formatCalendlyMeetings,
   handleError,
 };
+
+export {
+  formatCourses,
+  getCourseSectionListItemCount,
+} from './course';
+
 export {
   buildTemplatePreview,
   formatEmailTemplates,
   loadTemplateEditorApp,
 } from './emailTemplates';
-
-export {
-  preventBodyScroll,
-  collapseNavbar,
-} from './html';
 
 export {
   getCurrentUnix,
@@ -38,3 +39,8 @@ export {
   missingFormInputs,
   passwordIsValid,
 } from './forms';
+
+export {
+  preventBodyScroll,
+  collapseNavbar,
+} from './html';

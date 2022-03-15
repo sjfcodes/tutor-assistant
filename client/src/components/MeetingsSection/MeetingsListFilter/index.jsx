@@ -1,46 +1,26 @@
 import { string } from 'prop-types';
 import React, { useContext, useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import ListFilterSelector from '../../List/ListFilterSelector';
 import { MeetingsContext } from '../MeetingsProvider';
 
-const MeetingsListFilter = ({ className }) => {
-  const { allCourses, selectedCourse } = useSelector((state) => state);
+// eslint-disable-next-line react/prop-types
+const MeetingsListFilter = ({ className, meetings }) => {
   const {
-    sectionName,
-    filterBy, setFilterBy,
+    sectionName, filterBy, setFilterBy,
     filterOptions, setFilterOptions,
   } = useContext(MeetingsContext);
 
   useEffect(() => {
-    let isMounted = true;
-    const optionName = 'calendly';
-    if (!allCourses || !selectedCourse) return '';
-    const { meetings } = allCourses[selectedCourse];
-    const hasItemsToFilter = (Object.keys(meetings).length > 0);
+    // scan meetings for missing meeting types
+    // if a type is missing, add it to the filter options
 
-    if (hasItemsToFilter) {
-    /**
-         * if there are items to display
-         *  if already an option, return
-         * add option
-         */
-      if (isMounted
-      && !filterOptions.includes(optionName)
-      ) setFilterOptions([...filterOptions, optionName]);
-    } else if (filterOptions.includes(optionName)) {
-    /*
-        * if there are no items to display & option is included
-        * remove option
-        * update state
-        */
-      const removeCalendlyOption = filterOptions.filter((option) => option !== optionName);
-      if (isMounted) setFilterOptions([...removeCalendlyOption]);
-    }
-
-    return () => { isMounted = false; };
-  }, [allCourses, selectedCourse, filterOptions, setFilterOptions]);
-
+    // eslint-disable-next-line react/prop-types
+    meetings.forEach(
+      ({ type }) => {
+        if (!filterOptions.includes(type)) setFilterOptions([...filterOptions, type]);
+      },
+    );
+  }, [meetings, filterOptions, setFilterOptions]);
   return (
     <ListFilterSelector
       className={`py-0 has-text-centered ${className}`}
@@ -53,5 +33,7 @@ const MeetingsListFilter = ({ className }) => {
 };
 export default MeetingsListFilter;
 
-MeetingsListFilter.propTypes = { className: string };
+MeetingsListFilter.propTypes = {
+  className: string,
+};
 MeetingsListFilter.defaultProps = { className: '' };

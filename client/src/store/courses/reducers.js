@@ -1,4 +1,4 @@
-import formatCourses from '../../utils/helpers/course';
+import { formatCourses } from '../../utils';
 import {
   SET_ALL_COURSES,
   SET_SELECTED_COURSE,

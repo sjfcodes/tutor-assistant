@@ -1,9 +1,9 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useMemo } from 'react';
 import { Columns } from 'react-bulma-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { SET_CALENDLY_MEETINGS_FOR_COURSE } from '../../store/courses/actions';
 import { ADD_MEETING_MODAL, SET_OPEN_MODAL } from '../../store/view/actions';
-import { formatCalendlyMeetings, readModel } from '../../utils';
+import { formatCalendlyMeetings, getCourseSectionListItemCount, readModel } from '../../utils';
 import {
   DashboardContext,
   MEETINGS_SECTION,
@@ -19,15 +19,14 @@ const MeetingsSection = () => {
   const dispatch = useDispatch();
   const { toggleDisplayedSection } = useContext(DashboardContext);
   const {
-    filterBy, setFilterBy, isActive, sectionName, filterOptions,
+    filterBy, setFilterBy, isActive,
+    sectionName, filterOptions, displayedMeetings,
   } = useContext(MeetingsContext);
 
-  const toggleSection = () => toggleDisplayedSection(MEETINGS_SECTION);
-  const getMeetingCount = () => {
-    let count = 0;
-    if (allCourses && selectedCourse) count += allCourses[selectedCourse].meetingCount;
-    return count > 0 ? count : '~';
-  };
+  const { meetings: allMeetings } = allCourses[selectedCourse];
+
+  // will be used for updating focused meetings based on checkbox settings, see students section
+  const focusedMeetings = useMemo(() => Object.values(allMeetings), [allMeetings]);
 
   useEffect(() => {
     let isMounted = true;
@@ -54,31 +53,44 @@ const MeetingsSection = () => {
     };
   }, [selectedCourse, allCourses, dispatch]);
 
-  const heading = (
-    <SectionHeading sectionName={sectionName} count={getMeetingCount()} />
+  const headingComponent = (
+    <SectionHeading
+      sectionName={sectionName}
+      count={
+        getCourseSectionListItemCount({
+          displayed: displayedMeetings.length,
+          focused: focusedMeetings.length,
+        })
+      }
+    />
   );
+
+  const getChildren = () => {
+    if (!isActive) return '';
+    return (
+      <>
+        <Columns className='is-mobile ml-5 mt-2'>
+          <p className='mr-3'>sort</p>
+          <MeetingsListFilter meetings={Object.values(allMeetings)} />
+        </Columns>
+
+        <MeetingsList focusedMeetings={focusedMeetings} />
+      </>
+    );
+  };
 
   return (
     <SectionContainer
-      heading={heading}
+      heading={headingComponent}
       active={isActive}
-      toggleDisplayedSection={toggleSection}
+      toggleDisplayedSection={() => toggleDisplayedSection(MEETINGS_SECTION)}
       sectionName={sectionName}
       filterBy={filterBy}
       setFilterBy={setFilterBy}
       filterOptions={filterOptions}
       addListItemClick={() => dispatch({ type: SET_OPEN_MODAL, payload: ADD_MEETING_MODAL })}
     >
-      {isActive && (
-        <>
-          <Columns className='is-mobile ml-5 mt-2'>
-            <p className='mr-3'>sort</p>
-            <MeetingsListFilter />
-          </Columns>
-
-          <MeetingsList filterBy={filterBy} />
-        </>
-      )}
+      {getChildren()}
     </SectionContainer>
   );
 };

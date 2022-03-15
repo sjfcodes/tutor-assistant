@@ -8,8 +8,9 @@ import TasksListItem from './TasksListItem';
 const TasksList = () => {
   const { selectedCourse } = useSelector((state) => state.courses);
 
-  const { filterBy, setCount, studentTasks } = useContext(TasksContext);
-  const [displayedTasks, setDisplayedTasks] = useState([]);
+  const {
+    filterBy, studentTasks, displayedTasks, setDisplayedTasks,
+  } = useContext(TasksContext);
   const [tasksListItems, setTasksListItems] = useState('');
 
   useEffect(
@@ -78,12 +79,11 @@ const TasksList = () => {
       };
 
       const tasks = collectTasks(filterBy);
-      setCount(tasks.length);
       setDisplayedTasks(tasks);
     },
     [
-      filterBy, setCount,
-      selectedCourse, studentTasks,
+      studentTasks, setDisplayedTasks,
+      filterBy, selectedCourse,
     ],
   );
 
