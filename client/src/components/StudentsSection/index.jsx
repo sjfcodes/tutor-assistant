@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ADD_STUDENT_MODAL, SET_OPEN_MODAL } from '../../store/view/actions';
 import { getCourseSectionListItemCount, getCurrentUnix } from '../../utils';
 import { getUnixFromISO } from '../../utils/helpers/dateTime';
-import { DashboardContext, STUDENTS_SECTION } from '../../views/Dashboard/DashboardProvider';
+import { DashboardContext, COURSE_SECTION_STUDENTS } from '../../views/Dashboard/DashboardProvider';
 import SectionContainer from '../Section/Container';
 import SectionHeading from '../Section/Heading';
 import StudentsList from './StudentsList';
@@ -87,7 +87,7 @@ const StudentsSection = () => {
     <SectionContainer
       heading={heading}
       active={isActive}
-      toggleDisplayedSection={() => toggleDisplayedSection(STUDENTS_SECTION)}
+      toggleDisplayedSection={() => toggleDisplayedSection(COURSE_SECTION_STUDENTS)}
       sectionName={sectionName}
       filterBy={filterBy}
       setFilterBy={setFilterBy}

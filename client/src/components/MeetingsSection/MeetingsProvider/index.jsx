@@ -1,7 +1,7 @@
 import React, {
   createContext, useContext, useMemo, useState,
 } from 'react';
-import { DashboardContext, MEETINGS_SECTION } from '../../../views/Dashboard/DashboardProvider';
+import { DashboardContext, COURSE_SECTION_MEETINGS } from '../../../views/Dashboard/DashboardProvider';
 
 export const MeetingsContext = createContext({});
 
@@ -21,7 +21,7 @@ const MeetingsProvider = ({ children }) => {
       displayedMeetings,
       setDisplayedMeetings,
       sectionName: 'Meetings',
-      isActive: component === MEETINGS_SECTION,
+      isActive: component === COURSE_SECTION_MEETINGS,
     }
   ), [component, filterBy, filterOptions, displayedMeetings]);
 

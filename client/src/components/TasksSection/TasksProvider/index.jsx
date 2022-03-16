@@ -2,7 +2,7 @@ import React, {
   createContext, useContext, useEffect, useMemo, useState,
 } from 'react';
 import { useSelector } from 'react-redux';
-import { DashboardContext, TASKS_SECTION } from '../../../views/Dashboard/DashboardProvider';
+import { DashboardContext, COURSE_SECTION_TASKS } from '../../../views/Dashboard/DashboardProvider';
 
 export const TasksContext = createContext({});
 
@@ -40,7 +40,7 @@ const TasksProvider = ({ children }) => {
         displayedTasks,
         setDisplayedTasks,
         sectionName: 'Tasks',
-        isActive: component === TASKS_SECTION,
+        isActive: component === COURSE_SECTION_TASKS,
       }
     ),
     [

@@ -4,7 +4,7 @@ import {
 } from 'prop-types';
 import { Level } from 'react-bulma-components';
 import ListItemContainer from '../../List/ListItemContainer';
-import { DashboardContext, TASKS_SECTION } from '../../../views/Dashboard/DashboardProvider';
+import { DashboardContext, COURSE_SECTION_TASKS } from '../../../views/Dashboard/DashboardProvider';
 
 const TasksListItem = ({ task }) => {
   const [listItemDetails, setListItemDetails] = useState('listItemDetails');
@@ -21,7 +21,7 @@ const TasksListItem = ({ task }) => {
   );
 
   useEffect(() => {
-    if (component !== TASKS_SECTION) return '';
+    if (component !== COURSE_SECTION_TASKS) return '';
 
     if (selectedItemId !== _id) return setListItemDetails('');
     return setListItemDetails(taskComponent);

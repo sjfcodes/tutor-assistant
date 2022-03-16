@@ -6,7 +6,7 @@ import { ADD_MEETING_MODAL, SET_OPEN_MODAL } from '../../store/view/actions';
 import { formatCalendlyMeetings, getCourseSectionListItemCount, readModel } from '../../utils';
 import {
   DashboardContext,
-  MEETINGS_SECTION,
+  COURSE_SECTION_MEETINGS,
 } from '../../views/Dashboard/DashboardProvider';
 import SectionContainer from '../Section/Container';
 import SectionHeading from '../Section/Heading';
@@ -87,7 +87,7 @@ const MeetingsSection = () => {
     <SectionContainer
       heading={headingComponent}
       active={isActive}
-      toggleDisplayedSection={() => toggleDisplayedSection(MEETINGS_SECTION)}
+      toggleDisplayedSection={() => toggleDisplayedSection(COURSE_SECTION_MEETINGS)}
       sectionName={sectionName}
       filterBy={filterBy}
       setFilterBy={setFilterBy}

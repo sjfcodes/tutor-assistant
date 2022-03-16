@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import MeetingDetailList from '../MeetingDetailList';
 import ListItemContainer from '../../List/ListItemContainer';
 import MeetingsListItemLayout from './MeetingsListItemLayout';
-import { DashboardContext, MEETINGS_SECTION } from '../../../views/Dashboard/DashboardProvider';
+import { DashboardContext, COURSE_SECTION_MEETINGS } from '../../../views/Dashboard/DashboardProvider';
 
 const MeetingListItem = ({ meeting }) => {
   const { allCourses, selectedCourse } = useSelector((state) => state.courses);
@@ -31,7 +31,7 @@ const MeetingListItem = ({ meeting }) => {
   );
 
   useEffect(() => {
-    if (component !== MEETINGS_SECTION) return '';
+    if (component !== COURSE_SECTION_MEETINGS) return '';
     if (selectedItemId !== _id) return setListItemDetails('');
     return setListItemDetails(<MeetingDetailList meeting={meeting} _id={_id} />);
   }, [meeting, _id, selectedItemId, component]);

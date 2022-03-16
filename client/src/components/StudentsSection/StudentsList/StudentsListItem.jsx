@@ -6,7 +6,7 @@ import { Level } from 'react-bulma-components';
 import ListItemContainer from '../../List/ListItemContainer';
 import StudentDetailList from '../StudentDetailList';
 import { TimeZoneAbbreviation } from '../../DateTime';
-import { DashboardContext, STUDENTS_SECTION } from '../../../views/Dashboard/DashboardProvider';
+import { DashboardContext, COURSE_SECTION_STUDENTS } from '../../../views/Dashboard/DashboardProvider';
 
 const StudentListItem = ({ student }) => {
   const [listItemDetails, setListItemDetails] = useState('listItemDetails');
@@ -24,7 +24,7 @@ const StudentListItem = ({ student }) => {
   );
 
   useEffect(() => {
-    if (component !== STUDENTS_SECTION) return '';
+    if (component !== COURSE_SECTION_STUDENTS) return '';
 
     if (selectedItemId !== _id) return setListItemDetails('');
     return setListItemDetails(<StudentDetailList student={student} _id={_id} />);

@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Button, Level } from 'react-bulma-components';
 import { getCurrentUnix } from '../../../utils';
 import { getUnixFromISO } from '../../../utils/helpers/dateTime';
-import { DashboardContext, STUDENTS_SECTION } from '../../../views/Dashboard/DashboardProvider';
+import { DashboardContext, COURSE_SECTION_STUDENTS } from '../../../views/Dashboard/DashboardProvider';
 import { MeetingDateShort, MeetingTime } from '../../DateTime';
 
 import './style.css';
@@ -52,7 +52,7 @@ const MeetingsListItemLayout = (
     e.stopPropagation();
     setActiveComponent({
       ...activeComponent,
-      component: STUDENTS_SECTION,
+      component: COURSE_SECTION_STUDENTS,
       selectedItemId: studentId,
     });
   };

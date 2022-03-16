@@ -3,7 +3,7 @@ import { Columns } from 'react-bulma-components';
 import { useDispatch } from 'react-redux';
 import { ADD_TASK_MODAL, SET_OPEN_MODAL } from '../../store/view/actions';
 import { getCourseSectionListItemCount } from '../../utils';
-import { DashboardContext, TASKS_SECTION } from '../../views/Dashboard/DashboardProvider';
+import { DashboardContext, COURSE_SECTION_TASKS } from '../../views/Dashboard/DashboardProvider';
 import SectionContainer from '../Section/Container';
 import SectionHeading from '../Section/Heading';
 import TasksList from './TasksList';
@@ -57,7 +57,7 @@ const TasksSection = () => {
     <SectionContainer
       heading={headingComponent}
       active={isActive}
-      toggleDisplayedSection={() => toggleDisplayedSection(TASKS_SECTION)}
+      toggleDisplayedSection={() => toggleDisplayedSection(COURSE_SECTION_TASKS)}
       sectionName={sectionName}
       filterBy={filterBy}
       setFilterBy={setFilterBy}
