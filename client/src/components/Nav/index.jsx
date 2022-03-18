@@ -61,12 +61,10 @@ const Nav = () => {
     });
   }, [loggedIn]);
 
-  const openSettingsModal = () => dispatch(
-    { type: SET_OPEN_MODAL, payload: SETTINGS_MODAL },
-  );
-  const openEmailTemplatesModal = () => dispatch(
-    { type: SET_OPEN_MODAL, payload: EMAIL_TEMPLATES_MODAL },
-  );
+  const openSettingsModal = () => dispatch({ type: SET_OPEN_MODAL, payload: SETTINGS_MODAL });
+  const openEmailTemplatesModal = () => dispatch({
+    type: SET_OPEN_MODAL, payload: EMAIL_TEMPLATES_MODAL,
+  });
 
   return (
     <Navbar className='background-blurred is-transparent'>

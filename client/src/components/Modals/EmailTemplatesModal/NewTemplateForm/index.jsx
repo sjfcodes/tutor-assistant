@@ -18,19 +18,20 @@ const NewTemplateForm = () => {
   const handleFormChange = ({ target: { name, value } }) => {
     const [model, property] = name.split('.');
 
-    if (value === 'true' || value === 'false') setFormState(
-      (currState) => ({ ...currState, [model]: { [property]: !(currState[model][property]) } }),
-    );
+    if (value === 'true' || value === 'false') setFormState((currState) => ({
+      ...currState,
+      [model]: {
+        [property]: !(currState[model][property]),
+      },
+    }));
   };
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    const { _id } = await createModel(
-      {
-        model: 'email-template',
-        body: { propertiesFor: formState },
-      },
-    );
+    const { _id } = await createModel({
+      model: 'email-template',
+      body: { propertiesFor: formState },
+    });
     if (!_id) return;
     loadTemplateEditorApp(_id);
   };

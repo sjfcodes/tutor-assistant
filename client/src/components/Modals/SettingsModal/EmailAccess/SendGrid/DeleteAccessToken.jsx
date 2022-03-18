@@ -9,12 +9,10 @@ const DeleteAccessToken = () => {
   const { sendGrid: { accessToken } } = useSelector((state) => state.tutor);
 
   const handleDeleteAccessToken = async () => {
-    await deleteModel(
-      {
-        _id: accessToken,
-        model: 'sendgrid/token',
-      },
-    );
+    await deleteModel({
+      _id: accessToken,
+      model: 'sendgrid/token',
+    });
     window.location.reload();
   };
 

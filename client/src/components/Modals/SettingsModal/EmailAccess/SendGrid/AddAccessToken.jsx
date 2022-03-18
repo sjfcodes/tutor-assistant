@@ -25,12 +25,10 @@ const AddAccessToken = ({ password }) => {
     setLoading(true);
 
     try {
-      const { _id: accessToken } = await createModel(
-        {
-          model: 'sendgrid/add-token',
-          body: { ...formInputs, password },
-        },
-      );
+      const { _id: accessToken } = await createModel({
+        model: 'sendgrid/add-token',
+        body: { ...formInputs, password },
+      });
       setHelpText('');
       setColor('');
       setButtonText('success!');
