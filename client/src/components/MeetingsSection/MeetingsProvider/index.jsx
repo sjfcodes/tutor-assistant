@@ -1,13 +1,14 @@
 import React, {
-  createContext, useContext, useMemo, useState,
+  createContext, useMemo, useState,
 } from 'react';
-import { DashboardContext, COURSE_SECTION_MEETINGS } from '../../../views/Dashboard/DashboardProvider';
+import { useSelector } from 'react-redux';
+import { COURSE_SECTION_MEETINGS } from '../../../store/view/actions';
 
 export const MeetingsContext = createContext({});
 
 // eslint-disable-next-line react/prop-types
 const MeetingsProvider = ({ children }) => {
-  const { activeComponent: { component } } = useContext(DashboardContext);
+  const { activeComponent: { selectedComponent } } = useSelector((state) => state.view);
   const [displayedMeetings, setDisplayedMeetings] = useState([]);
   const [filterOptions, setFilterOptions] = useState(['all', 'tutorly']);
   const [filterBy, setFilterBy] = useState(filterOptions[0]);
@@ -21,9 +22,9 @@ const MeetingsProvider = ({ children }) => {
       displayedMeetings,
       setDisplayedMeetings,
       sectionName: 'Meetings',
-      isActive: component === COURSE_SECTION_MEETINGS,
+      isActive: selectedComponent === COURSE_SECTION_MEETINGS,
     }
-  ), [component, filterBy, filterOptions, displayedMeetings]);
+  ), [selectedComponent, filterBy, filterOptions, displayedMeetings]);
 
   return (
     <MeetingsContext.Provider value={value}>

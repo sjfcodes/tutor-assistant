@@ -1,36 +1,40 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   shape, string,
 } from 'prop-types';
 import { Level } from 'react-bulma-components';
+import { useDispatch, useSelector } from 'react-redux';
 import ListItemContainer from '../../List/ListItemContainer';
-import { DashboardContext, COURSE_SECTION_TASKS } from '../../../views/Dashboard/DashboardProvider';
+import { COURSE_SECTION_TASKS, SET_ACTIVE_COMPONENT } from '../../../store/view/actions';
 
 const TasksListItem = ({ task }) => {
+  const dispatch = useDispatch();
+  const {
+    activeComponent: { selectedComponent, selectedComponentItemId },
+  } = useSelector((state) => state.view);
   const [listItemDetails, setListItemDetails] = useState('listItemDetails');
   const { _id, taskComponent, taskFor } = task;
 
-  const { activeComponent, setActiveComponent } = useContext(DashboardContext);
-  const { component, selectedItemId } = activeComponent;
-
   const toggleViewTask = () => (
-    setActiveComponent({
-      ...activeComponent,
-      selectedItemId: selectedItemId === _id ? '' : _id,
+    dispatch({
+      type: SET_ACTIVE_COMPONENT,
+      payload: {
+        selectedComponentItemId: selectedComponentItemId === _id ? '' : _id,
+      },
     })
   );
 
   useEffect(() => {
-    if (component !== COURSE_SECTION_TASKS) return '';
+    if (selectedComponent !== COURSE_SECTION_TASKS) return '';
 
-    if (selectedItemId !== _id) return setListItemDetails('');
+    if (selectedComponentItemId !== _id) return setListItemDetails('');
     return setListItemDetails(taskComponent);
-  }, [task, _id, selectedItemId, component, taskComponent]);
+  }, [task, _id, selectedComponentItemId, selectedComponent, taskComponent]);
 
   return (
     <ListItemContainer
       itemId={_id}
-      selectedItemId={selectedItemId}
+      selectedComponentItemId={selectedComponentItemId}
       toggleViewItem={toggleViewTask}
       listItemDetails={listItemDetails}
     >

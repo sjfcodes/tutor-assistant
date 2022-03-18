@@ -1,6 +1,5 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import DashboardProvider from './DashboardProvider';
 import TasksSection from '../../components/TasksSection';
 
 import MessageBoard from '../../components/MessageBoard';
@@ -21,7 +20,7 @@ const Dashboard = () => {
   const getComponents = () => {
     if (!selectedCourse) return '';
     return (
-      <DashboardProvider>
+      <>
         <TasksProvider>
           <TasksSection />
         </TasksProvider>
@@ -31,7 +30,7 @@ const Dashboard = () => {
         <MeetingsProvider>
           <MeetingsSection />
         </MeetingsProvider>
-      </DashboardProvider>
+      </>
     );
   };
 

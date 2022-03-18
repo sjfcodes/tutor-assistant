@@ -1,6 +1,6 @@
-export const TUTOR_AUTH_TOKEN = 'auth_token';
+export const TUTOR_AUTH_TOKEN = 'authToken';
 export const LS_SELECTED_COURSE = 'selectedCourseId';
-export const LS_SELECTED_SECTION = 'selectedSection';
+export const LS_SELECTED_COMPONENT = 'selectedComponent';
 
 const LS_KEY = 'tutorly';
 

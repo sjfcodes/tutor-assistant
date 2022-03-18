@@ -2,12 +2,17 @@ import React, { useContext, useEffect, useMemo } from 'react';
 import { Columns } from 'react-bulma-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { SET_CALENDLY_MEETINGS_FOR_COURSE } from '../../store/courses/actions';
-import { ADD_MEETING_MODAL, SET_OPEN_MODAL } from '../../store/view/actions';
-import { formatCalendlyMeetings, getCourseSectionListItemCount, readModel } from '../../utils';
 import {
-  DashboardContext,
+  ADD_MEETING_MODAL,
   COURSE_SECTION_MEETINGS,
-} from '../../views/Dashboard/DashboardProvider';
+  SET_ACTIVE_COMPONENT,
+  SET_OPEN_MODAL,
+} from '../../store/view/actions';
+import {
+  formatCalendlyMeetings,
+  getCourseSectionListItemCount,
+  readModel,
+} from '../../utils';
 import SectionContainer from '../Section/Container';
 import SectionHeading from '../Section/Heading';
 import MeetingsList from './MeetingsList';
@@ -15,12 +20,18 @@ import MeetingsListFilter from './MeetingsListFilter';
 import { MeetingsContext } from './MeetingsProvider';
 
 const MeetingsSection = () => {
-  const { allCourses, selectedCourse } = useSelector((state) => state.courses);
   const dispatch = useDispatch();
-  const { toggleDisplayedSection } = useContext(DashboardContext);
   const {
-    filterBy, setFilterBy, isActive,
-    sectionName, filterOptions, displayedMeetings,
+    courses: { allCourses, selectedCourse },
+    view: { activeComponent: { selectedComponent } },
+  } = useSelector((state) => state);
+  const {
+    filterBy,
+    setFilterBy,
+    isActive,
+    sectionName,
+    filterOptions,
+    displayedMeetings,
   } = useContext(MeetingsContext);
 
   const { meetings: allMeetings } = useMemo(
@@ -29,7 +40,10 @@ const MeetingsSection = () => {
   );
 
   // will be used for updating focused meetings based on checkbox settings, see students section
-  const focusedMeetings = useMemo(() => Object.values(allMeetings), [allMeetings]);
+  const focusedMeetings = useMemo(
+    () => Object.values(allMeetings),
+    [allMeetings],
+  );
 
   useEffect(() => {
     let isMounted = true;
@@ -60,12 +74,10 @@ const MeetingsSection = () => {
   const headingComponent = (
     <SectionHeading
       sectionName={sectionName}
-      count={
-        getCourseSectionListItemCount({
-          displayed: displayedMeetings.length,
-          focused: focusedMeetings.length,
-        })
-      }
+      count={getCourseSectionListItemCount({
+        displayed: displayedMeetings.length,
+        focused: focusedMeetings.length,
+      })}
     />
   );
 
@@ -87,7 +99,14 @@ const MeetingsSection = () => {
     <SectionContainer
       heading={headingComponent}
       active={isActive}
-      toggleDisplayedSection={() => toggleDisplayedSection(COURSE_SECTION_MEETINGS)}
+      toggleDisplayedSection={() => dispatch({
+        type: SET_ACTIVE_COMPONENT,
+        payload: {
+          selectedComponent: selectedComponent !== COURSE_SECTION_MEETINGS
+            ? COURSE_SECTION_MEETINGS
+            : '',
+        },
+      })}
       sectionName={sectionName}
       filterBy={filterBy}
       setFilterBy={setFilterBy}

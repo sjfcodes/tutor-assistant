@@ -1,10 +1,11 @@
 import React, { useContext, useMemo, useState } from 'react';
 import { Columns, Form } from 'react-bulma-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { ADD_STUDENT_MODAL, SET_OPEN_MODAL } from '../../store/view/actions';
+import {
+  ADD_STUDENT_MODAL, COURSE_SECTION_STUDENTS, SET_ACTIVE_COMPONENT, SET_OPEN_MODAL,
+} from '../../store/view/actions';
 import { getCourseSectionListItemCount, getCurrentUnix } from '../../utils';
 import { getUnixFromISO } from '../../utils/helpers/dateTime';
-import { DashboardContext, COURSE_SECTION_STUDENTS } from '../../views/Dashboard/DashboardProvider';
 import SectionContainer from '../Section/Container';
 import SectionHeading from '../Section/Heading';
 import StudentsList from './StudentsList';
@@ -12,10 +13,12 @@ import StudentsListFilter from './StudentsListFilter';
 import { StudentsContext } from './StudentsProvider';
 
 const StudentsSection = () => {
-  const { allCourses, selectedCourse } = useSelector((state) => state.courses);
   const dispatch = useDispatch();
+  const {
+    courses: { allCourses, selectedCourse },
+    view: { activeComponent: { selectedComponent } },
+  } = useSelector((state) => state);
 
-  const { toggleDisplayedSection } = useContext(DashboardContext);
   const { displayedStudents } = useContext(StudentsContext);
   const [checkBox, setCheckBox] = useState({ currentStudentsOnly: true });
 
@@ -87,7 +90,14 @@ const StudentsSection = () => {
     <SectionContainer
       heading={heading}
       active={isActive}
-      toggleDisplayedSection={() => toggleDisplayedSection(COURSE_SECTION_STUDENTS)}
+      toggleDisplayedSection={() => dispatch({
+        type: SET_ACTIVE_COMPONENT,
+        payload: {
+          selectedComponent: selectedComponent !== COURSE_SECTION_STUDENTS
+            ? COURSE_SECTION_STUDENTS
+            : '',
+        },
+      })}
       sectionName={sectionName}
       filterBy={filterBy}
       setFilterBy={setFilterBy}

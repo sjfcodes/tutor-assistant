@@ -1,9 +1,10 @@
 import { shape, string } from 'prop-types';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Level } from 'react-bulma-components';
+import { useDispatch } from 'react-redux';
+import { COURSE_SECTION_STUDENTS, SET_ACTIVE_COMPONENT } from '../../../store/view/actions';
 import { getCurrentUnix } from '../../../utils';
 import { getUnixFromISO } from '../../../utils/helpers/dateTime';
-import { DashboardContext, COURSE_SECTION_STUDENTS } from '../../../views/Dashboard/DashboardProvider';
 import { MeetingDateShort, MeetingTime } from '../../DateTime';
 
 import './style.css';
@@ -19,18 +20,14 @@ const getScheduleStatus = ({ currentTime, start, end }) => {
   return null;
 };
 
-const MeetingsListItemLayout = (
-  {
-    student: { firstName, lastName },
-    meeting: {
-      startTime, endTime, firstName: calFirstName, lastName: calLastName, studentId,
-    },
+const MeetingsListItemLayout = ({
+  student: { firstName, lastName },
+  meeting: {
+    startTime, endTime, firstName: calFirstName, lastName: calLastName, studentId,
   },
-) => {
-  const { activeComponent, setActiveComponent } = useContext(DashboardContext);
-
-  // eslint-disable-next-line no-unused-vars
-  const [status, setStatus] = useState(() => {
+}) => {
+  const dispatch = useDispatch();
+  const [status] = useState(() => {
     const currentTime = getCurrentUnix();
     const start = getUnixFromISO(startTime);
     const end = getUnixFromISO(endTime);
@@ -50,10 +47,12 @@ const MeetingsListItemLayout = (
   };
   const showStudentDetails = (e) => {
     e.stopPropagation();
-    setActiveComponent({
-      ...activeComponent,
-      component: COURSE_SECTION_STUDENTS,
-      selectedItemId: studentId,
+    dispatch({
+      type: SET_ACTIVE_COMPONENT,
+      payload: {
+        component: COURSE_SECTION_STUDENTS,
+        selectedComponentItemId: studentId,
+      },
     });
   };
 
