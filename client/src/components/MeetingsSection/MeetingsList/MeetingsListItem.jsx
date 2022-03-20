@@ -12,7 +12,7 @@ const MeetingListItem = ({ meeting }) => {
   const dispatch = useDispatch();
   const {
     courses: { allCourses, selectedCourse },
-    view: { component, selectedComponentItemId },
+    view: { activeComponent: { selectedComponent, selectedComponentItemId } },
   } = useSelector((state) => state);
 
   const [listItemDetails, setListItemDetails] = useState('');
@@ -34,10 +34,10 @@ const MeetingListItem = ({ meeting }) => {
   );
 
   useEffect(() => {
-    if (component !== COURSE_SECTION_MEETINGS) return '';
+    if (selectedComponent !== COURSE_SECTION_MEETINGS) return '';
     if (selectedComponentItemId !== _id) return setListItemDetails('');
     return setListItemDetails(<MeetingDetailList meeting={meeting} _id={_id} />);
-  }, [meeting, _id, selectedComponentItemId, component]);
+  }, [meeting, _id, selectedComponentItemId, selectedComponent]);
 
   return (
     <ListItemContainer
