@@ -24,13 +24,11 @@ const AddMeetingModal = () => {
   const handleAddMeeting = async (e) => {
     e.preventDefault();
 
-    const meeting = await createModel(
-      {
-        model: 'meeting',
-        body: formInputs,
-        _id: selectedCourse,
-      },
-    );
+    const meeting = await createModel({
+      model: 'meeting',
+      body: formInputs,
+      _id: selectedCourse,
+    });
 
     dispatch({
       type: ADD_MEETING_TO_COURSE,

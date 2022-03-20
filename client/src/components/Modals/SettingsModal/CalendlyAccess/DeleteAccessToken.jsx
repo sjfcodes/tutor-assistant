@@ -11,13 +11,11 @@ const DeleteAccessToken = ({ courseId }) => {
   const { calendly: { accessToken } } = allCourses[courseId];
 
   const handleDeleteAccessToken = async () => {
-    await deleteModel(
-      {
-        _id: accessToken,
-        model: 'calendly/token',
-        body: { courseId },
-      },
-    );
+    await deleteModel({
+      _id: accessToken,
+      model: 'calendly/token',
+      body: { courseId },
+    });
     window.location.reload();
   };
 

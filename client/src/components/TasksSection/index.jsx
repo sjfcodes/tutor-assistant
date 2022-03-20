@@ -1,9 +1,10 @@
 import React, { useContext, useMemo } from 'react';
 import { Columns } from 'react-bulma-components';
-import { useDispatch } from 'react-redux';
-import { ADD_TASK_MODAL, SET_OPEN_MODAL } from '../../store/view/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  ADD_TASK_MODAL, COURSE_SECTION_TASKS, SET_ACTIVE_COMPONENT, SET_OPEN_MODAL,
+} from '../../store/view/actions';
 import { getCourseSectionListItemCount } from '../../utils';
-import { DashboardContext, TASKS_SECTION } from '../../views/Dashboard/DashboardProvider';
 import SectionContainer from '../Section/Container';
 import SectionHeading from '../Section/Heading';
 import TasksList from './TasksList';
@@ -12,7 +13,7 @@ import { TasksContext } from './TasksProvider';
 
 const TasksSection = () => {
   const dispatch = useDispatch();
-  const { toggleDisplayedSection } = useContext(DashboardContext);
+  const { activeComponent: { selectedComponent } } = useSelector((state) => state.view);
   const {
     filterBy, setFilterBy,
     studentTasks, meetingTasks, tutorTasks,
@@ -57,7 +58,14 @@ const TasksSection = () => {
     <SectionContainer
       heading={headingComponent}
       active={isActive}
-      toggleDisplayedSection={() => toggleDisplayedSection(TASKS_SECTION)}
+      toggleDisplayedSection={() => dispatch({
+        type: SET_ACTIVE_COMPONENT,
+        payload: {
+          selectedComponent: selectedComponent !== COURSE_SECTION_TASKS
+            ? COURSE_SECTION_TASKS
+            : '',
+        },
+      })}
       sectionName={sectionName}
       filterBy={filterBy}
       setFilterBy={setFilterBy}

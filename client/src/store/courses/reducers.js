@@ -1,7 +1,11 @@
+import {
+  LS_SELECTED_COURSE, LS_SELECTED_COMPONENT, updateLocalStorage, getLocalStorageValueFor,
+} from '../../store_local';
 import { formatCourses } from '../../utils';
 import {
   SET_ALL_COURSES,
   SET_SELECTED_COURSE,
+  SET_SELECTED_COURSE_SECTION,
 
   ADD_COURSE,
   UPDATE_COURSE_DETAIL,
@@ -17,21 +21,29 @@ import {
   SET_CALENDLY_MEETINGS_FOR_COURSE,
 } from './actions';
 
-// eslint-disable-next-line no-console
+const defaultState = {
+  selectedCourse: getLocalStorageValueFor({ key: LS_SELECTED_COURSE }) || '',
+};
 
 // eslint-disable-next-line default-param-last
-const courseReducer = (state = {}, { type, payload }) => {
+const courseReducer = (state = defaultState, { type, payload }) => {
   switch (type) {
   case SET_ALL_COURSES: {
     return {
+      ...state,
       allCourses: formatCourses(payload),
     };
   }
   case SET_SELECTED_COURSE: {
+    updateLocalStorage({ key: LS_SELECTED_COURSE, value: payload._id });
     return {
       ...state,
       selectedCourse: payload._id,
     };
+  }
+  case SET_SELECTED_COURSE_SECTION: {
+    updateLocalStorage({ key: LS_SELECTED_COMPONENT, value: payload.section });
+    return state;
   }
 
   case ADD_COURSE: {

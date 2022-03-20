@@ -63,9 +63,7 @@ const AddStudentForm = ({ formInputs, setFormInputs }) => {
   };
 
   useEffect(() => {
-    setDisplayHelpText(
-      Object.entries(helpText).map(([key, value]) => (value ? <p key={key}>{value}</p> : '')),
-    );
+    setDisplayHelpText(Object.entries(helpText).map(([key, value]) => (value ? <p key={key}>{value}</p> : '')));
   }, [helpText]);
 
   return (

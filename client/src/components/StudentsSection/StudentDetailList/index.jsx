@@ -14,22 +14,20 @@ const StudentDetailList = ({ student }) => {
 
   useEffect(() => {
     let count = 0;
-    if (student._id) setListItems(
-      Object.entries(student)
-        .map(([property, value]) => {
-          if (doNotDisplay.indexOf(property) !== -1) return null;
-          count += 1;
-          return (
-            <StudentDetailListItem
-              key={uuid()}
-              _id={student._id}
-              count={count} // used for striped background
-              value={value}
-              property={property}
-            />
-          );
-        }),
-    );
+    if (student._id) setListItems(Object.entries(student)
+      .map(([property, value]) => {
+        if (doNotDisplay.indexOf(property) !== -1) return null;
+        count += 1;
+        return (
+          <StudentDetailListItem
+            key={uuid()}
+            _id={student._id}
+            count={count} // used for striped background
+            value={value}
+            property={property}
+          />
+        );
+      }));
   }, [student, doNotDisplay]);
 
   return (

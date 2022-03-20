@@ -1,13 +1,15 @@
 import React, {
-  createContext, useContext, useMemo, useState,
+  createContext, useMemo, useState,
 } from 'react';
-import { DashboardContext, STUDENTS_SECTION } from '../../../views/Dashboard/DashboardProvider';
+import { useSelector } from 'react-redux';
+import { COURSE_SECTION_STUDENTS } from '../../../store/view/actions';
 
 export const StudentsContext = createContext({});
 
 // eslint-disable-next-line react/prop-types
 const StudentsProvider = ({ children }) => {
-  const { activeComponent: { component } } = useContext(DashboardContext);
+  const { activeComponent: { selectedComponent } } = useSelector((state) => state.view);
+
   const [displayedStudents, setDisplayedStudents] = useState([]);
   const [filterOptions, setFilterOptions] = useState(['first name', 'last name', 'graduation date']);
   const [filterBy, setFilterBy] = useState(filterOptions[0]);
@@ -21,9 +23,9 @@ const StudentsProvider = ({ children }) => {
       displayedStudents,
       setDisplayedStudents,
       sectionName: 'Students',
-      isActive: component === STUDENTS_SECTION,
+      isActive: selectedComponent === COURSE_SECTION_STUDENTS,
     }
-  ), [component, filterBy, filterOptions, displayedStudents]);
+  ), [selectedComponent, filterBy, filterOptions, displayedStudents]);
 
   return (
     <StudentsContext.Provider value={value}>

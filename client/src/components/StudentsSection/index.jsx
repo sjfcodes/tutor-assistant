@@ -1,10 +1,13 @@
-import React, { useContext, useMemo, useState } from 'react';
+import React, {
+  useContext, useMemo, useState,
+} from 'react';
 import { Columns, Form } from 'react-bulma-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { ADD_STUDENT_MODAL, SET_OPEN_MODAL } from '../../store/view/actions';
+import {
+  ADD_STUDENT_MODAL, COURSE_SECTION_STUDENTS, SET_ACTIVE_COMPONENT, SET_OPEN_MODAL,
+} from '../../store/view/actions';
 import { getCourseSectionListItemCount, getCurrentUnix } from '../../utils';
 import { getUnixFromISO } from '../../utils/helpers/dateTime';
-import { DashboardContext, STUDENTS_SECTION } from '../../views/Dashboard/DashboardProvider';
 import SectionContainer from '../Section/Container';
 import SectionHeading from '../Section/Heading';
 import StudentsList from './StudentsList';
@@ -12,38 +15,48 @@ import StudentsListFilter from './StudentsListFilter';
 import { StudentsContext } from './StudentsProvider';
 
 const StudentsSection = () => {
-  const { allCourses, selectedCourse } = useSelector((state) => state.courses);
   const dispatch = useDispatch();
+  const {
+    courses: { allCourses, selectedCourse },
+    view: { activeComponent: { selectedComponent } },
+  } = useSelector((state) => state);
 
-  const { toggleDisplayedSection } = useContext(DashboardContext);
   const { displayedStudents } = useContext(StudentsContext);
-  const [checkBox, setCheckBox] = useState({ currentStudentsOnly: true });
-
-  const focusedStudents = useMemo(
-    () => {
-      const allStudents = Object
-        .values(allCourses[selectedCourse].students);
-
-      const currentDateUnix = getCurrentUnix();
-
-      return checkBox.currentStudentsOnly
-        ? allStudents
-          .filter(({ graduationDate }) => getUnixFromISO(graduationDate) > currentDateUnix)
-        : allStudents;
-    },
-    [allCourses, selectedCourse, checkBox.currentStudentsOnly],
-  );
-
   const {
     filterBy, setFilterBy,
     isActive, sectionName, filterOptions,
   } = useContext(StudentsContext);
 
-  const toggleCheckbox = ({ target: { name, checked } }) => {
-    setCheckBox({ ...checkBox, [name]: checked });
-  };
+  const [checkBox, setCheckBox] = useState({ currentStudentsOnly: true });
 
-  const getChildren = () => {
+  const { students: allStudents } = useMemo(
+    () => {
+      if (!allCourses || !selectedCourse || !allCourses[selectedCourse]) return { students: {} };
+
+      return allCourses[selectedCourse];
+    },
+    [allCourses, selectedCourse],
+  );
+
+  const focusedStudents = useMemo(
+    () => {
+      const currentDateUnix = getCurrentUnix();
+      const studentsArr = Object.values(allStudents);
+
+      if (!studentsArr.length) return [];
+
+      return checkBox.currentStudentsOnly
+        ? studentsArr
+          .filter(({ graduationDate }) => getUnixFromISO(graduationDate) > currentDateUnix)
+        : [];
+    },
+    [allStudents, checkBox.currentStudentsOnly],
+  );
+
+  const children = useMemo(() => {
+    const toggleCheckbox = ({ target: { name, checked } }) => {
+      setCheckBox({ ...checkBox, [name]: checked });
+    };
     if (!isActive) return '';
     return (
       <>
@@ -68,7 +81,7 @@ const StudentsSection = () => {
         <StudentsList focusedStudents={focusedStudents} />
       </>
     );
-  };
+  }, [isActive, checkBox, focusedStudents]);
 
   const heading = (
     <SectionHeading
@@ -87,14 +100,21 @@ const StudentsSection = () => {
     <SectionContainer
       heading={heading}
       active={isActive}
-      toggleDisplayedSection={() => toggleDisplayedSection(STUDENTS_SECTION)}
+      toggleDisplayedSection={() => dispatch({
+        type: SET_ACTIVE_COMPONENT,
+        payload: {
+          selectedComponent: selectedComponent !== COURSE_SECTION_STUDENTS
+            ? COURSE_SECTION_STUDENTS
+            : '',
+        },
+      })}
       sectionName={sectionName}
       filterBy={filterBy}
       setFilterBy={setFilterBy}
       filterOptions={filterOptions}
       addListItemClick={openAddStudentModal}
     >
-      {getChildren()}
+      {children}
     </SectionContainer>
   );
 };

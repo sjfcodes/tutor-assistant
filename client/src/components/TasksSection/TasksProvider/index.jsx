@@ -1,12 +1,13 @@
 import React, {
-  createContext, useContext, useEffect, useMemo, useState,
+  createContext, useEffect, useMemo, useState,
 } from 'react';
 import { useSelector } from 'react-redux';
-import { DashboardContext, TASKS_SECTION } from '../../../views/Dashboard/DashboardProvider';
+import { COURSE_SECTION_TASKS } from '../../../store/view/actions';
 
 export const TasksContext = createContext({});
 
 const findMissingStudents = (courseMeetings) => {
+  if (!courseMeetings) return [];
   const meetings = Object.values(courseMeetings);
   return meetings
     .filter(({ studentId }) => !studentId);
@@ -16,8 +17,8 @@ const findMissingStudents = (courseMeetings) => {
 const TasksProvider = ({ children }) => {
   const {
     courses: { allCourses, selectedCourse },
+    view: { activeComponent: { selectedComponent } },
   } = useSelector((state) => state);
-  const { activeComponent: { component } } = useContext(DashboardContext);
   const [displayedTasks, setDisplayedTasks] = useState([]);
   const [filterOptions, setFilterOptions] = useState(['all', 'tutor', 'student', 'meeting']);
   const [filterBy, setFilterBy] = useState(filterOptions[0]);
@@ -40,21 +41,29 @@ const TasksProvider = ({ children }) => {
         displayedTasks,
         setDisplayedTasks,
         sectionName: 'Tasks',
-        isActive: component === TASKS_SECTION,
+        isActive: selectedComponent === COURSE_SECTION_TASKS,
       }
     ),
     [
       tutorTasks, studentTasks, meetingTasks,
-      component, filterBy, filterOptions, displayedTasks,
+      selectedComponent, filterBy, filterOptions, displayedTasks,
     ],
   );
 
-  const { meetings: allMeetings } = allCourses[selectedCourse];
+  const { meetings: allMeetings } = useMemo(
+    () => {
+      if (!allCourses || !selectedCourse) return { meetings: {} };
+
+      return allCourses[selectedCourse];
+    },
+    [allCourses, selectedCourse],
+  );
 
   useEffect(() => {
     const missingStudents = findMissingStudents(allMeetings);
-    if (missingStudents.length) setStudentTasks(missingStudents);
-    else setStudentTasks([]);
+    setStudentTasks(missingStudents.length
+      ? missingStudents
+      : []);
   }, [allMeetings]);
 
   return (

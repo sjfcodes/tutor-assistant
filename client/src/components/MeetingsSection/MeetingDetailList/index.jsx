@@ -20,23 +20,21 @@ const MeetingDetailList = ({ _id, meeting }) => {
 
   useEffect(() => {
     let count = 0;
-    if (_id && meeting) setListItems(
-      Object.entries(meeting)
-        .map(([property, value]) => {
-          if (doNotDisplay.indexOf(property) !== -1) return null;
-          count += 1;
-          return (
-            <MeetingDetailListItem
-              key={uuid()}
-              _id={_id}
-              count={count} // used for striped background
-              value={value}
-              property={property}
-              type={meeting.type}
-            />
-          );
-        }),
-    );
+    if (_id && meeting) setListItems(Object.entries(meeting)
+      .map(([property, value]) => {
+        if (doNotDisplay.indexOf(property) !== -1) return null;
+        count += 1;
+        return (
+          <MeetingDetailListItem
+            key={uuid()}
+            _id={_id}
+            count={count} // used for striped background
+            value={value}
+            property={property}
+            type={meeting.type}
+          />
+        );
+      }));
   }, [_id, meeting, doNotDisplay]);
 
   return (

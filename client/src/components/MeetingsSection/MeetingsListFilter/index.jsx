@@ -15,11 +15,9 @@ const MeetingsListFilter = ({ className, meetings }) => {
     // if a type is missing, add it to the filter options
 
     // eslint-disable-next-line react/prop-types
-    meetings.forEach(
-      ({ type }) => {
-        if (!filterOptions.includes(type)) setFilterOptions([...filterOptions, type]);
-      },
-    );
+    meetings.forEach(({ type }) => {
+      if (!filterOptions.includes(type)) setFilterOptions([...filterOptions, type]);
+    });
   }, [meetings, filterOptions, setFilterOptions]);
   return (
     <ListFilterSelector

@@ -3,10 +3,11 @@ import {
   bool, number, shape, string,
 } from 'prop-types';
 import { Level } from 'react-bulma-components';
+import { useDispatch, useSelector } from 'react-redux';
 import ListItemContainer from '../../List/ListItemContainer';
 import StudentDetailList from '../StudentDetailList';
 import { GraduationDate, TimeZoneAbbreviation } from '../../DateTime';
-import { DashboardContext, STUDENTS_SECTION } from '../../../views/Dashboard/DashboardProvider';
+import { COURSE_SECTION_STUDENTS, SET_ACTIVE_COMPONENT } from '../../../store/view/actions';
 import { StudentsContext } from '../StudentsProvider';
 
 const StudentListItem = ({ student }) => {
@@ -14,28 +15,36 @@ const StudentListItem = ({ student }) => {
   const {
     _id, firstName, lastName, timeZoneName, graduationDate,
   } = student;
-  const { activeComponent, setActiveComponent } = useContext(DashboardContext);
-  const { component, selectedItemId } = activeComponent;
+  const dispatch = useDispatch();
+  const {
+    activeComponent: { selectedComponent, selectedComponentItemId },
+  } = useSelector((state) => state.view);
   const { filterBy } = useContext(StudentsContext);
 
   const toggleViewStudent = () => (
-    setActiveComponent({
-      ...activeComponent,
-      selectedItemId: selectedItemId === _id ? '' : _id,
+    dispatch({
+      type: SET_ACTIVE_COMPONENT,
+      payload: {
+        selectedComponentItemId: selectedComponentItemId === _id ? '' : _id,
+      },
     })
+    // setactiveComponent({
+    //   ...activeComponent,
+    //   selectedComponentItemId: selectedComponentItemId === _id ? '' : _id,
+    // })
   );
 
   useEffect(() => {
-    if (component !== STUDENTS_SECTION) return '';
+    if (selectedComponent !== COURSE_SECTION_STUDENTS) return '';
 
-    if (selectedItemId !== _id) return setListItemDetails('');
+    if (selectedComponentItemId !== _id) return setListItemDetails('');
     return setListItemDetails(<StudentDetailList student={student} _id={_id} />);
-  }, [student, _id, component, selectedItemId]);
+  }, [student, _id, selectedComponent, selectedComponentItemId]);
 
   return (
     <ListItemContainer
       itemId={_id}
-      selectedItemId={selectedItemId}
+      selectedComponentItemId={selectedComponentItemId}
       toggleViewItem={toggleViewStudent}
       listItemDetails={listItemDetails}
     >

@@ -30,13 +30,11 @@ const AddAccessToken = ({ courseId, password }) => {
     let data;
 
     try {
-      const { _id } = await createModel(
-        {
-          model: 'calendly/token',
-          body: { ...formInputs, password },
-          _id: courseId,
-        },
-      );
+      const { _id } = await createModel({
+        model: 'calendly/token',
+        body: { ...formInputs, password },
+        _id: courseId,
+      });
       accessToken = _id;
     } catch (error) {
       // expected case: bad password
