@@ -30,6 +30,7 @@ const courseReducer = (state = defaultState, { type, payload }) => {
   switch (type) {
   case SET_ALL_COURSES: {
     return {
+      ...state,
       allCourses: formatCourses(payload),
     };
   }
