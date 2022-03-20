@@ -1,4 +1,6 @@
-import React, { useContext, useMemo, useState } from 'react';
+import React, {
+  useContext, useMemo, useState,
+} from 'react';
 import { Columns, Form } from 'react-bulma-components';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -20,33 +22,41 @@ const StudentsSection = () => {
   } = useSelector((state) => state);
 
   const { displayedStudents } = useContext(StudentsContext);
-  const [checkBox, setCheckBox] = useState({ currentStudentsOnly: true });
-
-  const focusedStudents = useMemo(
-    () => {
-      const allStudents = Object
-        .values(allCourses[selectedCourse].students);
-
-      const currentDateUnix = getCurrentUnix();
-
-      return checkBox.currentStudentsOnly
-        ? allStudents
-          .filter(({ graduationDate }) => getUnixFromISO(graduationDate) > currentDateUnix)
-        : allStudents;
-    },
-    [allCourses, selectedCourse, checkBox.currentStudentsOnly],
-  );
-
   const {
     filterBy, setFilterBy,
     isActive, sectionName, filterOptions,
   } = useContext(StudentsContext);
 
-  const toggleCheckbox = ({ target: { name, checked } }) => {
-    setCheckBox({ ...checkBox, [name]: checked });
-  };
+  const [checkBox, setCheckBox] = useState({ currentStudentsOnly: true });
 
-  const getChildren = () => {
+  const { students: allStudents } = useMemo(
+    () => {
+      if (!allCourses || !selectedCourse || !allCourses[selectedCourse]) return { students: {} };
+
+      return allCourses[selectedCourse];
+    },
+    [allCourses, selectedCourse],
+  );
+
+  const focusedStudents = useMemo(
+    () => {
+      const currentDateUnix = getCurrentUnix();
+      const studentsArr = Object.values(allStudents);
+
+      if (!studentsArr.length) return [];
+
+      return checkBox.currentStudentsOnly
+        ? studentsArr
+          .filter(({ graduationDate }) => getUnixFromISO(graduationDate) > currentDateUnix)
+        : [];
+    },
+    [allStudents, checkBox.currentStudentsOnly],
+  );
+
+  const children = useMemo(() => {
+    const toggleCheckbox = ({ target: { name, checked } }) => {
+      setCheckBox({ ...checkBox, [name]: checked });
+    };
     if (!isActive) return '';
     return (
       <>
@@ -71,7 +81,7 @@ const StudentsSection = () => {
         <StudentsList focusedStudents={focusedStudents} />
       </>
     );
-  };
+  }, [isActive, checkBox, focusedStudents]);
 
   const heading = (
     <SectionHeading
@@ -104,7 +114,7 @@ const StudentsSection = () => {
       filterOptions={filterOptions}
       addListItemClick={openAddStudentModal}
     >
-      {getChildren()}
+      {children}
     </SectionContainer>
   );
 };

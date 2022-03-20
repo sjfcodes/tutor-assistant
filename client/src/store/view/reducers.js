@@ -1,4 +1,6 @@
-import { getLocalStorageValueFor, LS_SELECTED_COMPONENT, updateLocalStorage } from '../../store_local';
+import {
+  getLocalStorageValueFor, LS_SELECTED_COMPONENT, LS_SELECTED_COMPONENT_ITEM_ID, updateLocalStorage,
+} from '../../store_local';
 import {
   SET_OPEN_MODAL,
   CLOSE_MODAL,
@@ -9,18 +11,17 @@ const defaultState = {
   openModal: '',
   activeComponent: {
     selectedComponent: getLocalStorageValueFor({ key: LS_SELECTED_COMPONENT }) || '',
-    selectedComponentItemId: '',
+    selectedComponentItemId: getLocalStorageValueFor({ key: LS_SELECTED_COMPONENT_ITEM_ID }) || '',
   },
 };
-console.log('defaultState', defaultState);
 
 // eslint-disable-next-line default-param-last
 const tutorReducer = (state = defaultState, { type, payload }) => {
   switch (type) {
   case SET_ACTIVE_COMPONENT: {
-    console.log(Object.entries(payload).forEach(([key, value]) => {
+    Object.entries(payload).forEach(([key, value]) => {
       updateLocalStorage({ key, value });
-    }));
+    });
     return {
       ...state,
       activeComponent: {

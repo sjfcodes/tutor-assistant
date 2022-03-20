@@ -9,6 +9,7 @@ import { MeetingDateShort, MeetingTime } from '../../DateTime';
 
 import './style.css';
 
+// classnames for styling
 const MEETING_PAST = 'meeting-past';
 const MEETING_PRESENT = 'meeting-present';
 const MEETING_FUTURE = 'meeting-future';
@@ -50,7 +51,7 @@ const MeetingsListItemLayout = ({
     dispatch({
       type: SET_ACTIVE_COMPONENT,
       payload: {
-        component: COURSE_SECTION_STUDENTS,
+        selectedComponent: COURSE_SECTION_STUDENTS,
         selectedComponentItemId: studentId,
       },
     });

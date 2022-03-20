@@ -7,6 +7,7 @@ import { COURSE_SECTION_TASKS } from '../../../store/view/actions';
 export const TasksContext = createContext({});
 
 const findMissingStudents = (courseMeetings) => {
+  if (!courseMeetings) return [];
   const meetings = Object.values(courseMeetings);
   return meetings
     .filter(({ studentId }) => !studentId);
@@ -49,12 +50,20 @@ const TasksProvider = ({ children }) => {
     ],
   );
 
-  const { meetings: allMeetings } = allCourses[selectedCourse];
+  const { meetings: allMeetings } = useMemo(
+    () => {
+      if (!allCourses || !selectedCourse) return { meetings: {} };
+
+      return allCourses[selectedCourse];
+    },
+    [allCourses, selectedCourse],
+  );
 
   useEffect(() => {
     const missingStudents = findMissingStudents(allMeetings);
-    if (missingStudents.length) setStudentTasks(missingStudents);
-    else setStudentTasks([]);
+    setStudentTasks(missingStudents.length
+      ? missingStudents
+      : []);
   }, [allMeetings]);
 
   return (

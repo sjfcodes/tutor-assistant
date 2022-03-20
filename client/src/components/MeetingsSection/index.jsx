@@ -26,22 +26,30 @@ const MeetingsSection = () => {
     view: { activeComponent: { selectedComponent } },
   } = useSelector((state) => state);
   const {
+    isActive,
     filterBy,
     setFilterBy,
-    isActive,
     sectionName,
     filterOptions,
     displayedMeetings,
   } = useContext(MeetingsContext);
 
   const { meetings: allMeetings } = useMemo(
-    () => allCourses[selectedCourse],
+    () => {
+      if (!allCourses || !selectedCourse || !allCourses[selectedCourse]) return { meetings: {} };
+
+      return allCourses[selectedCourse];
+    },
     [allCourses, selectedCourse],
   );
 
   // will be used for updating focused meetings based on checkbox settings, see students section
   const focusedMeetings = useMemo(
-    () => Object.values(allMeetings),
+    () => {
+      const meetingsArr = Object.values(allMeetings);
+
+      return meetingsArr;
+    },
     [allMeetings],
   );
 
@@ -81,7 +89,7 @@ const MeetingsSection = () => {
     />
   );
 
-  const getChildren = () => {
+  const children = useMemo(() => {
     if (!isActive) return '';
     return (
       <>
@@ -93,7 +101,7 @@ const MeetingsSection = () => {
         <MeetingsList focusedMeetings={focusedMeetings} />
       </>
     );
-  };
+  }, [allMeetings, focusedMeetings, isActive]);
 
   return (
     <SectionContainer
@@ -113,7 +121,7 @@ const MeetingsSection = () => {
       filterOptions={filterOptions}
       addListItemClick={() => dispatch({ type: SET_OPEN_MODAL, payload: ADD_MEETING_MODAL })}
     >
-      {getChildren()}
+      {children}
     </SectionContainer>
   );
 };
