@@ -41,14 +41,14 @@ const StudentsSection = () => {
   const focusedStudents = useMemo(
     () => {
       const currentDateUnix = getCurrentUnix();
-      const studentsArr = Object.values(allStudents);
+      const studentsArr = Object.values(allStudents) || [];
 
-      if (!studentsArr.length) return [];
+      if (!studentsArr.length) return studentsArr;
 
       return checkBox.currentStudentsOnly
         ? studentsArr
           .filter(({ graduationDate }) => getUnixFromISO(graduationDate) > currentDateUnix)
-        : [];
+        : studentsArr;
     },
     [allStudents, checkBox.currentStudentsOnly],
   );
