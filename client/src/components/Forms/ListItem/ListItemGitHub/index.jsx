@@ -10,7 +10,7 @@ const ListITemGitHub = ({ value }) => (
         target='_blank'
         rel='noreferrer'
       >
-        {`https://github.com/${value}`}
+        {value}
       </a>
     )
 );

@@ -78,7 +78,7 @@ studentSchema.virtual('fullName').get(function () {
 studentSchema.virtual('clockOutNotes').get(function () {
   return `1. ${this.classId}
 2. ${this.firstName} ${this.lastName}
-3. B2B-No/yes`;
+3. B2B-No`;
 });
 // eslint-disable-next-line func-names
 // eslint-disable-next-line prefer-arrow-callback
