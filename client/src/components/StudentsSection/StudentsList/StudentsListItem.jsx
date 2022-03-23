@@ -28,10 +28,6 @@ const StudentListItem = ({ student }) => {
         selectedComponentItemId: selectedComponentItemId === _id ? '' : _id,
       },
     })
-    // setactiveComponent({
-    //   ...activeComponent,
-    //   selectedComponentItemId: selectedComponentItemId === _id ? '' : _id,
-    // })
   );
 
   useEffect(() => {
