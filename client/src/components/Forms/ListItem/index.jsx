@@ -15,7 +15,7 @@ import { getLocalDateString, convertStrToBool } from '../../../utils';
 import ListITemGitHub from './ListItemGitHub';
 import ListItemTime from './ListITemTime';
 
-const getElementFor = ({ property, value }) => {
+export const getElementFor = ({ property, value }) => {
   const elementFor = {
     createdAt: () => <span>{getLocalDateString(value)}</span>,
     cancelUrl: () => <ListItemLink value={value} />,
@@ -36,7 +36,9 @@ const getElementFor = ({ property, value }) => {
     updatedAt: () => <ListItemTime value={value} />,
   };
 
-  return elementFor[property] || elementFor.default;
+  return elementFor[property]
+    ? elementFor[property]()
+    : elementFor.default();
 };
 
 const ListItem = ({
@@ -75,6 +77,7 @@ const ListItem = ({
     notes: <Form.Textarea {...args} />,
     timeZoneName: <TimeZoneSelector {...args} />,
     clockOutNotes: <Form.Textarea {...args} />,
+    sessionReview: <Form.Textarea {...args} />,
   };
 
   useEffect(() => {
