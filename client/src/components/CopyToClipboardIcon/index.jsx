@@ -27,7 +27,7 @@ const CopyToClipboardIcon = ({ className, data }) => {
       <FaClipboardCheck
         className={_className}
       />
-      <span className='has-text-primary'>{helpText}</span>
+      {/* <span className='has-text-primary'>{helpText}</span> */}
     </>
   );
 
