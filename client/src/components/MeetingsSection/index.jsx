@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { SET_CALENDLY_MEETINGS_FOR_COURSE } from '../../store/courses/actions';
 import {
@@ -23,11 +23,12 @@ const MeetingsSection = () => {
     courses: { allCourses, selectedCourse },
     view: { activeComponent: { selectedComponent } },
   } = useSelector((state) => state);
+
   const {
     isActive,
     filterBy,
-    setFilterBy,
     sectionName,
+    setFilterBy,
     filterOptions,
     focusedMeetings,
   } = useContext(MeetingsContext);
@@ -57,13 +58,6 @@ const MeetingsSection = () => {
     };
   }, [selectedCourse, allCourses, dispatch]);
 
-  const children = useMemo(() => {
-    if (!isActive) return '';
-    return (
-      <MeetingsList focusedMeetings={focusedMeetings} />
-    );
-  }, [focusedMeetings, isActive]);
-
   const toggleDisplayedSection = () => {
     dispatch({
       type: SET_ACTIVE_COMPONENT,
@@ -79,7 +73,7 @@ const MeetingsSection = () => {
     <SectionContainer
       active={isActive}
       heading={<MeetingHeading />}
-      toolbar={isActive && <MeetingToolbar />}
+      toolbar={<MeetingToolbar />}
       toggleDisplayedSection={toggleDisplayedSection}
       sectionName={sectionName}
       filterBy={filterBy}
@@ -87,7 +81,7 @@ const MeetingsSection = () => {
       filterOptions={filterOptions}
       addListItemClick={() => dispatch({ type: SET_OPEN_MODAL, payload: ADD_MEETING_MODAL })}
     >
-      {children}
+      {isActive ? <MeetingsList focusedMeetings={focusedMeetings} /> : ''}
     </SectionContainer>
   );
 };

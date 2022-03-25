@@ -6,8 +6,12 @@ import { MeetingsContext } from '../MeetingsProvider';
 // eslint-disable-next-line react/prop-types
 const MeetingsListFilter = ({ className }) => {
   const {
-    sectionName, filterBy, setFilterBy,
-    filterOptions, setFilterOptions, allMeetings,
+    filterBy,
+    setFilterBy,
+    sectionName,
+    setFilterOptions,
+    allMeetings,
+    filterOptions,
   } = useContext(MeetingsContext);
 
   useEffect(() => {
@@ -18,7 +22,10 @@ const MeetingsListFilter = ({ className }) => {
     Object
       .values(allMeetings)
       .forEach(({ type }) => {
-        if (!filterOptions.includes(type)) setFilterOptions([...filterOptions, type]);
+        if (!filterOptions.types.includes(type)) setFilterOptions({
+          ...filterOptions,
+          types: [...filterOptions.types, type],
+        });
       });
   }, [allMeetings, filterOptions, setFilterOptions]);
   return (
@@ -27,7 +34,7 @@ const MeetingsListFilter = ({ className }) => {
       filterBy={filterBy}
       setFilterBy={setFilterBy}
       sectionName={sectionName}
-      filterOptions={filterOptions}
+      filterOptions={filterOptions.types}
     />
   );
 };

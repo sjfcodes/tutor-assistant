@@ -16,8 +16,11 @@ const MeetingsProvider = ({ children }) => {
   } = useSelector((state) => state);
 
   const [displayedMeetings, setDisplayedMeetings] = useState([]);
-  const [filterOptions, setFilterOptions] = useState(['all', 'tutorly']);
-  const [filterBy, setFilterBy] = useState(filterOptions[0]);
+  const [filterOptions, setFilterOptions] = useState({
+    currentMeetingsOnly: true,
+    types: ['all', 'tutorly'],
+  });
+  const [filterBy, setFilterBy] = useState(filterOptions.types[0]);
 
   const { meetings: allMeetings } = useMemo(() => {
     const noCourseSelected = () => (
