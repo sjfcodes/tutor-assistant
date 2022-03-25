@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useMemo } from 'react';
-import { Columns } from 'react-bulma-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { SET_CALENDLY_MEETINGS_FOR_COURSE } from '../../store/courses/actions';
 import {
@@ -10,14 +9,13 @@ import {
 } from '../../store/view/actions';
 import {
   formatCalendlyMeetings,
-  getCourseSectionListItemCount,
   readModel,
 } from '../../utils';
 import SectionContainer from '../Section/Container';
-import SectionHeading from '../Section/Heading';
+import MeetingHeading from './MeetingHeading';
 import MeetingsList from './MeetingsList';
-import MeetingsListFilter from './MeetingsListFilter';
 import { MeetingsContext } from './MeetingsProvider';
+import MeetingToolbar from './MeetingToolbar';
 
 const MeetingsSection = () => {
   const dispatch = useDispatch();
@@ -31,27 +29,8 @@ const MeetingsSection = () => {
     setFilterBy,
     sectionName,
     filterOptions,
-    displayedMeetings,
+    focusedMeetings,
   } = useContext(MeetingsContext);
-
-  const { meetings: allMeetings } = useMemo(
-    () => {
-      if (!allCourses || !selectedCourse || !allCourses[selectedCourse]) return { meetings: {} };
-
-      return allCourses[selectedCourse];
-    },
-    [allCourses, selectedCourse],
-  );
-
-  // will be used for updating focused meetings based on checkbox settings, see students section
-  const focusedMeetings = useMemo(
-    () => {
-      const meetingsArr = Object.values(allMeetings);
-
-      return meetingsArr;
-    },
-    [allMeetings],
-  );
 
   useEffect(() => {
     let isMounted = true;
@@ -70,7 +49,6 @@ const MeetingsSection = () => {
           },
         });
       };
-
       if (allCourses[selectedCourse].calendly.data) getCalendlyMeetings();
     }
 
@@ -79,42 +57,30 @@ const MeetingsSection = () => {
     };
   }, [selectedCourse, allCourses, dispatch]);
 
-  const headingComponent = (
-    <SectionHeading
-      sectionName={sectionName}
-      count={getCourseSectionListItemCount({
-        displayed: displayedMeetings.length,
-        focused: focusedMeetings.length,
-      })}
-    />
-  );
-
   const children = useMemo(() => {
     if (!isActive) return '';
     return (
-      <>
-        <Columns className='is-mobile ml-5 mt-2'>
-          <p className='mr-3'>sort</p>
-          <MeetingsListFilter meetings={Object.values(allMeetings)} />
-        </Columns>
-
-        <MeetingsList focusedMeetings={focusedMeetings} />
-      </>
+      <MeetingsList focusedMeetings={focusedMeetings} />
     );
-  }, [allMeetings, focusedMeetings, isActive]);
+  }, [focusedMeetings, isActive]);
+
+  const toggleDisplayedSection = () => {
+    dispatch({
+      type: SET_ACTIVE_COMPONENT,
+      payload: {
+        selectedComponent: selectedComponent !== COURSE_SECTION_MEETINGS
+          ? COURSE_SECTION_MEETINGS
+          : '',
+      },
+    });
+  };
 
   return (
     <SectionContainer
-      heading={headingComponent}
       active={isActive}
-      toggleDisplayedSection={() => dispatch({
-        type: SET_ACTIVE_COMPONENT,
-        payload: {
-          selectedComponent: selectedComponent !== COURSE_SECTION_MEETINGS
-            ? COURSE_SECTION_MEETINGS
-            : '',
-        },
-      })}
+      heading={<MeetingHeading />}
+      toolbar={isActive && <MeetingToolbar />}
+      toggleDisplayedSection={toggleDisplayedSection}
       sectionName={sectionName}
       filterBy={filterBy}
       setFilterBy={setFilterBy}
