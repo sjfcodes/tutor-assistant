@@ -40,7 +40,7 @@ const SectionContainer = ({
           <DropDownIcon active={active} />
         </LevelSide>
       </Level>
-      {toolbar}
+      {active && toolbar}
       <div className='section-list-container'>
         {children}
       </div>
