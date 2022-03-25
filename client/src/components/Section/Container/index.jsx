@@ -6,9 +6,11 @@ import {
 import { LevelSide } from '../../BulmaHelpers';
 import DropDownIcon from '../../DropDownIcon';
 
+import './style.css';
+
 const SectionContainer = ({
   // eslint-disable-next-line react/prop-types
-  children, heading, addListItemClick, active, toggleDisplayedSection, disabled = false,
+  children, heading, addListItemClick, active, toggleDisplayedSection, toolbar, disabled = false,
 }) => {
   const handleListItemCLicked = (e) => {
     e.stopPropagation();
@@ -38,9 +40,10 @@ const SectionContainer = ({
           <DropDownIcon active={active} />
         </LevelSide>
       </Level>
-
-      {children}
-
+      {toolbar}
+      <div className='section-list-container'>
+        {children}
+      </div>
     </Box>
 
   );
