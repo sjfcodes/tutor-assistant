@@ -4,10 +4,10 @@ import ListFilterSelector from '../../List/ListFilterSelector';
 import { MeetingsContext } from '../MeetingsProvider';
 
 // eslint-disable-next-line react/prop-types
-const MeetingsListFilter = ({ className, meetings }) => {
+const MeetingsListFilter = ({ className }) => {
   const {
     sectionName, filterBy, setFilterBy,
-    filterOptions, setFilterOptions,
+    filterOptions, setFilterOptions, allMeetings,
   } = useContext(MeetingsContext);
 
   useEffect(() => {
@@ -15,17 +15,19 @@ const MeetingsListFilter = ({ className, meetings }) => {
     // if a type is missing, add it to the filter options
 
     // eslint-disable-next-line react/prop-types
-    meetings.forEach(({ type }) => {
-      if (!filterOptions.includes(type)) setFilterOptions([...filterOptions, type]);
-    });
-  }, [meetings, filterOptions, setFilterOptions]);
+    Object
+      .values(allMeetings)
+      .forEach(({ type }) => {
+        if (!filterOptions.includes(type)) setFilterOptions([...filterOptions, type]);
+      });
+  }, [allMeetings, filterOptions, setFilterOptions]);
   return (
     <ListFilterSelector
       className={`py-0 has-text-centered ${className}`}
-      sectionName={sectionName}
-      filterOptions={filterOptions}
       filterBy={filterBy}
       setFilterBy={setFilterBy}
+      sectionName={sectionName}
+      filterOptions={filterOptions}
     />
   );
 };
