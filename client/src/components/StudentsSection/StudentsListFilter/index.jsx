@@ -5,15 +5,17 @@ import { StudentsContext } from '../StudentsProvider';
 
 const StudentsListFilter = ({ className }) => {
   const {
-    filterBy, setFilterBy,
-    sectionName, filterOptions,
+    filterBy,
+    setFilterBy,
+    sectionName,
+    filterOptions: { types },
   } = useContext(StudentsContext);
 
   return (
     <ListFilterSelector
       className={`has-text-centered ${className}`}
       sectionName={sectionName}
-      filterOptions={filterOptions}
+      filterOptions={types}
       filterBy={filterBy}
       setFilterBy={setFilterBy}
     />
