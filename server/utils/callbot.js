@@ -23,4 +23,4 @@ const refreshOtherServers = async (urls) => {
 };
 
 refreshOtherServers(endPoints);
-setInterval(() => refreshOtherServers(endPoints), minute * 20);
+setInterval(() => refreshOtherServers(endPoints), minute * 30);
