@@ -34,7 +34,7 @@ const AddStudentForm = ({ formInputs, setFormInputs }) => {
 
   const updateHelpText = (name, message) => setHelpText({
     ...helpText,
-    [name]: message || `missing ${name}`,
+    [name]: message ? `missing ${name}` : '',
   });
 
   const handleInputChange = ({ target: { name, value } }) => {
@@ -44,7 +44,9 @@ const AddStudentForm = ({ formInputs, setFormInputs }) => {
     case 'graduationDate': {
       const selectedDate = getUnixFromFormInputs(value);
       const today = getCurrentUnix();
+
       if (selectedDate < today) updateHelpText(name, 'graduation date must be in the future');
+      else updateHelpText(name, ' ');
     }
       break;
 
