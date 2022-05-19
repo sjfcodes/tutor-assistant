@@ -1,81 +1,87 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { Columns } from 'react-bulma-components';
+import React, { useContext, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { SET_CALENDLY_MEETINGS } from '../../store/calendly/actions';
-import { ADD_MEETING_MODAL, SET_OPEN_MODAL } from '../../store/view/actions';
-import { formatCalendlyMeetings, readModel } from '../../utils';
-import { HomeContext, MEETINGS_SECTION } from '../../views/Home/HomeProvider';
+import { SET_CALENDLY_MEETINGS_FOR_COURSE } from '../../store/courses/actions';
+import {
+  ADD_MEETING_MODAL,
+  COURSE_SECTION_MEETINGS,
+  SET_ACTIVE_COMPONENT,
+  SET_OPEN_MODAL,
+} from '../../store/view/actions';
+import {
+  formatCalendlyMeetings,
+  readModel,
+} from '../../utils';
 import SectionContainer from '../Section/Container';
-import SectionHeading from '../Section/Heading';
+import MeetingHeading from './MeetingHeading';
 import MeetingsList from './MeetingsList';
-import MeetingsListFilter from './MeetingsListFilter';
 import { MeetingsContext } from './MeetingsProvider';
+import MeetingToolbar from './MeetingToolbar';
 
 const MeetingsSection = () => {
-  const { allCourses, selectedCourse } = useSelector((state) => state.courses);
   const dispatch = useDispatch();
-  const { handleToggle } = useContext(HomeContext);
   const {
-    filterBy, setFilterBy,
-    isActive, sectionName, filterOptions,
-  } = useContext(MeetingsContext);
-  const [calendlyCount, setCalendlyCount] = useState(0);
+    courses: { allCourses, selectedCourse },
+    view: { activeComponent: { selectedComponent } },
+  } = useSelector((state) => state);
 
-  const toggleSection = () => handleToggle(MEETINGS_SECTION);
-  const getMeetingCount = () => {
-    let count = 0;
-    if (allCourses && selectedCourse) count += allCourses[selectedCourse].meetingCount;
-    if (calendlyCount) count += calendlyCount;
-    return count > 0 ? count : '~';
-  };
+  const {
+    isActive,
+    filterBy,
+    sectionName,
+    setFilterBy,
+    filterOptions,
+    focusedMeetings,
+  } = useContext(MeetingsContext);
 
   useEffect(() => {
     let isMounted = true;
-    if (!selectedCourse || !allCourses) return '';
-    const getCalendlyMeetings = async () => {
-      const { calendlyMeetings: meetings } = await readModel({ model: 'calendly/meetings', _id: selectedCourse });
-      if (!isMounted) return;
-      dispatch({
-        type: SET_CALENDLY_MEETINGS,
-        payload: formatCalendlyMeetings(meetings),
-      });
-      setCalendlyCount(meetings.length);
-    };
-    if (allCourses[selectedCourse].calendly.data) getCalendlyMeetings();
+    if (allCourses && selectedCourse) {
+      const getCalendlyMeetings = async () => {
+        const { calendlyMeetings: meetings } = await readModel({
+          model: 'calendly/meetings',
+          _id: selectedCourse,
+        });
+        if (!isMounted) return;
+        dispatch({
+          type: SET_CALENDLY_MEETINGS_FOR_COURSE,
+          payload: {
+            selectedCourse,
+            calendlyMeetings: formatCalendlyMeetings(meetings),
+          },
+        });
+      };
+      if (allCourses[selectedCourse].calendly.data) getCalendlyMeetings();
+    }
 
-    return () => { isMounted = false; };
+    return () => {
+      isMounted = false;
+    };
   }, [selectedCourse, allCourses, dispatch]);
 
-  const heading = (
-    <SectionHeading
-      sectionName={sectionName}
-      count={getMeetingCount()}
-    />
-  );
+  const toggleDisplayedSection = () => {
+    dispatch({
+      type: SET_ACTIVE_COMPONENT,
+      payload: {
+        selectedComponent: selectedComponent !== COURSE_SECTION_MEETINGS
+          ? COURSE_SECTION_MEETINGS
+          : '',
+      },
+    });
+  };
 
   return (
     <SectionContainer
-      heading={heading}
       active={isActive}
-      handleToggle={toggleSection}
+      heading={<MeetingHeading />}
+      toolbar={<MeetingToolbar />}
+      toggleDisplayedSection={toggleDisplayedSection}
       sectionName={sectionName}
       filterBy={filterBy}
       setFilterBy={setFilterBy}
       filterOptions={filterOptions}
       addListItemClick={() => dispatch({ type: SET_OPEN_MODAL, payload: ADD_MEETING_MODAL })}
     >
-      { isActive && (
-        <>
-          <Columns className='is-mobile ml-5'>
-            <p className='mr-3'>sort</p>
-            <MeetingsListFilter />
-          </Columns>
-
-          <MeetingsList
-            filterBy={filterBy}
-          />
-        </>
-      )}
+      {isActive ? <MeetingsList focusedMeetings={focusedMeetings} /> : ''}
     </SectionContainer>
   );
 };

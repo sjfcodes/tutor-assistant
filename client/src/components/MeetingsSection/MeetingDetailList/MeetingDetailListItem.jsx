@@ -74,20 +74,18 @@ const MeetingListItemDetail = ({
   useEffect(() => {
     const toggleEdit = () => setItemToEdit(itemToEdit !== property ? property : '');
 
-    if (!allowedToEdit) return setDisplayedEditIcon(
+    if (!allowedToEdit) return setDisplayedEditIcon((
       <Icon className='mx-1 mt-5'>
         <i className='fas fa-pen icon-small has-text-grey-lighter' />
-      </Icon>,
-    );
-    return setDisplayedEditIcon(
+      </Icon>));
+    return setDisplayedEditIcon((
       <Icon className='mx-1 mt-5' onClick={toggleEdit}>
         <i className={`icon-small has-text-primary
             ${itemToEdit === property
-    ? 'far fa-times-circle'
-    : 'fas fa-pen'}`}
+        ? 'far fa-times-circle'
+        : 'fas fa-pen'}`}
         />
-      </Icon>,
-    );
+      </Icon>));
   }, [allowedToEdit, itemToEdit, property]);
 
   return (

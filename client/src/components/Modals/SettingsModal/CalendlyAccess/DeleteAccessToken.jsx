@@ -1,22 +1,21 @@
+import { string } from 'prop-types';
 import React from 'react';
 import { Button } from 'react-bulma-components';
 import { useSelector } from 'react-redux';
 import { deleteModel } from '../../../../utils';
 
-const DeleteAccessToken = () => {
+const DeleteAccessToken = ({ courseId }) => {
 //   const [deleteState, setDeleteState] = useState('');
 //   const [loading, setLoading] = useState(false);
-  const { allCourses, selectedCourse } = useSelector((state) => state.courses);
-  const { calendly: { accessToken } } = allCourses[selectedCourse];
+  const { allCourses } = useSelector((state) => state.courses);
+  const { calendly: { accessToken } } = allCourses[courseId];
 
   const handleDeleteAccessToken = async () => {
-    await deleteModel(
-      {
-        _id: accessToken,
-        model: 'calendly/token',
-        body: { courseId: selectedCourse },
-      },
-    );
+    await deleteModel({
+      _id: accessToken,
+      model: 'calendly/token',
+      body: { courseId },
+    });
     window.location.reload();
   };
 
@@ -30,4 +29,9 @@ const DeleteAccessToken = () => {
     </Button>
   );
 };
+
+DeleteAccessToken.propTypes = {
+  courseId: string.isRequired,
+};
+
 export default DeleteAccessToken;

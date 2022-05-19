@@ -1,4 +1,4 @@
-import { LOCAL_STORAGE_KEY } from '../../config';
+import { TUTOR_AUTH_TOKEN, removeLocalStorageData, updateLocalStorage } from '../../store_local';
 import { LOGIN_TUTOR, LOGOUT_TUTOR, UPDATE_TUTOR_DETAIL } from './actions';
 
 const tutorDefault = {
@@ -20,7 +20,7 @@ const tutorReducer = (state = tutorDefault, action) => {
     const tutorWithoutCourses = { ...action.payload.tutor };
     delete tutorWithoutCourses.courses;
 
-    localStorage.setItem(LOCAL_STORAGE_KEY, action.payload.token);
+    updateLocalStorage({ key: TUTOR_AUTH_TOKEN, value: action.payload.token });
     return {
       loggedIn: true,
       ...tutorWithoutCourses,
@@ -35,7 +35,7 @@ const tutorReducer = (state = tutorDefault, action) => {
   }
 
   case LOGOUT_TUTOR: {
-    localStorage.removeItem(LOCAL_STORAGE_KEY);
+    removeLocalStorageData();
     return { loggedIn: false };
   }
 

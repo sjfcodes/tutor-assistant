@@ -6,7 +6,7 @@ import formatStudents from './student';
  * @param {Array} courses
  * @returns
  */
-const formatCourses = (courses) => {
+export const formatCourses = (courses) => {
   if (!courses.length) return {};
 
   const courseObj = {};
@@ -21,4 +21,8 @@ const formatCourses = (courses) => {
   return courseObj;
 };
 
-export default formatCourses;
+export const getCourseSectionListItemCount = ({ displayed, focused }) => {
+  if (displayed) return displayed;
+  if (focused) return focused;
+  return '~';
+};

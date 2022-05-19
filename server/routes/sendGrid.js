@@ -4,7 +4,7 @@ const { AccessToken, Tutor } = require('../models');
 const { authorizeToken } = require('../utils/auth');
 const { reportError } = require('../utils/consoleColors/index.js');
 const { encryptToken, decryptToken } = require('../utils/encryption');
-const { getTutorById } = require('../utils/helpers');
+const { getTutor } = require('../utils/helpers');
 
 const createTokenAndAddToTutor = async ({ encryptedToken, tutorId }) => {
   // create db entry
@@ -42,7 +42,7 @@ router.post('/add-token', authorizeToken, async (
 ) => {
   try {
     //  get tutor document
-    const { tutor } = await getTutorById(tutorId);
+    const { tutor } = await getTutor({ _id: tutorId });
     if (!tutor) return res.status(401).json({ message: 'unauthorized' });
     // compare request password to tutor saved password
     if (!await tutor.isCorrectPassword(password)) return res.status(401).json({ message: 'unauthorized' });

@@ -1,15 +1,14 @@
-import { string } from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { MeetingsContext } from '../MeetingsProvider';
 import MeetingsListItem from './MeetingsListItem';
 
-const MeetingsList = ({ filterBy }) => {
+const MeetingsList = ({ focusedMeetings }) => {
   const {
-    calendlyMeetings,
-    courses: { allCourses, selectedCourse },
+    courses: { selectedCourse },
   } = useSelector((state) => state);
-  const [selectedMeetingId, setSelectedMeetingId] = useState('');
-  const [displayedMeetings, setDisplayedMeetings] = useState([]);
+  const { filterBy, displayedMeetings, setDisplayedMeetings } = useContext(MeetingsContext);
+
   const [meetingsListItems, setMeetingsListItems] = useState('');
 
   const filterMeetingsByStartTime = (arr) => (
@@ -26,52 +25,45 @@ const MeetingsList = ({ filterBy }) => {
   );
 
   useEffect(() => {
-    if (!selectedCourse) return;
-    const selectedMeetings = [];
+    const getMeetingsFor = (filter) => focusedMeetings
+      .filter(({ type }) => type === filter);
 
-    const addCalendlyMeetings = () => {
-      const arr = Object.values(calendlyMeetings);
-      if (arr.length) selectedMeetings.push(...arr);
-      return '';
-    };
-    const addTutorlyMeetings = () => {
-      const arr = Object.values(allCourses[selectedCourse].meetings);
-      if (arr.length) selectedMeetings.push(...arr);
-    };
+    if (selectedCourse && focusedMeetings.length) {
+      let meetings;
 
-    switch (filterBy) {
-    case 'all':
-      addTutorlyMeetings();
-      addCalendlyMeetings();
-      break;
-    case 'calendly':
-      addCalendlyMeetings();
-      break;
-    default:
-      addTutorlyMeetings();
-      break;
-    }
+      switch (filterBy) {
+      case 'all':
+        meetings = focusedMeetings;
+        break;
 
-    setDisplayedMeetings(filterMeetingsByStartTime(selectedMeetings));
-  }, [selectedCourse, allCourses, calendlyMeetings, filterBy]);
+      case 'calendly':
+        meetings = getMeetingsFor('calendly');
+        break;
+
+      case 'tutorly':
+        meetings = getMeetingsFor('tutorly');
+        break;
+
+      default:
+        meetings = focusedMeetings;
+        break;
+      }
+
+      setDisplayedMeetings(filterMeetingsByStartTime(meetings));
+    } else setDisplayedMeetings([]);
+  }, [selectedCourse, filterBy, focusedMeetings, setDisplayedMeetings]);
 
   useEffect(() => {
-    if (!displayedMeetings.length) return setMeetingsListItems(<p className='has-text-centered'>no scheduled meetings</p>);
-    return setMeetingsListItems(displayedMeetings
+    if (!displayedMeetings.length) setMeetingsListItems(<p className='has-text-centered'>no scheduled meetings</p>);
+    else setMeetingsListItems(displayedMeetings
       .map((meeting) => (
         <MeetingsListItem
           key={meeting._id}
           meeting={meeting}
-          selectedMeetingId={selectedMeetingId}
-          setSelectedMeetingId={setSelectedMeetingId}
         />
       )));
-  }, [selectedCourse, allCourses, calendlyMeetings, displayedMeetings, selectedMeetingId]);
+  }, [selectedCourse, displayedMeetings]);
 
   return meetingsListItems;
 };
 export default MeetingsList;
-
-MeetingsList.propTypes = {
-  filterBy: string.isRequired,
-};

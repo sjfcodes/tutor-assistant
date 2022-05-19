@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import { emailIsValid, updateModel } from '../../../utils';
 import ListItem from '../../Forms/ListItem';
 import { UPDATE_STUDENT_DETAIL } from '../../../store/courses/actions';
+import CopyToClipboardIcon from '../../CopyToClipboardIcon';
 
 const StudentListItemDetail = ({
   _id, property, value,
@@ -49,8 +50,10 @@ const StudentListItemDetail = ({
     if (property === 'endTime') setDisplayProperyName(property.substring(0, 3));
 
     if (!property || !itemToEdit) return;
+
     const element = document.querySelector(`input[name=${property}]`)
       || document.querySelector(`textarea[name=${property}]`);
+
     if (!element) return;
 
     element.focus();
@@ -64,20 +67,18 @@ const StudentListItemDetail = ({
   useEffect(() => {
     const toggleEdit = () => setItemToEdit(itemToEdit !== property ? property : '');
 
-    if (!allowedToEdit) return setDisplayedEditIcon(
+    if (!allowedToEdit) return setDisplayedEditIcon((
       <Icon className='mx-1 mt-5'>
         <i className='fas fa-pen icon-small has-text-grey-lighter' />
-      </Icon>,
-    );
-    return setDisplayedEditIcon(
+      </Icon>));
+    return setDisplayedEditIcon((
       <Icon className='mx-1 mt-5' onClick={toggleEdit}>
         <i className={`icon-small has-text-primary
             ${itemToEdit === property
-    ? 'far fa-times-circle'
-    : 'fas fa-pen'}`}
+        ? 'far fa-times-circle'
+        : 'fas fa-pen'}`}
         />
-      </Icon>,
-    );
+      </Icon>));
   }, [allowedToEdit, itemToEdit, property]);
 
   return (
@@ -86,10 +87,11 @@ const StudentListItemDetail = ({
         <Form.Field kind='addons' className=''>
           <Form.Control fullwidth className='border-bottom-light'>
             <Form.Label
-              className='mb-0 mt-3 has-text-primary'
+              className='mb-0 mt-3 has-text-info'
               size='small'
             >
               {displayPropertyName}
+              <CopyToClipboardIcon className='' data={value} />
             </Form.Label>
 
             <Form.Help textAlign='right' className='ml-5' color='danger'>{helpText}</Form.Help>

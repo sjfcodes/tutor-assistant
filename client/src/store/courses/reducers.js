@@ -1,7 +1,11 @@
-import formatCourses from '../../utils/helpers/course';
+import {
+  LS_SELECTED_COURSE, LS_SELECTED_COMPONENT, updateLocalStorage, getLocalStorageValueFor,
+} from '../../store_local';
+import { formatCourses } from '../../utils';
 import {
   SET_ALL_COURSES,
   SET_SELECTED_COURSE,
+  SET_SELECTED_COURSE_SECTION,
 
   ADD_COURSE,
   UPDATE_COURSE_DETAIL,
@@ -14,27 +18,36 @@ import {
   ADD_MEETING_TO_COURSE,
   UPDATE_MEETING_DETAIL,
   DELETE_MEETING,
+  SET_CALENDLY_MEETINGS_FOR_COURSE,
 } from './actions';
 
-// eslint-disable-next-line no-console
+const defaultState = {
+  selectedCourse: getLocalStorageValueFor({ key: LS_SELECTED_COURSE }) || '',
+};
 
 // eslint-disable-next-line default-param-last
-const courseReducer = (state = {}, action) => {
-  switch (action.type) {
+const courseReducer = (state = defaultState, { type, payload }) => {
+  switch (type) {
   case SET_ALL_COURSES: {
     return {
-      allCourses: formatCourses(action.payload),
+      ...state,
+      allCourses: formatCourses(payload),
     };
   }
   case SET_SELECTED_COURSE: {
+    updateLocalStorage({ key: LS_SELECTED_COURSE, value: payload._id });
     return {
       ...state,
-      selectedCourse: action.payload,
+      selectedCourse: payload._id,
     };
+  }
+  case SET_SELECTED_COURSE_SECTION: {
+    updateLocalStorage({ key: LS_SELECTED_COMPONENT, value: payload.section });
+    return state;
   }
 
   case ADD_COURSE: {
-    const course = action.payload;
+    const course = payload;
     course.students = {};
     course.meetings = {};
     const allCourses = { ...state.allCourses };
@@ -48,7 +61,7 @@ const courseReducer = (state = {}, action) => {
   case UPDATE_COURSE_DETAIL: {
     const course = {
       ...state.allCourses[state.selectedCourse],
-      ...action.payload,
+      ...payload,
     };
     const allCourses = { ...state.allCourses, [course._id]: course };
     return {
@@ -57,7 +70,7 @@ const courseReducer = (state = {}, action) => {
     };
   }
   case DELETE_COURSE: {
-    const _id = action.payload;
+    const _id = payload;
     const copy = { ...state.allCourses };
     delete copy[_id];
 
@@ -71,7 +84,7 @@ const courseReducer = (state = {}, action) => {
   }
 
   case ADD_STUDENT_TO_COURSE: {
-    const student = action.payload;
+    const student = payload;
     const allCourses = { ...state.allCourses };
     allCourses[state.selectedCourse].students[student._id] = student;
 
@@ -82,7 +95,7 @@ const courseReducer = (state = {}, action) => {
   }
 
   case UPDATE_STUDENT_DETAIL: {
-    const student = action.payload;
+    const student = payload;
     const allCourses = { ...state.allCourses };
     allCourses[state.selectedCourse].students[student._id] = student;
 
@@ -92,7 +105,7 @@ const courseReducer = (state = {}, action) => {
     };
   }
   case DELETE_STUDENT: {
-    const _id = action.payload;
+    const _id = payload;
     const allCourses = { ...state.allCourses };
     delete allCourses[state.selectedCourse].students[_id];
 
@@ -102,18 +115,21 @@ const courseReducer = (state = {}, action) => {
     };
   }
   case ADD_MEETING_TO_COURSE: {
-    const meeting = action.payload;
+    const meeting = payload;
     const allCourses = { ...state.allCourses };
     allCourses[state.selectedCourse].meetings[meeting._id] = meeting;
+
+    const meetingCount = allCourses[state.selectedCourse].meetingCount + 1;
 
     return {
       ...state,
       allCourses,
+      meetingCount,
     };
   }
 
   case UPDATE_MEETING_DETAIL: {
-    const meeting = action.payload;
+    const meeting = payload;
     const allCourses = { ...state.allCourses };
     allCourses[state.selectedCourse].meetings[meeting._id] = meeting;
 
@@ -123,13 +139,26 @@ const courseReducer = (state = {}, action) => {
     };
   }
   case DELETE_MEETING: {
-    const _id = action.payload;
+    const _id = payload;
     const allCourses = { ...state.allCourses };
     delete allCourses[state.selectedCourse].meetings[_id];
 
     return {
       ...state,
       allCourses,
+    };
+  }
+
+  case SET_CALENDLY_MEETINGS_FOR_COURSE: {
+    const { selectedCourse, calendlyMeetings } = payload;
+    const allCourses = { ...state.allCourses };
+    const mergedMeetings = { ...allCourses[selectedCourse].meetings, ...calendlyMeetings };
+    allCourses[selectedCourse].meetings = mergedMeetings;
+    console.log(allCourses);
+
+    return {
+      ...state,
+      // allCourses,
     };
   }
 

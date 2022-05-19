@@ -1,15 +1,51 @@
 import React, {
-  createContext, useContext, useMemo, useState,
+  createContext, useMemo, useState,
 } from 'react';
-import { HomeContext, MEETINGS_SECTION } from '../../../views/Home/HomeProvider';
+import { useSelector } from 'react-redux';
+import { COURSE_SECTION_MEETINGS } from '../../../store/view/actions';
+import { getCourseSectionListItemCount } from '../../../utils';
 
 export const MeetingsContext = createContext({});
+let count = 0;
 
 // eslint-disable-next-line react/prop-types
 const MeetingsProvider = ({ children }) => {
-  const { activeComponent } = useContext(HomeContext);
-  const [filterOptions, setFilterOptions] = useState(['all', 'tutorly']);
-  const [filterBy, setFilterBy] = useState(filterOptions[0]);
+  const {
+    courses: { allCourses, selectedCourse },
+    view: { activeComponent: { selectedComponent } },
+  } = useSelector((state) => state);
+
+  const [displayedMeetings, setDisplayedMeetings] = useState([]);
+  const [filterOptions, setFilterOptions] = useState({
+    currentMeetingsOnly: true,
+    types: ['all', 'tutorly'],
+  });
+  const [filterBy, setFilterBy] = useState(filterOptions.types[0]);
+
+  const { meetings: allMeetings } = useMemo(() => {
+    const noCourseSelected = () => (
+      !allCourses
+        || !selectedCourse
+        || !allCourses[selectedCourse]
+    );
+    return (
+      noCourseSelected()
+        ? { meetings: {} }
+        : allCourses[selectedCourse]
+    );
+  }, [allCourses, selectedCourse]);
+
+  const focusedMeetings = useMemo(() => {
+    const allMeetingsArr = Object.values(allMeetings);
+    // will be used for updating focused meetings based on checkbox settings, see students section
+    // currentMeetingsArr = ...
+    return allMeetingsArr;
+  }, [allMeetings]);
+
+  const meetingCount = getCourseSectionListItemCount({
+    displayed: displayedMeetings.length,
+    focused: focusedMeetings.length,
+  });
 
   const value = useMemo(() => (
     {
@@ -17,10 +53,21 @@ const MeetingsProvider = ({ children }) => {
       setFilterBy,
       filterOptions,
       setFilterOptions,
+      allMeetings,
+      displayedMeetings,
+      focusedMeetings,
+      meetingCount,
+      setDisplayedMeetings,
       sectionName: 'Meetings',
-      isActive: activeComponent === MEETINGS_SECTION,
+      isActive: selectedComponent === COURSE_SECTION_MEETINGS,
     }
-  ), [activeComponent, filterBy, filterOptions]);
+  ), [
+    selectedComponent, filterBy, filterOptions,
+    displayedMeetings, focusedMeetings,
+    allMeetings, meetingCount,
+  ]);
+  count += 1;
+  console.log('rendering meetingProvider', count);
 
   return (
     <MeetingsContext.Provider value={value}>

@@ -2,14 +2,12 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 
 import view from './view/reducers';
-import calendlyMeetings from './calendly/reducers';
 import courses from './courses/reducers';
 import tutor from './tutor/reducers';
 import middleware from './middleware';
 
 export default createStore(
   combineReducers({
-    calendlyMeetings,
     courses,
     tutor,
     view,

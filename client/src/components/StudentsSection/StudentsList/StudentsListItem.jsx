@@ -1,38 +1,66 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
-  bool, func, number, shape, string,
+  bool, number, shape, string,
 } from 'prop-types';
 import { Level } from 'react-bulma-components';
+import { useDispatch, useSelector } from 'react-redux';
 import ListItemContainer from '../../List/ListItemContainer';
 import StudentDetailList from '../StudentDetailList';
-import { TimeZoneAbbreviation } from '../../DateTime';
+import { GraduationDate, TimeZoneAbbreviation } from '../../DateTime';
+import { COURSE_SECTION_STUDENTS, SET_ACTIVE_COMPONENT } from '../../../store/view/actions';
+import { StudentsContext } from '../StudentsProvider';
 
-const StudentListItem = ({ student, selectedStudentId, setSelectedStudentId }) => {
+const StudentListItem = ({ student }) => {
   const [listItemDetails, setListItemDetails] = useState('listItemDetails');
   const {
-    _id, firstName, lastName, timeZoneName,
+    _id, firstName, lastName, timeZoneName, graduationDate,
   } = student;
+  const dispatch = useDispatch();
+  const {
+    activeComponent: { selectedComponent, selectedComponentItemId },
+  } = useSelector((state) => state.view);
+  const { filterBy } = useContext(StudentsContext);
 
   const toggleViewStudent = () => (
-    selectedStudentId === _id
-      ? setSelectedStudentId('')
-      : setSelectedStudentId(_id)
+    dispatch({
+      type: SET_ACTIVE_COMPONENT,
+      payload: {
+        selectedComponentItemId: selectedComponentItemId === _id ? '' : _id,
+      },
+    })
   );
 
   useEffect(() => {
-    if (selectedStudentId !== _id) return setListItemDetails('');
+    if (selectedComponent !== COURSE_SECTION_STUDENTS) return '';
+
+    if (selectedComponentItemId !== _id) return setListItemDetails('');
     return setListItemDetails(<StudentDetailList student={student} _id={_id} />);
-  }, [student, _id, selectedStudentId]);
+  }, [student, _id, selectedComponent, selectedComponentItemId]);
 
   return (
     <ListItemContainer
       itemId={_id}
-      selectedItemId={selectedStudentId}
+      selectedComponentItemId={selectedComponentItemId}
       toggleViewItem={toggleViewStudent}
       listItemDetails={listItemDetails}
     >
+      {
+        filterBy === 'graduation date'
+          ? (
+            <Level.Item className='ml-3 mr-1'>
+              [
+              <GraduationDate iso8601={graduationDate} />
+              ]
+            </Level.Item>
+          )
+          : ''
+      }
       <Level.Item className='ml-3 mr-1'>
-        {`${firstName} ${lastName}`}
+        {
+          filterBy === 'first name'
+            ? `${firstName} ${lastName}`
+            : `${lastName}, ${firstName}`
+        }
       </Level.Item>
       <Level.Item>
         <p>
@@ -65,6 +93,4 @@ StudentListItem.propTypes = {
     recurringMeeting: bool,
     createdAt: string,
   }).isRequired,
-  selectedStudentId: string.isRequired,
-  setSelectedStudentId: func.isRequired,
 };

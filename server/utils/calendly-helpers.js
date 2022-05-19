@@ -1,4 +1,5 @@
 const axios = require('axios');
+const { Course } = require('../models');
 const { getISOCurrentDateStamp } = require('./dateTime');
 const { getCalendlyToken, decryptToken } = require('./encryption');
 const { formatName } = require('./format');
@@ -9,10 +10,11 @@ const getCalendlyHeaders = (token) => ({
 });
 
 const getCalendlyMeetings = async ({
+  uri,
   courseId,
   accountKey,
-  uri,
-}, minstartTime = getISOCurrentDateStamp()) => {
+  minStartTime = getISOCurrentDateStamp(),
+}) => {
   //  get & decrypt accountKey (users password)
   const password = decryptToken(accountKey, process.env.JWT_SECRET);
   // use account key to get & decrypt calendly token
@@ -25,10 +27,25 @@ const getCalendlyMeetings = async ({
       params: {
         user: uri,
         // count: 10,
-        min_start_time: minstartTime,
+        min_start_time: minStartTime,
       },
     },
   );
+
+  // object we'll use to link email's to existing students on the roster { email:_id, email:_id }
+  const studentEmailIdObject = await Course
+    .findById(courseId)
+    .populate('students')
+    .then((data) => {
+      const emailIdObject = {};
+      data.students
+        .forEach(({ _id, email }) => {
+          emailIdObject[email] = _id;
+        });
+      return emailIdObject;
+    });
+
+  // console.log(studentEmailIdObject);
 
   const stillActive = collection.filter(({ status }) => status !== 'canceled');
 
@@ -52,6 +69,8 @@ const getCalendlyMeetings = async ({
           questionsAndAnswers: student.questions_and_answers,
           rescheduleUrl: student.reschedule_url,
           rescheduled: student.rescheduled,
+          recurringMeeting: false,
+          studentId: studentEmailIdObject[student.email] || null,
           timeZoneName: student.timezone,
           updatedAt: student.updated_at,
           createdAt: event.created_at,

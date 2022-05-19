@@ -17,9 +17,7 @@ const TimeZoneSelector = ({
     <option>-</option>
     {
       getSortedTimeZones()
-        .map(
-          ({ name: tzName, abbreviation }) => <option key={uuidv4()} value={tzName}>{`${abbreviation} - ${tzName}`}</option>,
-        )
+        .map(({ name: tzName, abbreviation }) => <option key={uuidv4()} value={tzName}>{`${abbreviation} - ${tzName}`}</option>)
     }
   </Form.Select>
 );

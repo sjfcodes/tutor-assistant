@@ -12,6 +12,7 @@ const ProfileDetailList = () => {
   const [listItems, setListItems] = useState();
   const doNotDisplay = useMemo(() => [
     '_id',
+    'id',
     '__v',
     'courses',
     'createdAt',
@@ -22,20 +23,18 @@ const ProfileDetailList = () => {
   ], []);
 
   useEffect(() => {
-    if (tutorDetails._id) setListItems(
-      Object.entries(tutorDetails)
-        .map(([property, value]) => {
-          if (doNotDisplay.indexOf(property) !== -1) return null;
-          return (
-            <ProfileDetailListItem
-              key={uuid()}
-              _id={tutorDetails._id}
-              value={value}
-              property={property}
-            />
-          );
-        }),
-    );
+    if (tutorDetails._id) setListItems(Object.entries(tutorDetails)
+      .map(([property, value]) => {
+        if (doNotDisplay.indexOf(property) !== -1) return null;
+        return (
+          <ProfileDetailListItem
+            key={uuid()}
+            _id={tutorDetails._id}
+            value={value}
+            property={property}
+          />
+        );
+      }));
   }, [tutorDetails, doNotDisplay]);
 
   return (

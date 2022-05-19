@@ -5,7 +5,7 @@ const {
 } = require('../models');
 const { exitWithSuccess, reportStatus } = require('../utils/consoleColors/index.js');
 const { demo, me } = require('./tutor');
-const emailTemplateSeed = require('./emailTemplate.json');
+// const emailTemplateSeeds = require('./emailTemplate.json');
 
 const courseSeed = require('./course.json');
 const studentSeeds = require('./student');
@@ -58,9 +58,9 @@ const createMeetings = async ({ seed, courseId, studentIds }) => {
   await Course.findByIdAndUpdate(courseId, { $addToSet: { meetings } });
 };
 
-const createEmailTemplates = async ({ seed, authorId }) => {
-  await EmailTemplate.create({ ...seed, authorId });
-};
+// const createEmailTemplates = async (seedsArr) => {
+//   await EmailTemplate.create(seedsArr);
+// };
 
 db.once('open', async () => {
   await eraseDB();
@@ -80,7 +80,8 @@ db.once('open', async () => {
   await Course.findByIdAndUpdate(myCourseId, { 'calendly.accessToken': calendlyTokenId });
   const { _id: sendGridTokenId } = await AccessToken.create(tokenSeed[1]);
   await Tutor.findByIdAndUpdate(myId, { 'sendGrid.accessToken': sendGridTokenId });
-  await createEmailTemplates({ seed: emailTemplateSeed, authorId: myId });
+  // const emailSeeds = emailTemplateSeeds.map((template) => ({ ...template, authorId: myId }));
+  // await createEmailTemplates(emailSeeds);
 
   exitWithSuccess('Seeds Complete');
 });

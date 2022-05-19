@@ -1,64 +1,57 @@
 import React, { useContext } from 'react';
-import { Columns } from 'react-bulma-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { ADD_STUDENT_MODAL, SET_OPEN_MODAL } from '../../store/view/actions';
-import { HomeContext, STUDENTS_SECTION } from '../../views/Home/HomeProvider';
+import {
+  ADD_STUDENT_MODAL, COURSE_SECTION_STUDENTS, SET_ACTIVE_COMPONENT, SET_OPEN_MODAL,
+} from '../../store/view/actions';
 import SectionContainer from '../Section/Container';
-import SectionHeading from '../Section/Heading';
+import StudentHeading from './StudentHeading';
 import StudentsList from './StudentsList';
-import StudentsListFilter from './StudentsListFilter';
 import { StudentsContext } from './StudentsProvider';
+import StudentToolbar from './StudentToolbar';
 
 const StudentsSection = () => {
-  const { allCourses, selectedCourse } = useSelector((state) => state.courses);
   const dispatch = useDispatch();
-
-  const { handleToggle } = useContext(HomeContext);
   const {
-    filterBy, setFilterBy,
-    isActive, sectionName, filterOptions,
+    view: { activeComponent: { selectedComponent } },
+  } = useSelector((state) => state);
+
+  const {
+    isActive,
+    filterBy,
+    sectionName,
+    setFilterBy,
+    filterOptions,
+    // setFilterOptions,
+    focusedStudents,
+    // displayedStudents,
   } = useContext(StudentsContext);
 
-  const toggleSection = () => handleToggle(STUDENTS_SECTION);
-  const getStudentCount = () => {
-    let count = 0;
-    if (allCourses && selectedCourse) count += allCourses[selectedCourse].studentCount;
-    return count > 0 ? count : '~';
-  };
-
-  const getChildren = () => {
-    if (!isActive) return '';
-    return (
-      <>
-        <Columns className='is-mobile ml-5'>
-          <p className='mr-3'>sort</p>
-          <StudentsListFilter />
-        </Columns>
-        <StudentsList />
-      </>
-    );
-  };
-
-  const heading = (
-    <SectionHeading
-      sectionName={sectionName}
-      count={getStudentCount()}
-    />
-  );
-
   const openAddStudentModal = () => dispatch({ type: SET_OPEN_MODAL, payload: ADD_STUDENT_MODAL });
+
+  const toggleDisplayedSection = () => {
+    dispatch({
+      type: SET_ACTIVE_COMPONENT,
+      payload: {
+        selectedComponent: selectedComponent !== COURSE_SECTION_STUDENTS
+          ? COURSE_SECTION_STUDENTS
+          : '',
+      },
+    });
+  };
+
   return (
     <SectionContainer
-      heading={heading}
       active={isActive}
-      handleToggle={toggleSection}
+      heading={<StudentHeading />}
+      toolbar={isActive && <StudentToolbar />}
+      toggleDisplayedSection={toggleDisplayedSection}
       sectionName={sectionName}
       filterBy={filterBy}
       setFilterBy={setFilterBy}
       filterOptions={filterOptions}
       addListItemClick={openAddStudentModal}
     >
-      {getChildren()}
+      {isActive ? <StudentsList focusedStudents={focusedStudents} /> : ''}
     </SectionContainer>
   );
 };

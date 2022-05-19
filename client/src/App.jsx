@@ -5,24 +5,24 @@ import { useDispatch, useSelector } from 'react-redux';
 import Nav from './components/Nav';
 import Footer from './components/Footer';
 import BackgroundImage from './components/BackgroundImage';
-import Home from './views/Home';
+import Dashboard from './views/Dashboard';
 import Landing from './views/Landing';
 import { loginWithToken } from './utils';
-import { LOGIN_TUTOR } from './store/tutor/actions';
+import { LOGIN_TUTOR, LOGOUT_TUTOR } from './store/tutor/actions';
 import { SET_ALL_COURSES } from './store/courses/actions';
-import { LOCAL_STORAGE_KEY } from './config';
 import './App.sass';
+import { getLocalStorageValueFor, TUTOR_AUTH_TOKEN } from './store_local';
 
 const App = () => {
   const dispatch = useDispatch();
   const { loggedIn } = useSelector((state) => state.tutor);
-  const prevToken = localStorage.getItem(LOCAL_STORAGE_KEY);
+  const previousToken = getLocalStorageValueFor({ key: TUTOR_AUTH_TOKEN });
 
   useEffect(() => {
     document.title = 'The Tutor App';
-    if (loggedIn || !prevToken) return;
+    if (loggedIn || !previousToken) return;
 
-    const loginUser = async (lsToken) => {
+    const loginUserWith = async (lsToken) => {
       try {
         const { tutor, token } = await loginWithToken(lsToken);
         if (!tutor || !token) return;
@@ -37,12 +37,12 @@ const App = () => {
           payload: tutor.courses,
         });
       } catch (error) {
-        localStorage.removeItem(LOCAL_STORAGE_KEY);
+        dispatch({ type: LOGOUT_TUTOR });
       }
     };
 
-    loginUser(prevToken);
-  }, [dispatch, loggedIn, prevToken]);
+    loginUserWith(previousToken);
+  }, [dispatch, loggedIn, previousToken]);
 
   return (
     <>
@@ -54,24 +54,26 @@ const App = () => {
       </Section>
 
       <BackgroundImage url='./images/bg-image.jpg' />
-      <Section renderAs='main' className='p-0'>
-        <Container className='is-max-desktop'>
-          <Columns centered className='m-0'>
-            <Columns.Column
-              desktop={{ size: 10 }}
-              tablet={{ size: 8 }}
-            >
-              {
-                loggedIn
-                  ? <Home />
-                  : <Landing />
-              }
+      <div id='app-wrapper'>
+        <Section renderAs='main' className='p-0'>
+          <Container className='is-max-desktop'>
+            <Columns centered className='m-0'>
+              <Columns.Column
+                desktop={{ size: 10 }}
+                tablet={{ size: 8 }}
+              >
+                {
+                  loggedIn
+                    ? <Dashboard />
+                    : <Landing />
+                }
 
-            </Columns.Column>
-          </Columns>
-        </Container>
-      </Section>
-      <Footer className='border-top py-0' />
+              </Columns.Column>
+            </Columns>
+          </Container>
+        </Section>
+        <Footer className='border-top py-0' />
+      </div>
     </>
   );
 };

@@ -1,6 +1,5 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import HomeProvider from './HomeProvider';
 import TasksSection from '../../components/TasksSection';
 
 import MessageBoard from '../../components/MessageBoard';
@@ -12,7 +11,7 @@ import StudentsSection from '../../components/StudentsSection';
 import MeetingsSection from '../../components/MeetingsSection';
 import CourseTabs from '../../components/CourseTabs';
 
-const Home = () => {
+const Dashboard = () => {
   const {
     tutor: { loggedIn },
     courses: { selectedCourse },
@@ -21,7 +20,7 @@ const Home = () => {
   const getComponents = () => {
     if (!selectedCourse) return '';
     return (
-      <HomeProvider>
+      <>
         <TasksProvider>
           <TasksSection />
         </TasksProvider>
@@ -31,7 +30,7 @@ const Home = () => {
         <MeetingsProvider>
           <MeetingsSection />
         </MeetingsProvider>
-      </HomeProvider>
+      </>
     );
   };
 
@@ -45,4 +44,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Dashboard;

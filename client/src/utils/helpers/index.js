@@ -5,16 +5,11 @@ export {
   formatCalendlyMeetings,
   handleError,
 };
-export {
-  buildTemplatePreview,
-  formatEmailTemplates,
-  loadTemplateEditorApp,
-} from './emailTemplates';
 
 export {
-  preventBodyScroll,
-  collapseNavbar,
-} from './html';
+  formatCourses,
+  getCourseSectionListItemCount,
+} from './course';
 
 export {
   getCurrentUnix,
@@ -31,6 +26,12 @@ export {
 } from './dateTime';
 
 export {
+  buildTemplatePreview,
+  formatEmailTemplates,
+  loadTemplateEditorApp,
+} from './emailTemplates';
+
+export {
   convertStrToBool,
   emailIsValid,
   getTextareaRows,
@@ -38,3 +39,8 @@ export {
   missingFormInputs,
   passwordIsValid,
 } from './forms';
+
+export {
+  preventBodyScroll,
+  collapseNavbar,
+} from './html';

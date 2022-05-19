@@ -1,21 +1,31 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { func, shape, string } from 'prop-types';
-import { useSelector } from 'react-redux';
+import React, {
+  useEffect, useMemo, useState,
+} from 'react';
+import { shape, string } from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 import MeetingDetailList from '../MeetingDetailList';
 import ListItemContainer from '../../List/ListItemContainer';
 import MeetingsListItemLayout from './MeetingsListItemLayout';
+import { COURSE_SECTION_MEETINGS, SET_ACTIVE_COMPONENT } from '../../../store/view/actions';
 
-const MeetingListItem = ({ meeting, setSelectedMeetingId, selectedMeetingId }) => {
-  const { allCourses, selectedCourse } = useSelector((state) => state.courses);
+const MeetingListItem = ({ meeting }) => {
+  const dispatch = useDispatch();
+  const {
+    courses: { allCourses, selectedCourse },
+    view: { activeComponent: { selectedComponent, selectedComponentItemId } },
+  } = useSelector((state) => state);
 
   const [listItemDetails, setListItemDetails] = useState('');
 
   const { _id, studentId } = meeting;
 
   const toggleViewMeeting = () => (
-    selectedMeetingId === _id
-      ? setSelectedMeetingId('')
-      : setSelectedMeetingId(_id)
+    dispatch({
+      type: SET_ACTIVE_COMPONENT,
+      payload: {
+        selectedComponentItemId: selectedComponentItemId === _id ? '' : _id,
+      },
+    })
   );
 
   const student = useMemo(
@@ -24,14 +34,15 @@ const MeetingListItem = ({ meeting, setSelectedMeetingId, selectedMeetingId }) =
   );
 
   useEffect(() => {
-    if (selectedMeetingId !== _id) return setListItemDetails('');
+    if (selectedComponent !== COURSE_SECTION_MEETINGS) return '';
+    if (selectedComponentItemId !== _id) return setListItemDetails('');
     return setListItemDetails(<MeetingDetailList meeting={meeting} _id={_id} />);
-  }, [meeting, _id, selectedMeetingId]);
+  }, [meeting, _id, selectedComponentItemId, selectedComponent]);
 
   return (
     <ListItemContainer
       itemId={_id}
-      selectedItemId={selectedMeetingId}
+      selectedComponentItemId={selectedComponentItemId}
       toggleViewItem={toggleViewMeeting}
       listItemDetails={listItemDetails}
     >
@@ -53,6 +64,4 @@ MeetingListItem.propTypes = {
     status: string.isRequired,
     createdAt: string.isRequired,
   }).isRequired,
-  selectedMeetingId: string.isRequired,
-  setSelectedMeetingId: func.isRequired,
 };

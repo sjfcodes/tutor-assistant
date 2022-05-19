@@ -8,7 +8,7 @@ import { Form } from 'react-bulma-components';
 const ListFilterSelector = ({
   className, filterBy, setFilterBy, filterOptions, sectionName,
 }) => (
-  <Form.Field>
+  <Form.Control>
     <select
       className={className}
       value={filterBy}
@@ -23,7 +23,7 @@ const ListFilterSelector = ({
         </option>
       ))}
     </select>
-  </Form.Field>
+  </Form.Control>
 
 );
 export default ListFilterSelector;

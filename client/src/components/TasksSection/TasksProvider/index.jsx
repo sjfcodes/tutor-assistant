@@ -1,41 +1,25 @@
 import React, {
-  createContext, useContext, useEffect, useMemo, useState,
+  createContext, useEffect, useMemo, useState,
 } from 'react';
 import { useSelector } from 'react-redux';
-import { HomeContext, TASKS_SECTION } from '../../../views/Home/HomeProvider';
+import { COURSE_SECTION_TASKS } from '../../../store/view/actions';
 
 export const TasksContext = createContext({});
 
-const checkCalendlyStudents = (students, calendlyMeetings) => {
-  const studentEmails = {};
-  Object
-    .values(students)
-    .forEach((student) => {
-      studentEmails[student.email] = true;
-    });
-
-  const missing = [];
-  Object
-    .values(calendlyMeetings)
-    .forEach((meeting) => {
-      if (!studentEmails[meeting.email]) {
-        studentEmails[meeting.email] = true;
-        missing.push(meeting);
-      }
-    });
-
-  // console.log('found', studentEmails);
-  // console.log('missing', missing);
-  return missing;
+const findMissingStudents = (courseMeetings) => {
+  if (!courseMeetings) return [];
+  const meetings = Object.values(courseMeetings);
+  return meetings
+    .filter(({ studentId }) => !studentId);
 };
 
 // eslint-disable-next-line react/prop-types
 const TasksProvider = ({ children }) => {
   const {
     courses: { allCourses, selectedCourse },
-    calendlyMeetings,
+    view: { activeComponent: { selectedComponent } },
   } = useSelector((state) => state);
-  const { activeComponent } = useContext(HomeContext);
+  const [displayedTasks, setDisplayedTasks] = useState([]);
   const [filterOptions, setFilterOptions] = useState(['all', 'tutor', 'student', 'meeting']);
   const [filterBy, setFilterBy] = useState(filterOptions[0]);
   // eslint-disable-next-line no-unused-vars
@@ -43,40 +27,44 @@ const TasksProvider = ({ children }) => {
   const [studentTasks, setStudentTasks] = useState([]);
   // eslint-disable-next-line no-unused-vars
   const [meetingTasks, setMeetingTasks] = useState([]);
-  const [count, setCount] = useState(0);
 
   const value = useMemo(
     () => (
       {
-        count,
         tutorTasks,
         studentTasks,
         meetingTasks,
-        setCount,
         filterBy,
         setFilterBy,
         filterOptions,
         setFilterOptions,
+        displayedTasks,
+        setDisplayedTasks,
         sectionName: 'Tasks',
-        isActive: activeComponent === TASKS_SECTION,
+        isActive: selectedComponent === COURSE_SECTION_TASKS,
       }
     ),
     [
-      count, tutorTasks, studentTasks, meetingTasks,
-      activeComponent, filterBy, filterOptions,
+      tutorTasks, studentTasks, meetingTasks,
+      selectedComponent, filterBy, filterOptions, displayedTasks,
     ],
   );
 
+  const { meetings: allMeetings } = useMemo(
+    () => {
+      if (!allCourses || !selectedCourse) return { meetings: {} };
+
+      return allCourses[selectedCourse];
+    },
+    [allCourses, selectedCourse],
+  );
+
   useEffect(() => {
-    const missingFromDB = checkCalendlyStudents(
-      allCourses[selectedCourse].students,
-      calendlyMeetings,
-    );
-    if (!missingFromDB.length) return;
-    // console.log(missingFromDB);
-    setCount(missingFromDB.length);
-    setStudentTasks(missingFromDB);
-  }, [allCourses, selectedCourse, calendlyMeetings, setCount]);
+    const missingStudents = findMissingStudents(allMeetings);
+    setStudentTasks(missingStudents.length
+      ? missingStudents
+      : []);
+  }, [allMeetings]);
 
   return (
     <TasksContext.Provider value={value}>

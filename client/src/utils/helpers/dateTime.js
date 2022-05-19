@@ -23,6 +23,8 @@ export const getSortedTimeZones = () => rawTimeZones
    */
 export const getCurrentUnix = () => Math.floor(new Date().getTime() / 1000);
 
+export const getUnixFromISO = (isoString) => Math.floor(new Date(isoString).getTime() / 1000);
+
 /**
    * @param {Number} unix number of seconds since epoch, default to current time
    * @returns {String} iso8601 timestamp

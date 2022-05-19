@@ -6,26 +6,26 @@ import DropDownIcon from '../DropDownIcon';
 
 const ListItemContainer = ({
   // eslint-disable-next-line react/prop-types
-  children, itemId, selectedItemId, toggleViewItem, listItemDetails,
+  children, itemId, selectedComponentItemId, toggleViewItem, listItemDetails,
 }) => (
   <Box
-    className={`border rounded px-0 py-1 mb-3
-      ${selectedItemId !== itemId && 'hover-large-item'}`}
+    className={`border rounded px-0 py-0 mb-3
+      ${selectedComponentItemId !== itemId && 'hover-large-item'} `}
   >
     <Level
       renderAs='div'
       breakpoint='mobile'
-      className={`${selectedItemId === itemId && 'border-bottom pb-1 mb-0'}`}
+      className={`py-1 ${selectedComponentItemId === itemId && 'border-bottom pb-1 mb-0'}`}
       onClick={toggleViewItem}
     >
       <LevelSide>
         {children}
       </LevelSide>
-      <Level.Side>
-        <DropDownIcon active={(selectedItemId === itemId)} />
+      <Level.Side align='right'>
+        <DropDownIcon active={(selectedComponentItemId === itemId)} />
       </Level.Side>
     </Level>
-    {selectedItemId === itemId ? listItemDetails : null}
+    {selectedComponentItemId === itemId ? listItemDetails : null}
   </Box>
 
 );
@@ -33,6 +33,9 @@ const ListItemContainer = ({
 export default ListItemContainer;
 ListItemContainer.propTypes = {
   itemId: string.isRequired,
-  selectedItemId: string.isRequired,
+  selectedComponentItemId: string,
   toggleViewItem: func.isRequired,
+};
+ListItemContainer.defaultProps = {
+  selectedComponentItemId: '',
 };

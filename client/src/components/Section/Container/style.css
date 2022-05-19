@@ -1,0 +1,4 @@
+.section-list-container{
+    max-height: 33vh;
+    overflow-x: scroll;
+}
